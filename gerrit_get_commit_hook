@@ -1,0 +1,21 @@
+#!/bin/sh
+
+checkUser() {
+echo "For this script to work, ${USER} must be your domain username. Is this true? [y/N]"
+read x
+case $x in
+        y)
+                return
+                ;;
+        *)
+                echo "Enter your domain username:"
+                read USER
+                ;;
+esac
+}
+
+checkUser
+
+echo "Fetching commit hook..."
+scp -p -P 29418 ${USER}@source.cummings.local:hooks/commit-msg .git/hooks/
+echo "... done!"
