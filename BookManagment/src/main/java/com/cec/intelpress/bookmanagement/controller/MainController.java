@@ -1,4 +1,4 @@
-package com.cec.intelpress.bookmanagment.controller;
+package com.cec.intelpress.bookmanagement.controller;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.cec.intelpress.bookmanagment.domain.Person;
-import com.cec.intelpress.bookmanagment.service.PersonService;
+import com.cec.intelpress.bookmanagement.domain.Person;
+import com.cec.intelpress.bookmanagement.service.PersonService;
 
 
 /**

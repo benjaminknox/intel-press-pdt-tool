@@ -1,4 +1,4 @@
-package com.cec.intelpress.bookmanagment.domain;
+package com.cec.intelpress.bookmanagement.domain;
 
 import java.io.Serializable;
 

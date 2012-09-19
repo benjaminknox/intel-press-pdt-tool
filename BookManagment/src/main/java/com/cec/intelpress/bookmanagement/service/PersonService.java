@@ -1,4 +1,4 @@
-package com.cec.intelpress.bookmanagment.service;
+package com.cec.intelpress.bookmanagement.service;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cec.intelpress.bookmanagment.domain.Person;
+import com.cec.intelpress.bookmanagement.domain.Person;
 
 /**
  * Service for processing Persons

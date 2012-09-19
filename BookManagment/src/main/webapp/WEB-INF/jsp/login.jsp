@@ -2,51 +2,46 @@
 <html>
 <head>
 <title>Login Page</title>
-<style>
-.errorblock {
-	color: #ff0000;
-	background-color: #ffEEEE;
-	border: 3px solid #ff0000;
-	padding: 8px;
-	margin: 16px;
-}
-</style>
 </head>
 <body onload='document.f.j_username.focus();'>
-	<h3>Login with Username and Password (Custom Page)</h3>
- 
-	<c:if test="${not empty error}">
-		<div class="errorblock">
-			Your login attempt was not successful, try again.<br /> Caused :
-			${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+	<div class="modal">
+		<div class="modal-header">
+
+			<h3>Login</h3>
 		</div>
-	</c:if>
- 
-	<form name='f' action="<c:url value='j_spring_security_check' />"
-		method='POST'>
- 
-		<table>
-			<tr>
-				<td>User:</td>
-				<td><input type='text' name='j_username' value=''>
-				</td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-				<td><input type='password' name='j_password' />
-				</td>
-			</tr>
-			<tr>
-				<td colspan='2'><input name="submit" type="submit"
-					value="submit" />
-				</td>
-			</tr>
-			<tr>
-				<td colspan='2'><input name="reset" type="reset" />
-				</td>
-			</tr>
-		</table>
- 
-	</form>
+		<div class="modal-body" style="text-align:center">
+
+			<c:if test="${not empty error}">
+				<div class="alert alert-error" style="height: 20px;">
+					<p>
+						<span class="ui-icon ui-icon-mail-closed"
+							style="float: left; height: 5px; margin-right: .3em;"></span> <strong>Error:</strong>
+						Invalid login credentials, please try again.
+					</p>
+				</div>
+			</c:if>
+			<form name='f' class="form-horizontal" action="<c:url value='j_spring_security_check' />"
+				method='POST'>
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="j_username">Username</label>
+						<div class="controls">
+							<input id="j_username" name="j_username" class="input-xlarge focused" placeholder="username" type="text">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="j_password">Password</label>
+						<div class="controls">
+							<input id="j_password" name="j_password" class="input-xlarge focused" placeholder="password" type="password" autocomplete="off">
+						</div>
+					</div>
+				</fieldset>
+				<div class="modal-footer" style="height: 15px;">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</form>
+
+		</div>
+	</div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.cec.intelpress.bookmanagment.controller;
+package com.cec.intelpress.bookmanagement.controller;
 
 import java.security.Principal;
 
