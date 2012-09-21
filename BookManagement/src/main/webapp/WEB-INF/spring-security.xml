@@ -24,10 +24,12 @@
 
         <authentication-provider>
 
+            <password-encoder hash="sha-256" />
+
             <jdbc-user-service
                 authorities-by-username-query="
-		      select distinct u.username, r.authority from roles AS r, user_roles AS ur, users AS u where u.username = ?" 
-		      
+		      select distinct u.username, r.authority from roles AS r,
+		       user_roles AS ur, users AS u where u.username = ?"
                 data-source-ref="dataSource"
                 users-by-username-query="
 		      select username,password, enabled 

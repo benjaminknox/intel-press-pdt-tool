@@ -10,6 +10,7 @@ import com.cec.intelpress.bookmanagement.domain.Role;
 import com.cec.intelpress.bookmanagement.domain.User;
 import com.cec.intelpress.bookmanagement.service.RoleService;
 import com.cec.intelpress.bookmanagement.service.UserService;
+import com.cec.intelpress.bookmanagement.util.Util;
 
 @Component
 public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
@@ -28,7 +29,7 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 		{
 			User user = new User();
 			user.setUsername(username);
-			user.setPassword(password);
+			user.setPassword(Util.sha256HashString(password));
 			user.setEnabled(1);
 			
 			Role role = new Role();
