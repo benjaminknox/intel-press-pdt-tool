@@ -11,41 +11,41 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cec.intelpress.bookmanagement.domain.UserRole;
+import com.cec.intelpress.bookmanagement.domain.Role;
 
-@Service("UserRoleService")
+@Service("RoleService")
 @Transactional
-public class UserRoleService {
+public class RoleService {
 
 	protected static Logger logger = Logger.getLogger("UserRoleService");
 
 	@Resource(name = "sessionFactory")
 	private SessionFactory sessionFactory;
 
-	public List<UserRole> getAll() {
+	public List<Role> getAll() {
 		logger.debug("Retrieving all persons");
 
 		Session session = sessionFactory.getCurrentSession();
 
-		Query query = session.createQuery("FROM  UserRole");
+		Query query = session.createQuery("FROM  Role");
 
 		return query.list();
 	}
 
-	public UserRole get(Integer id) {
+	public Role get(Integer id) {
 		Session session = sessionFactory.getCurrentSession();
 
-		UserRole userRole = (UserRole) session.get(UserRole.class, id);
+		Role role = (Role) session.get(Role.class, id);
 
-		return userRole;
+		return role;
 	}
 
-	public void add(UserRole userRole) {
+	public void add(Role role) {
 		logger.debug("Adding new user");
 
 		Session session = sessionFactory.getCurrentSession();
 
-		session.save(userRole);
+		session.save(role);
 	}
 
 	public void delete(Integer id) {
@@ -53,21 +53,21 @@ public class UserRoleService {
 
 		Session session = sessionFactory.getCurrentSession();
 
-		UserRole userRole = (UserRole) session.get(UserRole.class, id);
+		Role role = (Role) session.get(Role.class, id);
 
-		session.delete(userRole);
+		session.delete(role);
 	}
 
-	public void edit(UserRole userRole) {
+	public void edit(Role role) {
 		logger.debug("Editing existing person");
 
 		Session session = sessionFactory.getCurrentSession();
 
-		UserRole existingUserRole = (UserRole) session.get(UserRole.class, userRole.getId());
+		Role existingRole = (Role) session.get(Role.class,
+				role.getId());
 
-		existingUserRole.setAuthority(userRole.getAuthority());
-		existingUserRole.setUser_id(userRole.getUser_id());
+		existingRole.setAuthority(role.getAuthority());
 
-		session.save(userRole);
+		session.save(role);
 	}
 }
