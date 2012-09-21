@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <html>
 <head>
 <title>Intel Press Management - Login</title>
@@ -9,7 +11,7 @@
 
 			<h3>Login</h3>
 		</div>
-		<div class="modal-body" style="text-align:center">
+		<div class="modal-body" style="text-align: center">
 
 			<c:if test="${not empty error}">
 				<div class="alert alert-error" style="height: 20px;">
@@ -20,19 +22,22 @@
 					</p>
 				</div>
 			</c:if>
-			<form name='f' class="form-horizontal" action="<c:url value='j_spring_security_check' />"
-				method='POST'>
+			<form name='f' class="form-horizontal"
+				action="<c:url value='j_spring_security_check' />" method='POST'>
 				<fieldset>
 					<div class="control-group">
 						<label class="control-label" for="j_username">Username</label>
 						<div class="controls">
-							<input id="j_username" name="j_username" class="input-xlarge focused" placeholder="username" type="text">
+							<input id="j_username" name="j_username"
+								class="input-xlarge focused" placeholder="username" type="text">
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="j_password">Password</label>
 						<div class="controls">
-							<input id="j_password" name="j_password" class="input-xlarge focused" placeholder="password" type="password" autocomplete="off">
+							<input id="j_password" name="j_password"
+								class="input-xlarge focused" placeholder="password"
+								type="password" autocomplete="off">
 						</div>
 					</div>
 				</fieldset>

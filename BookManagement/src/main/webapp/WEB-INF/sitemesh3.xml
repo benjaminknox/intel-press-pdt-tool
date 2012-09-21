@@ -4,4 +4,6 @@
   <mapping path="/logout" decorator="/WEB-INF/decorators/onecolumnnofooter.jsp"/>
     
   <mapping path="/*" decorator="/WEB-INF/decorators/main.jsp"/>
+  <mapping path="/*/*" decorator="/WEB-INF/decorators/main.jsp"/>
+  
 </sitemesh>
