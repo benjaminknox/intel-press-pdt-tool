@@ -49,27 +49,65 @@
 						</div>
 					</div>
 				</div>
+
+				<div align="right">
+					<a href="#createNewUser" role="button" class="btn"
+						data-toggle="modal">Create New User</a>
+				</div>
+
 			</div>
 		</div>
 	</div>
-	<a href="#createNewUser" role="button" class="btn" data-toggle="modal">Launch
-		demo modal</a>
-		
-	<div class="modal hide fade" id="createNewUser" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+
+	<!-- Create User MODAL -->
+	<div class="modal hide fade" id="createNewUser" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal"
 				aria-hidden="true">×</button>
-			<h3 id="myModalLabel">Create new user:</h3>
+			<h3 id="myModalLabel">Create New User</h3>
 		</div>
 		<div class="modal-body">
-			<p>One fine body…</p>
-		</div>
-		<div class="modal-footer">
-			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-			<button class="btn btn-primary">Create</button>
+			<form name='f' class="form-horizontal"
+				action="<c:url value='adduser' />" method='POST'>
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="firstname">Firstname</label>
+						<div class="controls">
+							<input id="firstname" name="firstname"
+								class="input-xlarge focused" placeholder="firstname" type="text">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="lastname">Lastname</label>
+						<div class="controls">
+							<input id="lastname" name="lastname" class="input-xlarge focused"
+								placeholder="lastname" type="text">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="email">Email</label>
+						<div class="controls">
+							<input id="email" name="email" class="input-xlarge focused"
+								placeholder="email" type="text">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="password">Password</label>
+						<div class="controls">
+							<input id="password" name="password" type="password"
+								class="input-xlarge focused" placeholder="password"
+								autocomplete="off">
+						</div>
+					</div>
+				</fieldset>
+				<div class="modal-footer" style="height: 15px;">
+					<button type="submit" class="btn btn-primary">Create User</button>
+				</div>
+			</form>
 		</div>
 	</div>
-	
+
 </body>
 </html>

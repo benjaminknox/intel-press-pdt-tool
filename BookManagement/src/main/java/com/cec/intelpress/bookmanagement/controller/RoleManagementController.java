@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,56 +21,65 @@ import com.cec.intelpress.bookmanagement.domain.Role;
 import com.cec.intelpress.bookmanagement.domain.User;
 import com.cec.intelpress.bookmanagement.service.RoleService;
 import com.cec.intelpress.bookmanagement.service.UserService;
-import com.cec.intelpress.bookmanagement.util.Util;
 
 @Controller
 @SessionAttributes
 @RequestMapping("/")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
-public class UserManagementController {
+public class RoleManagementController {
 
 	protected static Logger logger = Logger
-			.getLogger("UserManagmentController");
+			.getLogger("RoleManagementController");
 
 	@Resource(name = "UserService")
 	private UserService userService;
 	@Resource(name = "RoleService")
 	private RoleService roleService;
 
-	@RequestMapping(value = "/usermanagement", method = RequestMethod.GET)
-	public ModelAndView getUserManagement(Model model) {
+	@RequestMapping(value = "/rolemanagement", method = RequestMethod.GET)
+	public ModelAndView getRoleManagement(Model model) {
 
 		ModelAndView mav = new ModelAndView();
 
-		List<User> allUsers = userService.getAll();
 		List<Role> allRoles = roleService.getAll();
-
-		mav.addObject("users", allUsers);
+		List<User> allUsers = userService.getAll();
+		
 		mav.addObject("roles", allRoles);
-		mav.setViewName("usermanagement");
+		mav.addObject("users", allUsers);
+		mav.setViewName("rolemanagement");
 		return mav;
 	}
-
-	@RequestMapping(value = "/deluser/{id}", method = RequestMethod.GET)
-	public String deleteUser(@PathVariable(value = "id") int id) {
-		userService.delete(id);
-
-		return "redirect:/usermanagement";
+	
+	
+	@RequestMapping(value = "/addroletouser", method = RequestMethod.POST)
+	public String addRoleToUser(@RequestParam("username")String username, @RequestParam("role")String role) {
+		
+		User user = userService.getUserByUserName(username);
+		if(user != null)
+		{
+			user.getUserRoles().add(roleService.getByAuthority(role));
+			userService.edit(user);
+		}
+		
+		return "redirect:/rolemanagement";
+	}
+	
+	@RequestMapping(value = "/delrolefromuser/{roleid}/{userid}", method = RequestMethod.GET)
+	public String deleteRoleFromUser(@PathVariable(value = "roleid") int roleId,
+			@PathVariable(value = "userid") int userId) {
+		
+		User user = userService.get(userId);
+		user.deleteRoleById(roleId);
+		
+		userService.edit(user);
+		return "redirect:/rolemanagement";
 	}
 
-	@RequestMapping(value = "/adduser", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute("user") User user,
+	@RequestMapping(value = "/createrole", method = RequestMethod.POST)
+	public String createRole(@ModelAttribute("role") Role role,
 			BindingResult result) {
-
-		user.setUsername(user.getFirstname().toLowerCase() + "."
-				+ user.getLastname().toLowerCase());
-
-		user.setEnabled(1);
-		user.setPassword(Util.sha256HashString(user.getPassword()));
-		user.getUserRoles().add(roleService.getByAuthority("ROLE_USER"));
-		userService.add(user);
-
-		logger.info("Created new user:" + user.getUsername());
-		return "redirect:/usermanagement";
+		
+		roleService.add(role);
+		return "redirect:/rolemanagement";
 	}
 }

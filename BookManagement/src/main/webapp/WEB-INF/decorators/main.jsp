@@ -135,7 +135,7 @@ body {
 			<div id="menu-left" class="span3">
 				<div class="sidebar-nav">
 					<ul class="nav nav-list">
-						<li><a href="index.html"><i class="icon-th-large"></i><span>
+						<li><a href="<c:url value="/" />""><i class="icon-th-large"></i><span>
 									Dashboard</span></a></li>
 						<li><a href="widget.html"><i class="icon-th"></i><span>
 									Widgets</span></a></li>
@@ -150,6 +150,7 @@ body {
 									<div class="accordion-inner">
 										<ul class="nav nav-list">
 											<li><a href="<c:url value="usermanagement" />">User Management</a></li>
+											<li><a href="<c:url value="rolemanagement" />">Role Management</a></li>
 											<li><a href="<c:url value="bookmanagement" />">Book Management</a></li>
 										</ul>
 									</div>
@@ -157,8 +158,6 @@ body {
 						</sec:authorize>
 					</ul>
 					<div class="togglemenuleft">
-						<a class="toggle-menu"><i
-							class="icon-circle-arrow-left icon-white"></i></a>
 					</div>
 				</div>
 				<!--/.well -->
@@ -181,18 +180,6 @@ body {
 	<script src="js/jquery-ui.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('.togglemenuleft').click(function() {
-				$('#menu-left').toggleClass('span1');
-				$('#menu-left').toggleClass('icons-only');
-				$('#menu-left').toggleClass('span3');
-
-				$('#content').toggleClass('span9');
-				$('#content').toggleClass('span11');
-				$(this).find('i').toggleClass('icon-circle-arrow-right');
-				$(this).find('i').toggleClass('icon-circle-arrow-left');
-				$('#menu-left').find('span').toggle();
-				$('#menu-left').find('.dropdown').toggle();
-			});
 
 			$('#menu-left a').click(function() {
 				$('#menu-left').find('a').removeClass('active');

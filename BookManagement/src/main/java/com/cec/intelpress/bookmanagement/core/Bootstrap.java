@@ -15,6 +15,9 @@ import com.cec.intelpress.bookmanagement.util.Util;
 @Component
 public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
+	private String firstname = "Admin";
+	private String lastname = "Admin";
+	private String email = "admin@admin.com";
 	private String username = "admin";
 	private String password = "dongs";
 
@@ -29,15 +32,23 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 		{
 			User user = new User();
 			user.setUsername(username);
+			user.setFirstname(firstname);
+			user.setLastname(lastname);
+			user.setEmail(email);
 			user.setPassword(Util.sha256HashString(password));
 			user.setEnabled(1);
 			
-			Role role = new Role();
-			role.setAuthority("ROLE_ADMIN");
+			Role userRole = new Role();
+			userRole.setAuthority("ROLE_USER");
 			
-			user.getUserRoles().add(role);
+			Role adminRole = new Role();
+			adminRole.setAuthority("ROLE_ADMIN");
 			
-			roleService.add(role);	
+			user.getUserRoles().add(userRole);
+			user.getUserRoles().add(adminRole);
+			
+			roleService.add(userRole);
+			roleService.add(adminRole);	
 			userService.add(user);			
 		}
 	}

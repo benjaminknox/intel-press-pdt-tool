@@ -40,12 +40,27 @@ public class RoleService {
 		return role;
 	}
 
+	public Role getByAuthority(String authority)
+	{
+		Session session = sessionFactory.getCurrentSession();
+		
+		for(Role role: getAll())
+		{
+			if(role.getAuthority().equals(authority))
+			{
+				return role;
+			}
+		}
+		
+		return null;
+	}
 	public void add(Role role) {
 		logger.debug("Adding new user");
 
 		Session session = sessionFactory.getCurrentSession();
-
 		session.save(role);
+		session.flush();
+
 	}
 
 	public void delete(Integer id) {
@@ -56,6 +71,8 @@ public class RoleService {
 		Role role = (Role) session.get(Role.class, id);
 
 		session.delete(role);
+		session.flush();
+
 	}
 
 	public void edit(Role role) {
@@ -69,5 +86,7 @@ public class RoleService {
 		existingRole.setAuthority(role.getAuthority());
 
 		session.save(role);
+		session.flush();
+
 	}
 }
