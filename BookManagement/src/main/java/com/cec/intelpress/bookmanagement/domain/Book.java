@@ -105,11 +105,11 @@ public class Book implements Serializable {
 		this.description = description;
 	}
 
-	public String getBookcoverurl() {
+	public String getBookCoverUrl() {
 		return bookcoverurl;
 	}
 
-	public void setBookcoverurl(String bookcoverurl) {
+	public void setBookCoverUrl(String bookcoverurl) {
 		this.bookcoverurl = bookcoverurl;
 	}
 
