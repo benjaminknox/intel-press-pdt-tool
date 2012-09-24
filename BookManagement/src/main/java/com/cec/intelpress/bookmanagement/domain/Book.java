@@ -137,4 +137,12 @@ public class Book implements Serializable {
 		this.bookChapters = bookChapters;
 	}
 
+	public Boolean getSuggestedReading() {
+		return suggestedReading;
+	}
+
+	public void setSuggestedReading(Boolean suggestedReading) {
+		this.suggestedReading = suggestedReading;
+	}
+
 }
