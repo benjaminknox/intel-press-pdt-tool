@@ -12,11 +12,11 @@
 <meta name="author" content="" />
 <!-- Le styles -->
 <!-- bootstrap css -->
-<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="/bookmanagement/css/bootstrap.min.css" rel="stylesheet" />
 <!-- base css -->
-<link class="links-css" href="css/darkblue.css" rel="stylesheet" />
+<link class="links-css" href="/bookmanagement/css/darkblue.css" rel="stylesheet" />
 <!-- inbox page css -->
-<link href="css/inbox.css" rel="stylesheet" />
+<link href="/bookmanagement/css/inbox.css" rel="stylesheet" />
 <style type="text/css">
 body {
 	padding-top: 60px;
@@ -28,9 +28,9 @@ body {
 }
 </style>
 <!-- responsive css -->
-<link href="css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/bookmanagement/css/bootstrap-responsive.css" rel="stylesheet" />
 <!-- media query css -->
-<link href="css/media-fluid.css" rel="stylesheet" />
+<link href="/bookmanagement/css/media-fluid.css" rel="stylesheet" />
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -60,9 +60,9 @@ body {
 	<!-- Le javascript
          ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.dataTables.js"></script>
-	<script src="js/jquery-ui.min.js"></script>
+	<script src="/bookmanagement/js/jquery.min.js"></script>
+	<script src="/bookmanagement/js/bootstrap.min.js"></script>
+	<script src="/bookmanagement/js/jquery.dataTables.js"></script>
+	<script src="/bookmanagement/js/jquery-ui.min.js"></script>
 </body>
 </html>

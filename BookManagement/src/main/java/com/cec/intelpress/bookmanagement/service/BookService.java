@@ -1,5 +1,6 @@
 package com.cec.intelpress.bookmanagement.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -30,6 +31,23 @@ public class BookService {
 		Query query = session.createQuery("FROM  Book");
 
 		return query.list();
+	}
+	
+	public List<Book> getAllSuggested() {
+		logger.debug("Retrieving all persons");
+		List<Book> suggestedBookList = new ArrayList<Book>();
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM  Book");
+		
+		for(Book book : (List<Book>)query.list())
+		{
+			if(book.getSuggestedReading() == true)
+			{
+				suggestedBookList.add(book);
+			}
+		}
+		
+		return suggestedBookList;
 	}
 
 	public Book get(Integer id) {

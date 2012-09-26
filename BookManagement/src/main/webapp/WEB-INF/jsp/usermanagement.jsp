@@ -39,7 +39,7 @@
 											<td>${user.username}</td>
 											<td>${user.enabled}</td>
 											<td class="center"><a
-												href="<c:url value="deluser/${user.id}" />"
+												href="<c:url value="/admin/usermanagement/deluser/${user.id}" />"
 												class="btn btn-danger" title="Remove"><i
 													class="icon-remove icon-white"></i></a></td>
 										</tr>
@@ -69,7 +69,7 @@
 		</div>
 		<div class="modal-body">
 			<form name='f' class="form-horizontal"
-				action="<c:url value='adduser' />" method='POST'>
+				action="<c:url value='/admin/usermanagement/adduser' />" method='POST'>
 				<fieldset>
 					<div class="control-group">
 						<label class="control-label" for="firstname">Firstname</label>

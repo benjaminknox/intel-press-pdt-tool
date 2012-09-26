@@ -37,8 +37,8 @@ public class Book implements Serializable {
 
 	@Column(name = "isbn")
 	private String isbn;
-
-	@Column(name = "description")
+   
+	@Column(name = "description", length=1000)
 	private String description;
 
 	@Column(name = "bookcoverurl")
@@ -51,7 +51,7 @@ public class Book implements Serializable {
 	private String category;
 
 	@Column(name = "suggestedreading")
-	private Boolean suggestedReading;
+	private Boolean suggestedreading;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "book_chapters", joinColumns = { @JoinColumn(name = "book_id", nullable = false, updatable = true) }, inverseJoinColumns = { @JoinColumn(name = "chapter_id", nullable = false, updatable = true) })
@@ -138,11 +138,11 @@ public class Book implements Serializable {
 	}
 
 	public Boolean getSuggestedReading() {
-		return suggestedReading;
+		return suggestedreading;
 	}
 
 	public void setSuggestedReading(Boolean suggestedReading) {
-		this.suggestedReading = suggestedReading;
+		this.suggestedreading = suggestedReading;
 	}
 
 }

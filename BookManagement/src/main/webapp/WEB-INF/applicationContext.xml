@@ -27,7 +27,10 @@
     -->
 
     <mvc:annotation-driven />
-
+	<mvc:resources
+        location="/resources/"
+        mapping="/" />
+    
     <mvc:resources
         location="/resources/css/"
         mapping="/css/**" />
@@ -40,17 +43,7 @@
         location="/resources/js/"
         mapping="/js/**" />
     
-        <mvc:resources
-        location="/resources/css/"
-        mapping="/admin/css/**" />
-
-    <mvc:resources
-        location="/resources/img/"
-        mapping="/admin/img/**" />
-
-    <mvc:resources
-        location="/resources/js/"
-        mapping="/admin/js/**" />
+        
 
     <!-- Load Hibernate related configuration -->
 

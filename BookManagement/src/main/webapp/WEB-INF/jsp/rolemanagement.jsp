@@ -40,7 +40,7 @@
 												<td>${username.username}</td>
 												<td>${role.authority}</td>
 												<td class="center"><a
-													href="<c:url value="delrolefromuser/${role.id}/${username.id}" />"
+													href="<c:url value="/admin/rolemanagement/delrolefromuser/${role.id}/${username.id}" />"
 													class="btn btn-danger" title="Remove"><i
 														class="icon-remove icon-white"></i></a></td>
 											</tr>
@@ -70,7 +70,7 @@
 		</div>
 		<div class="modal-body">
 			<form name='f' class="form-horizontal"
-				action="<c:url value='createrole' />" method='POST'>
+				action="<c:url value='/admin/rolemanagement/createrole' />" method='POST'>
 				<fieldset>
 					<div class="control-group">
 						<label class="control-label" for="authority">Role Name</label>
@@ -98,7 +98,7 @@
 		</div>
 		<div class="modal-body">
 			<form name='f' class="form-horizontal"
-				action="<c:url value='addroletouser' />" method='POST'>
+				action="<c:url value='/admin/rolemanagement/addroletouser' />" method='POST'>
 				<fieldset>
 
 					<div class="control-group">

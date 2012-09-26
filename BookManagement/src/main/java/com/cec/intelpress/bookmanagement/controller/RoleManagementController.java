@@ -24,7 +24,7 @@ import com.cec.intelpress.bookmanagement.service.UserService;
 
 @Controller
 @SessionAttributes
-@RequestMapping("/")
+@RequestMapping("/admin/rolemanagement")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class RoleManagementController {
 
@@ -36,7 +36,7 @@ public class RoleManagementController {
 	@Resource(name = "RoleService")
 	private RoleService roleService;
 
-	@RequestMapping(value = "/rolemanagement", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView getRoleManagement(Model model) {
 
 		ModelAndView mav = new ModelAndView();
@@ -61,7 +61,7 @@ public class RoleManagementController {
 			userService.edit(user);
 		}
 		
-		return "redirect:/rolemanagement";
+		return "redirect:/admin/rolemanagement/";
 	}
 	
 	@RequestMapping(value = "/delrolefromuser/{roleid}/{userid}", method = RequestMethod.GET)
@@ -72,7 +72,7 @@ public class RoleManagementController {
 		user.deleteRoleById(roleId);
 		
 		userService.edit(user);
-		return "redirect:/rolemanagement";
+		return "redirect:/admin/rolemanagement/";
 	}
 
 	@RequestMapping(value = "/createrole", method = RequestMethod.POST)
@@ -80,6 +80,6 @@ public class RoleManagementController {
 			BindingResult result) {
 		
 		roleService.add(role);
-		return "redirect:/rolemanagement";
+		return "redirect:/admin/rolemanagement";
 	}
 }

@@ -14,11 +14,11 @@
 <meta name="author" content="" />
 <!-- Le styles -->
 <!-- bootstrap css -->
-<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link href="/bookmanagement/css/bootstrap.min.css" rel="stylesheet" />
 <!-- base css -->
-<link class="links-css" href="css/darkblue.css" rel="stylesheet" />
+<link class="links-css" href="/bookmanagement/css/darkblue.css" rel="stylesheet" />
 <!-- inbox page css -->
-<link href="css/inbox.css" rel="stylesheet" />
+<link href="/bookmanagement/css/inbox.css" rel="stylesheet" />
 <style type="text/css">
 body {
 	padding-top: 60px;
@@ -30,9 +30,9 @@ body {
 }
 </style>
 <!-- responsive css -->
-<link href="css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/bookmanagement/css/bootstrap-responsive.css" rel="stylesheet" />
 <!-- media query css -->
-<link href="css/media-fluid.css" rel="stylesheet" />
+<link href="/bookmanagement/css/media-fluid.css" rel="stylesheet" />
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -47,7 +47,7 @@ body {
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
 				</a> <a class="brand" href="index.html"><img
-					src="img/logo-small.png" alt="logo" /></a>
+					src="/bookmanagement/img/logo-small.png" alt="logo" /></a>
 				<ul class="nav pull-left bar-root">
 					<li class="divider-vertical"></li>
 					<li><a href="chat.html"><i class="icon-comment icon-white"></i><span
@@ -137,8 +137,8 @@ body {
 					<ul class="nav nav-list">
 						<li><a href="<c:url value="/" />""><i class="icon-th-large"></i><span>
 									Dashboard</span></a></li>
-						<li><a href="widget.html"><i class="icon-th"></i><span>
-									Widgets</span></a></li>
+						<li><a href="<c:url value="/suggestedreading"/>"><i class="icon-th"></i><span>
+									Suggested Reading</span></a></li>
 						<li><a href="tables.html"><i class="icon-list-alt"></i><span>
 									Tables</span></a></li>
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
@@ -149,9 +149,9 @@ body {
 								<div class="accordion-body collapse dropdown" id="collapseOne">
 									<div class="accordion-inner">
 										<ul class="nav nav-list">
-											<li><a href="<c:url value="usermanagement" />">User Management</a></li>
-											<li><a href="<c:url value="rolemanagement" />">Role Management</a></li>
-											<li><a href="<c:url value="bookmanagement" />">Book Management</a></li>
+											<li><a href="<c:url value="/admin/usermanagement/" />">User Management</a></li>
+											<li><a href="<c:url value="/admin/rolemanagement/" />">Role Management</a></li>
+											<li><a href="<c:url value="/admin/bookmanagement/" />">Book Management</a></li>
 										</ul>
 									</div>
 								</div></li>
@@ -174,10 +174,10 @@ body {
 	<!-- Le javascript
          ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.dataTables.js"></script>
-	<script src="js/jquery-ui.min.js"></script>
+	<script src="/bookmanagement/js/jquery.min.js"></script>
+	<script src="/bookmanagement/js/bootstrap.min.js"></script>
+	<script src="/bookmanagement/js/jquery.dataTables.js"></script>
+	<script src="/bookmanagement/js/jquery-ui.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 
