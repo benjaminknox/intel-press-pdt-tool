@@ -8,7 +8,8 @@
 	   		http://www.springframework.org/schema/context
 	   		http://www.springframework.org/schema/context/spring-context-3.0.xsd
 			http://www.springframework.org/schema/mvc 
-			http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd" >
+			http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+			http://www.springframework.org/schema/security" >
 
     <!-- Activates various annotations to be detected in bean classes -->
 
@@ -43,10 +44,6 @@
         location="/resources/js/"
         mapping="/js/**" />
     
-        
-
-    <!-- Load Hibernate related configuration -->
-
     <import resource="hibernate-context.xml" />
 
 </beans>

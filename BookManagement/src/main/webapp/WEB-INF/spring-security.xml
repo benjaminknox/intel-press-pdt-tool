@@ -12,6 +12,10 @@
         auto-config="true"
         use-expressions="true" >
 
+        <intercept-url
+            access="hasRole('ROLE_ADMIN')"
+            pattern="/admin/**" />
+
         <form-login
             authentication-failure-url="/loginfailed"
             default-target-url="/"
@@ -28,8 +32,9 @@
 
             <jdbc-user-service
                 authorities-by-username-query="
-		      select distinct u.username, r.authority from roles AS r,
-		       user_roles AS ur, users AS u where u.username = ?"
+		         select distinct u.username, r.authority from roles AS r inner join user_roles AS ur on 
+		         r.role_id = ur.role_id inner join users AS u on u.user_id = ur.user_id where u.username=?"
+
                 data-source-ref="dataSource"
                 users-by-username-query="
 		      select username,password, enabled 

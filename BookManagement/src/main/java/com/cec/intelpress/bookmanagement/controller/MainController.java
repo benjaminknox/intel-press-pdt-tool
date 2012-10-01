@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,7 +41,17 @@ public class MainController {
 		List<Book> allBooks = bookService.getAllSuggested();
 		
 		mav.addObject("suggestedBooks", allBooks);
-		mav.setViewName("suggestedreading");		
+		mav.setViewName("suggestedreading");
+		return mav;
+	}
+	
+	@RequestMapping(value="/getBook/{bookid}", method = RequestMethod.GET)
+	public ModelAndView getBook(@PathVariable(value="bookid") int bookId)
+	{
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("book", bookService.get(bookId));
+		mav.setViewName("bookmodal");
+
 		return mav;
 	}
 

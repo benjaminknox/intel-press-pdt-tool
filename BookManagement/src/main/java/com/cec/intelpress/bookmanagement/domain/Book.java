@@ -38,7 +38,7 @@ public class Book implements Serializable {
 	@Column(name = "isbn")
 	private String isbn;
    
-	@Column(name = "description", length=1000)
+	@Column(name = "description", length=2560)
 	private String description;
 
 	@Column(name = "bookcoverurl")

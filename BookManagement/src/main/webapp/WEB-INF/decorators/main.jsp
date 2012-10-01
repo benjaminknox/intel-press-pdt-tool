@@ -106,6 +106,7 @@ body {
 						</a>
 							<ul class="dropdown-menu">
 								<li>
+									<div id="profileModal">
 									<div class="modal-header">
 										<h3>Todo</h3>
 									</div>
@@ -118,7 +119,8 @@ body {
 									</div>
 									<div class="modal-footer">
 										<a class="btn btn-info"
-											href="<c:url value="j_spring_security_logout" />">Logoff</a>
+											href="<c:url value="/j_spring_security_logout" />">Logoff</a>
+									</div>
 									</div>
 								</li>
 							</ul></li>
@@ -135,7 +137,7 @@ body {
 			<div id="menu-left" class="span3">
 				<div class="sidebar-nav">
 					<ul class="nav nav-list">
-						<li><a href="<c:url value="/" />""><i class="icon-th-large"></i><span>
+						<li><a href="<c:url value="/" />"><i class="icon-th-large"></i><span>
 									Dashboard</span></a></li>
 						<li><a href="<c:url value="/suggestedreading"/>"><i class="icon-th"></i><span>
 									Suggested Reading</span></a></li>
@@ -193,9 +195,8 @@ body {
 				$('.links-css').attr('href', 'css/' + style);
 				return false;
 			});
-
+			
 			// switch style 
-
 			$(".switcher").click(function() {
 				if ($(this).find('i').hasClass('icon-circle-arrow-right'))
 					$('.theme').animate({

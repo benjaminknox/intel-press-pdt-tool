@@ -40,6 +40,9 @@
 												<td>${username.username}</td>
 												<td>${role.authority}</td>
 												<td class="center"><a
+													href="<c:url value="/admin/bookmanagement/delbook/${book.id}" />"
+													class="btn btn-warning" title="Edit"><i
+														class="icon-edit icon-white"></i></a> <a
 													href="<c:url value="/admin/rolemanagement/delrolefromuser/${role.id}/${username.id}" />"
 													class="btn btn-danger" title="Remove"><i
 														class="icon-remove icon-white"></i></a></td>
@@ -70,7 +73,8 @@
 		</div>
 		<div class="modal-body">
 			<form name='f' class="form-horizontal"
-				action="<c:url value='/admin/rolemanagement/createrole' />" method='POST'>
+				action="<c:url value='/admin/rolemanagement/createrole' />"
+				method='POST'>
 				<fieldset>
 					<div class="control-group">
 						<label class="control-label" for="authority">Role Name</label>
@@ -98,7 +102,8 @@
 		</div>
 		<div class="modal-body">
 			<form name='f' class="form-horizontal"
-				action="<c:url value='/admin/rolemanagement/addroletouser' />" method='POST'>
+				action="<c:url value='/admin/rolemanagement/addroletouser' />"
+				method='POST'>
 				<fieldset>
 
 					<div class="control-group">
@@ -115,7 +120,7 @@
 					<div class="control-group">
 						<label class="control-label" for="role">Role:</label>
 						<div class="controls">
-							<select  id="role" name="role" multiple="multiple">
+							<select id="role" name="role" multiple="multiple">
 								<c:forEach var="role" items="${roles}">
 									<option>${role.authority}</option>
 								</c:forEach>
@@ -124,7 +129,8 @@
 					</div>
 				</fieldset>
 				<div class="modal-footer" style="height: 15px;">
-					<button type="submit" class="btn btn-primary">Add Role To User</button>
+					<button type="submit" class="btn btn-primary">Add Role To
+						User</button>
 				</div>
 			</form>
 		</div>

@@ -59,4 +59,5 @@ public class BookManagementController {
 		bookService.delete(bookId);
 		return "redirect:/admin/bookmanagement/";
 	}
+	
 }

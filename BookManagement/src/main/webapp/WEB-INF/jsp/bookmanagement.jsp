@@ -48,8 +48,12 @@
 											<td>${book.suggestedReading}</td>
 											<td class="center"><a
 												href="<c:url value="/admin/bookmanagement/delbook/${book.id}" />"
+												class="btn btn-warning" title="Edit"><i
+													class="icon-edit icon-white"></i></a> <a
+												href="<c:url value="/admin/bookmanagement/delbook/${book.id}" />"
 												class="btn btn-danger" title="Remove"><i
 													class="icon-remove icon-white"></i></a></td>
+
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -77,24 +81,25 @@
 		</div>
 		<div class="modal-body">
 			<form name='f' class="form-horizontal"
-				action="<c:url value='/admin/bookmanagement/addbook' />" method='POST'>
+				action="<c:url value='/admin/bookmanagement/addbook' />"
+				method='POST'>
 				<fieldset>
 					<div class="control-group">
 						<label class="control-label" for="title">Title</label>
 						<div class="controls">
-							<input id="title" name="title"
-								class="input-xlarge focused" placeholder="title" type="text">
+							<input id="title" name="title" class="input-xlarge focused"
+								placeholder="title" type="text">
 						</div>
 					</div>
-					
+
 					<div class="control-group">
 						<label class="control-label" for="author">Author</label>
 						<div class="controls">
-							<input id="author" name="author"
-								class="input-xlarge focused" placeholder="author" type="text">
+							<input id="author" name="author" class="input-xlarge focused"
+								placeholder="author" type="text">
 						</div>
 					</div>
-					
+
 					<div class="control-group">
 						<label class="control-label" for="publisher">Publisher</label>
 						<div class="controls">
@@ -102,15 +107,15 @@
 								class="input-xlarge focused" placeholder="publisher" type="text">
 						</div>
 					</div>
-					
+
 					<div class="control-group">
 						<label class="control-label" for="isbn">ISBN</label>
 						<div class="controls">
-							<input id="isbn" name="isbn"
-								class="input-xlarge focused" placeholder="isbn" type="text">
+							<input id="isbn" name="isbn" class="input-xlarge focused"
+								placeholder="isbn" type="text">
 						</div>
 					</div>
-					
+
 					<div class="control-group">
 						<label class="control-label" for="description">Description</label>
 						<div class="controls">
@@ -121,43 +126,46 @@
 					<div class="control-group">
 						<label class="control-label" for="category">Category</label>
 						<div class="controls">
-							<input id="category" name="category"
-								class="input-xlarge focused" placeholder="category" type="text">
+							<input id="category" name="category" class="input-xlarge focused"
+								placeholder="category" type="text">
 						</div>
 					</div>
-					
+
 					<div class="control-group">
 						<label class="control-label" for="bookCoverUrl">BookCover</label>
 						<div class="controls">
 							<input id="bookCoverUrl" name="bookCoverUrl"
-								class="input-xlarge focused" placeholder="bookCoverUrl" type="text">
+								class="input-xlarge focused" placeholder="bookCoverUrl"
+								type="text">
 						</div>
 					</div>
-					
+
 					<div class="control-group">
 						<label class="control-label" for="buyurl">BuyUrl</label>
 						<div class="controls">
-							<input id="buyurl" name="buyurl"
-								class="input-xlarge focused" placeholder="buyurl" type="text">
+							<input id="buyurl" name="buyurl" class="input-xlarge focused"
+								placeholder="buyurl" type="text">
 						</div>
 					</div>
-					
+
 					<div class="control-group">
 						<label class="control-label" for="category">Category</label>
 						<div class="controls">
-							<input id="category" name="category"
-								class="input-xlarge focused" placeholder="category" type="text">
+							<input id="category" name="category" class="input-xlarge focused"
+								placeholder="category" type="text">
 						</div>
 					</div>
-					
+
 					<div class="control-group">
-						<label class="control-label" for="suggestedReading">Suggested Reading</label>
+						<label class="control-label" for="suggestedReading">Suggested
+							Reading</label>
 						<div class="controls">
 							<input id="suggestedReading" name="suggestedReading"
-								class="input-xlarge focused" path="suggestedReading" placeholder="suggestedReading" type="checkbox">
+								class="input-xlarge focused" path="suggestedReading"
+								placeholder="suggestedReading" type="checkbox">
 						</div>
 					</div>
-					
+
 				</fieldset>
 				<div class="modal-footer" style="height: 15px;">
 					<button type="submit" class="btn btn-primary">Create Book</button>

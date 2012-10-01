@@ -2,7 +2,7 @@
   <mapping path="/login" decorator="/WEB-INF/decorators/onecolumnnofooter.jsp"/>
   <mapping path="/loginfailed" decorator="/WEB-INF/decorators/onecolumnnofooter.jsp"/>
   <mapping path="/logout" decorator="/WEB-INF/decorators/onecolumnnofooter.jsp"/>
-    
+  <mapping path="/getbook/*" decorator="/WEB-INF/decorators/empty.jsp"/>
   <mapping path="/*" decorator="/WEB-INF/decorators/main.jsp"/>
   <mapping path="/*/*" decorator="/WEB-INF/decorators/main.jsp"/>
   
