@@ -69,7 +69,8 @@ public class RoleManagementController {
 			@PathVariable(value = "userid") int userId) {
 		
 		User user = userService.get(userId);
-		user.deleteRoleById(roleId);
+		Role role = roleService.get(roleId);
+		user.deleteRole(role);
 		
 		userService.edit(user);
 		return "redirect:/admin/rolemanagement/";
@@ -80,6 +81,6 @@ public class RoleManagementController {
 			BindingResult result) {
 		
 		roleService.add(role);
-		return "redirect:/admin/rolemanagement";
+		return "redirect:/admin/rolemanagement/";
 	}
 }

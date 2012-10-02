@@ -61,6 +61,7 @@
 				data-toggle="modal">Create New Role</a> <a href="#addRoleToUser"
 				role="button" class="btn" data-toggle="modal">Add Role To User</a>
 		</div>
+		<br />
 	</div>
 
 	<!-- Create New Role MODAL -->

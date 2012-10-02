@@ -82,7 +82,7 @@ public class BookService {
 		Book existingBook = (Book) session.get(Book.class, book.getId());
 		existingBook.setAuthor(book.getAuthor());
 		existingBook.setBookChapters(book.getBookChapters());
-		existingBook.setBookCoverUrl(book.getBookCoverUrl());
+		existingBook.setBookcover(book.getBookcover());
 		existingBook.setBuyurl(book.getBuyurl());
 		existingBook.setCategory(book.getCategory());
 		existingBook.setDescription(book.getDescription());

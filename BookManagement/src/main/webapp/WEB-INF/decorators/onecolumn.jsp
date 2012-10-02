@@ -14,7 +14,8 @@
 <!-- bootstrap css -->
 <link href="/bookmanagement/css/bootstrap.min.css" rel="stylesheet" />
 <!-- base css -->
-<link class="links-css" href="/bookmanagement/css/darkblue.css" rel="stylesheet" />
+<link class="links-css" href="/bookmanagement/css/darkblue.css"
+	rel="stylesheet" />
 <!-- inbox page css -->
 <link href="/bookmanagement/css/inbox.css" rel="stylesheet" />
 <style type="text/css">
@@ -28,7 +29,8 @@ body {
 }
 </style>
 <!-- responsive css -->
-<link href="/bookmanagement/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/bookmanagement/css/bootstrap-responsive.css"
+	rel="stylesheet" />
 <!-- media query css -->
 <link href="/bookmanagement/css/media-fluid.css" rel="stylesheet" />
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->

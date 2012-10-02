@@ -16,7 +16,8 @@
 <!-- bootstrap css -->
 <link href="/bookmanagement/css/bootstrap.min.css" rel="stylesheet" />
 <!-- base css -->
-<link class="links-css" href="/bookmanagement/css/darkblue.css" rel="stylesheet" />
+<link class="links-css" href="/bookmanagement/css/darkblue.css"
+	rel="stylesheet" />
 <!-- inbox page css -->
 <link href="/bookmanagement/css/inbox.css" rel="stylesheet" />
 <style type="text/css">
@@ -30,7 +31,8 @@ body {
 }
 </style>
 <!-- responsive css -->
-<link href="/bookmanagement/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/bookmanagement/css/bootstrap-responsive.css"
+	rel="stylesheet" />
 <!-- media query css -->
 <link href="/bookmanagement/css/media-fluid.css" rel="stylesheet" />
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -46,55 +48,23 @@ body {
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="index.html"><img
+				</a> <a class="brand" href="#"><img
 					src="/bookmanagement/img/logo-small.png" alt="logo" /></a>
 				<ul class="nav pull-left bar-root">
 					<li class="divider-vertical"></li>
-					<li><a href="chat.html"><i class="icon-comment icon-white"></i><span
-							class="label label-important">6</span></a></li>
+					<li><a href="#"><i class="icon-comment icon-white"></i><span
+							class="label label-important">0</span></a></li>
 					<li class="dropdown"><a href="#" data-toggle="dropdown"> <i
 							class="icon-envelope icon-white"></i><span
-							class="label label-important">5 new</span></a>
+							class="label label-important">0</span></a>
 						<ul class="dropdown-menu">
-							<li><a href="inbox.html"> <img
-									src="img/small/thumb1.png" alt="" /> Subject : Project
-									<p class="help-block">
-										<small>From: ab.alhyane@gmail.com</small>
-									</p> <span class="label">23/09/2012</span>
-							</a></li>
-							<li class="divider"></li>
-							<li><a href="inbox.html"> <img
-									src="img/small/thumb2.png" alt="" /> Subject : Film
-									<p class="help-block">
-										<small>From: ab.alhyane@gmail.com</small>
-									</p> <span class="label">21/04/2012</span>
-							</a></li>
-							<li class="divider"></li>
-							<li><a href="inbox.html"> <img
-									src="img/small/thumb3.png" alt="" /> Subject : Meeting
-									<p class="help-block">
-										<small>From: ab.alhyane@gmail.com</small>
-									</p> <span class="label">20/02/2012</span>
-							</a></li>
-							<li class="divider"></li>
-							<li><a href="inbox.html"> <img
-									src="img/small/thumb4.png" alt="" /> Subject : Tasks
-									<p class="help-block">
-										<small>From: y.kostali@gmail.com</small>
-									</p> <span class="label">19/01/2012</span>
-							</a></li>
-							<li class="divider"></li>
-							<li class="active"><a href="inbox.html"> Show All </a></li>
+
 						</ul></li>
 					<li class="dropdown"><a href="#" data-toggle="dropdown"> <i
 							class="icon-refresh icon-white"></i><span
-							class="label label-info">3 Updates</span></a>
+							class="label label-info">0</span></a>
 						<ul class="dropdown-menu">
-							<li><a href="#"> Theme </a></li>
-							<li><a href="#"> Components</a></li>
-							<li><a href="#"> Plugins</a></li>
-							<li class="divider"></li>
-							<li class="active"><a href="#"> Show All </a></li>
+
 						</ul></li>
 				</ul>
 				<div class="group-menu nav-collapse">
@@ -107,20 +77,20 @@ body {
 							<ul class="dropdown-menu">
 								<li>
 									<div id="profileModal">
-									<div class="modal-header">
-										<h3>Todo</h3>
-									</div>
-									<div class="modal-body">
-										<div class="row">
-											<div class="span1">
-												<p>Todo</p>
+										<div class="modal-header modal-login">
+											<h3>Todo</h3>
+										</div>
+										<div class="modal-body modal-login">
+											<div class="row">
+												<div class="span1">
+													<p>Todo</p>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="modal-footer">
-										<a class="btn btn-info"
-											href="<c:url value="/j_spring_security_logout" />">Logoff</a>
-									</div>
+										<div class="modal-footer">
+											<a class="btn btn-info"
+												href="<c:url value="/j_spring_security_logout" />">Logoff</a>
+										</div>
 									</div>
 								</li>
 							</ul></li>
@@ -137,11 +107,11 @@ body {
 			<div id="menu-left" class="span3">
 				<div class="sidebar-nav">
 					<ul class="nav nav-list">
-						<li><a href="<c:url value="/" />"><i class="icon-th-large"></i><span>
-									Dashboard</span></a></li>
-						<li><a href="<c:url value="/suggestedreading"/>"><i class="icon-th"></i><span>
-									Suggested Reading</span></a></li>
-						<li><a href="tables.html"><i class="icon-list-alt"></i><span>
+						<li><a href="<c:url value="/" />"><i
+								class="icon-th-large"></i><span> Dashboard</span></a></li>
+						<li><a href="<c:url value="/suggestedreading"/>"><i
+								class="icon-th"></i><span> Suggested Reading</span></a></li>
+						<li><a href="#"><i class="icon-list-alt"></i><span>
 									Tables</span></a></li>
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 							<li class="accordion-menu"><a href="#collapseOne"
@@ -151,16 +121,18 @@ body {
 								<div class="accordion-body collapse dropdown" id="collapseOne">
 									<div class="accordion-inner">
 										<ul class="nav nav-list">
-											<li><a href="<c:url value="/admin/usermanagement/" />">User Management</a></li>
-											<li><a href="<c:url value="/admin/rolemanagement/" />">Role Management</a></li>
-											<li><a href="<c:url value="/admin/bookmanagement/" />">Book Management</a></li>
+											<li><a href="<c:url value="/admin/usermanagement/" />">User
+													Management</a></li>
+											<li><a href="<c:url value="/admin/rolemanagement/" />">Role
+													Management</a></li>
+											<li><a href="<c:url value="/admin/bookmanagement/" />">Book
+													Management</a></li>
 										</ul>
 									</div>
 								</div></li>
 						</sec:authorize>
 					</ul>
-					<div class="togglemenuleft">
-					</div>
+					<div class="togglemenuleft"></div>
 				</div>
 				<!--/.well -->
 			</div>
@@ -195,7 +167,7 @@ body {
 				$('.links-css').attr('href', 'css/' + style);
 				return false;
 			});
-			
+
 			// switch style 
 			$(".switcher").click(function() {
 				if ($(this).find('i').hasClass('icon-circle-arrow-right'))

@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 @Entity
 @Table(name = "books")
 public class Book implements Serializable {
@@ -41,8 +43,11 @@ public class Book implements Serializable {
 	@Column(name = "description", length=2560)
 	private String description;
 
-	@Column(name = "bookcoverurl")
-	private String bookcoverurl;
+	@Column(name = "bookcovername")
+	private String bookcovername;
+	
+	@Column(name = "bookcover")
+	private CommonsMultipartFile bookcover;
 
 	@Column(name = "buyurl")
 	private String buyurl;
@@ -105,14 +110,6 @@ public class Book implements Serializable {
 		this.description = description;
 	}
 
-	public String getBookCoverUrl() {
-		return bookcoverurl;
-	}
-
-	public void setBookCoverUrl(String bookcoverurl) {
-		this.bookcoverurl = bookcoverurl;
-	}
-
 	public String getBuyurl() {
 		return buyurl;
 	}
@@ -143,6 +140,22 @@ public class Book implements Serializable {
 
 	public void setSuggestedReading(Boolean suggestedReading) {
 		this.suggestedreading = suggestedReading;
+	}
+
+	public CommonsMultipartFile getBookcover() {
+		return bookcover;
+	}
+
+	public void setBookcover(CommonsMultipartFile bookcover) {
+		this.bookcover = bookcover;
+	}
+
+	public String getBookcovername() {
+		return bookcovername;
+	}
+
+	public void setBookcovername(String bookcovername) {
+		this.bookcovername = bookcovername;
 	}
 
 }

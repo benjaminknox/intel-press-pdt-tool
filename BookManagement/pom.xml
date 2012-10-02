@@ -166,7 +166,15 @@
       <artifactId>sitemesh</artifactId>
       <version>3.0-alpha-2</version>
     </dependency>
+    
     <!-- Spring Security -->
+    
+	<dependency>
+	    <groupId>commons-io</groupId>
+	    <artifactId>commons-io</artifactId>
+	    <version>2.3</version>
+	</dependency>
+
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-core</artifactId>
@@ -187,6 +195,11 @@
       <artifactId>spring-security-taglibs</artifactId>
       <version>3.0.5.RELEASE</version>
     </dependency>
+    	<dependency>
+		<groupId>commons-fileupload</groupId>
+		<artifactId>commons-fileupload</artifactId>
+		<version>1.2.2</version>
+	</dependency>
   </dependencies>
   <build>
     <finalName>bookmanagement</finalName>

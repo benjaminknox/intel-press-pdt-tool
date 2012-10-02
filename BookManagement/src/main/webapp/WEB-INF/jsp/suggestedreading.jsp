@@ -10,14 +10,14 @@
 </head>
 <body>
 	<script>
-	function findBook(id) {
-		
-			$.get('<c:url value="/getBook/" />'+id, function(data) {
-				$('.modal-body').html(data);
+		function findBook(id) {
+
+			$.get('<c:url value="/getBook/" />' + id, function(data) {
+				$('.book-modal').html(data);
 				$('#myModal').modal('show');
 			});
 
-	}
+		}
 	</script>
 	<br />
 	<div id="content" class="row-fluid span8">
@@ -32,9 +32,13 @@
 				href="javascript:findBook(${suggestedBook.id});">
 
 					<div class="thumbnail">
-						<img src="http://placehold.it/100x100" alt="">
+						<img
+							src="<c:url value="/uploads/${suggestedBook.bookcovername }"/>"
+							width="100" height="120">
 						<div class="caption">
-							<p>${suggestedBook.title}</p>
+							<div align="center">
+								<p>${suggestedBook.title}</p>
+							</div>
 						</div>
 					</div>
 			</a></li>
@@ -54,12 +58,12 @@
 
 	<div class="modal hide" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-header">
+		<div class="modal-header ">
 			<button type="button" class="close" data-dismiss="modal"
 				aria-hidden="true">×</button>
 			<h3 id="myModalLabel">Book Info</h3>
 		</div>
-		<div class="modal-body">
+		<div class="modal-body book-modal">
 			<p>One fine body…</p>
 		</div>
 		<div class="modal-footer">

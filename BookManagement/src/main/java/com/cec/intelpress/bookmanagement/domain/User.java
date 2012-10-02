@@ -52,8 +52,14 @@ public class User implements Serializable {
 		for (Role role : userRoles) {
 			if (role.getId().equals(roleId)) {
 				userRoles.remove(role);
+				break;
 			}
 		}
+	}
+	public void deleteRole(Role role) {
+		System.out.println("Before: "+userRoles.size());
+		userRoles.remove(role);
+		System.out.println("After: "+userRoles.size());
 	}
 
 	public Integer getId() {

@@ -17,21 +17,22 @@
 
     <!--
      Scans the classpath for annotated components that will be auto-registered as Spring beans.
-	 For example @Controller and @Service. Make sure to set the correct base-package
+	 For example @Controller and @Service. Make sure to set the correct base-package
     -->
 
     <context:component-scan base-package="com.cec.intelpress.bookmanagement" />
 
     <!--
     Configures the annotation-driven Spring MVC Controller programming model.
-	Note that, with Spring 3.0, this tag works in Servlet MVC only!
+	Note that, with Spring 3.0, this tag works in Servlet MVC only!
     -->
 
     <mvc:annotation-driven />
-	<mvc:resources
+
+    <mvc:resources
         location="/resources/"
         mapping="/" />
-    
+
     <mvc:resources
         location="/resources/css/"
         mapping="/css/**" />
@@ -43,7 +44,24 @@
     <mvc:resources
         location="/resources/js/"
         mapping="/js/**" />
+
+    <mvc:resources
+        location="/uploads/"
+        mapping="/uploads/**" />
     
+    <!-- Configure the multipart resolver -->
+
+    <bean
+        id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
+
+        <!-- one of the properties available; the maximum file size in bytes -->
+
+        <property
+            name="maxUploadSize"
+            value="1000000000000" />
+    </bean>
+
     <import resource="hibernate-context.xml" />
 
 </beans>

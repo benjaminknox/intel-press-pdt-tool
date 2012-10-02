@@ -82,7 +82,7 @@
 		<div class="modal-body">
 			<form name='f' class="form-horizontal"
 				action="<c:url value='/admin/bookmanagement/addbook' />"
-				method='POST'>
+				method='POST' enctype="multipart/form-data">
 				<fieldset>
 					<div class="control-group">
 						<label class="control-label" for="title">Title</label>
@@ -132,11 +132,11 @@
 					</div>
 
 					<div class="control-group">
-						<label class="control-label" for="bookCoverUrl">BookCover</label>
+						<label class="control-label" for="bookcover">BookCover</label>
 						<div class="controls">
-							<input id="bookCoverUrl" name="bookCoverUrl"
-								class="input-xlarge focused" placeholder="bookCoverUrl"
-								type="text">
+							<input id="bookcover" name="bookcover"
+								class="input-xlarge focused" for="bookcover"
+								placeholder="bookcover" type="file">
 						</div>
 					</div>
 
@@ -145,14 +145,6 @@
 						<div class="controls">
 							<input id="buyurl" name="buyurl" class="input-xlarge focused"
 								placeholder="buyurl" type="text">
-						</div>
-					</div>
-
-					<div class="control-group">
-						<label class="control-label" for="category">Category</label>
-						<div class="controls">
-							<input id="category" name="category" class="input-xlarge focused"
-								placeholder="category" type="text">
 						</div>
 					</div>
 

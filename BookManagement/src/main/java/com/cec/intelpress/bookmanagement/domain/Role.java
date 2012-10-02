@@ -28,7 +28,7 @@ public class Role implements Serializable {
 
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "userRoles")
 	private Set<User> users = new HashSet<User>(0);
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -40,11 +40,30 @@ public class Role implements Serializable {
 	public Set<User> getUsers() {
 		return this.users;
 	}
+
 	public String getAuthority() {
 		return authority;
 	}
 
 	public void setAuthority(String authority) {
 		this.authority = authority;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		try {
+			Role role = (Role) o;
+			if (role.getId().equals(this.getId())) {
+				return true;
+			}
+		} catch (Exception e) {
+			// Blank
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return this.getId();
 	}
 }

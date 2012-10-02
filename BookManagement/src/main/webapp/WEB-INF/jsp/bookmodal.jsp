@@ -10,8 +10,8 @@
 </head>
 <body>
 	<div class="span9">
-		<img src="http://placehold.it/100x100" align="left"
-			style="padding: 10px;">
+		<img src="<c:url value="/uploads/${book.bookcovername }"/>"
+			width="100" height="120" align="left" style="padding: 10px;">
 
 		<h3>
 			<u>${book.title }</u>
@@ -20,12 +20,12 @@
 	</div>
 
 	<div class="span9">
-		<a href="${book.buyurl }">
+		<br /> <a href="${book.buyurl}" target="_blank">
 			<button type="button" class="btn btn-primary" data-toggle="button">Buy
 				Now</button>
 		</a>
 	</div>
-	<br/>
+	<br />
 
 </body>
 </html>
