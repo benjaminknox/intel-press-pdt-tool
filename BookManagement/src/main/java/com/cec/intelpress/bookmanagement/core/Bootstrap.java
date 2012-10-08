@@ -38,18 +38,21 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 			user.setPassword(Util.sha256HashString(password));
 			user.setEnabled(1);
 			
+			userService.add(user);			
+
 			Role userRole = new Role();
 			userRole.setAuthority("ROLE_USER");
 			
 			Role adminRole = new Role();
 			adminRole.setAuthority("ROLE_ADMIN");
 			
-			user.getUserRoles().add(userRole);
-			user.getUserRoles().add(adminRole);
-			
 			roleService.add(userRole);
 			roleService.add(adminRole);	
-			userService.add(user);			
+
+			user.getUserRoles().add(userRole);
+			user.getUserRoles().add(adminRole);
+
+			userService.edit(user);			
 		}
 	}
 }
