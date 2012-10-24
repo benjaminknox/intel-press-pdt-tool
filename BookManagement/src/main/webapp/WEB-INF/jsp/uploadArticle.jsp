@@ -10,7 +10,23 @@
 </head>
 <body>
 	<script>
-		
+	$(document).ready(function() {
+	    // to show it in an alert window
+	    //alert(window.location);
+
+	    // to store it in a variable
+	    var loc = window.location.toString();
+	    var errorCode = loc.split("#error=")[1];
+	    if (errorCode == "1" ) {
+	    	$("#errors").text("The file extension for the uploaded article is not on the approved list.");
+	    }
+	    if (errorCode == "2" ) {
+	    	$("#errors").text("Please enter a article title, and select an article.");
+	    }
+	    if (errorCode == "3" ) {
+	    	$("#errors").text("Please select an article.");
+	    }
+	});
 	</script>
 	<br />
 	<div id="content" class="row-fluid span8">
@@ -26,6 +42,7 @@
 
 			<div id="upload-article-container" class="span8">
 				<h2>Upload Article</h2>
+				<div id="errors"></div>
 				<hr>
 				<form name='f' class="form-horizontal"
 				action="<c:url value='/addArticle/${chapter.id}' />"

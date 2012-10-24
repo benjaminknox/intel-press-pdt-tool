@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cec.intelpress.bookmanagement.domain.Book;
@@ -88,54 +89,50 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/addArticle/{chapterId}", method = RequestMethod.POST)
-	public ModelAndView addArticle(@ModelAttribute("article") TechnicalArticle article, @PathVariable(value = "chapterId") int chapterId) throws Exception {
+	public String addArticle(@ModelAttribute("article") TechnicalArticle article, @PathVariable(value = "chapterId") int chapterId) throws Exception {
 		if (article != null) {
-			String orgName = article.getArticle().getOriginalFilename();
-			//TODO: This, and everything that looks like this is 100% vaulnrable to many bad things
-			String[] test = orgName.split("\\.");
-			if(test.length >= 2) {
-				String newName = String.valueOf(UUID.randomUUID()) +"."+test[1];
-				
-				//TODO: Dirty hacky please for the love of god change this later
-				String filePath = Util.UPLOADS_DIR + newName;
-				
-				//Confirm that the uploads dir exists
-				Util.validateUploads();
-				
-				if (Util.validArticleExtensions.contains(test[1])) {
-					File dest = new File(filePath);
-					try {
-						article.getArticle().transferTo(dest);
-					} catch (IllegalStateException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					Chapter chapter = chapterService.get(chapterId);
-					if (chapter != null) {
-						article.setArticleName(newName);
-						article.setArticle(null);
-						articleService.add(article);
-				
-						logger.info("~~~~~~~ Created Article  ["+article.getId()+"] ~~~~~~~~~~~");
-						
-						chapter.setArticle(article);
-						chapterService.edit(chapter);
+			CommonsMultipartFile articleFile = article.getArticle();
+			if (articleFile != null) {
+				String orgName = article.getArticle().getOriginalFilename();
+				//TODO: This, and everything that looks like this is 100% vaulnrable to many bad things
+				String[] test = orgName.split("\\.");
+				if(test.length >= 2 && !article.getTitle().equals("")) {
+					String newName = String.valueOf(UUID.randomUUID()) +"."+test[1];
+					
+					//TODO: Dirty hacky please for the love of god change this later
+					String filePath = Util.UPLOADS_DIR + newName;
+					
+					//Confirm that the uploads dir exists
+					Util.validateUploads();
+					
+					if (Util.validArticleExtensions.contains(test[1])) {
+						File dest = new File(filePath);
+						try {
+							article.getArticle().transferTo(dest);
+						} catch (IllegalStateException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						Chapter chapter = chapterService.get(chapterId);
+						if (chapter != null) {
+							article.setArticleName(newName);
+							article.setArticle(null);
+							articleService.add(article);
+					
+							logger.info("~~~~~~~ Created Article  ["+article.getId()+"] ~~~~~~~~~~~");
+							
+							chapter.setArticle(article);
+							chapterService.edit(chapter);
+						}
+					} else {
+						return "redirect:/uploadArticle/"+chapterId+"#error=1";
 					}
 				} else {
-					return "redirect:/suggestedreading";
-					
-					/**
-					 * 
-					 * 
-					 * 
-					 * Return MAV and use # to make javascript show errors
-					 * 
-					 * 
-					 * 
-					 * 
-					 */
+					return "redirect:/uploadArticle/"+chapterId+"#error=2";
 				}
+			} else {
+				return "redirect:/uploadArticle/"+chapterId+"#error=3";
 			}
 		}
 		return "redirect:/suggestedreading";

@@ -18,6 +18,9 @@
 <!-- base css -->
 <link class="links-css" href="/bookmanagement/css/darkblue.css"
 	rel="stylesheet" />
+	
+	<script src="/bookmanagement/js/jquery.min.js"></script>
+
 <!-- inbox page css -->
 <link href="/bookmanagement/css/inbox.css" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/bookmanagement/img/Intel.png">
