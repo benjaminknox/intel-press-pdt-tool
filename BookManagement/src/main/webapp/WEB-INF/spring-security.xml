@@ -18,7 +18,7 @@
 
         <form-login
             authentication-failure-url="/loginfailed"
-            default-target-url="/"
+            default-target-url="/suggestedreading"
             login-page="/login" />
 
         <logout logout-success-url="/logout" />

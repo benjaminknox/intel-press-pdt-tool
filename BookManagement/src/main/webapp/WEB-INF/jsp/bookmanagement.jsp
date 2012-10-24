@@ -39,7 +39,7 @@
 									<c:forEach var="book" items="${books}">
 
 										<tr class="odd gradeX">
-											<td>${book.id}
+											<td>${book.id}</td>
 											<td>${book.title}</td>
 											<td>${book.author}</td>
 											<td>${book.publisher}</td>
@@ -52,7 +52,10 @@
 													class="icon-edit icon-white"></i></a> <a
 												href="<c:url value="/admin/bookmanagement/delbook/${book.id}" />"
 												class="btn btn-danger" title="Remove"><i
-													class="icon-remove icon-white"></i></a></td>
+													class="icon-remove icon-white"></i></a>
+													<a href="<c:url value="/admin/bookmanagement/chapters/${book.id}" />"
+												class="btn btn-success" title="Chapters"><i
+													class="icon-book icon-white"></i></a></td>
 
 										</tr>
 									</c:forEach>

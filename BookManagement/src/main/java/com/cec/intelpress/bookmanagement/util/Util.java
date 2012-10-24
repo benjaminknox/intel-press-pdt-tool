@@ -1,10 +1,17 @@
 package com.cec.intelpress.bookmanagement.util;
 
+import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.List;
 
 public class Util {
 
+	public final static String UPLOADS_DIR = "src/main/webapp/uploads/";
+	public final static String PDF_DIR = "src/main/webapp/pdfs/";
+	public static List<String> validArticleExtensions = Arrays.asList("pdf", "doc", "docx", "txt");
+	
 	public static String sha256HashString(String stringToHash) {
 		MessageDigest md;
 		try {
@@ -34,5 +41,43 @@ public class Util {
 			return "";
 		}
 
+	}
+	
+	/**
+	 * This is check and see if the uploads dir exists, and is a folder. 
+	 * If the folder exists we pass on by.
+	 * If the uploads directory is a file we throw an exception
+	 * If it needs to be created we create it
+	 *  
+	 * @throws Exception
+	 */
+	public static void validateUploads() throws Exception {
+		File uploadsDir = new File(UPLOADS_DIR);
+		if (uploadsDir.exists()) {
+			if (uploadsDir.isDirectory()) {
+				return;
+			}
+			throw new Exception("Uploads Directory exists, but is a file?");
+		}
+		uploadsDir.mkdir();
+	}
+	
+	/**
+	 * This is check and see if the pdf dir exists, and is a folder. 
+	 * If the folder exists we pass on by.
+	 * If the uploads directory is a file we throw an exception
+	 * If it needs to be created we create it
+	 *  
+	 * @throws Exception
+	 */
+	public static void validatePdfs() throws Exception {
+		File uploadsDir = new File(PDF_DIR);
+		if (uploadsDir.exists()) {
+			if (uploadsDir.isDirectory()) {
+				return;
+			}
+			throw new Exception("Uploads Directory exists, but is a file?");
+		}
+		uploadsDir.mkdir();
 	}
 }

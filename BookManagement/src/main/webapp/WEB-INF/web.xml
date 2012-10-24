@@ -47,5 +47,22 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  
+  <!--  Added for serving more types of resources -->
+	<mime-mapping>
+	   <extension>pdf</extension>
+	    <mime-type>application/pdf</mime-type>
+	</mime-mapping>
+	
+	<mime-mapping>
+	   <extension>ico</extension>
+	    <mime-type>image/ico</mime-type>
+	</mime-mapping>
+	
+	<mime-mapping>
+	   <extension>doc</extension>
+	    <mime-type>application/msword</mime-type>
+	</mime-mapping>
+	
 </web-app>
 

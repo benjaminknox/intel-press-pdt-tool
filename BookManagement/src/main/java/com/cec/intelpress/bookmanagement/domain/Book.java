@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 @Entity
@@ -24,9 +26,10 @@ public class Book implements Serializable {
 	private static final long serialVersionUID = -5423566248002296042L;
 
 	@Id
-	@Column(name = "book_id")
-	@GeneratedValue
-	private Integer id;
+	@Column(name = "book_id", unique=true)
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	private String id;
 
 	@Column(name = "title")
 	private String title;
@@ -61,14 +64,6 @@ public class Book implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "book_chapters", joinColumns = { @JoinColumn(name = "book_id", nullable = false, updatable = true) }, inverseJoinColumns = { @JoinColumn(name = "chapter_id", nullable = false, updatable = true) })
 	private Set<Chapter> bookChapters = new HashSet<Chapter>(0);
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getTitle() {
 		return title;
@@ -156,6 +151,14 @@ public class Book implements Serializable {
 
 	public void setBookcovername(String bookcovername) {
 		this.bookcovername = bookcovername;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

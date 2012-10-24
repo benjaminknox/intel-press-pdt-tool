@@ -52,7 +52,6 @@ public class ChapterService {
 		Session session = sessionFactory.getCurrentSession();
 
 		Chapter chapter = (Chapter) session.get(Chapter.class, id);
-		chapter.getBooks().clear();
 		session.delete(chapter);
 	}
 
@@ -62,12 +61,22 @@ public class ChapterService {
 		Session session = sessionFactory.getCurrentSession();
 
 		Chapter existingChapter = (Chapter) session.get(Chapter.class, chapter.getId());
-		existingChapter.setBooks(chapter.getBooks());
 		existingChapter.setChapterNumber(chapter.getChapterNumber());
 		existingChapter.setCompleted(chapter.getCompleted());
 		existingChapter.setInprogress(chapter.getInprogress());
 		existingChapter.setName(chapter.getName());
 		existingChapter.setWorkedOnBy(chapter.getWorkedOnBy());
+		existingChapter.setArticle(chapter.getArticle());
 		session.merge(existingChapter);
+	}
+	
+	public List<Chapter> getAllWithoutArticles() {
+		logger.debug("Grabbing all chapters without articles");
+		
+		Session session = sessionFactory.getCurrentSession();
+
+		Query query = session.createQuery("FROM  Chapter chapter where chapter.technical = true and chapter.article = NULL");
+
+		return query.list();
 	}
 }

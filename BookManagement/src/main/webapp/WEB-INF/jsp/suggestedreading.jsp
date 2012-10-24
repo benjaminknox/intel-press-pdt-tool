@@ -3,6 +3,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+	
 <html>
 <head>
 <title>Intel Press Management</title>
@@ -14,6 +16,7 @@
 
 			$.get('<c:url value="/getBook/" />' + id, function(data) {
 				$('.book-modal').html(data);
+				//$('#myModal').css("left", Math.max(0, (($(window).width() - $('#myModal').outerWidth()) / 2) + $(window).scrollLeft()) + "px");
 				$('#myModal').modal('show');
 			});
 
@@ -29,12 +32,23 @@
 					<ul class="">
 			</c:if>
 			<li class="span2 book"><a id="findBook"
-				href="javascript:findBook(${suggestedBook.id});">
-
-					<div class="thumbnail">
+				href="javascript:findBook('${suggestedBook.id}');">
+					<c:set var="articlesToDo" value="false" scope="page" />
+					<c:forEach var="chapter" items="${suggestedBook.bookChapters}">
+						<c:if test="${chapter.technical && chapter.article == null}">
+							<c:set var="articlesToDo" value="true" scope="page" />
+						</c:if>
+					</c:forEach>
+					
+					<c:if test="${articlesToDo}" >
+						<div class="thumbnail bookmark-red" title="More technical chapters exist">
+					</c:if>
+					<c:if test="${!articlesToDo}" >
+						<div class="thumbnail bookmark-blue" title="All technical articles have been completed" >
+					</c:if>
 						<img
-							src="<c:url value="/uploads/${suggestedBook.bookcovername }"/>"
-							width="100" height="120">
+							src="<c:url value="/uploads/${suggestedBook.bookcovername}"/>"
+							width="120" height="120">
 						<div class="caption">
 							<div align="center">
 								<p>${suggestedBook.title}</p>
@@ -52,12 +66,12 @@
 	</c:forEach>
 	</ul>
 	</div>
+	<br>
 	</div>
-	<br />
 
 
 	<div class="modal hide" id="myModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+		aria-labelledby="myModalLabel" aria-hidden="true"  >
 		<div class="modal-header ">
 			<button type="button" class="close" data-dismiss="modal"
 				aria-hidden="true">×</button>

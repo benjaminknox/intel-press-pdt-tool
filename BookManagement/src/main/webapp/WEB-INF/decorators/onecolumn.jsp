@@ -18,6 +18,8 @@
 	rel="stylesheet" />
 <!-- inbox page css -->
 <link href="/bookmanagement/css/inbox.css" rel="stylesheet" />
+<link rel="icon" type="image/png" href="/bookmanagement/img/Intel.png">
+
 <style type="text/css">
 body {
 	padding-top: 60px;
@@ -46,7 +48,7 @@ body {
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="index.html"><img
+				</a> <a class="brand" href="/bookmanagement/"><img
 					src="img/logo-small.png" alt="logo" /></a>
 			</div>
 		</div>
@@ -54,7 +56,7 @@ body {
 	<sitemesh:write property='body' />
 	<footer>
 		<p>
-			<strong>&copy; Maniadmin 2012</strong>
+			<strong>&copy; Cummings Engineering 2012</strong>
 		</p>
 	</footer>
 

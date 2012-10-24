@@ -1,15 +1,15 @@
 package com.cec.intelpress.bookmanagement.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,25 +22,32 @@ public class Chapter implements Serializable {
 	@Column(name = "chapter_id")
 	@GeneratedValue
 	private Integer id;
-	
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "chapternumber")
 	private Integer chapterNumber;
-	
+
 	@Column(name = "completed")
 	private Boolean completed;
-	
+
 	@Column(name = "inprogress")
 	private Boolean inprogress;
-	
+
 	@Column(name = "workedonby")
 	private String workedOnBy;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "bookChapters")
-	private Set<Book> books = new HashSet<Book>(0);
+	@Column(name = "technical")
+	private boolean technical;
 	
+	@ManyToOne
+	@JoinColumn (name="book_id")
+	private Book book;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private TechnicalArticle article;
+
 	public Integer getId() {
 		return id;
 	}
@@ -89,12 +96,28 @@ public class Chapter implements Serializable {
 		this.workedOnBy = workedOnBy;
 	}
 
-	public Set<Book> getBooks() {
-		return books;
+	public boolean isTechnical() {
+		return technical;
 	}
 
-	public void setBooks(Set<Book> books) {
-		this.books = books;
+	public void setTechnical(boolean technical) {
+		this.technical = technical;
+	}
+
+	public TechnicalArticle getArticle() {
+		return article;
+	}
+
+	public void setArticle(TechnicalArticle article) {
+		this.article = article;
+	}
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
 }

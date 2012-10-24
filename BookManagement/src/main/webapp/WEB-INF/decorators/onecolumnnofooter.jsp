@@ -20,6 +20,8 @@
 <!-- custom css  -->
 <link class="links-css" href="css/jquery-ui-bootstrap-1.8.16.custom.css"
 	rel="stylesheet">
+	<link rel="icon" type="image/png" href="/bookmanagement/img/Intel.png">
+	
 <style type="text/css">
 body {
 	padding-top: 60px;
@@ -47,7 +49,7 @@ body {
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="index.html"><img
+				</a> <a class="brand" href="/bookmanagement/"><img
 					src="img/logo-small.png" alt="logo" /></a>
 			</div>
 		</div>

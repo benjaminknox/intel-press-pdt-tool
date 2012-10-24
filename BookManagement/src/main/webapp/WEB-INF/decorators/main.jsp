@@ -20,6 +20,8 @@
 	rel="stylesheet" />
 <!-- inbox page css -->
 <link href="/bookmanagement/css/inbox.css" rel="stylesheet" />
+<link rel="icon" type="image/png" href="/bookmanagement/img/Intel.png">
+      
 <style type="text/css">
 body {
 	padding-top: 60px;
@@ -48,24 +50,10 @@ body {
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="#"><img
+				</a> <a class="brand" href="/bookmanagement/"><img
 					src="/bookmanagement/img/logo-small.png" alt="logo" /></a>
 				<ul class="nav pull-left bar-root">
 					<li class="divider-vertical"></li>
-					<li><a href="#"><i class="icon-comment icon-white"></i><span
-							class="label label-important">0</span></a></li>
-					<li class="dropdown"><a href="#" data-toggle="dropdown"> <i
-							class="icon-envelope icon-white"></i><span
-							class="label label-important">0</span></a>
-						<ul class="dropdown-menu">
-
-						</ul></li>
-					<li class="dropdown"><a href="#" data-toggle="dropdown"> <i
-							class="icon-refresh icon-white"></i><span
-							class="label label-info">0</span></a>
-						<ul class="dropdown-menu">
-
-						</ul></li>
 				</ul>
 				<div class="group-menu nav-collapse">
 					<ul class="nav pull-right">
@@ -77,27 +65,19 @@ body {
 							<ul class="dropdown-menu">
 								<li>
 									<div id="profileModal">
-										<div class="modal-header modal-login">
-											<h3>Todo</h3>
-										</div>
-										<div class="modal-body modal-login">
-											<div class="row">
-												<div class="span1">
-													<p>Todo</p>
-												</div>
-											</div>
-										</div>
+										
 										<div class="modal-footer">
-											<a class="btn btn-info"
+											<center><a class="btn btn-info"
 												href="<c:url value="/j_spring_security_logout" />">Logoff</a>
+												</center>
 										</div>
 									</div>
 								</li>
 							</ul></li>
 					</ul>
-					<form action="#" class="navbar-search pull-right">
+					<!--<form action="#" class="navbar-search pull-right">
 						<input type="text" placeholder="Search" class="search-query span2" />
-					</form>
+					</form> -->
 				</div>
 			</div>
 		</div>
@@ -107,12 +87,12 @@ body {
 			<div id="menu-left" class="span3">
 				<div class="sidebar-nav">
 					<ul class="nav nav-list">
-						<li><a href="<c:url value="/" />"><i
-								class="icon-th-large"></i><span> Dashboard</span></a></li>
 						<li><a href="<c:url value="/suggestedreading"/>"><i
-								class="icon-th"></i><span> Suggested Reading</span></a></li>
-						<li><a href="#"><i class="icon-list-alt"></i><span>
-									Tables</span></a></li>
+								class="icon-th"></i><span>Book Management</span></a></li>
+						<li><a href="<c:url value="/" />"><i
+								class="icon-th-large"></i><span>Statistics</span></a></li>
+						<li><a href="<c:url value="/pdfconversion"/>"><i class="icon-list-alt"></i><span>
+									PDF Conversion</span></a></li>
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 							<li class="accordion-menu"><a href="#collapseOne"
 								data-toggle="collapse" class="accordion-toggle"><i
@@ -127,6 +107,8 @@ body {
 													Management</a></li>
 											<li><a href="<c:url value="/admin/bookmanagement/" />">Book
 													Management</a></li>
+											<li><a href="<c:url value="/admin/pdfmanagement/" />">Pdf
+													Management</a></li>
 										</ul>
 									</div>
 								</div></li>
@@ -140,7 +122,7 @@ body {
 		</div>
 		<footer>
 			<p>
-				<strong>&copy; Maniadmin 2012</strong>
+				<strong>&copy; Cummings Engineering 2012</strong>
 			</p>
 		</footer>
 

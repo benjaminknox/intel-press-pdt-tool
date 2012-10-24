@@ -3,23 +3,91 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+	<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <html>
 <head>
 <title>Intel Press Management</title>
 <meta name='description' content='A simple page'>
 </head>
 <body>
-	<div class="span9">
+	<div class="span5">
 		<img src="<c:url value="/uploads/${book.bookcovername }"/>"
 			width="100" height="120" align="left" style="padding: 10px;">
-
 		<h3>
-			<u>${book.title }</u>
+			<u>${book.title}</u>
 		</h3>
-		${book.description}
+		<p>${book.description}</p>
 	</div>
+	<c:if test="${fn:length(book.bookChapters) > 0}" >
+	<div class="center">
+		<h3>Chapters</h3>
+	</div>
+	
+	<table class="table table-bordered table-striped" id="example">
+		<thead>
+			<tr>
+				<!--<th>Number</th>-->
+				<th>Name</th>
+				<th>Technical Article</th>
+				<th>Article</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="chapter" items="${book.bookChapters}">
+				<tr class="odd gradeX">
+					<!--<td>${chapter.chapterNumber}</td> -->
+					<td>${chapter.name}</td>
+					<c:choose>
+						<c:when test="${chapter.technical && chapter.article == null }">
+							<td class="center"><center>
+									<div title="Technical Article Required and NOT submitted"
+										class="btn btn-warning" style="width: 50px">Yes</div>
+								</center></td>
+						</c:when>
+						<c:when test="${chapter.technical && chapter.article != null }">
+							<td class="center"><center>
+									<div title="Technical Article Required and submitted"
+										class="btn btn-success" style="width: 50px">Yes</div>
+								</center></td>
+						</c:when>
+						<c:otherwise>
+							<td class="center"><center>
+									<div title="No Technical Article Required"
+										class="btn btn-danger" style="width: 50px">No</div>
+								</center></td>
+						</c:otherwise>
+					</c:choose>
 
-	<div class="span9">
+					<c:choose>
+						<c:when test="${chapter.technical && chapter.article != null }">
+							<td><a class="btn btn-info"
+								href="<c:url value="/uploads/${chapter.article.articleName}"/>"><i
+									class="icon-circle-arrow-down"></i></a></td>
+						</c:when>
+						<c:otherwise>
+								<td></td>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${chapter.technical && chapter.article == null }">
+							<td class="center"><a title="Upload Article"
+								class="btn btn-success"
+								href="/bookmanagement/uploadArticle/${chapter.id}">
+									<i class="icon-white icon-circle-arrow-up"></i>
+							</a></td>
+						</c:when>
+						<c:otherwise>
+							<td class="center"></td>
+						</c:otherwise>
+					</c:choose>
+
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	</c:if>
+	<div class="span5">
 		<br /> <a href="${book.buyurl}" target="_blank">
 			<button type="button" class="btn btn-primary" data-toggle="button">Buy
 				Now</button>

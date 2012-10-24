@@ -874,3 +874,17 @@ cursor: pointer;
 width: 16px;
 height: 16px;
 }
+
+.bookmark-red {
+	background-image:url('/bookmanagement/img/red_bookmark.png');
+	background-repeat:no-repeat;
+	background-size:30px 60px;
+	background-position:right top; 
+}
+
+.bookmark-blue {
+	background-image:url('/bookmanagement/img/blue_bookmark.png');
+	background-repeat:no-repeat;
+	background-size:30px 60px;
+	background-position:right top; 
+}

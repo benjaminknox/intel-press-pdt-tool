@@ -50,7 +50,7 @@ public class BookService {
 		return suggestedBookList;
 	}
 
-	public Book get(Integer id) {
+	public Book get(String id) {
 		Session session = sessionFactory.getCurrentSession();
 
 		Book book = (Book) session.get(Book.class, id);
