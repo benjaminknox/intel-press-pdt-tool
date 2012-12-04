@@ -46,6 +46,10 @@
         mapping="/js/**" />
 
     <mvc:resources
+        location="/pdfs/"
+        mapping="/pdfs/**" />
+
+    <mvc:resources
         location="/uploads/"
         mapping="/uploads/**" />
     

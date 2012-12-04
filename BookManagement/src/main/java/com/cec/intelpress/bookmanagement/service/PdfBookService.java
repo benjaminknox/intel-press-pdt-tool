@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cec.intelpress.bookmanagement.domain.Book;
 import com.cec.intelpress.bookmanagement.domain.PdfBook;
+import com.cec.intelpress.bookmanagement.domain.User;
 
 @Service("PdfBookService")
 @Transactional
@@ -44,7 +45,35 @@ public class PdfBookService {
 		
 		return suggestedBookList;
 	}
+	
+	public List<PdfBook> getAllNonCompletedBooksByUser(User user) {
+		List<PdfBook> suggestedBookList = new ArrayList<PdfBook>();
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM  PdfBook b where b.uploader = :user and b.converted = 0");
+		query.setParameter("user", user);
+		
+		for(PdfBook book : (List<PdfBook>)query.list())
+		{
+			suggestedBookList.add(book);
+		}
+		
+		return suggestedBookList;
+	}
 
+	public List<PdfBook> getAllCompletedBooksByUser(User user) {
+		List<PdfBook> suggestedBookList = new ArrayList<PdfBook>();
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM  PdfBook b where b.uploader = :user and b.converted = 1");
+		query.setParameter("user", user);
+		
+		for(PdfBook book : (List<PdfBook>)query.list())
+		{
+			suggestedBookList.add(book);
+		}
+		
+		return suggestedBookList;
+	}
+	
 	public PdfBook get(String id) {
 		Session session = sessionFactory.getCurrentSession();
 
@@ -79,6 +108,9 @@ public class PdfBookService {
 		existingBook.setEpubFileName(book.getEpubFileName());
 		existingBook.setMobiFileName(book.getMobiFileName());
 		existingBook.setPdfFileName(book.getPdfFileName());
+		existingBook.setConverted(book.isConverted());
+		existingBook.setEmail(book.getEmail());
+		existingBook.setUploader(book.getUploader());
 		session.merge(existingBook);
 	}
 }

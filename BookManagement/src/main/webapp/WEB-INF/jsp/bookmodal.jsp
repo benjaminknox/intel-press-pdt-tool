@@ -26,7 +26,7 @@
 	<table class="table table-bordered table-striped" id="example">
 		<thead>
 			<tr>
-				<!--<th>Number</th>-->
+				<th>Number</th>
 				<th>Name</th>
 				<th>Technical Article</th>
 				<th>Article</th>
@@ -36,7 +36,7 @@
 		<tbody>
 			<c:forEach var="chapter" items="${book.bookChapters}">
 				<tr class="odd gradeX">
-					<!--<td>${chapter.chapterNumber}</td> -->
+					<td>${chapter.chapterNumber}</td>
 					<td>${chapter.name}</td>
 					<c:choose>
 						<c:when test="${chapter.technical && chapter.article == null }">
@@ -70,18 +70,29 @@
 						</c:otherwise>
 					</c:choose>
 					<c:choose>
-						<c:when test="${chapter.technical && chapter.article == null }">
+						<c:when test="${chapter.technical && chapter.article == null && user.id == chapter.assignedUser.id}">
 							<td class="center"><a title="Upload Article"
 								class="btn btn-success"
 								href="/bookmanagement/uploadArticle/${chapter.id}">
 									<i class="icon-white icon-circle-arrow-up"></i>
 							</a></td>
 						</c:when>
+						
 						<c:otherwise>
 							<td class="center"></td>
 						</c:otherwise>
 					</c:choose>
-
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<c:choose>
+							<c:when test="${chapter.technical}">							
+								<td class="center"><a title="Assign Article"
+									class="btn btn-success"
+									href="/bookmanagement/admin/bookmanagement/assignChapter/${chapter.id}">
+										<i class="icon-white icon-pencil"></i>
+								</a></td>
+							</c:when>
+						</c:choose>
+					</sec:authorize>
 				</tr>
 			</c:forEach>
 		</tbody>

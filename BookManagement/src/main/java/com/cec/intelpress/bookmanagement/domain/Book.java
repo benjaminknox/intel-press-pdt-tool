@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -63,6 +64,7 @@ public class Book implements Serializable {
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "book_chapters", joinColumns = { @JoinColumn(name = "book_id", nullable = false, updatable = true) }, inverseJoinColumns = { @JoinColumn(name = "chapter_id", nullable = false, updatable = true) })
+	@OrderBy("chapterNumber")
 	private Set<Chapter> bookChapters = new HashSet<Chapter>(0);
 
 	public String getTitle() {

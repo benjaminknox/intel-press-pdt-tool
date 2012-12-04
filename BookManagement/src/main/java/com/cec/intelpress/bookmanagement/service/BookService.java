@@ -1,6 +1,7 @@
 package com.cec.intelpress.bookmanagement.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -64,7 +65,7 @@ public class BookService {
 		session.save(book);
 	}
 
-	public void delete(Integer id) {
+	public void delete(String id) {
 		logger.debug("Deleting existing book");
 
 		Session session = sessionFactory.getCurrentSession();

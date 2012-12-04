@@ -1,7 +1,6 @@
 package com.cec.intelpress.bookmanagement.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,10 +20,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cec.intelpress.bookmanagement.domain.Book;
 import com.cec.intelpress.bookmanagement.domain.Chapter;
-import com.cec.intelpress.bookmanagement.domain.TechnicalArticle;
+import com.cec.intelpress.bookmanagement.domain.User;
 import com.cec.intelpress.bookmanagement.service.ArticleService;
 import com.cec.intelpress.bookmanagement.service.BookService;
 import com.cec.intelpress.bookmanagement.service.ChapterService;
+import com.cec.intelpress.bookmanagement.service.UserService;
 import com.cec.intelpress.bookmanagement.util.Util;
 
 /**
@@ -46,6 +46,9 @@ public class BookManagementController {
 	
 	@Resource(name = "ArticleService")
 	private ArticleService articleService;
+	
+	@Resource(name = "UserService")
+	private UserService userService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView getBookManagement(Model model) {
@@ -104,6 +107,48 @@ public class BookManagementController {
 			
 			return mav;
 	}
+	/**
+	 * This allows an admin to assign a chapter to a given user
+	 * @param chapter
+	 * @param result
+	 * @param bookId
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/assignChapter/{chapterId}", method = RequestMethod.GET)
+	public ModelAndView assignChapter(@PathVariable(value = "chapterId") int chapterId) throws Exception {
+			
+			ModelAndView mav = new ModelAndView();
+			
+			mav.setViewName("assignchapter");
+			Chapter chapter = chapterService.get(chapterId);
+			
+			if(chapter != null) {
+				mav.addObject("chapter", chapter);
+				List<User> users = userService.getAll();
+				mav.addObject("users", users);
+			} else {
+				List<Book> allBooks = bookService.getAll();
+				mav.addObject("books", allBooks);
+				mav.setViewName("bookmanagement");
+			}
+			
+			return mav;
+	}	
+	
+	@RequestMapping(value = "/assignChapter", method = RequestMethod.POST)
+	public String postAssignChapter(@RequestParam(value = "chapterId") int chapterId, @RequestParam(value = "author") int author) throws Exception {
+
+		Chapter chapter = chapterService.get(chapterId);
+		User user = userService.get(author);
+		
+		if(chapter != null && user != null) {
+			chapter.setAssignedUser(user);
+			chapterService.edit(chapter);
+		}
+		
+		return "redirect:/suggestedreading";
+	}
 	
 	/**
 	 * This is used to add new chapters to existing books
@@ -116,11 +161,20 @@ public class BookManagementController {
 	public ModelAndView deleteChapter(@PathVariable(value = "chapterId") int chapterId) throws Exception {
 			
 			Chapter chapter = chapterService.get(chapterId);
+
+			chapter.setArticle(null);
 			Book book = chapter.getBook();
 			book.getBookChapters().remove(chapter);
-		
 			bookService.edit(book);
+			if(chapter.getArticle() != null) {
+				articleService.delete(chapter.getArticle().getId());
+
+			}
+
+			chapter.setAssignedUser(null);
+			chapterService.edit(chapter);
 			chapterService.delete(chapterId);
+
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("chapters");
 			mav.addObject("book", book);
@@ -142,13 +196,8 @@ public class BookManagementController {
 		Util.validateUploads();
 		
 		File dest = new File(filePath);
-		try {
-			book.getBookcover().transferTo(dest);
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		Util.writeFileToFileSystem(book.getBookcover(), dest);
+		
 		book.setBookcovername(newName);
 		book.setBookcover(null);
 		bookService.add(book);
@@ -158,7 +207,7 @@ public class BookManagementController {
 	}
 
 	@RequestMapping(value = "/delbook/{bookid}", method = RequestMethod.GET)
-	public String delBook(@PathVariable(value = "bookid") int bookId) {
+	public String delBook(@PathVariable(value = "bookid") String bookId) {
 
 		bookService.delete(bookId);
 		return "redirect:/admin/bookmanagement/";

@@ -69,5 +69,11 @@
 	    <mime-type>application/vnd.openxmlformats-officedocument.wordprocessingml.document</mime-type>
 	</mime-mapping>
 	
+	<mime-mapping>
+	   <extension>epub</extension>
+	    <mime-type>application/epub+zip</mime-type>
+	</mime-mapping>
+	
+	
 </web-app>
 

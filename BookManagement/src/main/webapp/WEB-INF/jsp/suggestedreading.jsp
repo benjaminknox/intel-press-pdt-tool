@@ -23,15 +23,11 @@
 		}
 	</script>
 	<br />
-	<div id="content" class="row-fluid span8">
-		<c:set var="rowIndex" value="0" scope="page" />
+	<div id="content" class="row-fluid span9">
+		<div class="row">
 		<c:forEach var="suggestedBook" items="${suggestedBooks}">
-
-			<c:if test="${rowIndex == 0}">
-				<div class="row-fluid">
-					<ul class="">
-			</c:if>
-			<li class="span2 book"><a id="findBook"
+			<center>
+			<div class="span4 book row"><a id="findBook"
 				href="javascript:findBook('${suggestedBook.id}');">
 					<c:set var="articlesToDo" value="false" scope="page" />
 					<c:forEach var="chapter" items="${suggestedBook.bookChapters}">
@@ -55,23 +51,19 @@
 							</div>
 						</div>
 					</div>
-			</a></li>
-			<c:if test="${rowIndex == 5}">
-				</ul>
-	</div>
-	<br />
-	<c:set var="rowIndex" value="0" scope="page" />
-	</c:if>
-	<c:set var="rowIndex" value="${rowIndex + 1}" scope="page" />
+			</a></div>
+			</center>
 	</c:forEach>
-	</ul>
 	</div>
 	<br>
 	</div>
+	
 
 
 	<div class="modal hide" id="myModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true"  >
+		aria-labelledby="myModalLabel" aria-hidden="true" 
+		style="width:790px;margin-left: -390px; "
+		 >
 		<div class="modal-header ">
 			<button type="button" class="close" data-dismiss="modal"
 				aria-hidden="true">×</button>

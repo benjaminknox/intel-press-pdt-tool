@@ -876,13 +876,20 @@ height: 16px;
 }
 
 .bookmark-red {
+	min-width:140px;
 	background-image:url('/bookmanagement/img/red_bookmark.png');
 	background-repeat:no-repeat;
 	background-size:30px 60px;
 	background-position:right top; 
 }
 
+.book {
+	min-width:200px;
+	padding: 10px;
+}
+
 .bookmark-blue {
+	min-width:140px;
 	background-image:url('/bookmanagement/img/blue_bookmark.png');
 	background-repeat:no-repeat;
 	background-size:30px 60px;

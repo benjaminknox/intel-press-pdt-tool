@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "chapters")
-public class Chapter implements Serializable {
+public class Chapter implements Serializable, Comparable<Chapter> {
 
 	private static final long serialVersionUID = -5527566243002296042L;
 
@@ -47,6 +47,9 @@ public class Chapter implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private TechnicalArticle article;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private User assignedUser;
 
 	public Integer getId() {
 		return id;
@@ -118,6 +121,18 @@ public class Chapter implements Serializable {
 
 	public void setBook(Book book) {
 		this.book = book;
+	}
+
+	public int compareTo(Chapter o) {
+		return this.chapterNumber;
+	}
+
+	public User getAssignedUser() {
+		return assignedUser;
+	}
+
+	public void setAssignedUser(User assignedUser) {
+		this.assignedUser = assignedUser;
 	}
 
 }

@@ -67,6 +67,7 @@ public class ChapterService {
 		existingChapter.setName(chapter.getName());
 		existingChapter.setWorkedOnBy(chapter.getWorkedOnBy());
 		existingChapter.setArticle(chapter.getArticle());
+		existingChapter.setAssignedUser(chapter.getAssignedUser());
 		session.merge(existingChapter);
 	}
 	

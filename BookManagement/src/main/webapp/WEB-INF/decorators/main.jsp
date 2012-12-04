@@ -18,13 +18,13 @@
 <!-- base css -->
 <link class="links-css" href="/bookmanagement/css/darkblue.css"
 	rel="stylesheet" />
-	
-	<script src="/bookmanagement/js/jquery.min.js"></script>
+
+<script src="/bookmanagement/js/jquery.min.js"></script>
 
 <!-- inbox page css -->
 <link href="/bookmanagement/css/inbox.css" rel="stylesheet" />
 <link rel="icon" type="image/png" href="/bookmanagement/img/Intel.png">
-      
+
 <style type="text/css">
 body {
 	padding-top: 60px;
@@ -68,11 +68,12 @@ body {
 							<ul class="dropdown-menu">
 								<li>
 									<div id="profileModal">
-										
+
 										<div class="modal-footer">
-											<center><a class="btn btn-info"
-												href="<c:url value="/j_spring_security_logout" />">Logoff</a>
-												</center>
+											<center>
+												<a class="btn btn-info"
+													href="<c:url value="/j_spring_security_logout" />">Logoff</a>
+											</center>
 										</div>
 									</div>
 								</li>
@@ -90,12 +91,29 @@ body {
 			<div id="menu-left" class="span3">
 				<div class="sidebar-nav">
 					<ul class="nav nav-list">
+
 						<li><a href="<c:url value="/suggestedreading"/>"><i
 								class="icon-th"></i><span>Book Management</span></a></li>
+
 						<li><a href="<c:url value="/" />"><i
 								class="icon-th-large"></i><span>Statistics</span></a></li>
-						<li><a href="<c:url value="/pdfconversion"/>"><i class="icon-list-alt"></i><span>
-									PDF Conversion</span></a></li>
+
+						<li class="accordion-menu"><a href="#collapseOne"
+							data-toggle="collapse" class="accordion-toggle"><i
+								class="icon-list-alt"></i><span> PDF Conversion <i
+									class="icon-chevron-down pull-right"></i></span></a>
+							<div class="accordion-body collapse dropdown" id="collapseOne">
+								<div class="accordion-inner">
+									<ul class="nav nav-list">
+										<li><a href="<c:url value="/pdfconversion/" />">Submit
+												PDF</a></li>
+										<li><a href="<c:url value="/pastpdf/" />">Completed</a></li>
+
+										<li><a href="<c:url value="/pendingpdf/" />">Pending</a></li>
+									</ul>
+								</div>
+							</div></li>
+
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
 							<li class="accordion-menu"><a href="#collapseOne"
 								data-toggle="collapse" class="accordion-toggle"><i

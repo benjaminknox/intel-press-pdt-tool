@@ -1,17 +1,39 @@
 package com.cec.intelpress.bookmanagement.util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import com.cec.intelpress.bookmanagement.domain.PdfBook;
+
 public class Util {
 
-	public final static String UPLOADS_DIR = "src/main/webapp/uploads/";
+//	public final static String UPLOADS_DIR = "src/main/webapp/uploads/";
+	public final static String UPLOADS_DIR = "webapps/bookmanagement/uploads/";
 	public final static String PDF_DIR = "src/main/webapp/pdfs/";
-	public static List<String> validArticleExtensions = Arrays.asList("pdf", "doc", "docx", "txt");
+	public final static String RESOURCE_DIR = "";
 	
+	public static List<String> validArticleExtensions = Arrays.asList("pdf",
+			"doc", "docx", "txt");
+	protected static Logger logger = Logger
+			.getLogger("Util");
+
 	public static String sha256HashString(String stringToHash) {
 		MessageDigest md;
 		try {
@@ -42,13 +64,12 @@ public class Util {
 		}
 
 	}
-	
+
 	/**
-	 * This is check and see if the uploads dir exists, and is a folder. 
-	 * If the folder exists we pass on by.
-	 * If the uploads directory is a file we throw an exception
-	 * If it needs to be created we create it
-	 *  
+	 * This is check and see if the uploads dir exists, and is a folder. If the
+	 * folder exists we pass on by. If the uploads directory is a file we throw
+	 * an exception If it needs to be created we create it
+	 * 
 	 * @throws Exception
 	 */
 	public static void validateUploads() throws Exception {
@@ -61,13 +82,12 @@ public class Util {
 		}
 		uploadsDir.mkdir();
 	}
-	
+
 	/**
-	 * This is check and see if the pdf dir exists, and is a folder. 
-	 * If the folder exists we pass on by.
-	 * If the uploads directory is a file we throw an exception
-	 * If it needs to be created we create it
-	 *  
+	 * This is check and see if the pdf dir exists, and is a folder. If the
+	 * folder exists we pass on by. If the uploads directory is a file we throw
+	 * an exception If it needs to be created we create it
+	 * 
 	 * @throws Exception
 	 */
 	public static void validatePdfs() throws Exception {
@@ -79,5 +99,89 @@ public class Util {
 			throw new Exception("Uploads Directory exists, but is a file?");
 		}
 		uploadsDir.mkdir();
+	}
+
+	/**
+	 * This is used by controllers when they need to deal with file uploads 
+	 * @param source
+	 * @param destination
+	 */
+	public static void writeFileToFileSystem(CommonsMultipartFile source,
+			File destination) {
+		try {
+			logger.error("Location "+destination.getAbsolutePath());
+			destination.createNewFile();
+
+			InputStream in = source.getInputStream();
+			OutputStream out = new FileOutputStream(destination);
+			byte buf[] = new byte[1024];
+			int len;
+			while ((len = in.read(buf)) > 0)
+				out.write(buf, 0, len);
+			out.close();
+			in.close();
+			logger.debug("Wrote new file to ["+destination.getAbsolutePath()+"]");
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("Error in writeFileToFileSystem");
+		}
+
+	}
+	/**
+	 * This will attempt to send a message with the supplied
+	 *  information to the PDF Conversion server
+	 *  
+	 *  Example Message:
+		{
+			type : 'convert',
+			in-format : 'pdf',
+			out-format : 'epub',
+			file-location : '/path/to/the/pdf.pdf'
+		}\n
+		
+	 *  @param the pdf domain object to convert
+	 */
+	public static void sendPdfToServer(File pdf, String id) {
+		JSONObject json = new JSONObject();
+		json.put("type", "convert");
+		json.put("in-format", "pdf");
+		json.put("out-format","epub");
+		json.put("file-location", pdf.getAbsolutePath());
+		json.put("pdf-id", id);
+		OutputStream out = null;
+		InputStream in = null;
+		Socket requestSocket = null;
+		
+		try{
+			//creating a socket to connect to the server
+			requestSocket = new Socket("localhost", 2000);
+			System.out.println("Connected to localhost in port 2000");
+			
+			//get Input and Output streams
+			out = new BufferedOutputStream(requestSocket.getOutputStream());
+			out.flush();
+			in = new BufferedInputStream(requestSocket.getInputStream());
+			
+			//Send our PDF request to the server
+			out.write(json.toJSONString().getBytes());
+			out.flush();
+		}
+		catch(UnknownHostException unknownHost){
+			System.err.println("You are trying to connect to an unknown host!");
+		}
+		catch(IOException ioException){
+			ioException.printStackTrace();
+		}
+		finally{
+			//4: Closing connection
+			try{
+				in.close();
+				out.close();
+				requestSocket.close();
+			}
+			catch(IOException ioException){
+				ioException.printStackTrace();
+			}
+		}
 	}
 }

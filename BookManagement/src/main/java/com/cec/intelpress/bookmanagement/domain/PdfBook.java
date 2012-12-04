@@ -2,10 +2,12 @@ package com.cec.intelpress.bookmanagement.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -31,6 +33,15 @@ public class PdfBook implements Serializable {
 
 	@Column(name = "isbn")
 	private String isbn;
+	
+	@Column(name = "email")
+	private String email;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private User uploader;
+	
+	@Column(name = "converted")
+	private boolean converted = false;
 	
 	@Column(name = "pdf")
 	private CommonsMultipartFile pdf;
@@ -108,5 +119,29 @@ public class PdfBook implements Serializable {
 
 	public void setPdf(CommonsMultipartFile pdf) {
 		this.pdf = pdf;
+	}
+
+	public User getUploader() {
+		return uploader;
+	}
+
+	public void setUploader(User uploader) {
+		this.uploader = uploader;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public boolean isConverted() {
+		return converted;
+	}
+
+	public void setConverted(boolean converted) {
+		this.converted = converted;
 	}
 }

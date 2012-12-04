@@ -1,7 +1,7 @@
 package com.cec.intelpress.bookmanagement.controller;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,14 +9,14 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,11 +27,14 @@ import com.cec.intelpress.bookmanagement.domain.TechnicalArticle;
 import com.cec.intelpress.bookmanagement.service.ArticleService;
 import com.cec.intelpress.bookmanagement.service.BookService;
 import com.cec.intelpress.bookmanagement.service.ChapterService;
+import com.cec.intelpress.bookmanagement.service.EmailService;
 import com.cec.intelpress.bookmanagement.service.PdfBookService;
+import com.cec.intelpress.bookmanagement.service.UserService;
 import com.cec.intelpress.bookmanagement.util.Util;
 
 /**
  * Handles and retrieves person request
+ * @param <HttpServletResponse>
  */
 @Controller
 @RequestMapping("/")
@@ -51,6 +54,12 @@ public class MainController {
 	
 	@Resource(name="PdfBookService")
 	private PdfBookService pdfService;
+	
+	@Resource(name="UserService")
+	private UserService userService;
+	
+	@Resource(name="emailService")
+	private EmailService emailService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView getMain(Model model) {
@@ -107,13 +116,8 @@ public class MainController {
 					
 					if (Util.validArticleExtensions.contains(test[1])) {
 						File dest = new File(filePath);
-						try {
-							article.getArticle().transferTo(dest);
-						} catch (IllegalStateException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						Util.writeFileToFileSystem(article.getArticle(), dest);
+
 						Chapter chapter = chapterService.get(chapterId);
 						if (chapter != null) {
 							article.setArticleName(newName);
@@ -155,29 +159,111 @@ public class MainController {
 	{
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("book", bookService.get(bookId));
+	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    String name = user.getUsername(); //get logged in username
+	    com.cec.intelpress.bookmanagement.domain.User realUser = userService.getUserByUserName(name);
+	    mav.addObject("user", realUser);
 		mav.setViewName("bookmodal");
 
 		return mav;
 	}
 	
+	@PreAuthorize("permitAll")
+	@RequestMapping(value = "/finishedconvert/{pdfid}", method = RequestMethod.GET)
+	public String getFinishedConvert(@PathVariable(value="pdfid") String pdfid) {
+		PdfBook pdf = pdfService.get(pdfid);
+		pdf.setConverted(true);
+		pdfService.edit(pdf);
+		emailService.sendPdfEmail(pdf);
+		System.out.println("Got feedback from the converter!! Email should be inc!");
+		return "redirect:/";
+	}
+	
+	@PreAuthorize("permitAll")
+	@RequestMapping(value = "/downloadepub/{pdfid}", method = RequestMethod.GET)
+	public String getdownloadPdfBook(@PathVariable(value="pdfid") String pdfid) {
+		PdfBook pdf = pdfService.get(pdfid);
+		String pdfFile = (pdf.getPdfFileName().split("\\.(?=[^\\.]+$)"))[0];
+		System.out.println("Serving Pdf Epub");
+        return "redirect:/pdfs/"+pdfFile+".epub";
+		
+	}
+	
 	@RequestMapping(value = "/pdfconversion", method = RequestMethod.GET)
 	public ModelAndView getPdfConversion(Model model) {
 		ModelAndView mav = new ModelAndView();
-
 		mav.setViewName("pdfconversion");
 		return mav;
 	}
 	
-	@RequestMapping(value = "/uploadPdf", method = RequestMethod.POST)
-	public String postUploadPdf(@ModelAttribute("pdf") PdfBook book) throws Exception {
-		System.out.println(book.getTitle());
-		System.out.println(book.getAuthor());
-		System.out.println(book.getIsbn());
-		System.out.println(book.getPdf().getOriginalFilename());
+	@RequestMapping(value = "/pastpdf", method = RequestMethod.GET)
+	public ModelAndView getPastPdf(Model model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("pastpdf");
 		
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String name = user.getUsername(); //get logged in username
+		com.cec.intelpress.bookmanagement.domain.User realUser = userService.getUserByUserName(name);
+		List<PdfBook> comppdfs = pdfService.getAllCompletedBooksByUser(realUser);
+		mav.addObject("completedPdfs", comppdfs);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/pendingpdf", method = RequestMethod.GET)
+	public ModelAndView getPendingPdf(Model model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("pendingpdf");
+		
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String name = user.getUsername(); //get logged in username
+		com.cec.intelpress.bookmanagement.domain.User realUser = userService.getUserByUserName(name);
+		List<PdfBook> nonpdfs = pdfService.getAllNonCompletedBooksByUser(realUser);
+		mav.addObject("noncompletedPdfs", nonpdfs);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/uploadPdf", method = RequestMethod.POST)
+	public ModelAndView postUploadPdf(@ModelAttribute("pdf") PdfBook book) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("pdfconversion");
+
 		String orgName = book.getPdf().getOriginalFilename();
 		String[] test = orgName.split("\\.");
-		if(test.length >= 2) {
+		
+		//Get current logged in user
+		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    String name = user.getUsername(); //get logged in username
+	    com.cec.intelpress.bookmanagement.domain.User realUser = userService.getUserByUserName(name);
+	    
+	    ArrayList<String> errors = new ArrayList<String>();
+	    
+	    boolean validForm = true;
+	    
+	    //Perform validation checks
+		if(test.length < 2) {
+			errors.add("Please upload a pdf file");
+			validForm = false;
+		} else {
+			if (!test[1].equalsIgnoreCase("pdf")) {
+				errors.add("Invalid file type");
+				validForm = false;
+			}
+		}
+		if(book.getTitle().equals("")) {
+			errors.add("Please enter a title");
+			validForm = false;
+		}
+		if (book.getAuthor().equals("")) {
+			errors.add("Please enter an author");
+			validForm = false;
+		}
+		if (book.getEmail().equals("")){
+			errors.add("Please enter a contact email");
+			validForm = false;
+		}
+	
+		//If validation has passed, lets do this!
+		if(validForm) {
 			String newName = String.valueOf(UUID.randomUUID()) +"."+test[1];
 			
 			//TODO: Dirty hacky please for the love of god change this later
@@ -185,23 +271,22 @@ public class MainController {
 			
 			//Confirm that the uploads dir exists
 			Util.validatePdfs();
-			if (test[1].equalsIgnoreCase("pdf")) {
-				File dest = new File(filePath);
-				try {
-					book.getPdf().transferTo(dest);
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				book.setPdf(null);
-				book.setPdfFileName(newName);
-				pdfService.add(book);
-				System.out.println("Created PdfBook!");
-			} 
+			File dest = new File(filePath);
+			
+			Util.writeFileToFileSystem(book.getPdf(), dest);
+	
+			book.setPdf(null);
+			book.setPdfFileName(newName);
+			book.setUploader(realUser);
+			pdfService.add(book);
+			System.out.println("Created PdfBook!");
+			
+			//Attempt to convert PDF
+			Util.sendPdfToServer(dest, book.getId());
+		} else {
+			mav.addObject("errors", errors);
 		}
-		return "redirect:/";
+		return mav;
 	}
 
 }
