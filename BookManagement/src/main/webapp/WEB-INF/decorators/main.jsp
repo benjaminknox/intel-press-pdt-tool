@@ -117,11 +117,11 @@ body {
 							</div></li>
 
 						<sec:authorize access="hasRole('ROLE_ADMIN')">
-							<li class="accordion-menu"><a href="#collapseOne"
+							<li class="accordion-menu"><a href="#collapseTwo"
 								data-toggle="collapse" class="accordion-toggle"><i
 									class="icon-warning-sign"></i><span> Admin <i
 										class="icon-chevron-down pull-right"></i></span></a>
-								<div class="accordion-body collapse dropdown" id="collapseOne">
+								<div class="accordion-body collapse dropdown" id="collapseTwo">
 									<div class="accordion-inner">
 										<ul class="nav nav-list">
 											<li><a href="<c:url value="/admin/usermanagement/" />">User

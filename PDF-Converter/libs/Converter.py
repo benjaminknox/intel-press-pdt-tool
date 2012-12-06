@@ -66,7 +66,7 @@ class ConverterProcess():
 		if not ".pdf" == self.file_extension.lower():
 			logger.error("This is not a PDF file")
 			return
-		logger.debug('Started the conversion process on %s', self.file_name)
+		logger.debug('Started the conversion process on %s.%s', (self.file_name, self.file_extension))
 		process = Popen(['ebook-convert', self.file_name + self.file_extension, ('%s.%s' % (self.file_name, self.out_format))], stdout=PIPE, stderr=PIPE)
 		return_value = process.wait()
 		return return_value
