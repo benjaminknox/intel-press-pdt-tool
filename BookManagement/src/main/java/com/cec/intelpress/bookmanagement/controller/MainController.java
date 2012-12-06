@@ -184,8 +184,7 @@ public class MainController {
 	public String getdownloadPdfBook(@PathVariable(value="pdfid") String pdfid) {
 		PdfBook pdf = pdfService.get(pdfid);
 		String pdfFile = (pdf.getPdfFileName().split("\\.(?=[^\\.]+$)"))[0];
-		System.out.println("Serving Pdf Epub");
-        return "redirect:/pdfs/"+pdfFile+".epub";
+        return "redirect:/pdfs/"+pdfFile+"."+pdf.getFormat();
 		
 	}
 	
@@ -193,6 +192,16 @@ public class MainController {
 	public ModelAndView getPdfConversion(Model model) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("pdfconversion");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/testpdf", method = RequestMethod.GET)
+	public ModelAndView getTestPdf(Model model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("pdfconversion");
+		if(Util.TestForPdfServer()) {
+			
+		}
 		return mav;
 	}
 	
@@ -261,6 +270,14 @@ public class MainController {
 			errors.add("Please enter a contact email");
 			validForm = false;
 		}
+		if (book.getFormat().equals("")) {
+			errors.add("Please select a format");
+			validForm = false;
+		}
+		if(!Util.TestForPdfServer()) {
+			mav.addObject("status", false);
+			validForm = false;
+		}
 	
 		//If validation has passed, lets do this!
 		if(validForm) {
@@ -279,10 +296,10 @@ public class MainController {
 			book.setPdfFileName(newName);
 			book.setUploader(realUser);
 			pdfService.add(book);
-			System.out.println("Created PdfBook!");
 			
 			//Attempt to convert PDF
-			Util.sendPdfToServer(dest, book.getId());
+			Util.sendPdfToServer(dest, book);
+			mav.addObject("success", true);
 		} else {
 			mav.addObject("errors", errors);
 		}

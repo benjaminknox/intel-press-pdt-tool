@@ -29,6 +29,7 @@
 		                            <th>Title</th>
 		                            <th>Author</th>
 		                            <th>Contact Email</th>
+		                            <th>Output Format</th>
 		                        </tr>
 		                    </thead>
 		                    <tbody>
@@ -37,6 +38,7 @@
 		                            <td>${pdf.title}</td> 
 									<td>${pdf.author}</td> 
  									<td>${pdf.email}</td>
+ 									<td>${pdf.format}</td>
 		                        </tr>
 		                        </c:forEach>
 		                    </tbody>

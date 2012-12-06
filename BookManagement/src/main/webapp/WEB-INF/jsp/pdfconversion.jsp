@@ -11,7 +11,17 @@
 <meta name='description' content='A simple page'>
 </head>
 <body>
+	<c:if test="${errors != null}">
+		<script>toastr.error('Please fill out all sections of the form.', 'Form Error');</script>
+	</c:if>
 
+	<c:if test="${success != null}">
+		<script>toastr.success('The supplied information has been giving to the PDF Conversion system.', 'PDF Converstion Submitted');</script>
+	</c:if>
+	
+	<c:if test="${status != null}">
+		<script>toastr.error("Couldn't connect to PDF Server", 'Server Error');</script>
+	</c:if>
 	<br />
 	<div id="content" class="row-fluid span9">
 		<div id="previous-uploads" class="span12"></div>
@@ -25,6 +35,7 @@
 				conversion process is finished.</p>
 			<c:forEach var="error" items="${errors}">
 				<p style="font-weight: bold;">${error}</p>
+				
 			</c:forEach>
 			<hr>
 			<form name='f' class="form-horizontal"
@@ -60,6 +71,30 @@
 						<div class="controls">
 							<input id="pdf" name="pdf" class="input-xlarge focused" for="pdf"
 								placeholder="pdf" type="file">
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="pdf">Output Format</label>
+						<div class="controls">
+							<select id="format" name="format">
+								<option value="epub">EPUB</option>
+								<option value="mobi">MOBI</option>
+								<option value="rtf">RTF</option>
+								<option value="txt">TXT</option>
+								<option value="azw3">AZW3</option>
+								<option value="fb2">FB2</option>
+								<option value="oeb">OEB</option>
+								<option value="lit">LIT</option>
+								<option value="lrf">LRF</option>
+								<option value="htmlz">HTMLZ</option>
+								<option value="pdb">PDB</option>
+								<option value="pml">PML</option>
+								<option value="rb">RB</option>
+								<option value="snb">SNB</option>
+								<option value="tcr">TCR</option>
+								<option value="txtz">TXTZ</option>
+							</select>
 						</div>
 					</div>
 				</fieldset>

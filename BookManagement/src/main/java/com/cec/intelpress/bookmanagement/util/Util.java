@@ -6,10 +6,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -28,6 +28,9 @@ public class Util {
 	public final static String UPLOADS_DIR = "webapps/bookmanagement/uploads/";
 	public final static String PDF_DIR = "src/main/webapp/pdfs/";
 	public final static String RESOURCE_DIR = "";
+	public final static String PDF_SERVER_LOCATION = "localhost";
+	public final static int PDF_SERVER_PORT = 2000;
+	private static final int PDF_SERVER_TIMEOUT = 500;
 	
 	public static List<String> validArticleExtensions = Arrays.asList("pdf",
 			"doc", "docx", "txt");
@@ -141,21 +144,23 @@ public class Util {
 		
 	 *  @param the pdf domain object to convert
 	 */
-	public static void sendPdfToServer(File pdf, String id) {
+	public static void sendPdfToServer(File pdf, PdfBook book) {
 		JSONObject json = new JSONObject();
 		json.put("type", "convert");
 		json.put("in-format", "pdf");
-		json.put("out-format","epub");
+		json.put("out-format", book.getFormat());
 		json.put("file-location", pdf.getAbsolutePath());
-		json.put("pdf-id", id);
+		json.put("pdf-id", book.getId());
 		OutputStream out = null;
 		InputStream in = null;
 		Socket requestSocket = null;
 		
 		try{
 			//creating a socket to connect to the server
-			requestSocket = new Socket("localhost", 2000);
-			System.out.println("Connected to localhost in port 2000");
+			SocketAddress sockaddr = new InetSocketAddress(PDF_SERVER_LOCATION, PDF_SERVER_PORT);
+			requestSocket = new Socket();
+			requestSocket.connect(sockaddr, PDF_SERVER_TIMEOUT);
+			System.out.println("Connected to "+PDF_SERVER_LOCATION+" in port "+PDF_SERVER_PORT);
 			
 			//get Input and Output streams
 			out = new BufferedOutputStream(requestSocket.getOutputStream());
@@ -172,16 +177,33 @@ public class Util {
 		catch(IOException ioException){
 			ioException.printStackTrace();
 		}
-		finally{
-			//4: Closing connection
-			try{
-				in.close();
-				out.close();
-				requestSocket.close();
-			}
-			catch(IOException ioException){
-				ioException.printStackTrace();
-			}
+		catch(Exception e) {
+			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * This will attempt to open a socket to the PDF server to confirm it is online
+	 * @return true if the server is online
+	 */
+	public static boolean TestForPdfServer() {
+		OutputStream out = null;
+		InputStream in = null;
+		Socket requestSocket = null;
+		boolean returnValue = false;
+		
+		try{
+			//creating a socket to connect to the server
+			SocketAddress sockaddr = new InetSocketAddress(PDF_SERVER_LOCATION, PDF_SERVER_PORT);
+			requestSocket = new Socket();
+			requestSocket.connect(sockaddr, PDF_SERVER_TIMEOUT);
+			System.out.println("Connected to "+PDF_SERVER_LOCATION+" in port "+PDF_SERVER_PORT);
+			returnValue = true;
+		}
+		catch(Exception exception){
+			System.err.println("You are trying to connect to an unknown host!");
+		}
+		return returnValue;
+		
 	}
 }

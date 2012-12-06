@@ -88,7 +88,6 @@ class ThreadPool:
             except Exception, excep: #IGNORE:W0703
                 logger = logging.getLogger("threadpool.worker")
                 logger.warning("A job in the ThreadPool raised an exception: ")
-                raise
                 #else do nothing cause we don't know what to do...
                 return 
                     

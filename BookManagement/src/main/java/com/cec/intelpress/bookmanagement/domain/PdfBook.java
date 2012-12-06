@@ -37,6 +37,9 @@ public class PdfBook implements Serializable {
 	@Column(name = "email")
 	private String email;
 	
+	@Column(name = "format")
+	private String format;
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	private User uploader;
 	
@@ -143,5 +146,13 @@ public class PdfBook implements Serializable {
 
 	public void setConverted(boolean converted) {
 		this.converted = converted;
+	}
+
+	public String getFormat() {
+		return format;
+	}
+
+	public void setFormat(String format) {
+		this.format = format;
 	}
 }

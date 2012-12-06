@@ -9,17 +9,12 @@ logger.setLevel(logging.DEBUG)
 BACKLOG = 5
 converter = Converter.Instance()
 
-# if __name__ == "__main__":
-#     logger.debug("PDF-Converter System Startup!")
-#     c = Converter.Instance()
-#     c.convert_file("/home/haddaway/Downloads/black-hat.epub")
-
 def pdf_conversion(message):
     ''' 
         Attempt to convert a pdf into a supplied format
     '''
     try:
-        if message['out-format'].lower() == "epub":
+        if message['out-format'] in converter.TYPES:
             converter.convert_file(message)
             logger.debug("Queued File!")
     except Exception:

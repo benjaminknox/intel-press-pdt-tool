@@ -1,79 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-  <servlet>
-    <servlet-name>spring</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  
-  <context-param>
-	<param-name>contextConfigLocation</param-name>
-	<param-value>
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<servlet>
+		<servlet-name>spring</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
 	    /WEB-INF/applicationContext.xml,
 	    /WEB-INF/hibernate-context.xml,
 	    /WEB-INF/spring-servlet.xml,
 		/WEB-INF/spring-security.xml
 	</param-value>
-  </context-param>
-	
-  <servlet-mapping>
-    <servlet-name>spring</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>
-  
-  <!-- Spring Security -->
-  <filter>
-    <filter-name>springSecurityFilterChain</filter-name>
-    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-  </filter>
-  
-  <filter-mapping>
-    <filter-name>springSecurityFilterChain</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  
-  <!-- Site Mesh -->
-  <filter>
-    <filter-name>sitemesh</filter-name>
-    <filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
-  </filter>
-  
-  <filter-mapping>
-    <filter-name>sitemesh</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  
-  
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-  
-  <!--  Added for serving more types of resources -->
+	</context-param>
+
+	<servlet-mapping>
+		<servlet-name>spring</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<!-- Spring Security -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- Site Mesh -->
+	<filter>
+		<filter-name>sitemesh</filter-name>
+		<filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>sitemesh</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Added for serving more types of resources -->
 	<mime-mapping>
-	   <extension>pdf</extension>
-	    <mime-type>application/pdf</mime-type>
+		<extension>pdf</extension>
+		<mime-type>application/pdf</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>ico</extension>
+		<mime-type>image/ico</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>doc</extension>
+		<mime-type>application/msword</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>docx</extension>
+		<mime-type>application/vnd.openxmlformats-officedocument.wordprocessingml.document</mime-type>
+	</mime-mapping>
+
+	<!-- PDF Conveter Output formats -->
+	<mime-mapping>
+		<extension>epub</extension>
+		<mime-type>application/epub+zip</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>mobi</extension>
+		<mime-type>application/x-mobipocket-ebook</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>rtf</extension>
+		<mime-type>application/rtf</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>txt</extension>
+		<mime-type>application/txt</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>azw3</extension>
+		<mime-type>application/x-mobipocket-ebook</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>fb2</extension>
+		<mime-type>application/x-fictionbook</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>oeb</extension>
+		<mime-type>text/x-oeb1-document</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>lit</extension>
+		<mime-type>application/x-ms-reader</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>lrf</extension>
+		<mime-type>application/x-sony-bbeb</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>htmlz</extension>
+		<mime-type>application/html</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>pdb</extension>
+		<mime-type>application/vnd.palm</mime-type>
+	</mime-mapping>
+
+	<mime-mapping>
+		<extension>pml</extension>
+		<mime-type>application/vnd.ctc-posml</mime-type>
 	</mime-mapping>
 	
 	<mime-mapping>
-	   <extension>ico</extension>
-	    <mime-type>image/ico</mime-type>
+		<extension>rb</extension>
+		<mime-type>application/text</mime-type>
 	</mime-mapping>
-	
+
 	<mime-mapping>
-	   <extension>doc</extension>
-	    <mime-type>application/msword</mime-type>
+		<extension>snb</extension>
+		<mime-type>application/text</mime-type>
 	</mime-mapping>
-	
-		<mime-mapping>
-	   <extension>docx</extension>
-	    <mime-type>application/vnd.openxmlformats-officedocument.wordprocessingml.document</mime-type>
-	</mime-mapping>
-	
+
 	<mime-mapping>
-	   <extension>epub</extension>
-	    <mime-type>application/epub+zip</mime-type>
+		<extension>tcr</extension>
+		<mime-type>application/vnd.amazon.ebook</mime-type>
 	</mime-mapping>
-	
-	
+
+	<mime-mapping>
+		<extension>txtz</extension>
+		<mime-type>application/text</mime-type>
+	</mime-mapping>
 </web-app>
 

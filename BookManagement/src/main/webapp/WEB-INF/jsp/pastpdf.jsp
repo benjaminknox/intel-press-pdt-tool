@@ -35,6 +35,7 @@
 													<th>Title</th>
 													<th>Author</th>
 													<th>Contact Email</th>
+													<th>Output Format</th>
 													<th>Actions</th>
 												</tr>
 											</thead>
@@ -44,9 +45,10 @@
 														<td>${pdf.title}</td>
 														<td>${pdf.author}</td>
 														<td>${pdf.email}</td>
+														<td>${pdf.format}</td>
 														<td class="center"><a
 															href="<c:url value="/downloadepub/${pdf.id}" />"
-															class="btn btn-success" title="Download Epub"><i
+															class="btn btn-success" title="Download"><i
 																class="icon-arrow-down icon-white"></i></a></td>
 													</tr>
 												</c:forEach>

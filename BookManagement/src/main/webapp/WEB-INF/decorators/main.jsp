@@ -15,11 +15,13 @@
 <!-- Le styles -->
 <!-- bootstrap css -->
 <link href="/bookmanagement/css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/toastr.css" rel="stylesheet"/>
 <!-- base css -->
 <link class="links-css" href="/bookmanagement/css/darkblue.css"
 	rel="stylesheet" />
 
 <script src="/bookmanagement/js/jquery.min.js"></script>
+<script src="/bookmanagement/js/toastr.js"></script>
 
 <!-- inbox page css -->
 <link href="/bookmanagement/css/inbox.css" rel="stylesheet" />
