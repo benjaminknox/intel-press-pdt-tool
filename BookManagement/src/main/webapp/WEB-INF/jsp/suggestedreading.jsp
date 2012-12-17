@@ -22,6 +22,29 @@
 
 		}
 	</script>
+	
+	<!-- Error and Status notifications -->
+	<c:if test="${status != null}" >
+		<script>toastr.success('${status}');</script>
+	</c:if>
+	
+	<script>
+	$(document).ready(function() {
+	    // to show it in an alert window
+	    //alert(window.location);
+
+	    // to store it in a variable
+	    var loc = window.location.toString();
+	    var successCode = loc.split("#success=")[1];
+	    if (successCode == "1" ) {
+	    	toastr.success("Succesfully uploaded article");
+	    }
+	    if (successCode == "2") {
+	    	toastr.success("Succesfully assigned chapter");
+	    }
+	});
+	</script>
+	
 	<br />
 	<div id="content" class="row-fluid span9">
 		<div class="row">

@@ -15,8 +15,7 @@
 		<div id="section-body" class="tabbable">
 			<!-- Only required for left/right tabs -->
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="#tab1" data-toggle="tab">User
-						Roles</a></li>
+				<li class="active"><a href="#tab1" data-toggle="tab">All Pdfs Uploaded</a></li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane active" id="tab1">
@@ -42,13 +41,7 @@
 											<td class="center"><a
 												href="<c:url value="/admin/pdfmanagement/delpdf/${pdf.id}" />"
 												class="btn btn-danger" title="Remove"><i
-													class="icon-remove icon-white"></i></a>
-													<a href="<c:url value="/admin/pdfmanagement/ebooks/${pdf.id}" />"
-												class="btn btn-inverse" title="Upload Ebooks"><i
-													class="icon-book icon-white"></i></a>
-													<a href="<c:url value="/admin/pdfmanagement/convertEbook/${pdf.id}" />"
-												class="btn btn-inverse" title="Publish Book"><i
-													class="icon-book icon-white"></i></a></td>
+													class="icon-remove icon-white"></i></a></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -59,9 +52,6 @@
 			</div>
 		</div>
 		<div align="right">
-			<a href="#createNewRole" role="button" class="btn"
-				data-toggle="modal">Create New Role</a> <a href="#addRoleToUser"
-				role="button" class="btn" data-toggle="modal">Add Role To User</a>
 		</div>
 		<br />
 	</div>

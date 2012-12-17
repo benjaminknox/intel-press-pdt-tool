@@ -92,7 +92,7 @@ public class MainController {
 			mav.addObject("chapter", chapter);
 		}
 		else {
-			mav.setViewName("/");
+			mav.setViewName("suggestedreading");
 		}
 		return mav;
 	}
@@ -139,7 +139,7 @@ public class MainController {
 				return "redirect:/uploadArticle/"+chapterId+"#error=3";
 			}
 		}
-		return "redirect:/suggestedreading";
+		return "redirect:/suggestedreading#success=1";
 
 	}
 	
@@ -191,17 +191,10 @@ public class MainController {
 	@RequestMapping(value = "/pdfconversion", method = RequestMethod.GET)
 	public ModelAndView getPdfConversion(Model model) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("pdfconversion");
-		return mav;
-	}
-	
-	@RequestMapping(value = "/testpdf", method = RequestMethod.GET)
-	public ModelAndView getTestPdf(Model model) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("pdfconversion");
-		if(Util.TestForPdfServer()) {
-			
+		if(!Util.TestForPdfServer()) {
+			mav.addObject("serverStatus", false);
 		}
+		mav.setViewName("pdfconversion");
 		return mav;
 	}
 	

@@ -21,6 +21,7 @@
 					<div class="row-fluid">
 						<!--Tabs2-->
 						<div class="span12">
+							<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 							<p><b>Total Books:</b> <span style="font-size:200%" >${bookCount}</span></p>
 							<p><b>Total Chapters:</b> <span style="font-size:200%" >${chapterCount}</span></p>
 							<p><b>Technical Articles Progress:</b> <span style="font-size:200%" ><i>${totalArticles}</i><b>/${totalArticles+uncompletedArticles}</b></span></p>
@@ -33,5 +34,57 @@
 			</div>
 		</div>
 	</div>
+	
+		<script>
+	    var chart;
+	    $(document).ready(function() {
+	        chart = new Highcharts.Chart({
+	            chart: {
+	                renderTo: 'container',
+	                plotBackgroundColor: null,
+	                plotBorderWidth: null,
+	                plotShadow: false
+	            },
+	            title: {
+	                text: 'Browser market shares at a specific website, 2010'
+	            },
+	            tooltip: {
+	                pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+	                percentageDecimals: 1
+	            },
+	            plotOptions: {
+	                pie: {
+	                    allowPointSelect: true,
+	                    cursor: 'pointer',
+	                    dataLabels: {
+	                        enabled: true,
+	                        color: '#000000',
+	                        connectorColor: '#000000',
+	                        formatter: function() {
+	                            return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
+	                        }
+	                    }
+	                }
+	            },
+	            series: [{
+	                type: 'pie',
+	                name: 'Browser share',
+	                data: [
+	                    ['Firefox',   45.0],
+	                    ['IE',       26.8],
+	                    {
+	                        name: 'Chrome',
+	                        y: 12.8,
+	                        sliced: true,
+	                        selected: true
+	                    },
+	                    ['Safari',    8.5],
+	                    ['Opera',     6.2],
+	                    ['Others',   0.7]
+	                ]
+	            }]
+	        });
+	    });
+	    </script>
 </body>
 </html>

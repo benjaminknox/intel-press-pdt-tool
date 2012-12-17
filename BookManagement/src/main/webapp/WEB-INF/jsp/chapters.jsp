@@ -14,7 +14,7 @@
 	</script>
 	<br />
 	<div id="content" class="row-fluid span8">
-		<div class="row">
+		<div class="row row-fluid">
 			<div class="span2">
 				<h1>${book.title}</h1>
 
@@ -24,9 +24,10 @@
 				</div>
 			</div>
 
-			<div id="chapter-list-container" class="span10">
+			<div id="chapter-list-container row-fluid" class="span9">
 				<h2>Chapters</h2>
-				<table class="table table-bordered table-striped" id="example">
+				
+				<table class="table table-bordered table-striped" >
 					<thead>
 						<tr>
 							<th>Number</th>
@@ -54,7 +55,10 @@
 									</c:otherwise>
 								</c:choose>
 								<td>${chapter.article}</td>
-								<td class="center"><a
+								<td class="center">
+								<a href="<c:url value="/admin/bookmanagement/editchapter/${chapter.id}" />"
+												class="btn btn-warning" title="Edit"><i
+													class="icon-edit icon-white"></i></a> <a
 									href="<c:url value="/admin/bookmanagement/deleteChapter/${chapter.id}" />"
 									class="btn btn-danger" title="Remove"><i
 										class="icon-remove icon-white"></i></a></td>
@@ -63,13 +67,25 @@
 						</c:forEach>
 					</tbody>
 				</table>
+				
 			</div>
-			<div align="right">
+			
+			
+			
+			
+			<br />
+		</div>
+		<br />
+		<div class="row row-fluid">
+			<div class="span6" align="left">
+				<a class="btn" href="/bookmanagement/admin/bookmanagement/" >Back</a>
+			</div>
+			<div class="span6" align="right">
 				<a href="#addChapter" role="button" class="btn" data-toggle="modal">Add
 					Chapter</a>
 			</div>
-			<br />
 		</div>
+			<br />
 		<!-- Row -->
 	</div>
 	<br />

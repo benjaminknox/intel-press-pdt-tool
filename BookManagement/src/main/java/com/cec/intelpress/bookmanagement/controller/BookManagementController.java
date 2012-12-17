@@ -107,6 +107,38 @@ public class BookManagementController {
 			
 			return mav;
 	}
+	
+	/**
+	 * This is used to edit an existing chapter
+	 * @param chapterid the chapter to edit
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/editchapter/{chapterid}", method = RequestMethod.GET)
+	public ModelAndView getEditChapter(@PathVariable(value = "chapterid") int chapterid) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			Chapter chapter = chapterService.get(chapterid);
+			mav.setViewName("editchapter");
+			mav.addObject("chapter", chapter);
+			return mav;
+	}
+	
+	/**
+	 * This is used to update an existing chapter
+	 * @param chapterid the chapter to edit
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/editchapter/{chapterid}", method = RequestMethod.POST)
+	public String postEditChapter(@ModelAttribute("chapter") Chapter chapter, @PathVariable(value = "chapterid") int chapterid) throws Exception {
+			chapterService.edit(chapter, chapterid);
+			
+			Chapter old = chapterService.get(chapterid);
+			String bookId = old.getBook().getId();
+			
+			return "redirect:/admin/bookmanagement/chapters/"+bookId;
+	}
+	
 	/**
 	 * This allows an admin to assign a chapter to a given user
 	 * @param chapter
@@ -147,7 +179,7 @@ public class BookManagementController {
 			chapterService.edit(chapter);
 		}
 		
-		return "redirect:/suggestedreading";
+		return "redirect:/suggestedreading#success=2";
 	}
 	
 	/**
@@ -166,15 +198,7 @@ public class BookManagementController {
 			Book book = chapter.getBook();
 			book.getBookChapters().remove(chapter);
 			bookService.edit(book);
-			if(chapter.getArticle() != null) {
-				articleService.delete(chapter.getArticle().getId());
-
-			}
-
-			chapter.setAssignedUser(null);
-			chapterService.edit(chapter);
 			chapterService.delete(chapterId);
-
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("chapters");
 			mav.addObject("book", book);
@@ -210,6 +234,41 @@ public class BookManagementController {
 	public String delBook(@PathVariable(value = "bookid") String bookId) {
 
 		bookService.delete(bookId);
+		return "redirect:/admin/bookmanagement/";
+	}
+	
+	@RequestMapping(value = "/editbook/{bookid}", method = RequestMethod.GET)
+	public ModelAndView getEditBook(@PathVariable(value = "bookid") String bookId) {
+		ModelAndView mav = new ModelAndView();
+		Book book = bookService.get(bookId);
+		mav.addObject("book", book);
+		mav.setViewName("editbook");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/editbook/{bookid}", method = RequestMethod.POST)
+	public String postEditBook(@PathVariable(value = "bookid") String bookId, @ModelAttribute("book") Book book,
+			BindingResult result) throws Exception {
+
+		String orgName = book.getBookcover().getOriginalFilename();
+		String[] test = orgName.split("\\.");
+		String newName = String.valueOf(UUID.randomUUID()) +"."+test[1];
+		
+		//TODO: Dirty hacky please for the love of god change this later
+		String filePath = Util.UPLOADS_DIR + newName;
+		
+		//Confirm that the uploads dir exists
+		Util.validateUploads();
+		
+		File dest = new File(filePath);
+		Util.writeFileToFileSystem(book.getBookcover(), dest);
+		
+		book.setBookcovername(newName);
+		book.setBookcover(null);
+		
+		bookService.edit(book, bookId);
+
+		logger.info("Updated book!");
 		return "redirect:/admin/bookmanagement/";
 	}
 

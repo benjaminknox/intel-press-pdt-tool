@@ -93,6 +93,7 @@ public class PdfBookService {
 		Session session = sessionFactory.getCurrentSession();
 
 		PdfBook book = (PdfBook) session.get(PdfBook.class, pdfid);
+		book.setUploader(null);
 		session.delete(book);
 	}
 

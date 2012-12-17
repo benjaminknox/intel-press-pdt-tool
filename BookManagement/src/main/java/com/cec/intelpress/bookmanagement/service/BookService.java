@@ -3,6 +3,7 @@ package com.cec.intelpress.bookmanagement.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cec.intelpress.bookmanagement.domain.Book;
+import com.cec.intelpress.bookmanagement.domain.Chapter;
 
 @Service("BookService")
 @Transactional
@@ -23,7 +25,13 @@ public class BookService {
 
 	@Resource(name = "sessionFactory")
 	private SessionFactory sessionFactory;
-
+	
+	@Resource(name = "ChapterService")
+	private ChapterService chapterService;
+	
+	@Resource(name = "PdfBookService")
+	private PdfBookService pdfService;
+	
 	public List<Book> getAll() {
 		logger.debug("Retrieving all persons");
 
@@ -71,13 +79,19 @@ public class BookService {
 		Session session = sessionFactory.getCurrentSession();
 
 		Book book = (Book) session.get(Book.class, id);
-		book.getBookChapters().clear();
+		Set<Chapter> chapters = book.getBookChapters();
+		//Have to remove all of the chapters before we can kill the book
+		for (Chapter chapter : chapters) {
+			chapterService.delete(chapter.getId());
+		}
 		session.delete(book);
 	}
 
+	/**
+	 * Updates the books information from the java object
+	 * @param book the new book 
+	 */
 	public void edit(Book book) {
-		logger.debug("Editing existing person");
-
 		Session session = sessionFactory.getCurrentSession();
 
 		Book existingBook = (Book) session.get(Book.class, book.getId());
@@ -91,6 +105,30 @@ public class BookService {
 		existingBook.setPublisher(book.getPublisher());
 		existingBook.setSuggestedReading(book.getSuggestedReading());
 		existingBook.setTitle(book.getTitle());
+		existingBook.setBookcovername(book.getBookcovername());
+		session.merge(existingBook);
+	}
+	
+	/**
+	 * This updates the book attached to the old ID with the content of the Book object passed in.
+	 * @param book new content
+	 * @param oldBookId old database object
+	 */
+	public void edit(Book book, String oldBookId) {
+		Session session = sessionFactory.getCurrentSession();
+
+		Book existingBook = (Book) session.get(Book.class, oldBookId);
+		existingBook.setAuthor(book.getAuthor());
+		existingBook.setBookChapters(book.getBookChapters());
+		existingBook.setBookcover(book.getBookcover());
+		existingBook.setBuyurl(book.getBuyurl());
+		existingBook.setCategory(book.getCategory());
+		existingBook.setDescription(book.getDescription());
+		existingBook.setIsbn(book.getIsbn());
+		existingBook.setPublisher(book.getPublisher());
+		existingBook.setSuggestedReading(book.getSuggestedReading());
+		existingBook.setTitle(book.getTitle());
+		existingBook.setBookcovername(book.getBookcovername());
 		session.merge(existingBook);
 	}
 }

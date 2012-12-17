@@ -19,7 +19,7 @@ public class Bootstrap implements ApplicationListener<ContextRefreshedEvent> {
 	private String lastname = "Admin";
 	private String email = "admin@admin.com";
 	private String username = "admin";
-	private String password = "dongs";
+	private String password = "1234";
 
 	@Resource(name="UserService")
 	private UserService userService;

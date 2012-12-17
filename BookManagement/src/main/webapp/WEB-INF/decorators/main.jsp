@@ -22,6 +22,9 @@
 
 <script src="/bookmanagement/js/jquery.min.js"></script>
 <script src="/bookmanagement/js/toastr.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
 
 <!-- inbox page css -->
 <link href="/bookmanagement/css/inbox.css" rel="stylesheet" />

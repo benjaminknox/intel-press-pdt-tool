@@ -66,11 +66,20 @@
 					</div>
 					
 				</fieldset>
-				<div class="modal-footer" style="height: 15px;">
-					<button type="submit" class="btn btn-primary">Upload Article</button>
+				<div class="modal-footer row-fluid" style="height: 15px;">
+				<div class="span1" >
+				<a class="btn" class="span6" href="/bookmanagement/suggestedreading" > Back
+				</a>
 				</div>
+					<div class="span10">
+					<button type="submit" class="btn btn-primary">Upload Article</button>
+					</div>
+				</div>
+				
 			</form>
+			
 			</div>
+				
 			<br />
 		</div>
 		<!-- Row -->

@@ -16,7 +16,7 @@
 	</c:if>
 
 	<c:if test="${success != null}">
-		<script>toastr.success('The supplied information has been giving to the PDF Conversion system.', 'PDF Converstion Submitted');</script>
+		<script>toastr.success('The supplied information has been given to the PDF Conversion system.', 'PDF Converstion Submitted');</script>
 	</c:if>
 	
 	<c:if test="${status != null}">
@@ -37,6 +37,15 @@
 				<p style="font-weight: bold;">${error}</p>
 				
 			</c:forEach>
+			<hr>
+			<h3>Server Status: 
+			<c:if test="${serverStatus == false}">
+				<div class="btn btn-danger">DOWN</div>
+			</c:if>
+			<c:if test="${serverStatus != false}">
+				<div class="btn btn-success">UP</div>
+			</c:if>
+			</h3>
 			<hr>
 			<form name='f' class="form-horizontal"
 				action="<c:url value='/uploadPdf' />" method='POST'

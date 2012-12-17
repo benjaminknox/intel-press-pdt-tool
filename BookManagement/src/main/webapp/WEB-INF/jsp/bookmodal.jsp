@@ -19,9 +19,6 @@
 		<p>${book.description}</p>
 	</div>
 	<c:if test="${fn:length(book.bookChapters) > 0}" >
-	<div class="center">
-		<h3>Chapters</h3>
-	</div>
 	
 	<table class="table table-bordered table-striped" id="example">
 		<thead>
@@ -29,6 +26,7 @@
 				<th>Number</th>
 				<th>Name</th>
 				<th>Technical Article</th>
+				<th>Assignee</th>
 				<th>Article</th>
 				<th>Actions</th>
 			</tr>
@@ -59,9 +57,11 @@
 						</c:otherwise>
 					</c:choose>
 
+					<td>${chapter.assignedUser.firstname}</td>
+
 					<c:choose>
 						<c:when test="${chapter.technical && chapter.article != null }">
-							<td><a class="btn btn-info"
+							<td><a class="btn btn-maniadmin-8"
 								href="<c:url value="/uploads/${chapter.article.articleName}"/>"><i
 									class="icon-circle-arrow-down"></i></a></td>
 						</c:when>
@@ -72,20 +72,33 @@
 					<c:choose>
 						<c:when test="${chapter.technical && chapter.article == null && user.id == chapter.assignedUser.id}">
 							<td class="center"><a title="Upload Article"
-								class="btn btn-success"
+								class="btn btn-inverse"
 								href="/bookmanagement/uploadArticle/${chapter.id}">
 									<i class="icon-white icon-circle-arrow-up"></i>
 							</a></td>
 						</c:when>
 						
 						<c:otherwise>
-							<td class="center"></td>
+							<!--  Admins can always upload, so make sure we display the button -->
+							<sec:authorize access="hasRole('ROLE_ADMIN')">
+								<td class="center"><a title="Upload Article"
+								class="btn btn-inverse"
+								href="/bookmanagement/uploadArticle/${chapter.id}">
+									<i class="icon-white icon-circle-arrow-up"></i>
+								</a></td>
+							</sec:authorize>
+							
+							<!-- We arent the assigned user or an Admin -->
+							<sec:authorize access="!hasRole('ROLE_ADMIN')">
+								<td class="center"></td>
+							</sec:authorize>
 						</c:otherwise>
 					</c:choose>
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<c:choose>
-							<c:when test="${chapter.technical}">							
-								<td class="center"><a title="Assign Article"
+							<c:when test="${chapter.technical}">
+								<td>							
+								<a title="Assign Article"
 									class="btn btn-success"
 									href="/bookmanagement/admin/bookmanagement/assignChapter/${chapter.id}">
 										<i class="icon-white icon-pencil"></i>
