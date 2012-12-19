@@ -32,6 +32,7 @@ public class Util {
 	public final static String PDF_SERVER_LOCATION = "localhost";
 	public final static int PDF_SERVER_PORT = 2000;
 	private static final int PDF_SERVER_TIMEOUT = 500;
+	public static final String RESET_PASSWORD = "1234";
 	
 	public static List<String> validArticleExtensions = Arrays.asList("pdf",
 			"doc", "docx", "txt");

@@ -1,7 +1,6 @@
 package com.cec.intelpress.bookmanagement.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -50,10 +49,7 @@ public class BookService {
 		
 		for(Book book : (List<Book>)query.list())
 		{
-			if(book.getSuggestedReading() == true)
-			{
 				suggestedBookList.add(book);
-			}
 		}
 		
 		return suggestedBookList;
@@ -103,7 +99,6 @@ public class BookService {
 		existingBook.setDescription(book.getDescription());
 		existingBook.setIsbn(book.getIsbn());
 		existingBook.setPublisher(book.getPublisher());
-		existingBook.setSuggestedReading(book.getSuggestedReading());
 		existingBook.setTitle(book.getTitle());
 		existingBook.setBookcovername(book.getBookcovername());
 		session.merge(existingBook);
@@ -126,7 +121,6 @@ public class BookService {
 		existingBook.setDescription(book.getDescription());
 		existingBook.setIsbn(book.getIsbn());
 		existingBook.setPublisher(book.getPublisher());
-		existingBook.setSuggestedReading(book.getSuggestedReading());
 		existingBook.setTitle(book.getTitle());
 		existingBook.setBookcovername(book.getBookcovername());
 		session.merge(existingBook);

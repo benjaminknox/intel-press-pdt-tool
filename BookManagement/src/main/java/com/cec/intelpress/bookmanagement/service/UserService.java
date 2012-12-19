@@ -84,6 +84,24 @@ public class UserService {
 		existingUser.setUserRoles(user.getUserRoles());
 		session.merge(existingUser);
 	}
+	
+	/**
+	 * This updates the user attached to the old ID with the content of the new User object passed in
+	 * @param user new content
+	 * @param oldUserId old database ID
+	 */
+	public void edit(User user, int oldUserId) {
+		logger.debug("Editing existing person");
+
+		Session session = sessionFactory.getCurrentSession();
+
+		User existingUser = (User) session.get(User.class, oldUserId);
+		existingUser.setUsername(user.getUsername());
+		existingUser.setFirstname(user.getFirstname());
+		existingUser.setLastname(user.getLastname());
+		existingUser.setEmail(user.getEmail());
+		session.update(existingUser);
+	}
 
 	public void merge(User user, User userToMerge) {
 		logger.debug("Editing existing person");

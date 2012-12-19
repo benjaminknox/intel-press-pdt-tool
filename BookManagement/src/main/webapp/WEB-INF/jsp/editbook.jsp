@@ -11,6 +11,18 @@
 <meta name='description' content='A simple page'>
 </head>
 <body>
+
+	<script>
+	$(document).ready(function() {
+	    // to store it in a variable
+	    var loc = window.location.toString();
+	    var errorCode = loc.split("#error=")[1];
+	    if (errorCode == "1" ) {
+	    	toastr.error("Please select a book cover");
+	    }
+	});
+	</script>
+
 	
 	<br />
 	<div id="content" class="row-fluid span8">

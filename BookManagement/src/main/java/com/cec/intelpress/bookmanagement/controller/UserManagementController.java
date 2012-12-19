@@ -72,4 +72,38 @@ public class UserManagementController {
 		logger.info("Created new user:" + user.getUsername());
 		return "redirect:/admin/usermanagement/";
 	}
+	
+	@RequestMapping(value = "/resetpassword/{id}", method = RequestMethod.GET)
+	public ModelAndView resetPasswordGet(@PathVariable(value = "id") int id) {
+		User user = userService.get(id);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("resetpassword");
+		mav.addObject("user", user);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/resetpassword/{id}", method = RequestMethod.POST)
+	public String resetPasswordPost(@PathVariable(value = "id") int id) {
+		User user = userService.get(id);
+		user.setPassword(Util.sha256HashString(Util.RESET_PASSWORD));
+		userService.edit(user);
+		return "redirect:/admin/usermanagement/#succes=1";
+	}
+	
+	@RequestMapping(value = "/edituser/{id}", method = RequestMethod.GET)
+	public ModelAndView editUser(@PathVariable(value = "id") int id) {
+		User user = userService.get(id);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("edituser");
+		mav.addObject("user", user);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/edituser/{id}", method = RequestMethod.POST)
+	public String editUserPost(@PathVariable(value = "id") int id, @ModelAttribute("user") User user,
+			BindingResult result) {
+		
+		userService.edit(user, id);
+		return "redirect:/admin/usermanagement/";
+	}
 }

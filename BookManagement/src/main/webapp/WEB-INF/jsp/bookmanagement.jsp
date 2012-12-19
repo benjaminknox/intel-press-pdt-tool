@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 <html>
 <head>
 <title>Intel Press Management</title>
@@ -22,6 +23,15 @@
 	
 	</script>
 
+	<!-- Error and Status notifications -->
+	<c:if test="${status != null}" >
+		<script>toastr.success('${status}');</script>
+	</c:if>
+	<c:if test="${fn:length(errors) > 0}" >
+		<script>toastr.error('Please correct the form errors');</script>
+	</c:if>
+	
+
 	<!--/span-->
 	<div id="content" class="span9 section-body">
 		<div id="section-body" class="tabbable">
@@ -34,6 +44,12 @@
 					<div class="row-fluid">
 						<!--Tabs2-->
 						<div class="span12">
+							<div>
+								<c:forEach var="error" items="${errors}">
+									<p style="font-weight:bold;" >${error}</p>
+								</c:forEach>
+								<br />
+							</div>
 							<table class="table table-bordered table-striped pull-left"
 								id="example">
 								<thead>
@@ -44,7 +60,6 @@
 										<th>Publisher</th>
 										<th>ISBN</th>
 										<th>Category</th>
-										<th>SuggestedReading</th>
 										<th>Actions</th>
 									</tr>
 								</thead>
@@ -58,7 +73,6 @@
 											<td>${book.publisher}</td>
 											<td>${book.isbn}</td>
 											<td>${book.category}</td>
-											<td>${book.suggestedReading}</td>
 											<td class="center">
 											<a href="<c:url value="/admin/bookmanagement/chapters/${book.id}" />"
 												class="btn btn-success" title="Chapters"><i
@@ -162,16 +176,6 @@
 						<div class="controls">
 							<input id="buyurl" name="buyurl" class="input-xlarge focused"
 								placeholder="buyurl" type="text">
-						</div>
-					</div>
-
-					<div class="control-group">
-						<label class="control-label" for="suggestedReading">Suggested
-							Reading</label>
-						<div class="controls">
-							<input id="suggestedReading" name="suggestedReading"
-								class="input-xlarge focused" path="suggestedReading"
-								placeholder="suggestedReading" type="checkbox">
 						</div>
 					</div>
 

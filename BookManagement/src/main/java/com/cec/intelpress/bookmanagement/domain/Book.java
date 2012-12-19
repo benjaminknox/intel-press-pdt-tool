@@ -59,9 +59,6 @@ public class Book implements Serializable {
 	@Column(name = "category")
 	private String category;
 
-	@Column(name = "suggestedreading")
-	private Boolean suggestedreading;
-	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "book_chapters", joinColumns = { @JoinColumn(name = "book_id", nullable = false, updatable = true) }, inverseJoinColumns = { @JoinColumn(name = "chapter_id", nullable = false, updatable = true) })
 	@OrderBy("chapterNumber")
@@ -129,14 +126,6 @@ public class Book implements Serializable {
 
 	public void setBookChapters(Set<Chapter> bookChapters) {
 		this.bookChapters = bookChapters;
-	}
-
-	public Boolean getSuggestedReading() {
-		return suggestedreading;
-	}
-
-	public void setSuggestedReading(Boolean suggestedReading) {
-		this.suggestedreading = suggestedReading;
 	}
 
 	public CommonsMultipartFile getBookcover() {

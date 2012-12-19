@@ -15,7 +15,7 @@
 <!-- Le styles -->
 <!-- bootstrap css -->
 <link href="/bookmanagement/css/bootstrap.min.css" rel="stylesheet" />
-<link href="css/toastr.css" rel="stylesheet"/>
+<link href="/bookmanagement/css/toastr.css" rel="stylesheet"/>
 <!-- base css -->
 <link class="links-css" href="/bookmanagement/css/darkblue.css"
 	rel="stylesheet" />

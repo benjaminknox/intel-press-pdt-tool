@@ -1,6 +1,7 @@
 package com.cec.intelpress.bookmanagement.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -206,28 +207,76 @@ public class BookManagementController {
 	}
 
 	@RequestMapping(value = "/addbook", method = RequestMethod.POST)
-	public String addBook(@ModelAttribute("book") Book book,
+	public ModelAndView addBook(@ModelAttribute("book") Book book,
 			BindingResult result) throws Exception {
 
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("bookmanagement");
 		String orgName = book.getBookcover().getOriginalFilename();
 		String[] test = orgName.split("\\.");
-		String newName = String.valueOf(UUID.randomUUID()) +"."+test[1];
 		
-		//TODO: Dirty hacky please for the love of god change this later
-		String filePath = Util.UPLOADS_DIR + newName;
-		
-		//Confirm that the uploads dir exists
-		Util.validateUploads();
-		
-		File dest = new File(filePath);
-		Util.writeFileToFileSystem(book.getBookcover(), dest);
-		
-		book.setBookcovername(newName);
-		book.setBookcover(null);
-		bookService.add(book);
+		boolean validForm = true;
+	    ArrayList<String> errors = new ArrayList<String>();
 
-		logger.info("Added new book");
-		return "redirect:/admin/bookmanagement/";
+		/** Validation checks **/
+		if(book.getTitle().equals("")){
+			errors.add("Please enter a title");
+			validForm = false;
+		}
+		if (book.getAuthor().equals("")) {
+			errors.add("Please enter an author");
+			validForm = false;
+		}
+		if(book.getPublisher().equals("")) {
+			errors.add("Please enter a publisher");
+			validForm = false;
+		}
+		if(book.getIsbn().equals("")){
+			errors.add("Please enter an ISBN");
+			validForm = false;
+		}
+		if(book.getDescription().equals("")){
+			errors.add("Please enter a book description");
+			validForm = false;
+		}
+		if(book.getCategory().equals("")){
+			errors.add("Please enter the book category");
+			validForm = false;
+		}
+		if(test.length < 2){
+			errors.add("Please select a book cover");
+			validForm = false;
+		}
+		if(book.getBuyurl().equals("")) {
+			errors.add("Please enter the url of where to purchase this book");
+			validForm = false;
+		}
+		/** End of Validation Checks! **/
+		if(validForm) {
+			String newName = String.valueOf(UUID.randomUUID()) +"."+test[1];
+			
+			//TODO: Dirty hacky please for the love of god change this later
+			String filePath = Util.UPLOADS_DIR + newName;
+			
+			//Confirm that the uploads dir exists
+			Util.validateUploads();
+			
+			File dest = new File(filePath);
+			Util.writeFileToFileSystem(book.getBookcover(), dest);
+			
+			book.setBookcovername(newName);
+			book.setBookcover(null);
+			bookService.add(book);
+			mav.addObject("status", "Succesfully created new book");
+			logger.info("Added new book");
+		}
+		
+		List<Book> books = bookService.getAll();
+		mav.addObject("books", books);
+		mav.addObject("errors", errors);
+		return mav;
+
 	}
 
 	@RequestMapping(value = "/delbook/{bookid}", method = RequestMethod.GET)
@@ -252,24 +301,31 @@ public class BookManagementController {
 
 		String orgName = book.getBookcover().getOriginalFilename();
 		String[] test = orgName.split("\\.");
-		String newName = String.valueOf(UUID.randomUUID()) +"."+test[1];
 		
-		//TODO: Dirty hacky please for the love of god change this later
-		String filePath = Util.UPLOADS_DIR + newName;
-		
-		//Confirm that the uploads dir exists
-		Util.validateUploads();
-		
-		File dest = new File(filePath);
-		Util.writeFileToFileSystem(book.getBookcover(), dest);
-		
-		book.setBookcovername(newName);
-		book.setBookcover(null);
-		
-		bookService.edit(book, bookId);
-
-		logger.info("Updated book!");
-		return "redirect:/admin/bookmanagement/";
+		//Make sure they selected a file
+		if(test.length > 1) {
+			String newName = String.valueOf(UUID.randomUUID()) +"."+test[1];
+			
+			//TODO: Dirty hacky please for the love of god change this later
+			String filePath = Util.UPLOADS_DIR + newName;
+			
+			//Confirm that the uploads dir exists
+			Util.validateUploads();
+			
+			File dest = new File(filePath);
+			Util.writeFileToFileSystem(book.getBookcover(), dest);
+			
+			book.setBookcovername(newName);
+			book.setBookcover(null);
+			
+			bookService.edit(book, bookId);
+	
+			logger.info("Updated book!");
+			
+			return "redirect:/admin/bookmanagement/";
+		} else {
+			return "redirect:/admin/bookmanagement/editbook/"+bookId+"#error=1";
+		}
 	}
 
 }

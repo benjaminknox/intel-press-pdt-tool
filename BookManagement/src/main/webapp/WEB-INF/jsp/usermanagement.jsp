@@ -9,6 +9,21 @@
 <meta name='description' content='A simple page'>
 </head>
 <body>
+
+	<script>
+	$(document).ready(function() {
+	    // to show it in an alert window
+	    //alert(window.location);
+
+	    // to store it in a variable
+	    var loc = window.location.toString();
+	    var successCode = loc.split("#success=")[1];
+	    if (successCode == "1" ) {
+	    	toastr.success("Succesfully reset password");
+	    }
+	});
+	</script>
+
 	<!--/span-->
 	<div id="content" class="span9 section-body">
 		<div id="section-body" class="tabbable">
@@ -39,12 +54,17 @@
 											<td>${user.username}</td>
 											<td>${user.enabled}</td>
 											<td class="center"><a
-												href="<c:url value="/admin/bookmanagement/delbook/${book.id}" />"
+												href="<c:url value="/admin/usermanagement/resetpassword/${user.id}" />"
+												class="btn btn-info" title="Reset Password"><i
+													class="icon-retweet icon-white"></i></a> <a
+												href="<c:url value="/admin/usermanagement/edituser/${user.id}" />"
 												class="btn btn-warning" title="Edit"><i
 													class="icon-edit icon-white"></i></a> <a
 												href="<c:url value="/admin/usermanagement/deluser/${user.id}" />"
 												class="btn btn-danger" title="Remove"><i
 													class="icon-remove icon-white"></i></a></td>
+													
+													
 										</tr>
 									</c:forEach>
 								</tbody>
