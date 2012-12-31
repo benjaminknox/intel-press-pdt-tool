@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cec.intelpress.bookmanagement.domain.Chapter;
+import com.cec.intelpress.bookmanagement.domain.User;
 
 @Service("ChapterService")
 @Transactional
@@ -99,6 +100,17 @@ public class ChapterService {
 		logger.debug("Grabbing all chapters without articles");
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("FROM  Chapter chapter where chapter.technical = true and chapter.article = NULL");
+		return query.list();
+	}
+
+	/**
+	 * This retrieves all chapters submitted by the user
+	 * @param realUser
+	 * @return
+	 */
+	public List<Chapter> getAllFromUser(User realUser) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM  Chapter chapter where chapter.assignedUser = "+realUser.getId());
 		return query.list();
 	}
 }

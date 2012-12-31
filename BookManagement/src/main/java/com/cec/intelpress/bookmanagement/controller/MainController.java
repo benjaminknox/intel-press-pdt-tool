@@ -10,13 +10,13 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,6 +24,7 @@ import com.cec.intelpress.bookmanagement.domain.Book;
 import com.cec.intelpress.bookmanagement.domain.Chapter;
 import com.cec.intelpress.bookmanagement.domain.PdfBook;
 import com.cec.intelpress.bookmanagement.domain.TechnicalArticle;
+import com.cec.intelpress.bookmanagement.domain.User;
 import com.cec.intelpress.bookmanagement.service.ArticleService;
 import com.cec.intelpress.bookmanagement.service.BookService;
 import com.cec.intelpress.bookmanagement.service.ChapterService;
@@ -80,6 +81,61 @@ public class MainController {
 		mav.addObject("progress", percent);
 		mav.addObject("chapterCount", chapterService.getAll().size());
 		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public ModelAndView getProfile(Model model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("profile");
+
+		User user = getCurrentLoggedInUser();
+	    List<Chapter> chaptersSubmitted = chapterService.getAllFromUser(user);
+	    mav.addObject("user", user);
+	    mav.addObject("chaptersSubmitted", chaptersSubmitted.size());
+	    return mav;
+	}
+	
+	/**
+	 * This is used to reset a user's password, the old password must be correct,
+	 *  and the two new password's should match!
+	 *  
+	 * @param userId User who's password should be changed
+	 * @param oldPassword The original password
+	 * @param newPasswordOne 
+	 * @param newPasswordTwo
+	 * @return
+	 */
+	@RequestMapping(value = "/resetpassword/{userId}", method = RequestMethod.POST)
+	public ModelAndView resetPassword(@PathVariable(value = "userId") int userId,
+									@RequestParam(value = "oldPassword") String oldPassword,
+									@RequestParam(value = "newPasswordOne") String newPasswordOne,
+									@RequestParam(value = "newPasswordTwo") String newPasswordTwo) {
+		List<String> errors = new ArrayList<String>();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("profile");
+		boolean valid = true;
+		User user = getCurrentLoggedInUser();
+		
+		//Form Validation
+		if (!user.getPassword().equals(Util.sha256HashString(oldPassword))){
+			valid = false;
+			errors.add("Incorrect old password");
+		}
+		if(!newPasswordOne.equals(newPasswordTwo)){
+			valid = false;
+			errors.add("New passwords don't match");
+		}
+		
+		//If everything is ok
+		if(valid) {
+			user.setPassword(Util.sha256HashString(newPasswordOne));
+			userService.edit(user);
+			mav.addObject("success", "Succesfully updated your password");
+		}
+		
+		mav.addObject("user", user);
+		mav.addObject("errors", errors);
 		return mav;
 	}
 	
@@ -159,10 +215,7 @@ public class MainController {
 	{
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("book", bookService.get(bookId));
-	    User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    String name = user.getUsername(); //get logged in username
-	    com.cec.intelpress.bookmanagement.domain.User realUser = userService.getUserByUserName(name);
-	    mav.addObject("user", realUser);
+	    mav.addObject("user", getCurrentLoggedInUser());
 		mav.setViewName("bookmodal");
 
 		return mav;
@@ -203,10 +256,7 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("pastpdf");
 		
-		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String name = user.getUsername(); //get logged in username
-		com.cec.intelpress.bookmanagement.domain.User realUser = userService.getUserByUserName(name);
-		List<PdfBook> comppdfs = pdfService.getAllCompletedBooksByUser(realUser);
+		List<PdfBook> comppdfs = pdfService.getAllCompletedBooksByUser(getCurrentLoggedInUser());
 		mav.addObject("completedPdfs", comppdfs);
 		return mav;
 	}
@@ -216,10 +266,7 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("pendingpdf");
 		
-		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String name = user.getUsername(); //get logged in username
-		com.cec.intelpress.bookmanagement.domain.User realUser = userService.getUserByUserName(name);
-		List<PdfBook> nonpdfs = pdfService.getAllNonCompletedBooksByUser(realUser);
+		List<PdfBook> nonpdfs = pdfService.getAllNonCompletedBooksByUser(getCurrentLoggedInUser());
 		mav.addObject("noncompletedPdfs", nonpdfs);
 		return mav;
 	}
@@ -232,10 +279,6 @@ public class MainController {
 		String orgName = book.getPdf().getOriginalFilename();
 		String[] test = orgName.split("\\.");
 		
-		//Get current logged in user
-		User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    String name = user.getUsername(); //get logged in username
-	    com.cec.intelpress.bookmanagement.domain.User realUser = userService.getUserByUserName(name);
 	    
 	    ArrayList<String> errors = new ArrayList<String>();
 	    
@@ -287,7 +330,7 @@ public class MainController {
 	
 			book.setPdf(null);
 			book.setPdfFileName(newName);
-			book.setUploader(realUser);
+			book.setUploader(getCurrentLoggedInUser());
 			pdfService.add(book);
 			
 			//Attempt to convert PDF
@@ -297,6 +340,18 @@ public class MainController {
 			mav.addObject("errors", errors);
 		}
 		return mav;
+	}
+	
+	/**
+	 * This uses the Spring Security Framework and attempts to return the current logged in user.
+	 * 
+	 * @return
+	 */
+	public User getCurrentLoggedInUser() {
+		org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    String name = user.getUsername();
+	    User realUser = userService.getUserByUserName(name);
+	    return realUser;
 	}
 
 }

@@ -30,7 +30,7 @@
 			</form>
 			</div>
 			<br />
-			<a class="btn" href="/bookmanagement/admin/bookmanagement/" >Back</a>
+			<a class="btn" href="/bookmanagement/admin/usermanagement/" >Back</a>
 		</div>
 		<!-- Row -->
 	</div>

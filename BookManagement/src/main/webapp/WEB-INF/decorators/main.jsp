@@ -73,7 +73,10 @@ body {
 							<ul class="dropdown-menu">
 								<li>
 									<div id="profileModal">
-
+										<center>
+											<a class="btn btn-info"
+												href="<c:url value="/profile" />">Profile</a>
+										</center>
 										<div class="modal-footer">
 											<center>
 												<a class="btn btn-info"
