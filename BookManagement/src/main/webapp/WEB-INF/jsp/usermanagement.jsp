@@ -9,7 +9,17 @@
 <meta name='description' content='A simple page'>
 </head>
 <body>
-
+	<script>
+	function deleteBook (bookId) {
+		
+		var choice = confirm("Are you sure you want to delete this user?");
+		
+		if(bookId != "" && choice) {
+			window.location.href = "/bookmanagement/admin/usermanagement/deluser/"+bookId;
+		}
+	}
+	
+	</script>
 	<script>
 	$(document).ready(function() {
 	    // to show it in an alert window
@@ -60,7 +70,7 @@
 												href="<c:url value="/admin/usermanagement/edituser/${user.id}" />"
 												class="btn btn-warning" title="Edit"><i
 													class="icon-edit icon-white"></i></a> <a
-												href="<c:url value="/admin/usermanagement/deluser/${user.id}" />"
+												href="<c:url value="javascript:deleteBook('${user.id}')" />"
 												class="btn btn-danger" title="Remove"><i
 													class="icon-remove icon-white"></i></a></td>
 													
