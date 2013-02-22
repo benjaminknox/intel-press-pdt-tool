@@ -21,7 +21,7 @@
 					<div class="row-fluid">
 						<!--Tabs2-->
 						<div class="span12">
-							<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+							<!-- <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div> -->
 							<p><b>Total Books:</b> <span style="font-size:200%" >${bookCount}</span></p>
 							<p><b>Total Chapters:</b> <span style="font-size:200%" >${chapterCount}</span></p>
 							<p><b>Technical Articles Progress:</b> <span style="font-size:200%" ><i>${totalArticles}</i><b>/${totalArticles+uncompletedArticles}</b></span></p>

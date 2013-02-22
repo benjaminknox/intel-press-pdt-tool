@@ -74,6 +74,19 @@ public class PdfBookService {
 		return suggestedBookList;
 	}
 	
+	public List<PdfBook> getAllCompletedBooks() {
+		List<PdfBook> suggestedBookList = new ArrayList<PdfBook>();
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM  PdfBook b where b.converted = 1");
+		
+		for(PdfBook book : (List<PdfBook>)query.list())
+		{
+			suggestedBookList.add(book);
+		}
+		
+		return suggestedBookList;
+	}
+	
 	public PdfBook get(String id) {
 		Session session = sessionFactory.getCurrentSession();
 

@@ -256,8 +256,16 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("pastpdf");
 		
-		List<PdfBook> comppdfs = pdfService.getAllCompletedBooksByUser(getCurrentLoggedInUser());
-		mav.addObject("completedPdfs", comppdfs);
+		User user = getCurrentLoggedInUser();
+		if (user != null) {
+			if (user.getUsername().equals("admin")) {
+				List<PdfBook> comppdfs = pdfService.getAllCompletedBooks();
+				mav.addObject("completedPdfs", comppdfs);
+			}else {
+				List<PdfBook> comppdfs = pdfService.getAllCompletedBooksByUser(user);
+				mav.addObject("completedPdfs", comppdfs);
+			}
+		}
 		return mav;
 	}
 	
