@@ -5,6 +5,9 @@ from document_management import views
 """
 "Url Schema:
 "   -login/
+"   -(:userid)/login/
+"   -(:userid)/logout/
+"   -register/
 "   -add/
 "   -(:documentid)/view/
 "   -(:documentid)/delete/
@@ -19,6 +22,9 @@ urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
     url(r'^(\d+)/$', views.index, name='index'),
     url(r'^login/$', views.login, name='login'),
+    url(r'^(\d+)/login/$', views.login, name='login'),
+    url(r'^(\d+)/logout/$', views.logout, name='logout'),
+    url(r'^(\d+)/register/$', views.register, name='register'),
     url(r'^add/$', views.add, name='add'),
     url(r'^(\d+)/view/$', views.view, name='view'),
     url(r'^(\d+)/delete/$', views.delete, name='delete'),

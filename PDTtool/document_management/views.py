@@ -4,8 +4,14 @@ from django.http import HttpResponse
 def index(request):
 	return HttpResponse("IntelPress Index Page " )
 
-def login(request):
+def login(request,userid=None):
 	return HttpResponse("login")
+
+def logout(request,userid):
+	return HttpResponse("login")
+
+def register(request):
+	return HttpResponse("register")
 
 def add(request):
 	return HttpResponse("add")
