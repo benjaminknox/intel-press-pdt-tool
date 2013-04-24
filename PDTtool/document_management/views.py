@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django import forms
+from django.contrib.auth import authenticate,login as userlogin,logout as userlogout
+from django.contrib.auth.decorators import login_required
 
 """
 " This is the default view 
@@ -10,7 +11,7 @@ from django import forms
 #	Up for review.
 #	-The view file is viewdocuments.html
 ########
-@login_required
+@login_required(login_url='/documents/login/')
 def viewdocuments(request):
 
 	#Load the object resources
@@ -36,6 +37,23 @@ def viewdocuments(request):
 ########
 def login(request):
 
+	if request.user.is_authenticated():
+		return redirect('/documents/')
+
+	if request.method == 'POST':
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			if user.is_active:
+
+				userlogin(request,user)
+
+				if 'next' in request.GET:
+					return redirect(request.GET['next'])
+				else:
+					return redirect('/documents/')
+
 	#Load the object resources
 	context = {
 		'title': 'User Login',
@@ -45,12 +63,25 @@ def login(request):
 	return render(request,
 				  'document_management/login.html',
 				  context)
+########
+# Logout logs the user out then shows a logout screen.
+########
+def logout(request):
+
+	if request.user.is_authenticated():
+		userlogout(request)
+
+	return redirect('/documents/login/')
+
 
 ########
 # Register shows a user registration screen.
 #	-The view file is register.html
 ########
 def register(request):
+
+	if request.user.is_authenticated():
+		return redirect('/documents/')
 
 	#Load the object resources
 	context = {
@@ -69,6 +100,10 @@ def register(request):
 ########
 def forgotpwd(request):
 
+	if request.user.is_authenticated():
+		return redirect('/documents/')
+		
+
 	#Load the object resources
 	context = {
 		'title': 'Forgotten Password Form',
@@ -85,6 +120,9 @@ def forgotpwd(request):
 #	-The view file is forgotusername.html
 ########
 def forgotusername(request):
+
+	if request.user.is_authenticated():
+		return redirect('/documents/')
 
 	#Load the object resources
 	context = {
@@ -108,7 +146,7 @@ def forgotusername(request):
 # adduser is a form that allows admins to add users.
 #	-The view file is adduser.html
 ########
-@login_required
+@login_required(login_url='/documents/login/')
 def adduser(request):
 
 	#Load the object resources
@@ -125,7 +163,7 @@ def adduser(request):
 # updateuser is a form that allows admins to update users.
 #	-The view file is updateuser.html
 ########
-@login_required
+@login_required(login_url='/documents/login/')
 def updateuser(request, userid = None):
 
 	#Load the object resources
@@ -143,7 +181,7 @@ def updateuser(request, userid = None):
 # deleteuser is a form that allows admins to delete users.
 #	-The view file is deleteuser.html
 ########
-@login_required
+@login_required(login_url='/documents/login/')
 def deleteuser(request, userid=None):
 
 	#Load the object resources
@@ -160,7 +198,7 @@ def deleteuser(request, userid=None):
 # changeuserpwd is a form that allows admins to change user passwords.
 #	-The view file is changeuserpwd.html
 ########
-@login_required
+@login_required(login_url='/documents/login/')
 def changeuserpwd(request,userid=None):
 
 	#Load the object resources
@@ -185,7 +223,7 @@ def changeuserpwd(request,userid=None):
 #		download documents, and later on approve docs.
 #	-The view file is viewdoc.html
 ########
-@login_required
+@login_required(login_url='/documents/login/')
 def viewdoc(request,documentid=None):
 
 	#Load the object resources
@@ -211,7 +249,7 @@ def viewdoc(request,documentid=None):
 #		a document.
 #	-The view file is adddocument.html
 ########
-@login_required
+@login_required(login_url='/documents/login/')
 def adddocument(request):
 
 	#Load the object resources
@@ -229,7 +267,7 @@ def adddocument(request):
 #		a document.
 #	-The view file is updatedocument.html
 ########
-@login_required
+@login_required(login_url='/documents/login/')
 def updatedocument(request, documentid=None):
 
 	#Load the object resources

@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-		<form action="/document/login/" method="POST">
+		<form action="{{ request.get_full_path }}" method="POST">
 			<table class="form-table">
+				{% csrf_token %}
 				<tr>
 					<td>Username:</td><td><input type="text" name="username" /></td>
 				</tr>

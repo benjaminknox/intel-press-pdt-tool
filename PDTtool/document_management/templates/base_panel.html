@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="wrapper" class="row">
+	<div id="navbar" class="span4 pull-left">
+		Navigation Bar
+	</div><!-- (bootstrap) .row -->
+	<div id="content" class="span7">
+		{% block panelContent %}Content{% endblock %}
+	</div><!-- (bootstrap) .row -->
+</div><!-- (bootstrap) .row -->
+
+{% endblock %}

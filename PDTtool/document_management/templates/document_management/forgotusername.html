@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-		<form action="/document/forgotpwd/" method="POST">
+		<form action="{{ request.get_full_path }}" method="POST">
+			{% csrf_token %}
 			<table class="form-table">
 				<th>
 					<td>Forgot Username</td>

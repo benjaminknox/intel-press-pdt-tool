@@ -54,6 +54,12 @@ WSGI_APPLICATION = 'PDTtool.wsgi.application'
 
 TEMPLATE_STRING_IF_INVALID = 'Variable Doesn\'t Exits'
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.request',
+    'django.core.context_processors.csrf',
+)
+
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 

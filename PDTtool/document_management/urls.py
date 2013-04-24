@@ -12,6 +12,7 @@ from document_management import views
 "
 "UserAuth Scheme:
 "	login/
+"	logout/
 "	register/
 "	forgotpwd/
 "	forgotusername/
@@ -53,6 +54,7 @@ urlpatterns = patterns('',
 	###
     #Our login view should use the built in Authentication Library.
     url(r'^login/', views.login, name='login'),
+    url(r'^logout/', views.logout, name='logout'),
     url(r'^register/', views.register, name='register'),
     url(r'^forgotpwd/', views.forgotpwd, name='forgotpwd'),
     url(r'^forgotusername/', views.forgotusername, name='forgotusername'),
@@ -68,9 +70,9 @@ urlpatterns = patterns('',
 	#	changepwd/(:userid)/
 	###
 	url(r'^adduser/', views.adduser, name='adduser'),
-	url(r'^updateuser/(\d+)/$', views.updateuser, name='updateuser'),
-	url(r'^deleteuser/(\d+)/$', views.deleteuser, name='deleteuser'),
-	url(r'^changeuserpwd/(\d+)/$', views.changeuserpwd, name='changeuserpwd'),
+	url(r'^updateuser(?:/(\d+))?/$', views.updateuser, name='updateuser'),
+	url(r'^deleteuser(?:/(\d+))?/$', views.deleteuser, name='deleteuser'),
+	url(r'^changeuserpwd(?:/(\d+))?/$', views.changeuserpwd, name='changeuserpwd'),
 	###
 	# End Admin Management Routes.
 	###
@@ -79,7 +81,7 @@ urlpatterns = patterns('',
 	# Document Management General User Routes:
 	#	viewdoc/(:documentid)/
 	###
-    url(r'^viewdoc/(\d+)/$', views.viewdoc, name='viewdoc'),
+    url(r'^viewdoc(?:/(\d+))?/$', views.viewdoc, name='viewdoc'),
 	###
 	# End Document Management General User Routes.
 	###
@@ -90,7 +92,7 @@ urlpatterns = patterns('',
 	#	updatedocument/(:documentid)/
 	###
     url(r'^adddocument/', views.adddocument, name='adddocument'),
-    url(r'^updatedocument/(\d+)/$', views.updatedocument, name='updatedocument'),
+    url(r'^updatedocument(?:/(\d+))?/$', views.updatedocument, name='updatedocument'),
 	###
 	# End Document Management Author Routes.
 	###

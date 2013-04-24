@@ -14,5 +14,24 @@
 
 <script src="{% static 'document_management/js/jquery.min.js' %}"></script>
 <script src="{% static 'document_management/bootstrap/js/bootstrap.min.js' %}"></script>
+<script>
+
+function loop(){
+
+	var height = $(document).height();
+
+	wrapper = $('#wrapper');
+	if(wrapper.length > 0){
+		wrapper.height(height - 50);
+	}
+	var t = setTimeout('loop()', 50);
+}
+
+$(function(){
+
+	loop();
+
+});
+</script>
 </body>
 </html>
