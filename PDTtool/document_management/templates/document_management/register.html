@@ -1,7 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-register
-
+		<form action="/documents/register/" method="POST">
+			<table class="form-table" id="register-form">
+				<tr>
+					<td>Username:</td>
+					<td><input type="text" name="username" /></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><input type="password" name="password" /></td>
+				</tr>
+				<tr>
+					<td>Check Password:</td>
+					<td><input type="password" name="checkpassword" /></td>
+				</tr>
+				<tr>
+					<td>Email:</td>
+					<td><input type="email" name="email" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align: center"><input type="submit" Value ="Register" /></td>
+				</tr>
+			</table><!-- #register-form -->
+		</form>
 {% endblock %}

@@ -1,7 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-Forgot Username
-
+		<form action="/document/forgotpwd/" method="POST">
+			<table class="form-table">
+				<th>
+					<td>Forgot Username</td>
+				</ht>
+				<tr>
+					<td>Email Address:</td><td><input type="text" name="email" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align: center"><input type="submit" Value ="Send Email" /></td>
+				</tr>
+			</table><!-- .form-table -->
+		</form>
 {% endblock %}

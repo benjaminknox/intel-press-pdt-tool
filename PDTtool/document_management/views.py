@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django import forms
 
 """
 " This is the default view 
@@ -9,6 +10,7 @@ from django.http import HttpResponse
 #	Up for review.
 #	-The view file is viewdocuments.html
 ########
+@login_required
 def viewdocuments(request):
 
 	#Load the object resources
@@ -106,6 +108,7 @@ def forgotusername(request):
 # adduser is a form that allows admins to add users.
 #	-The view file is adduser.html
 ########
+@login_required
 def adduser(request):
 
 	#Load the object resources
@@ -122,6 +125,7 @@ def adduser(request):
 # updateuser is a form that allows admins to update users.
 #	-The view file is updateuser.html
 ########
+@login_required
 def updateuser(request, userid = None):
 
 	#Load the object resources
@@ -139,6 +143,7 @@ def updateuser(request, userid = None):
 # deleteuser is a form that allows admins to delete users.
 #	-The view file is deleteuser.html
 ########
+@login_required
 def deleteuser(request, userid=None):
 
 	#Load the object resources
@@ -155,6 +160,7 @@ def deleteuser(request, userid=None):
 # changeuserpwd is a form that allows admins to change user passwords.
 #	-The view file is changeuserpwd.html
 ########
+@login_required
 def changeuserpwd(request,userid=None):
 
 	#Load the object resources
@@ -179,6 +185,7 @@ def changeuserpwd(request,userid=None):
 #		download documents, and later on approve docs.
 #	-The view file is viewdoc.html
 ########
+@login_required
 def viewdoc(request,documentid=None):
 
 	#Load the object resources
@@ -204,6 +211,7 @@ def viewdoc(request,documentid=None):
 #		a document.
 #	-The view file is adddocument.html
 ########
+@login_required
 def adddocument(request):
 
 	#Load the object resources
@@ -221,6 +229,7 @@ def adddocument(request):
 #		a document.
 #	-The view file is updatedocument.html
 ########
+@login_required
 def updatedocument(request, documentid=None):
 
 	#Load the object resources

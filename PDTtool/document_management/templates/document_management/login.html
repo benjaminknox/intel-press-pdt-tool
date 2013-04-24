@@ -1,7 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-login
-
+		<form action="/document/login/" method="POST">
+			<table class="form-table">
+				<tr>
+					<td>Username:</td><td><input type="text" name="username" /></td>
+				</tr>
+				<tr>
+					<td>Password:</td><td><input type="password" name="password" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align: center"><input type="submit" Value ="Login" /></td>
+				</tr>
+			</table><!-- .form-table -->
+		</form>
 {% endblock %}
