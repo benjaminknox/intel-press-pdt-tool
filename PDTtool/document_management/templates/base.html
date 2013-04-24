@@ -1,9 +1,15 @@
-<!DOCTYPE html>
+{% load staticfiles %}<!DOCTYPE html>
 <html lang="en" charset="utf-8">
 <head>
 	<title>PDT Portal - {{ title }}</title>
+	<link rel="stylesheet" href="{% static 'document_management/bootstrap/css/bootstrap.min.css' %}"></link>
+	<link rel="stylesheet" href="{% static 'document_management/toastr/toastr.css' %}"></link> 
 </head>
 <body>
+
 {% block content %} Content From Template {% endblock %}
+
+<script src="{% static 'document_management/jquery.min.js' %}"></script>
+<script src="{% static 'document_management/bootstrap/js/bootstrap.min.js' %}"></script>
 </body>
 </html>
