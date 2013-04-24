@@ -52,6 +52,7 @@ ROOT_URLCONF = 'PDTtool.urls'
 
 WSGI_APPLICATION = 'PDTtool.wsgi.application'
 
+TEMPLATE_STRING_IF_INVALID = 'Variable Doesn\'t Exits'
 
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases

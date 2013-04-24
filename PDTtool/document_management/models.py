@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 """
 " Document class.
@@ -24,11 +25,14 @@ class Document(models.Model):
     #	written by the uploader
 	description = models.TextField()
 
+	#This creates the `file` relationship
+	file = models.ManyToManyField('File')
+
+	#The user
+	user = models.ForeignKey(User)
+
 	#This creates the `Comment` relationship
 	comments = models.ManyToManyField('Comment')
-
-	#This creates the `file` relationship
-	file = models.ManyToManyField('File')    
     
     #The date the row is created
 	created = models.DateTimeField(auto_now_add=True)
@@ -44,13 +48,13 @@ class Document(models.Model):
 """
 class File(models.Model):
 
-	#The unique id of the row
+	#The unique id of the row.
 	id = models.AutoField(primary_key=True)
 	
-	#The location of the file on the hard disk
+	#The location of the file on the hard disk.
 	location = models.CharField(max_length=255)
 	
-	#The name of the file for display purposes
+	#The name of the file for display purposes.
 	filename = models.CharField(max_length=255)
 
 	#Returns the value of the filename
@@ -58,13 +62,26 @@ class File(models.Model):
 	def __unicode__(self):
    			return self.filename
 
+	#The Check Sum for the file.
+	checksum = models.CharField(max_length=255)
+
+	#The uuid.
+	uuid = models.CharField(max_length=255)
+
+	#The size of the file.
 	size = models.IntegerField()
+
+	#The documentid.
 	documentid = models.ForeignKey('Document',related_name='_file')    
-    #The date the row is created
-	created = models.DateTimeField(auto_now_add=True)
-    #The date of the last edit of the row
-	lastmodified = models.DateTimeField(auto_now=True)
+    
+    #The collection of comments attributed to this file.
 	comments = models.ManyToManyField('Comment')
+
+    #The date the row is created.
+	created = models.DateTimeField(auto_now_add=True)
+    
+    #The date of the last edit of the row.
+	lastmodified = models.DateTimeField(auto_now=True)
 
 """
 " Meeting class
@@ -73,9 +90,16 @@ class File(models.Model):
 class Meeting(models.Model):
 	#The unique id of the row
 	id = models.AutoField(primary_key=True)    
-	documents = models.ManyToManyField('Document')    
+
+	#The collection of documents attributed to this meeting.
+	documents = models.ManyToManyField('Document')
+
+	#The user
+	user = models.ForeignKey(User)
+
     #The date the row is created
 	created = models.DateTimeField(auto_now_add=True)
+    
     #The date of the last edit of the row
 	lastmodified = models.DateTimeField(auto_now=True)
 
@@ -84,10 +108,13 @@ class Meeting(models.Model):
 "	TODO: Add a user feild.
 """
 class Notification(models.Model):
+	
 	#The unique id of the row
 	id = models.AutoField(primary_key=True)    
+    
     #The date the row is created
 	created = models.DateTimeField(auto_now_add=True)
+    
     #The date of the last edit of the row
 	lastmodified = models.DateTimeField(auto_now=True)
 
@@ -105,6 +132,9 @@ class Notification(models.Model):
 							  choices=REASON_FOR_NOTIFICATION,
 							  default=NULL_NOTIFICATION)
 
+	#The user
+	user = models.ForeignKey(User)
+
 	#Flag to let us know if the user has viewed 
 	#	the notification.
 	viewed = models.BooleanField()
@@ -113,10 +143,16 @@ class Notification(models.Model):
 " Organization class
 """
 class Organization(models.Model):
+
 	#The unique id of the row
 	id = models.AutoField(primary_key=True)    
+
+	#The collection of users in the orginization    
+	users = models.ManyToManyField(User)
+
     #The date the row is created
 	created = models.DateTimeField(auto_now_add=True)
+    
     #The date of the last edit of the row
 	lastmodified = models.DateTimeField(auto_now=True)
 
@@ -124,10 +160,27 @@ class Organization(models.Model):
 " Comment class
 """
 class Comment(models.Model):
+
 	#The unique id of the row
-	id = models.AutoField(primary_key=True)    
+	id = models.AutoField(primary_key=True)   
+
+	#The user
+	user = models.ForeignKey(User)
+		
+	#The actual content of the comment
+	content = models.TextField()
+	
+	#The actual character field.
+	title = models.CharField(max_length=255)
+	
+	#The collection of comments associated with this field
+	comments = models.ManyToManyField('Comment')
+
+	#Whether or not the model is reported.
+	reported = models.BooleanField() 
+    
     #The date the row is created
 	created = models.DateTimeField(auto_now_add=True)
+    
     #The date of the last edit of the row
 	lastmodified = models.DateTimeField(auto_now=True)
-	comments = models.ManyToManyField('Comment')
