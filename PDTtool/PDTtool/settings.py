@@ -26,7 +26,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -36,7 +35,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'document_management',
+    'document_management'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -52,9 +51,10 @@ ROOT_URLCONF = 'PDTtool.urls'
 
 WSGI_APPLICATION = 'PDTtool.wsgi.application'
 
-TEMPLATE_STRING_IF_INVALID = 'Variable Doesn\'t Exits'
+TEMPLATE_STRING_IF_INVALID = 'Variable Doesn\'t Exist'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.static',
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
@@ -72,6 +72,12 @@ DATABASES = {
         'PASSWORD': 'Password'
     }
 }
+
+#The default login url if not specified.
+LOGIN_URL = '/login/'
+
+#tHIS IS THE DEFAULT UPLOAD DIRECTORYS
+FILE_UPLOAD_TEMP_DIR = '/TMP'
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/

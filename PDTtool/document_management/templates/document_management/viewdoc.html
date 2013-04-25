@@ -1,7 +1,15 @@
-{% extends "base.html" %}
+{% extends "base_panel.html" %}
 
-{% block content %}
+{% block panelContent %}
 
-View a document
+	<h5>{{ document.name }}</h5>
+
+	{% for file in files %}
+
+		<div class="list-file">
+			{{ file.filename }} <a href="#">(Click to download)</a>
+		</div>
+
+	{% endfor %}
 
 {% endblock %}

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 "	This is an uploaded document:
 "		-has many `File`
 "		-has many `Comment`
-" 	TODO: Connect to user auth model.
+"		-has a User
 """
 class Document(models.Model):
 	
@@ -42,8 +42,9 @@ class Document(models.Model):
 
 """
 " File class.
+"	-has many Comment.
+"	-has a Document.
 "	TODO: Lookup file security.
-"   TODO: Finish Class Definition.
 "	TODO: Figure out how to use the UUID django-extension.
 """
 class File(models.Model):
@@ -85,7 +86,8 @@ class File(models.Model):
 
 """
 " Meeting class
-"	TODO: Add a user field.
+"	-has many Document.
+"	-has a User.
 """
 class Meeting(models.Model):
 	#The unique id of the row
@@ -105,7 +107,7 @@ class Meeting(models.Model):
 
 """
 " Notification class
-"	TODO: Add a user feild.
+"	-has a User.
 """
 class Notification(models.Model):
 	
@@ -141,6 +143,7 @@ class Notification(models.Model):
 
 """
 " Organization class
+"	-has a User
 """
 class Organization(models.Model):
 
@@ -158,6 +161,7 @@ class Organization(models.Model):
 
 """
 " Comment class
+"	-has a User.
 """
 class Comment(models.Model):
 

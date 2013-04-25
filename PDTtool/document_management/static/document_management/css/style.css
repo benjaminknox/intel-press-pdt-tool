@@ -6,6 +6,9 @@ HTML,BODY{
 	background: #999999;
 }
 
+/*
+* The UserAuth Styles.
+*/
 .form-table{
 	border: 1px solid #DDD;
 	background: #EEE;
@@ -18,7 +21,20 @@ HTML,BODY{
 #register-form{
 	width: 500px;
 }
+/*
+* End UserAuth Styles.
+*/
 
+/*
+* These are Base User Panel styles.
+*	-It is these url schemes:
+*		-Default Route.
+*		-Document Manage General User Scheme.
+*		-Document Management Author Scheme.
+*	
+*	-It is used in the document_management/base_panel.html
+*		template.
+*/
 #wrapper{
 	padding: 0;
 	margin-top: 25px;
@@ -27,6 +43,23 @@ HTML,BODY{
 	background: #CCC;
 }
 	#wrapper #navbar{
+		margin-top: 20px;
 		border-right: 1px solid #AAA;
-		height: 100%;
 	}
+
+	#wrapper #content{
+		margin-top: 20px;
+	}
+
+#navbar li{
+
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 30px;
+	border-bottom: 1px solid #888;
+
+}
+/*
+* End Base User Panel styles.
+*/

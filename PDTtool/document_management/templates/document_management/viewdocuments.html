@@ -1,7 +1,13 @@
-{% extends "base.html" %}
+{% extends "base_panel.html" %}
 
-{% block content %}
+{% block panelContent%}
 
-View Documents
+	{% for document in documents %}
+
+		<div class="list-document">
+			<a href="/viewdoc/{{ document.id }}/">{{ document.name }}</a>
+		</div>
+
+	{% endfor %}
 
 {% endblock %}
