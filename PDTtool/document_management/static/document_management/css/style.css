@@ -3,7 +3,6 @@
 HTML,BODY{
 	width:100%;
 	height: 100%;
-	background: #999999;
 }
 
 /*
@@ -35,31 +34,63 @@ HTML,BODY{
 *	-It is used in the document_management/base_panel.html
 *		template.
 */
+
+
 #wrapper{
-	padding: 0;
-	margin-top: 25px;
-	height: 100%;
-	border: 1px solid #888;
-	background: #CCC;
+	padding: 10px;
+	margin-top: 20px;
+	border: 1px solid #DDD;
+	background: #FFF;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px 3px 20px 0px #EEE;
+	box-shadow: 0px 3px 20px 0px #EEE;
+	background: #ffffff; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIyMSUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZjdmN2Y3IiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+	background: -moz-linear-gradient(top, #ffffff 21%, #f7f7f7 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(21%,#ffffff), color-stop(100%,#f7f7f7)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 21%,#f7f7f7 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 21%,#f7f7f7 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 21%,#f7f7f7 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #ffffff 21%,#f7f7f7 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f7f7f7',GradientType=0 ); /* IE6-8 */
 }
-	#wrapper #navbar{
-		margin-top: 20px;
-		border-right: 1px solid #AAA;
+
+	#navbar{
+		background: #FFF;
+		height: 100%;
 	}
 
-	#wrapper #content{
-		margin-top: 20px;
+	#content{
+		padding-left: 10px;
+		border-left: 1px solid #EEE;
+		min-height: 300px;
 	}
 
-#navbar li{
+		#content #content-wrapper{
+			margin-top: 10px;
+		}
 
-	padding: 0;
-	margin: 0;
-	width: 100%;
-	height: 30px;
-	border-bottom: 1px solid #888;
+		#content textarea{
 
-}
+			height: 60px;
+			width: 400px;
+
+		}
+
+		.list-document{
+			padding: 5px;
+			margin-top: 10px;
+			width: 100%;
+			border: 1px solid #EEE;
+			cursor: pointer;
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
+			background: #FAFAFA;
+		}
 /*
 * End Base User Panel styles.
 */

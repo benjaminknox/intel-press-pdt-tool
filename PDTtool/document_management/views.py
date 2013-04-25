@@ -35,6 +35,8 @@ def viewdocuments(request):
 		'documents': documents
 	}
 
+	
+
 	#Return the view
 	return render(request,
 		  		  'document_management/viewdocuments.html',
@@ -347,12 +349,10 @@ def adddocument(request):
 		fileName = file.name
 		fileSize = file.size
 		document = doc
-		uuid = uuid.uuid4()
 		uploadedfile = File(location = location,
 						    filename=fileName,
 						    size=fileSize,
-						    documentid=doc,
-						    uuid=uuid)
+						    documentid=doc)
 		uploadedfile.save()
 
 		#Save the file

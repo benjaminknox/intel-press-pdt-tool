@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<div id="wrapper" class="row">
-	<div id="navbar" class="span3 pull-left">
-		<a href="/adddocument/">Add Document</a><br>
+<div id="wrapper" class="container">
+	<div id="navbar" class="span3">
+		<a href="/adddocument/">Add Document</a><br >
 		<a href="/">View Documents</a>
-	</div><!-- (bootstrap) .row -->
-	<div id="content" class="span7">
-		{% block panelContent %}Content{% endblock %}
+		
+	</div><!-- #navbar -->
+	<div id="content" class="span8">
+		<span class="label label-info">{{ title }}</span>
+		<div id="content-wrapper">
+			{% block panelContent %} Content {% endblock %}
+		</div>
 	</div><!-- (bootstrap) .row -->
 </div><!-- (bootstrap) .row -->
 
