@@ -1,15 +1,48 @@
 {% extends "base_panel.html" %}
 
 {% block panelContent %}
+	
+	<div id="files" class="pull-left span3"> 
+		<h5>{{ document.name }}</h5>
 
-	<h5>{{ document.name }}</h5>
+		{% for file in files %}
 
-	{% for file in files %}
+			<div class="list-file">
+				 <a href="{{ STATIC_URL }}downloads/{{ file.filename }}">{{ file.filename }}</a>
+				 <br>
+				 <small>(right click to download)</small>
+			</div>
 
-		<div class="list-file">
-			{{ file.filename }} <a href="#">(Click to download)</a>
+		{% endfor %}
+
+	</div>
+
+	<div class="pull-right span4"> 
+
+		<div id="comment-wrapper">
+		{% for comment in comments %}
+			<div class="comment">
+				<h6>{{ comment.title }}</h6>
+				{{ comment.content }}
+			</div>
+		{% endfor %}
 		</div>
+		
+		<a href="javascript:void(0);" onclick="$('#comment-form').toggle();">Add Comment</a>
 
-	{% endfor %}
+		<div id="comment-form">
+			<form action="{{ request.get_full_path }}" method="POST">
+				{% csrf_token %}
+				<input type="text" name="title" />
+				<textarea name="content" class="pull-left"></textarea>
+				<input type="submit" value="Post" class="btn btn-primary pull-left" />
+			</form>
+			<div class="clear-fix"></div>
+		</div><!-- #comment-form -->
+
+		<div clas="clear-fix"></div>
+	</div>
 
 {% endblock %}
+
+{% block scripts%}{% endblock %}

@@ -73,6 +73,12 @@ DATABASES = {
     }
 }
 
+#Find the static files
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+    ('downloads','/home/programmer/upload_dir/'),
+)
+
 #The default login url if not specified.
 LOGIN_URL = '/login/'
 

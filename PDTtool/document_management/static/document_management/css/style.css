@@ -59,13 +59,12 @@ HTML,BODY{
 }
 
 	#navbar{
-		background: #FFF;
 		height: 100%;
 	}
 
 	#content{
 		padding-left: 10px;
-		border-left: 1px solid #EEE;
+		border-left: 1px solid #DDD;
 		min-height: 300px;
 	}
 
@@ -91,6 +90,26 @@ HTML,BODY{
 			border-radius: 5px;
 			background: #FAFAFA;
 		}
+
+			#comment-form{
+				display: none;
+			}
+
+			#comment-form textarea{
+				width: 220px;
+				height: 50px;
+				margin-right: 10px;
+			}
+			#comment-wrapper{
+				width: 100%;
+			}
+				#comment-wrapper .comment{
+					margin-bottom: 5px;
+					background: #FCF8EF;
+					border: 1px solid #F9F2E1;
+				}
+
+
 /*
 * End Base User Panel styles.
 */

@@ -96,5 +96,4 @@ urlpatterns = patterns('',
 	###
 	# End Document Management Author Routes.
 	###
-
 )

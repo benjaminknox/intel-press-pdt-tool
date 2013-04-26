@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib.auth import authenticate,login as userlogin,logout as userlogout
-from django.contrib.auth.decorators import login_required
-from document_management.models import Document, File
-from django.contrib.auth.forms import AuthenticationForm
-from document_management.forms import DocumentForm,RegisterForm
-
 import uuid
+
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from document_management.models import Document, File, Comment
+from document_management.forms import DocumentForm,RegisterForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth import authenticate,login as userlogin,logout as userlogout
 
 """
 "
@@ -25,17 +26,38 @@ import uuid
 @login_required
 def viewdocuments(request):
 
-	#Load the document objects to 
-	#	pass into the browser.
-	documents = Document.objects.all()
+	#Check to see if the user has filtered 
+	#	the documents.
+	if request.method == 'POST':
+		#Get the user defined search filter
+		search = request.POST['search']
+		#Filter the document list based on the users filtered information.
+		document_list = Document.objects.filter(name__icontains=search)
+	else:
+		#Load the document objects into a list
+		document_list = Document.objects.all()
+	
+	#Put the documents into a paginator object
+	paginator = Paginator(document_list, 10) # Show 25 documents per page
+	#Get the page
+	page = request.GET.get('page')
+
+	#This block of code tries loading into a paginator object.
+	try:
+		#Load the documents for this page.
+		documents = paginator.page(page)
+	except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+		documents = paginator.page(1)
+	except EmptyPage:
+		# If page is out of range (e.g. 9999), deliver last page of results.
+		documents = paginator.page(paginator.num_pages)
 
 	#These are view variables.
 	context = {
 		'title': 'View Documents',
-		'documents': documents
-	}
-
-	
+		'documents': documents,
+	}	
 
 	#Return the view
 	return render(request,
@@ -95,7 +117,7 @@ def login(request):
 	" Load the login form.
 	"	This is run if:
 	"	-User is not authenticated.
-	"	-No POST information we display
+	"	-No POST information.
 	"""
 	#Load the view variables.
 	context = {
@@ -128,6 +150,22 @@ def logout(request):
 # 	TODO: register the user.
 ########
 def register(request):
+
+	if request.method == 'POST':
+
+		first_name = request.POST['first_name']
+		last_name = request.POST['last_name']
+		username = request.POST['username']
+		password = request.POST['password']
+		checkpassword = request.POST['checkpassword']
+		email = request.POST['email']
+
+		if password == checkpassword:
+			create_user(first_name=first_name,
+						last_name=last_name,
+						username=username,
+						password=password,
+						email=email)
 
 	#Check if the user is authenticated.
 	if request.user.is_authenticated():
@@ -278,17 +316,28 @@ def changeuserpwd(request,userid=None):
 @login_required
 def viewdoc(request,documentid=None):
 
-	if documentid :
+	if documentid :DOc
 
 		document = Document.objects.get(id=documentid)
 
+		if request.method == 'POST':
+			content = request.POST['content']
+			title = request.POST['title']
+			newcomment = Comment(user=request.user,content=content,title=title,reported=False)
+			newcomment.save()
+
+			document.comments.add(newcomment)
+
 		files = File.objects.filter(documentid=documentid)
+
+		comments = document.comments.all()
 
 		#Load the object resources
 		context = {
 			'title': 'View a Document',
 			'document': document,
 			'files' : files,
+			'comments' : comments,
 		}
 
 		#Return the view

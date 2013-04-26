@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from django_extensions.db.fields import UUIDField
+
 """
 " Document class.
 "	This is an uploaded document:
@@ -66,8 +68,8 @@ class File(models.Model):
 	#The Check Sum for the file.
 	checksum = models.CharField(max_length=255)
 
-	#The uuid.
-	uuid = models.CharField(max_length=255)
+	#The UUID field for the file.
+	uuid = UUIDField(version=4)
 
 	#The size of the file.
 	size = models.IntegerField()
