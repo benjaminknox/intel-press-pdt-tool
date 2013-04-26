@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from document_management import views
+from document_management.views import DefaultViews, UserAuth, AdminManagement, DocumentManagement, DocumentManagementAuthor
 
 """
 " Url Schema:
@@ -38,9 +38,9 @@ urlpatterns = patterns('',
 	# The default routes, index, and viewdocuments.
 	###
     #Here we have our default view which is viewdocuments.
-    url(r'^$', views.viewdocuments, name='viewdocuments'),
-    url(r'^index/', views.viewdocuments, name='viewdocuments'),
-    url(r'^viewdocuments/', views.viewdocuments, name='viewdocuments'),
+    url(r'^$', DefaultViews.viewdocuments, name='viewdocuments'),
+    url(r'^index/', DefaultViews.viewdocuments, name='viewdocuments'),
+    url(r'^viewdocuments/', DefaultViews.viewdocuments, name='viewdocuments'),
     ###
 	# End default routes
 	###
@@ -53,11 +53,11 @@ urlpatterns = patterns('',
 	#	forgotusername/
 	###
     #Our login view should use the built in Authentication Library.
-    url(r'^login/', views.login, name='login'),
-    url(r'^logout/', views.logout, name='logout'),
-    url(r'^register/', views.register, name='register'),
-    url(r'^forgotpwd/', views.forgotpwd, name='forgotpwd'),
-    url(r'^forgotusername/', views.forgotusername, name='forgotusername'),
+    url(r'^login/', UserAuth.login, name='login'),
+    url(r'^logout/', UserAuth.logout, name='logout'),
+    url(r'^register/', UserAuth.register, name='register'),
+    url(r'^forgotpwd/', UserAuth.forgotpwd, name='forgotpwd'),
+    url(r'^forgotusername/', UserAuth.forgotusername, name='forgotusername'),
  	###
 	# End UserAuth routes.
 	###
@@ -69,10 +69,10 @@ urlpatterns = patterns('',
 	#	deleteuser/(:userid)/
 	#	changepwd/(:userid)/
 	###
-	url(r'^adduser/', views.adduser, name='adduser'),
-	url(r'^updateuser(?:/(\d+))?/$', views.updateuser, name='updateuser'),
-	url(r'^deleteuser(?:/(\d+))?/$', views.deleteuser, name='deleteuser'),
-	url(r'^changeuserpwd(?:/(\d+))?/$', views.changeuserpwd, name='changeuserpwd'),
+	url(r'^adduser/', AdminManagement.adduser, name='adduser'),
+	url(r'^updateuser(?:/(\d+))?/$', AdminManagement.updateuser, name='updateuser'),
+	url(r'^deleteuser(?:/(\d+))?/$', AdminManagement.deleteuser, name='deleteuser'),
+	url(r'^changeuserpwd(?:/(\d+))?/$', AdminManagement.changeuserpwd, name='changeuserpwd'),
 	###
 	# End Admin Management Routes.
 	###
@@ -81,7 +81,7 @@ urlpatterns = patterns('',
 	# Document Management General User Routes:
 	#	viewdoc/(:documentid)/
 	###
-    url(r'^viewdoc(?:/(\d+))?/$', views.viewdoc, name='viewdoc'),
+    url(r'^viewdoc(?:/(\d+))?/$', DocumentManagement.viewdoc, name='viewdoc'),
 	###
 	# End Document Management General User Routes.
 	###
@@ -91,8 +91,8 @@ urlpatterns = patterns('',
 	#	adddocument/
 	#	updatedocument/(:documentid)/
 	###
-    url(r'^adddocument/', views.adddocument, name='adddocument'),
-    url(r'^updatedocument(?:/(\d+))?/$', views.updatedocument, name='updatedocument'),
+    url(r'^adddocument/', DocumentManagementAuthor.adddocument, name='adddocument'),
+    url(r'^updatedocument(?:/(\d+))?/$', DocumentManagementAuthor.updatedocument, name='updatedocument'),
 	###
 	# End Document Management Author Routes.
 	###
