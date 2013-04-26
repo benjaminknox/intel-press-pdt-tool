@@ -5,10 +5,24 @@
 <form enctype="multipart/form-data" action="{{ request.get_full_path }}" method="POST">{% csrf_token %}
 	<table style="width: 100%;">
 		{{ DocumentForm.as_table}}
+		<div id="original-form">
+			<input type="file" name="element_form" id="file_form" />
+		</div>
+		<div id="containers">
+
+		</div>
 		<tr>
 			<td colspan="2" style="text-align: center;"><input type="submit" value="Upload" /></td>
 		</tr>
 	</table>
 </form>
 
+{% endblock %}
+
+{% block scripts %}
+	<scipt>
+	$(function(){
+		
+	});
+	</script>
 {% endblock %}

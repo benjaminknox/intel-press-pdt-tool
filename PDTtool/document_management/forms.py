@@ -20,7 +20,7 @@ class DocumentForm(forms.Form):
 
 	#The form.
 	#uploadedFiles = MultiuploaderField(required=False)
-	file = forms.FileField()
+	#file = forms.FileField()
 
 """
 " The RegisterForm is a form for registering users.
