@@ -23,34 +23,39 @@ def adddocument(request):
 		'DocumentForm': DocumentForm(),
 	}
 
+	#Check if a file has been posted
 	if request.method == 'POST':
 
 		#Get the file
-		file = request.FILES['file']
+		thefile = request.FILES['file']
 
-		#Get the document
+		#Get the document post data
 		docName = request.POST['name']
 		docDesc = request.POST['description']
 		docUser = request.user
+		#Create a new Document and save it.
 		doc = Document(name=docName, description=docDesc,user=docUser)
 		doc.save()
 
 		#Single file upload
 		#Get the file
 		location = '/home/programmer/upload_dir/'+file.name
-		fileName = file.name
-		fileSize = file.size
+		fileName = thefile.name
+		fileSize = thefile.size
+		#Load the document
 		document = doc
+		#Load a new uploaded file and save it.
 		uploadedfile = File(location = location,
 						    filename=fileName,
 						    size=fileSize,
 						    documentid=doc)
 		uploadedfile.save()
 
-		#Save the file
-		handle_uploaded_file(file,location)
+		#Save the file on to the directory.
+		handle_uploaded_file(thefile,location)
 
-		context['file'] = file
+		#Add file to the context
+		context['file'] = thefile
 
 		#Return the view
 		return render(request,
