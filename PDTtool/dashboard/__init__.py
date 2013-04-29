@@ -2,6 +2,20 @@ from django.contrib.auth.models import Group, Permission
 
 """
 " Create User Roles (groups in django).
+"		-Program Manager.
+"		-Site Administrator.
+"		-Supervisor.
+"		-Writer.
+"		-General User.
+"
+" I will use this function to access these user roles in the views:
+"
+"def not_in_student_group(user):
+"    if user:
+"        return user.groups.filter(name='Student').count() == 0
+"    return False
+"
+"	@user_passes_test(not_in_student_group, login_url='/')
 """
 
 Supervisor = Group.objects.filter(name__iexact="Supervisor")
