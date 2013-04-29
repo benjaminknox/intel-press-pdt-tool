@@ -26,9 +26,6 @@ def adddocument(request):
 	#Check if a file has been posted
 	if request.method == 'POST':
 
-		#Get the file
-		thefile = request.FILES['file']
-
 		#Get the document post data
 		docName = request.POST['name']
 		docDesc = request.POST['description']
@@ -37,25 +34,29 @@ def adddocument(request):
 		doc = Document(name=docName, description=docDesc,user=docUser)
 		doc.save()
 
-		#Single file upload
-		#Get the file
-		location = '/home/programmer/upload_dir/'+file.name
-		fileName = thefile.name
-		fileSize = thefile.size
-		#Load the document
-		document = doc
-		#Load a new uploaded file and save it.
-		uploadedfile = File(location = location,
-						    filename=fileName,
-						    size=fileSize,
-						    documentid=doc)
-		uploadedfile.save()
 
-		#Save the file on to the directory.
-		handle_uploaded_file(thefile,location)
+		#Get the files
+		files = request.FILES
 
-		#Add file to the context
-		context['file'] = thefile
+		for name,f in files.iteritems():
+
+			#Single file upload
+			#Get the file
+			fileName = f.name
+			location = '/home/programmer/upload_dir/'+f.name
+			fileSize = f.size
+
+			#Load a new uploaded file and save it.
+			uploadedfile = File(location = location,
+							    filename=fileName,
+							    size=fileSize,
+							    documentid=doc)
+			uploadedfile.save()
+
+			#Save the file on to the directory.
+			handle_uploaded_file(f,location)
+
+			doc.file.add(uploadedfile)			
 
 		#Return the view
 		return render(request,

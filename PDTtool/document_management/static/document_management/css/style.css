@@ -109,6 +109,16 @@ HTML,BODY{
 					border: 1px solid #F9F2E1;
 				}
 
+		#docs{
+			display: none;
+			border: 1px solid #EEE;
+			padding: 10px;
+		}
+
+		#docs .del{
+			margin-left: 10px;
+			cursor: pointer;
+		}
 
 /*
 * End Base User Panel styles.

@@ -2,15 +2,17 @@
 
 {% block panelContent%}
 
-<form enctype="multipart/form-data" action="{{ request.get_full_path }}" method="POST">{% csrf_token %}
-	<table style="width: 100%;">
-		{{ DocumentForm.as_table}}
-		<div id="original-form">
-			<input type="file" name="element_form" id="file_form" />
-		</div>
-		<div id="containers">
+<div id="form-element" style="display: none;">
+	<input type="file" name="element_form" id="file_form_id" count="0" class="file_form" onchange="$(this).hide(); clone_form($(this).val());" />
+</div>
 
-		</div>
+<form enctype="multipart/form-data" action="{{ request.get_full_path }}" method="POST">{% csrf_token %}
+	<div id="file-container">
+	</div>
+	<table id="docs" class="table table-striped">
+	</table>
+	<table style="width: 100%;">
+		{{ DocumentForm.as_table }}
 		<tr>
 			<td colspan="2" style="text-align: center;"><input type="submit" value="Upload" /></td>
 		</tr>
@@ -20,9 +22,42 @@
 {% endblock %}
 
 {% block scripts %}
-	<scipt>
-	$(function(){
-		
-	});
+	<script>
+		function clone_form(val){
+
+			originalform = $('#form-element input[type="file"]');
+			form = $('#form-element').html();
+			count = parseInt(originalform.attr('count'));
+			id = 'file_form_'+count;
+			name = 'file_'+count;
+			form = form.replace('element_form',name);
+			form = form.replace('file_form_id',id);
+			$('#file-container').prepend(form);
+
+			if(count > 0){
+				$('#docs').show();
+			}
+
+			prevCount = count - 1;
+
+			if(val){
+				html = '<tr id="row-'+prevCount+'">';
+				html+= 		'<td><span class="label label-success">'+val+'</span></td><td><span onclick="removefile('+prevCount+')" class="del badge badge-important">x</span></td>';
+				html+= "</tr>";
+				$("#docs").append(html);
+			}
+
+			originalform.attr('count',count + 1);
+
+		}
+
+		function removefile(id){
+			$("#file_form_"+id).remove();
+			$("#row-"+id).remove();
+		}
+
+		$(function(){
+			clone_form();
+		});
 	</script>
 {% endblock %}

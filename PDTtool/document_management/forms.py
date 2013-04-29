@@ -36,7 +36,7 @@ class RegisterForm(forms.Form):
 	first_name = forms.CharField( max_length=255 )
 
 	#Text input field for the last name.
-	last_name = forms.CharField( max_length=255 )	
+	last_name = forms.CharField( max_length=255 )
 
 	#Text input field for the username.
 	username = forms.CharField( max_length=255 )
