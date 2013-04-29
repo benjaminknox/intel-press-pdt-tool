@@ -79,6 +79,13 @@ STATICFILES_DIRS = (
     ('downloads','/home/programmer/upload_dir/'),
 )
 
+#Create User Roles
+USER_ROLES = (
+    'manager',
+    'moderator',
+    'client',
+)
+
 #The default login url if not specified.
 LOGIN_URL = '/login/'
 
