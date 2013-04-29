@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!-a4@-8t692agpegy&&++8diri%7nfkzpi5i#cii-$byw)!0&w'
+SECRET_KEY = 'q*$frtad4ncwg7#=@*8s5so+7&w9mlf(2d-p*(*_dd4x4q-3#h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -25,7 +25,6 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -36,6 +35,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'document_management'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -51,16 +51,39 @@ ROOT_URLCONF = 'PDTtool.urls'
 
 WSGI_APPLICATION = 'PDTtool.wsgi.application'
 
+TEMPLATE_STRING_IF_INVALID = 'Variable Doesn\'t Exist'
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.static',
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.request',
+    'django.core.context_processors.csrf',
+)
 
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': 'localhost',
+        'NAME': 'django_db',
+        'USER': 'django_login',
+        'PASSWORD': 'Password'
     }
 }
+
+#Find the static files
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+    ('downloads','/home/programmer/upload_dir/'),
+)
+
+#The default login url if not specified.
+LOGIN_URL = '/login/'
+
+#tHIS IS THE DEFAULT UPLOAD DIRECTORYS
+FILE_UPLOAD_TEMP_DIR = '/TMP'
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
