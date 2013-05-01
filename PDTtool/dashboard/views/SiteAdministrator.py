@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from dashboard.models import *
 from dashboard.forms import DocumentForm, MeetingForm, NotificationForm, OrganizationForm, CommentForm
 
+#In development, this is the scaffolding.
+
 def addobject(request,objectname=None):
 	
 	context = {

@@ -1,16 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!--
+
+	This is the UI template.
+
+-->
 <div id="wrapper" class="container">
 	<a id="logout" class="btn btn-info" href="/logout/">logout</a>
 	<div id="navbar" class="span3">
+
 		{% for group in user.groups.all %}
+			
 			{% if group.name == 'General User' %}
 			<div class="nav-block">
 				<h6>General User Navigation</h6>
 				<a href="/">View Documents</a>
-			</div>
+			</div><!-- .nav-block -->
 			{% endif %}
+
 			{% if group.name == 'Supervisor' %}
 			<div class="nav-block">
 				<h6>Supervisor Navigation</h6>
@@ -18,19 +26,23 @@
 				<!-- {% for models in dashboard_models %}
 					<a href="/objects/{{ models }}/">{{ models }}</a> <br>
 				{% endfor %} -->
-			</div>
+			</div><!-- .nav-block -->
 			{% endif %}
-		{% endfor %}
 		
-	</div><!-- #navbar -->
+		{% endfor %}	
+	</div><!-- #navbar (bootstrap) .span3 -->
 	<div id="content" class="span8">
 		<span class="label label-info">{{ title }}</span>
 		<div id="content-wrapper">
 			{% block panelContent %} Content {% endblock %}
 			<div class="clear-fix"></div>
-		</div>
-	</div><!-- (bootstrap) .row -->
+		</div><!-- #content-wrapper -->
+	</div><!-- #content (bootstrap) .span8 -->
 	<div class="clear-fix"></div>
-</div><!-- (bootstrap) .row -->
+</div><!-- #wrapper (bootstrap) .container -->
+<!-- 
 
+	End UI template.
+
+-->
 {% endblock %}

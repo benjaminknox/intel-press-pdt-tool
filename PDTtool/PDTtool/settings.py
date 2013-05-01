@@ -35,12 +35,13 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #
+    # Extensions for utility.
     'django_extensions',
     ###
-    # This is the main app for the file
+    # This is the main app for IntelPress PDT portal,
+    #   it is at the root level in urls.py
     ###
-    'dashboard'
+    'dashboard',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -63,9 +64,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
-    #Dashboard context processor, it basically
+    # Dashboard context processor, it basically
     #    gets the list of models.
     'dashboard.context_processors.dashboard.dashboard_models',
+    # Load the search form which is used 
+    #   across multiple templates.
+    'dashboard.context_processors.dashboard.search_form',    
 )
 
 # Database

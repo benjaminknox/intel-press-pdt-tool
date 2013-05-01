@@ -150,6 +150,7 @@ class Notification(models.Model):
 """
 class Organization(models.Model):
 
+
 	#The name of the organization
 	name = models.CharField(max_length=255)
 
@@ -161,6 +162,13 @@ class Organization(models.Model):
     
     #The date of the last edit of the row
 	lastmodified = models.DateTimeField(auto_now=True)
+
+
+	#Returns the value of the filename
+	#	for reference purposes. 
+	def __unicode__(self):
+   			return self.name
+
 
 """
 " Comment class

@@ -1,7 +1,7 @@
 #from django.forms import ModelForm
 from django import forms
 from dashboard.models import *
-from django.forms import ModelForm
+from django.forms import ModelForm,widgets
 from django.contrib.auth.models import User
 
 """
@@ -84,20 +84,11 @@ class RegisterForm(forms.Form):
 	#An email field for the username.
 	email = forms.EmailField( max_length=255 )
 
-class EditUserForm(forms.Form):
-	#Finds out if the user is active
-	is_active = CheckboxInput()
+class ExtendeduserForm(forms.Form):
 
-	organizations = Organization.objects.all()
+	is_active = forms.BooleanField(required=False,label = 'Active')
 
-	select_choices = {}
-
-	for o in organizations:
-		select_choices[o.id] = o.name
-
-	organization = SelectMultiple(choices=select_choices)
-
-
+	#organization = forms.ModelMultipleChoiceField(required=False, queryset = Organization.objects.all(),label="orginization")
 
 
 class DocumentForm(ModelForm):

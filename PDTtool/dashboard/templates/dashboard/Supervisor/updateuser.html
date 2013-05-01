@@ -1,0 +1,22 @@
+{% extends "base_panel.html" %}
+
+{% block panelContent%}
+
+<h4>{{ user_to_update.user.first_name }} {{ user_to_update.user.last_name }}</h4>
+
+<form method="POST" action="{{ request.get_full_path }}">
+{% csrf_token %}
+<table>
+	{{ Extendeduserform.as_table }}
+		<tr>
+			<td colspan="2">
+				<input type="submit" value="Update User" class="btn" />
+			</td>
+		</tr>
+</table>
+</form>
+
+{% endblock %}
+
+{% block scripts%}
+{% endblock %}

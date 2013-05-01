@@ -2,44 +2,101 @@
 <html lang="en" charset="utf-8">
 <head>
 	<title>PDT Portal - {{ title }}</title>
+	<!--
+
+		Load css resources, the libraries are:
+			-Bootstrap (http://twitter.github.io/bootstrap/)
+			-Toastr (which is currently not being used) (https://github.com/CodeSeven/toastr)
+			-jQuery-ui (http://jqueryui.com/)
+			-Custome Stylesheets ({% static 'dashboard/css/style.css' %})
+
+	-->
 	<link rel="stylesheet" href="{% static 'dashboard/bootstrap/css/bootstrap.min.css' %}"></link>
-	<link rel="stylesheet" href="{% static 'dashboard/toastr/toastr.css' %}"></link> 
+	<!--<link rel="stylesheet" href="{% static 'dashboard/toastr/toastr.css' %}"></link>-->
 	<link rel="stylesheet" href="{% static 'dashboard/jquery-ui/css/ui-lightness/jquery-ui.min.css' %}"></link>
 	<link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}"></link> 
+	<!--
+
+		End stylesheet resources
+
+	-->
 </head>
 <body>
-<div class="container" style="margin-bottom: -40px;">
-<h3 id="page-title">PDT Portal</h3>
-</div>
-{% block content %} Content From Template {% endblock %}
 
+<div class="container" style="margin-bottom: -40px;">
+	<h3 id="page-title">PDT Portal</h3><!-- #page-title -->
+</div><!-- (boostrap) .container -->
+
+{% block content %}
+<!--
+	This block is the actual content of the generated view.
+-->
+{% endblock %}
+
+<!--
+	Load the javascript resources, the libraries are:
+		-jQuery (http://jquery.com/)
+		-Bootstrap (http://twitter.github.io/bootstrap/)
+		-jQuery-ui (http://jqueryui.com/)
+		-jQuery.cookie (https://github.com/carhartl/jquery-cookie)
+-->
 <script src="{% static 'dashboard/js/jquery.min.js' %}"></script>
 <script src="{% static 'dashboard/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'dashboard/jquery-ui/js/jquery-ui.min.js' %}"></script>
 <script src="{% static 'dashboard/js/jquery.cookie.js' %}"></script>
+<!--
+
+	End javascript resources
+
+-->
+
 <script>
+//This function loops recursively checking
+//	for things like change in page height,
+//	or notifications etc.
+//It is not being used right now.
+/*function loop(){
 
-function loop(){
+	//Get the document height.
+	//var height = $(document).height();
 
-	var height = $(document).height();
+ Not used right now.
+	//Get the content div.
+	contentdiv = $("#content");
+	//Check to see if it exists on the page.
+	if(contentdiv.length > 0){
+		//Get the height of the content
+		var contentHeight = contentdiv.height();
+		//
+		var plainbg = $('#plain-background');
 
-	var contentHeight= $("#content").height();
-
-	var plainbg = $('#plain-background');
-
-	plainbg.height(contentHeight);
+		plainbg.height(contentHeight);
+	}
 
 	var t = setTimeout('loop()', 50);
 }
-
+*/
 $(function(){
-
-	loop();
-
+//Load the datepicker
+var datepicker = $(".datepicker");
+//Check for any datepickers
+if(datepicker.length > 0){
+	//If datepickers are found load
+	//	the jQuery UI datepicker.
+	datepicker.each(function(){
+		$(this).datepicker();
+	});
+}
+//	loop();
 });
 
 </script>
 
-{% block scripts %}{% endblock %}
+{% block scripts %}
+<!--
+	This block is for scripts that are 
+		used only on one template.
+-->
+{% endblock %}
 </body>
 </html>

@@ -1,19 +1,9 @@
 {% extends "base_panel.html" %}
 
 {% block panelContent%}
-		<div>
-
-			<div class="pull-right">
-				<form action="{{ request.get_full_path }}" class="form-inline" method="post">
-					{% csrf_token %}
-					<input type="text" id="datepicker" name="date"style="width: 100px" placeholder="date" />
-				  	<input type="text" name="search" class="input-medium search-query">
-				  	<button type="submit" class="btn">Go</button>
-				</form>
-			</div>
-			<div class="clearfix"></div>
-		</div>
-
+		
+		{{ search_form|safe }}
+		
 		<table class="table table-striped">
 			<tr>
 				<th>Username</th>
@@ -22,31 +12,21 @@
 				<th>Edit</th>
 			</tr>
 		{% for u in users %}
-
 			<tr>
 				<td>{{ u.user.username }}</td>
-				<td>{{ u.organization }}</td>
+				<td>{{ u.user.organization }}</td>
 				<td>
-					{% if u.is_active %}
+					{% if u.user.is_active %}
 						yes
 					{% else %}
 						no
 					{% endif %}
 				</td>
 				<td>
-					<a href="/edituser/{{ u.user.id }}/" class="btn btn-warning">Edit</a>
+					<a href="/updateuser/{{ u.user.id }}/" class="btn btn-warning">Edit</a>
 				</td>
 			</tr>
-
 		{% endfor %}
-		</table>
+		</table><!-- (bootstrap) .table .table-striped -->
 
-{% endblock %}
-
-{% block scripts%}
-	<script>
-	  $(function() {
-	    $( "#datepicker" ).datepicker();
-	  });
-    </script>
 {% endblock %}

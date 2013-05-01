@@ -40,7 +40,7 @@ print DefaultViews.viewdocuments
 "	editmeeting/(:meetingid)/
 "	deletemeeting/(:meetingid)/
 "   viewusers/
-"   edituser/(:userid)/
+"   updateuser/(:userid)/
 "
 " Site Administrator Routes:
 "	-TODO: Add a CRUD for each DB object, this is scaffolding.
@@ -83,9 +83,14 @@ urlpatterns = patterns('',
     #   editmeeting/(:meetingid)/
     #   deletemeeting/(:meetingid)/
     #   viewusers/
-    #   edituser/(:userid)/
+    #   updateuser/(:userid)/
     ###
     url(r'^viewusers/', Supervisor.viewusers, name='viewusers'),
-    url(r'^edituser(?:/(\d+))?/$', Supervisor.edituser, name='edituser'),
+    url(r'^updateuser(?:/(\d+))?/$', Supervisor.updateuser, name='updateuser'),
 
+    ###
+    # General User Routes:
+    #   viewdocument/(:documentid)/
+    ###
+    url(r'^viewdocument(?:/(\d+))?/$', Supervisor.viewdocument, name='viewdocument'),
 )

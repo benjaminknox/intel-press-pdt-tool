@@ -1,18 +1,8 @@
 {% extends "base_panel.html" %}
 
 {% block panelContent%}
-		<div>
 
-			<div class="pull-right">
-				<form action="{{ request.get_full_path }}" class="form-inline" method="post">
-					{% csrf_token %}
-					<input type="text" id="datepicker" name="date"style="width: 100px" placeholder="date" />
-				  	<input type="text" name="search" class="input-medium search-query">
-				  	<button type="submit" class="btn">Go</button>
-				</form>
-			</div>
-			<div class="clearfix"></div>
-		</div>
+	{{ search_form|safe }}
 
 	{% if documents|length > 0 %}
 
@@ -20,7 +10,7 @@
 			<div class="list-document" onclick="location.href = '/viewdoc/{{ document.id }}/';">
 				Click to view {{ document.name }} by {{ document.user}}<br>
 				{{ document.description }}
-			</div>
+			</div><!-- .list-document -->
 
 		{% endfor %}
 
@@ -32,27 +22,18 @@
 
 	        <span class="current">
 	            Page {{ documents.number }} of {{ documents.paginator.num_pages }}.
-	        </span>
+	        </span><!-- .current -->
 
 	        {% if documents.has_next %}
 	            <a href="?page={{ documents.next_page_number }}">next</a>
 	        {% endif %}
-	    </span>
-	</div>
+	    </span><!-- .step-links -->
+	</div><!-- .pagination -->
 
 	  {% else %}
 
-	  	<span class="text-error">No results found</span>
+	  	<span class="text-error">No results found</span><!-- .text-error -->
 
 	{% endif %}
 
-{% endblock %}
-
-{% block scripts%}
-	<script>
-
-	  $(function() {
-	    $( "#datepicker" ).datepicker();
-	  });
-    </script>
 {% endblock %}
