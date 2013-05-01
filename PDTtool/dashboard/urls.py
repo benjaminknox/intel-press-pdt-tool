@@ -1,7 +1,5 @@
 from django.conf.urls import patterns, url
-from dashboard.views import DefaultViews, UserAuth, Supervisor
-
-print DefaultViews.viewdocuments
+from dashboard.views import DefaultViews, UserAuth, Supervisor, GeneralUser, SupervisorProgramManager
 
 """
 "
@@ -92,5 +90,13 @@ urlpatterns = patterns('',
     # General User Routes:
     #   viewdocument/(:documentid)/
     ###
-    url(r'^viewdocument(?:/(\d+))?/$', Supervisor.viewdocument, name='viewdocument'),
+    url(r'^viewdocument(?:/(\d+))?/$', GeneralUser.viewdocument, name='viewdocument'),
+ 
+    ###
+    # Supervisor and Program Manager:
+    #   adddocumenttomeeting/(:meetingid)/
+    #   adddocument/(:documentid)/
+    #   editdocument/(:documentid)/
+    ###
+    url(r'^adddocument/$', SupervisorProgramManager.adddocument, name='adddocument'),
 )
