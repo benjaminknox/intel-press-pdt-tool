@@ -1,4 +1,3 @@
-
 import uuid
 
 from django.http import HttpResponse

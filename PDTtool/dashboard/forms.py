@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 "	-Views: 'adddocument'
 "
 """
-class DocumentForm(forms.Form):
+class AddDocumentForm(forms.Form):
 
 	#The name of the document
 	name = forms.CharField( max_length=255 )
