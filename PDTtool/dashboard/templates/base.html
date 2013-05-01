@@ -1,0 +1,45 @@
+{% load staticfiles %}<!DOCTYPE html>
+<html lang="en" charset="utf-8">
+<head>
+	<title>PDT Portal - {{ title }}</title>
+	<link rel="stylesheet" href="{% static 'dashboard/bootstrap/css/bootstrap.min.css' %}"></link>
+	<link rel="stylesheet" href="{% static 'dashboard/toastr/toastr.css' %}"></link> 
+	<link rel="stylesheet" href="{% static 'dashboard/jquery-ui/css/ui-lightness/jquery-ui.min.css' %}"></link>
+	<link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}"></link> 
+</head>
+<body>
+<div class="container" style="margin-bottom: -40px;">
+<h3 id="page-title">PDT Portal</h3>
+</div>
+{% block content %} Content From Template {% endblock %}
+
+<script src="{% static 'dashboard/js/jquery.min.js' %}"></script>
+<script src="{% static 'dashboard/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'dashboard/jquery-ui/js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'dashboard/js/jquery.cookie.js' %}"></script>
+<script>
+
+function loop(){
+
+	var height = $(document).height();
+
+	var contentHeight= $("#content").height();
+
+	var plainbg = $('#plain-background');
+
+	plainbg.height(contentHeight);
+
+	var t = setTimeout('loop()', 50);
+}
+
+$(function(){
+
+	loop();
+
+});
+
+</script>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

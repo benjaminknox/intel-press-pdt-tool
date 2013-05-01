@@ -35,6 +35,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #
+    'django_extensions',
+    ###
+    # This is the main app for the file
+    ###
     'dashboard'
 )
 
@@ -51,13 +56,16 @@ ROOT_URLCONF = 'PDTtool.urls'
 
 WSGI_APPLICATION = 'PDTtool.wsgi.application'
 
-TEMPLATE_STRING_IF_INVALID = 'Variable Doesn\'t Exist'
+TEMPLATE_STRING_IF_INVALID = 'none'
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
+    #Dashboard context processor, it basically
+    #    gets the list of models.
+    'dashboard.context_processors.dashboard.dashboard_models',
 )
 
 # Database
@@ -67,7 +75,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'HOST': 'localhost',
-        'NAME': 'role_centric_refactor',
+        'NAME': 'django_db2',
         'USER': 'django_login',
         'PASSWORD': 'Password'
     }
@@ -77,13 +85,6 @@ DATABASES = {
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
     ('downloads','/home/programmer/upload_dir/'),
-)
-
-#Create User Roles
-USER_ROLES = (
-    'manager',
-    'moderator',
-    'client',
 )
 
 #The default login url if not specified.

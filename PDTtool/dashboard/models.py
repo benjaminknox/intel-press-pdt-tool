@@ -5,12 +5,14 @@ from django_extensions.db.fields import UUIDField
 
 """
 " Extendeduser model
-"	This is model extends the user information.
+"	This  model extends the user information,
+"		rather than modifying the User class
+"		in the Auth library just create a table
+"		related to it.
 """
 class Extendeduser(models.Model):
 	#User relationship
 	user = models.OneToOneField(User)
-	orginization = models.OneToOneField('Organization')
 	notifications = models.ManyToManyField('Notification')
 
 """
@@ -21,10 +23,7 @@ class Extendeduser(models.Model):
 "		-has a User
 """
 class Document(models.Model):
-	
-	#The unique id of the row
-	id = models.AutoField(primary_key=True)
-	
+
 	#The name of the document
 	name = models.CharField(max_length=255)
 
@@ -60,9 +59,6 @@ class Document(models.Model):
 "	TODO: Figure out how to use the UUID django-extension.
 """
 class File(models.Model):
-
-	#The unique id of the row.
-	id = models.AutoField(primary_key=True)
 	
 	#The location of the file on the hard disk.
 	location = models.CharField(max_length=255)
@@ -102,8 +98,6 @@ class File(models.Model):
 "	-has a User.
 """
 class Meeting(models.Model):
-	#The unique id of the row
-	id = models.AutoField(primary_key=True)    
 
 	#The collection of documents attributed to this meeting.
 	documents = models.ManyToManyField('Document')
@@ -121,10 +115,7 @@ class Meeting(models.Model):
 " Notification class
 "	-has a User.
 """
-class Notification(models.Model):
-	
-	#The unique id of the row
-	id = models.AutoField(primary_key=True)    
+class Notification(models.Model): 
     
     #The date the row is created
 	created = models.DateTimeField(auto_now_add=True)
@@ -143,7 +134,7 @@ class Notification(models.Model):
 	)
 	#Predefined choices are in REASON_FOR_NOTIFICATION
 	reason = models.CharField(max_length=255,
-							  choices=REASON_FOR_NOTIFICATION,
+						  	  choices=REASON_FOR_NOTIFICATION,
 							  default=NULL_NOTIFICATION)
 
 	#The user
@@ -159,8 +150,8 @@ class Notification(models.Model):
 """
 class Organization(models.Model):
 
-	#The unique id of the row
-	id = models.AutoField(primary_key=True)    
+	#The name of the organization
+	name = models.CharField(max_length=255)
 
 	#The collection of users in the orginization    
 	users = models.ManyToManyField(User)
@@ -176,9 +167,6 @@ class Organization(models.Model):
 "	-has a User.
 """
 class Comment(models.Model):
-
-	#The unique id of the row
-	id = models.AutoField(primary_key=True)   
 
 	#The user
 	user = models.ForeignKey(User)

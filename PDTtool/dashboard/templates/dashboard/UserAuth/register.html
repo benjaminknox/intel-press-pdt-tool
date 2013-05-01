@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+		<form action="{{ request.get_full_path }}" method="POST">
+			{% csrf_token %}
+			<table class="form-table" id="register-form">
+				
+				{{ RegisterForm.as_table }}
+
+				<tr>
+					<td colspan="2" style="text-align: center"><input type="submit" Value ="Register" /></td>
+				</tr>
+			</table><!-- #register-form -->
+		</form>
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		$(function(){
+			$(".errorlist").each(function(){
+
+				var width = $(this).parent('td').width();
+				$(this).addClass('label label-important').css({'left': (width -40)+'px', 'top':'5px'});
+				$(this).parent().css('position','relative');
+				$(this).parent().css({'background':'#FFEBF0', 'border-bottom':'1px solid #FFCDDA'});
+
+			});
+		});
+	</script>
+{% endblock %}

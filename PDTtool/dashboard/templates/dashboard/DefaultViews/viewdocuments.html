@@ -1,0 +1,58 @@
+{% extends "base_panel.html" %}
+
+{% block panelContent%}
+		<div>
+
+			<div class="pull-right">
+				<form action="{{ request.get_full_path }}" class="form-inline" method="post">
+					{% csrf_token %}
+					<input type="text" id="datepicker" name="date"style="width: 100px" placeholder="date" />
+				  	<input type="text" name="search" class="input-medium search-query">
+				  	<button type="submit" class="btn">Go</button>
+				</form>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	{% if documents|length > 0 %}
+
+		{% for document in documents %}
+			<div class="list-document" onclick="location.href = '/viewdoc/{{ document.id }}/';">
+				Click to view {{ document.name }} by {{ document.user}}<br>
+				{{ document.description }}
+			</div>
+
+		{% endfor %}
+
+	<div class="pagination">
+	    <span class="step-links">
+	        {% if documents.has_previous %}
+	            <a href="?page={{ documents.previous_page_number }}">previous</a>
+	        {% endif %}
+
+	        <span class="current">
+	            Page {{ documents.number }} of {{ documents.paginator.num_pages }}.
+	        </span>
+
+	        {% if documents.has_next %}
+	            <a href="?page={{ documents.next_page_number }}">next</a>
+	        {% endif %}
+	    </span>
+	</div>
+
+	  {% else %}
+
+	  	<span class="text-error">No results found</span>
+
+	{% endif %}
+
+{% endblock %}
+
+{% block scripts%}
+	<script>
+
+	  $(function() {
+	    $( "#datepicker" ).datepicker();
+	  });
+    </script>
+{% endblock %}
