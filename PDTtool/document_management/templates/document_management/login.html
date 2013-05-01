@@ -3,7 +3,6 @@
 {% block content %}
 		<form action="{{ request.get_full_path }}" method="POST">
 				{% csrf_token %}
-
 				<table class="form-table">
 					{{ AuthenticationForm.as_table }}
 					<tr>
