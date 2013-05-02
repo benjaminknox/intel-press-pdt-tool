@@ -7,7 +7,7 @@
 	{% if documents|length > 0 %}
 
 		{% for document in documents %}
-			<div class="list-document" onclick="location.href = '/viewdoc/{{ document.id }}/';">
+			<div class="list-document" onclick="location.href = '/viewdocument/{{ document.id }}/';">
 				Click to view {{ document.name }} by {{ document.user}}<br>
 				{{ document.description }}
 			</div><!-- .list-document -->
