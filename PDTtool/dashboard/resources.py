@@ -15,3 +15,10 @@ def user_is_authenticated_decorator(fn):
 		return fn(*args, **kw)
 	#Run the wrapped function
 	return wrappedFunction
+
+def handle_uploaded_file(f,location):
+    with open(location, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+    return location

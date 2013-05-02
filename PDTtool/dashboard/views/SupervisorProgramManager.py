@@ -1,7 +1,9 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from dashboard.models import Document, File
 from dashboard.forms import AddDocumentForm
-
+from django.shortcuts import render, redirect
+from dashboard.resources import handle_uploaded_file
+from django.contrib.auth.decorators import login_required
 
 """
 " The Document Management Author Views.
@@ -65,3 +67,5 @@ def adddocument(request):
 	return render(request,
 				  'dashboard/SupervisorProgramManager/adddocument.html',
 				  context)
+
+	
