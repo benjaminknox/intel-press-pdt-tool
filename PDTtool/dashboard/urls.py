@@ -41,10 +41,7 @@ from dashboard.views import DefaultViews, UserAuth, Supervisor, GeneralUser, Sup
 "   updateuser/(:userid)/
 "
 " Site Administrator Routes:
-"	-TODO: Add a CRUD for each DB object, this is scaffolding.
-"   addobject/(:objectname)/
-"   objects/(:objectname)/
-"   object/(:objectname)/(:objectid)/
+"   -Using the django Admin app.
 "
 " Writer's don't have any special routes right now.
 "
@@ -70,14 +67,17 @@ urlpatterns = patterns('',
     url(r'^logout/', UserAuth.logout, name='logout'),
     url(r'^register/', UserAuth.register, name='register'),
 
-    #Site Admin Routes
-    #url(r'^addobject(?:/(.+))?/$', Supervisor.addobject, name='addobject'),
-    #url(r'^objects(?:/(.+))?/$', Supervisor.objects, name='objects'),
-    #url(r'^object(?:/(.+)/(\d+))?/$', Supervisor.object, name='object'),
+    ###
+    # General User Routes:
+    #   viewdocument/(:documentid)/
+    #   viewmeetings/
+    ###
+    url(r'^viewdocument(?:/(\d+))?/$', GeneralUser.viewdocument, name='viewdocument'),
+    url(r'^viewmeetings/', GeneralUser.viewmeetings, name='viewmeetings'),
 
     ###
     # Supervisor Routes:
-    #   addmeeting/(:meetingid)/
+    #   addmeeting/
     #   editmeeting/(:meetingid)/
     #   deletemeeting/(:meetingid)/
     #   viewusers/
@@ -85,13 +85,9 @@ urlpatterns = patterns('',
     ###
     url(r'^viewusers/', Supervisor.viewusers, name='viewusers'),
     url(r'^updateuser(?:/(\d+))?/$', Supervisor.updateuser, name='updateuser'),
+    url(r'^addmeeting/', Supervisor.addmeeting, name='addmeeting'),
+    url(r'^editmeeting(?:/(\d+))?/$', Supervisor.editmeeting, name='editmeeting'),
 
-    ###
-    # General User Routes:
-    #   viewdocument/(:documentid)/
-    ###
-    url(r'^viewdocument(?:/(\d+))?/$', GeneralUser.viewdocument, name='viewdocument'),
- 
     ###
     # Supervisor and Program Manager:
     #   adddocumenttomeeting/(:meetingid)/

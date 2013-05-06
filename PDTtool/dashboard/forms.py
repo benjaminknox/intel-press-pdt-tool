@@ -1,7 +1,7 @@
 #from django.forms import ModelForm
 from django import forms
 from dashboard.models import *
-from django.forms import ModelForm,widgets
+from django.forms import ModelForm, widgets, TextInput
 from django.contrib.auth.models import User
 
 """
@@ -85,28 +85,46 @@ class RegisterForm(forms.Form):
 	email = forms.EmailField( max_length=255 )
 
 class ExtendeduserForm(forms.Form):
-
-	is_active = forms.BooleanField(required=False,label = 'Active')
+	
+	is_active = forms.BooleanField(required=False,label = 'User is active')
+	
+	is_program_manager = forms.BooleanField(required=False, label='Is a Program Manager')
 
 	#organization = forms.ModelMultipleChoiceField(required=False, queryset = Organization.objects.all(),label="orginization")
 
-
+#This is the DocumentForm.
 class DocumentForm(ModelForm):
+	#This is the Meta.
 	class Meta:
+		#This is the model.
 		model = Document
 
+#This is the MeetingForm.
 class MeetingForm(ModelForm):
+	#This is the Meta.
 	class Meta:
+		#This is the model that is loaded.
 		model = Meeting
+		#We exclude these fields.
+		exclude = ('added_user','deleted')
+		#This fields have special attributes here
+		widgets = {
+			'start_date': TextInput(attrs={'class':'datepicker'}),
+			'documents': forms.CheckboxSelectMultiple(),
+		}					
 
-class NotificationForm(ModelForm):
-	class Meta:
-		model = Notification
+	#This initializes
+	def __init__(self, **kwargs):
+		#This is the super meeting.
+   		super(MeetingForm, self).__init__(**kwargs)
+   		
+   		# This is json code that is used to create an interface
+   		#	for selecting documents.
+		def json_unicode_implementation(self):
+			return '{"document_name":"'+self.name+'","document_user_first_name":"'+self.user.first_name+'"}' 
 
-class OrganizationForm(ModelForm):
-	class Meta:
-		model = Organization
+		#We redefine the unicode of the Document class.
+		Document.__unicode__ = json_unicode_implementation
 
-class CommentForm(ModelForm):
-	class Meta:
-		model = Comment
+		#Output the document fields to grab.
+   		self.fields['documents'].queryset = Document.objects.filter(deleted=False)

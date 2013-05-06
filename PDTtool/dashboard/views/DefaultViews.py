@@ -1,8 +1,8 @@
 import uuid
 
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
 from dashboard.models import Document
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -28,10 +28,10 @@ def viewdocuments(request):
 		#Get the user defined search filter
 		search = request.POST['search']
 		#Filter the document list based on the users filtered information.
-		document_list = Document.objects.filter(name__icontains=search)
+		document_list = Document.objects.filter(name__icontains=search,deleted=False)
 	else:
 		#Load the document objects into a list
-		document_list = Document.objects.all()
+		document_list = Document.objects.filter(deleted=False)
 	
 	#Put the documents into a paginator object
 	paginator = Paginator(document_list, 10) # Show 25 documents per page
@@ -52,9 +52,9 @@ def viewdocuments(request):
 	#These are view variables.
 	context = {
 		'title': 'View Documents',
+		#Load in the documents paginator
 		'documents': documents,
 	}	
-
 	#Return the view
 	return render(request,
 		  		  'dashboard/DefaultViews/viewdocuments.html',

@@ -5,3 +5,10 @@
 				<span class="text-success">Thank you, you will receive an email when the supervisor activates your account!</span>
 			</div><!-- .form-table -->
 {% endblock %}
+{% block scripts %}
+	<script>
+		$(function(){
+			var t = setTimeout("window.location = '/login/';", 5000);
+		});
+	</script>
+{% endblock %}

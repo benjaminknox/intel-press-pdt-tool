@@ -4,7 +4,6 @@ from django.contrib.auth.models import Group, Permission
 " Create User Roles (groups in django) based on the use case diagram in the share.
 "		-General User.
 "		-Supervisor.
-"		-Site Administrator.
 "		-Program Manager.
 "		-Writer.
 "
@@ -36,14 +35,6 @@ try:
 		print "Creating Supervisor group."
 	else:
 		print "Supervisor group already created."
-
-	SiteAdministrator = Group.objects.filter(name__iexact="Site Administrator")
-	if not SiteAdministrator:
-		SiteAdministrator = Group(name = "Site Administrator")
-		SiteAdministrator.save()
-		print "Creating Site Administrator group."
-	else:
-		print "Site Administrator group already created."
 
 	ProgramManager = Group.objects.filter(name__iexact="Program Manager")
 	if not ProgramManager:

@@ -1,9 +1,19 @@
 {% extends "base_panel.html" %}
 
 {% block panelContent%}
-		
+<!--
+	This lists the users in a table for User Administration.
+		It doesn't display Supervisors or Site Administrators, just these roles:
+			-General User.
+			-Site Administrator.
+			-Program Manager.
+			-Writer.
+-->
+
+		<!-- display the search form from the dashbaord/context -->
 		{{ search_form|safe }}
 		
+		<!-- A table for listing the users. -->
 		<table class="table table-striped">
 			<tr>
 				<th>Username</th>
@@ -11,6 +21,8 @@
 				<th>Activated</th>
 				<th>Edit</th>
 			</tr>
+
+		<!-- Start the listing of the users -->
 		{% for u in users %}
 			<tr>
 				<td>{{ u.user.username }}</td>
@@ -23,10 +35,12 @@
 					{% endif %}
 				</td>
 				<td>
+					<!-- This leads you to a form to update the user -->
 					<a href="/updateuser/{{ u.user.id }}/" class="btn btn-warning">Edit</a>
 				</td>
 			</tr>
 		{% endfor %}
+		<!-- End the listing of the users -->
 		</table><!-- (bootstrap) .table .table-striped -->
 
 {% endblock %}

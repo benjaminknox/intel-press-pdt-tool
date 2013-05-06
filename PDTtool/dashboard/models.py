@@ -1,7 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User, Group, Permission
-
 from django_extensions.db.fields import UUIDField
+from django.contrib.auth.models import User, Group, Permission
 
 """
 " Extendeduser model
@@ -33,7 +32,7 @@ class Document(models.Model):
 		return self.name
 
     #A short description of the document
-    #	written by the uploader
+    #	written by the uploader.
 	description = models.TextField()
 
 	#This creates the `file` relationship
@@ -43,7 +42,10 @@ class Document(models.Model):
 	user = models.ForeignKey(User)
 
 	#This creates the `Comment` relationship
-	comments = models.ManyToManyField('Comment')
+	comments = models.ManyToManyField('Comment',blank=True)
+
+	#If this is false the field is deleted.
+	deleted = models.BooleanField(default=False)
     
     #The date the row is created
 	created = models.DateTimeField(auto_now_add=True)
@@ -84,7 +86,7 @@ class File(models.Model):
 	documentid = models.ForeignKey('Document',related_name='_file')    
     
     #The collection of comments attributed to this file.
-	comments = models.ManyToManyField('Comment')
+	comments = models.ManyToManyField('Comment',blank=True)
 
     #The date the row is created.
 	created = models.DateTimeField(auto_now_add=True)
@@ -102,8 +104,20 @@ class Meeting(models.Model):
 	#The collection of documents attributed to this meeting.
 	documents = models.ManyToManyField('Document')
 
-	#The user
-	user = models.ForeignKey(User)
+	#The user that added it
+	added_user = models.ForeignKey(User)
+
+	#The name of the meeting
+	name = models.CharField(max_length=255)
+
+	#The Description of the meeting
+	description = models.TextField()
+
+	#The date the meeting starts.
+	start_date = models.DateTimeField()
+
+	#If this is false the field is deleted.
+	deleted = models.BooleanField(default=False)
 
     #The date the row is created
 	created = models.DateTimeField(auto_now_add=True)
@@ -163,12 +177,10 @@ class Organization(models.Model):
     #The date of the last edit of the row
 	lastmodified = models.DateTimeField(auto_now=True)
 
-
 	#Returns the value of the filename
 	#	for reference purposes. 
 	def __unicode__(self):
    			return self.name
-
 
 """
 " Comment class
@@ -183,16 +195,16 @@ class Comment(models.Model):
 	content = models.TextField()
 	
 	#The actual character field.
-	title = models.CharField(max_length=255)
+	title = models.CharField(max_length=255,blank=True)
 	
 	#The collection of comments associated with this field
-	comments = models.ManyToManyField('Comment')
+	comments = models.ManyToManyField('Comment',blank=True)
 
 	#Whether or not the model is reported.
 	reported = models.BooleanField() 
     
     #The date the row is created
 	created = models.DateTimeField(auto_now_add=True)
-    
+ 	
     #The date of the last edit of the row
 	lastmodified = models.DateTimeField(auto_now=True)

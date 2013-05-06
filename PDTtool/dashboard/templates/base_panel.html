@@ -7,6 +7,9 @@
 
 -->
 <div id="wrapper" class="container">
+	{% if request.user.is_superuser %}
+	<a id="admin" class="btn btn-inverse" href="/admin/">admin</a>
+	{% endif %}
 	<a id="logout" class="btn btn-info" href="/logout/">logout</a>
 	<div id="navbar" class="span3">
 
@@ -15,7 +18,8 @@
 			{% if group.name == 'General User' %}
 			<div class="nav-block">
 				<h6>General User Navigation</h6>
-				<a href="/">View Documents</a>
+				<a href="/">View Documents</a><br>
+				<a href="/viewmeetings/">View Meetings</a>
 			</div><!-- .nav-block -->
 			{% endif %}
 
@@ -29,7 +33,8 @@
 			{% if group.name == 'Supervisor' %}
 			<div class="nav-block">
 				<h6>Supervisor Navigation</h6>
-				<a href="/viewusers/">Users</a>
+				<a href="/viewusers/">Users</a><br>
+				<a href="/addmeeting/">Add Meeting</a>
 				<!-- {% for models in dashboard_models %}
 					<a href="/objects/{{ models }}/">{{ models }}</a> <br>
 				{% endfor %} -->
@@ -38,13 +43,13 @@
 		
 		{% endfor %}	
 	</div><!-- #navbar (bootstrap) .span3 -->
-	<div id="content" class="span8">
+	<div id="content-wrapper" class="span8">
 		<span class="label label-info">{{ title }}</span>
-		<div id="content-wrapper">
+		<div id="content">
 			{% block panelContent %} Content {% endblock %}
 			<div class="clear-fix"></div>
-		</div><!-- #content-wrapper -->
-	</div><!-- #content (bootstrap) .span8 -->
+		</div><!-- #content -->
+	</div><!-- #content-wrapper (bootstrap) .span8 -->
 	<div class="clear-fix"></div>
 </div><!-- #wrapper (bootstrap) .container -->
 <!-- 

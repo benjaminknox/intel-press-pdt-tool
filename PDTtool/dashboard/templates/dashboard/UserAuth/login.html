@@ -3,7 +3,7 @@
 {% block content %}
 		<form action="{{ request.get_full_path }}" method="POST">
 				{% csrf_token %}
-				<table class="form-table">
+				<table class="form_table">
 					{% if loginerror %}
 					<tr>
 						<td colspan="2" class="text-error small">
@@ -15,6 +15,6 @@
 					<tr>
 						<td colspan="2"><input type="submit" value="login" /></td>
 					</tr>
-				</table><!-- .form-table -->
+				</table><!-- .form_table -->
 		</form>
 {% endblock %}

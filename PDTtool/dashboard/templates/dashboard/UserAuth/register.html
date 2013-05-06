@@ -1,26 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+	<!-- 
+		User registration form, the form adds a user,
+			the user is then activated by a Supervisor.
+	-->
 		<form action="{{ request.get_full_path }}" method="POST">
 			{% csrf_token %}
-			<table class="form-table" id="register-form">
-				
+			<table id="register_form" class="form_table">
 				{{ RegisterForm.as_table }}
-
 				<tr>
 					<td colspan="2" style="text-align: center"><input type="submit" Value ="Register" /></td>
 				</tr>
-			</table><!-- #register-form -->
+			</table><!-- #register_form .form_table -->
 		</form>
 {% endblock %}
 
 {% block scripts %}
 	<script>
+		//Document load action.
 		$(function(){
-			$(".errorlist").each(function(){
 
+			//This styles the errors that are displayed
+			//		when the form validation fails. 
+			$(".errorlist").each(function(){
+				//Get the width of the td.
 				var width = $(this).parent('td').width();
+				//Add bootstrap .label and .label-important,
+				//	and dynamic positioning.
 				$(this).addClass('label label-important').css({'left': (width -40)+'px', 'top':'5px'});
+				//
 				$(this).parent().css('position','relative');
 				$(this).parent().css({'background':'#FFEBF0', 'border-bottom':'1px solid #FFCDDA'});
 

@@ -1,10 +1,11 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from dashboard.models import Extendeduser,Organization
-from dashboard.forms import ExtendeduserForm
+from django.core.mail import send_mail
 from django.db.models import Q, related
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User,Group
+from dashboard.models import Extendeduser,Organization,Meeting
 from django.contrib.auth.decorators import login_required
+from dashboard.forms import ExtendeduserForm, MeetingForm
 
 """
 " Supervisor Views
@@ -43,50 +44,55 @@ def updateuser(request, userid=None):
 	if not userid:
 		return redirect('/viewusers/')
 
+	#Get the user.
 	user_to_update = Extendeduser.objects.get(user__id=userid)
 
+	#Get the groups.
+	user_to_update_groups = user_to_update.user.groups.all()
 
+	#Get the active status
+	user_to_update_is_active = user_to_update.user.is_active
+
+	#Check if the user is a program manager
+	user_to_update_is_program_manager = False
+	#Loop through the groups
+	for group in user_to_update_groups:
+		#Check the name
+		if group.name == 'Program Manager':
+			#If Program Manager is in the list set
+			#	to True.
+			user_to_update_is_program_manager = True
+
+	#Manage the post data
 	if request.method == 'POST':
-
-		"""if 'organization' in request.POST:
-			organizations_value = request.POST['organization']
-
-		else:
-			organizations_value = []
-
-		organizations = Organization.objects.filter(id__in=)
-
-		for org in organizations:
-
-			if str(org.id) in organizations_value:
-
-				print org.id
-
-				org.users.add(user_to_update.user)
-				#org.save()
-
-		"""
-
+	
+		#Check for the is_active variable.
 		if 'is_active' in request.POST:
-			is_active = request.POST['is_active']
-
+			user_to_update.user.is_active = request.POST['is_active']
+			user_to_update_is_active = request.POST['is_active']
 		else:
-			is_active = False
-			
-		user_to_update.user.is_active = is_active
+			user_to_update.user.is_active = False
+			user_to_update_is_active = False
+
 		user_to_update.user.save()
 
-	#else:
+		#Load the program manager group
+		program_manager_group = Group.objects.get(name='Program Manager')
 
-		#organizations = Organization.objects.filter(users__in=userid)
-
-
-
-	#organizations_value = [organization.id for organization in organizations]
+		#Check if the user is a program managers
+		if 'is_program_manager' in request.POST:
+			if not user_to_update_is_program_manager:
+				user_to_update.user.groups.add(program_manager_group)
+				user_to_update.user.save()
+				user_to_update_is_program_manager = True
+		else:
+			if program_manager_group:
+				user_to_update.user.groups.remove(program_manager_group)
+				user_to_update_is_program_manager = False
 
 	data = {
-		'is_active':user_to_update.user.is_active,
-		#'organization':organizations_value,
+		'is_active':user_to_update_is_active,
+		'is_program_manager': user_to_update_is_program_manager,
 	}
 
 	extendeduserform = ExtendeduserForm(data)
@@ -100,4 +106,64 @@ def updateuser(request, userid=None):
 	#Return the view
 	return render(request,
 		  		  'dashboard/Supervisor/updateuser.html',
+				  context)
+
+@login_required
+def addmeeting(request):
+
+	if request.method == 'POST':
+
+		meetingform = MeetingForm(request.POST)
+
+		if meetingform.is_valid():
+			new_meeting = meetingform.save(commit=False)
+			new_meeting.added_user = request.user
+
+			new_meeting.save()
+
+	else:
+		meetingform = MeetingForm()
+
+	context ={
+
+		'title': 'Meeting Form',
+		'meetingform': meetingform,
+
+	}
+
+	#Return the view
+	return render(request,
+		  		  'dashboard/Supervisor/meetingform.html',
+				  context)
+
+
+@login_required
+def editmeeting(request,meetingid=None):
+
+	if not meetingid:
+		return redirect('/viewmeetings/')
+
+	meeting = Meeting.objects.get(id=meetingid)
+
+	if request.method == 'POST':
+
+		meetingform = MeetingForm(request.POST,instance=meeting)
+
+		if meetingform.is_valid():
+			new_meeting = meetingform.save(commit=False)
+			new_meeting.save()
+
+	else:
+		meetingform = MeetingForm(instance=meeting)
+
+	context ={
+
+		'title': 'Update %s'% meeting.name,
+		'meetingform': meetingform,
+
+	}
+
+	#Return the view
+	return render(request,
+		  		  'dashboard/Supervisor/meetingform.html',
 				  context)

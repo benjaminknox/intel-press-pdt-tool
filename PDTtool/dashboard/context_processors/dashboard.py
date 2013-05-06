@@ -26,6 +26,7 @@ def dashboard_models(*args, **kw):
 		classname = _class.__name__
 		#Leave out some of the objects.
 		if classname not in ('Extendeduser','File'): 
+			#Load the dashboard class model
 			dashboard_models[classname] = _class
 	###
 	# Return the dictionary to the context_processor
@@ -37,15 +38,19 @@ def dashboard_models(*args, **kw):
 ###
 #
 # Create a search form to be used 
-#	across the templates.
+#	in all the templates.
 #
 # It gets loaded in the TEMPLATE_CONTEXT_PROCESSOR
-#	in settings.py
+#	in settings.py.
 #
-#	The way that this would used in the template is
+#	The way that this would be used in the template is
 #		like this in order to disable escaping:
 #
 #		{{ search_form|safe }}
+#
+# There is no user input here so it doesn't have
+#		to be escaped.
+#
 ###
 def search_form(request):
 
@@ -56,17 +61,17 @@ def search_form(request):
 	request_full_path = request.path
 
 	#Output the from HTML
-	html = '<div id="search-form">'
-	html+= '<div class="pull-right">'
-	html+= '<form action="%s" class="form-inline" method="post">' % request_full_path
-	html+= '<input type="hidden" name="csrfmiddlewaretoken" value="%s">' % token
-	html+= '<input type="text" class="datepicker" name="date" style="width: 100px" placeholder="date" />'
-	html+= '<input type="text" name="search" class="input-medium search-query" />'
-	html+= '<button type="submit" class="btn">Go</button>'
-	html+= '</form><!-- (bootstrap) .form-inline -->'
-	html+= '</div><!-- (bootstrap) .pull-right -->'
-	html+= '<div class="clearfix"></div>'
-	html+= '</div><!-- #search-form -->'
+	html = 	'<div id="search_form">'
+	html+= 		'<div class="pull-right">'
+	html+= 			'<form action="%s" class="form-inline" method="post">' % request_full_path
+	html+= 				'<input type="hidden" name="csrfmiddlewaretoken" value="%s">' % token
+	html+= 				'<input type="text" class="datepicker" name="date" style="width: 100px" placeholder="date" />'
+	html+= 				'<input type="text" name="search" class="input-medium search-query" />'
+	html+= 				'<button type="submit" class="btn">Go</button>'
+	html+= 			'</form><!-- (bootstrap) .form-inline -->'
+	html+= 		'</div><!-- (bootstrap) .pull-right -->'
+	html+= 		'<div class="clearfix"></div>'
+	html+= 	'</div><!-- #search_form -->'
 
 	#Return the variable into the context.
 	return {'search_form':html}

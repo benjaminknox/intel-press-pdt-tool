@@ -64,11 +64,15 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
+    ###
     # Dashboard context processor, it basically
     #    gets the list of models.
+    ###
     'dashboard.context_processors.dashboard.dashboard_models',
+    ###
     # Load the search form which is used 
     #   across multiple templates.
+    ###
     'dashboard.context_processors.dashboard.search_form',    
 )
 
@@ -81,7 +85,7 @@ DATABASES = {
         'HOST': 'localhost',
         'NAME': 'django_db2',
         'USER': 'django_login',
-        'PASSWORD': 'Password'
+        'PASSWORD': 'Password',
     }
 }
 
@@ -90,6 +94,17 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
     ('downloads','/home/programmer/upload_dir/'),
 )
+
+# Set the email SMTP server
+EMAIL_USE_TLS = True
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_HOST_USER = 'the.pdt.portal@gmail.com'
+
+EMAIL_HOST_PASSWORD = 'cummings123'
+
+EMAIL_PORT = 587
 
 #The default login url if not specified.
 LOGIN_URL = '/login/'
@@ -113,5 +128,4 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
-
 STATIC_URL = '/static/'
