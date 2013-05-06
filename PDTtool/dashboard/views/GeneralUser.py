@@ -43,7 +43,7 @@ def viewdocument(request,documentid=None):
 			document.save()
 
 			#Return the redirect.
-			return redirect('/')
+			return redirect('/?deleted_document=%s' % document.name)
 
 		#If a comment has been posted.
 		if request.method == 'POST' and 'content' in request.POST:

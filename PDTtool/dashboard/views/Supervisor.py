@@ -3,9 +3,9 @@ from django.core.mail import send_mail
 from django.db.models import Q, related
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User,Group
-from dashboard.models import Extendeduser,Organization,Meeting
-from django.contrib.auth.decorators import login_required
 from dashboard.forms import ExtendeduserForm, MeetingForm
+from django.contrib.auth.decorators import login_required
+from dashboard.models import Extendeduser,Organization,Meeting,Document
 
 """
 " Supervisor Views
@@ -108,6 +108,18 @@ def updateuser(request, userid=None):
 		  		  'dashboard/Supervisor/updateuser.html',
 				  context)
 
+def save_meeting_documents(meeting,document_list):
+
+	meeting.documents.clear()
+
+	documents = Document.objects.filter(id__in = document_list)
+
+	for document in documents:
+
+		meeting.documents.add(document)
+
+
+
 @login_required
 def addmeeting(request):
 
@@ -121,14 +133,19 @@ def addmeeting(request):
 
 			new_meeting.save()
 
+			documents_list = request.POST.getlist('documents')
+
+			save_meeting_documents(new_meeting,documents_list)
+
+			return redirect('/viewmeetings/?added_meeting=%s&start_date=%s' % (new_meeting.name,new_meeting.start_date))
+
 	else:
 		meetingform = MeetingForm()
 
 	context ={
-
 		'title': 'Meeting Form',
 		'meetingform': meetingform,
-
+		'submit_button_value': 'Add Meeting',
 	}
 
 	#Return the view
@@ -150,8 +167,14 @@ def editmeeting(request,meetingid=None):
 		meetingform = MeetingForm(request.POST,instance=meeting)
 
 		if meetingform.is_valid():
-			new_meeting = meetingform.save(commit=False)
-			new_meeting.save()
+
+			meeting = meetingform.save(commit=False)
+			
+			meeting.save()
+
+			documents_list = request.POST.getlist('documents')
+
+			save_meeting_documents(meeting,documents_list)
 
 	else:
 		meetingform = MeetingForm(instance=meeting)
@@ -160,6 +183,7 @@ def editmeeting(request,meetingid=None):
 
 		'title': 'Update %s'% meeting.name,
 		'meetingform': meetingform,
+		'submit_button_value': 'Update Meeting',
 
 	}
 

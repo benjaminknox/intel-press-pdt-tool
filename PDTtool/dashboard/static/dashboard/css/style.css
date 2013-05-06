@@ -321,6 +321,10 @@ HTML,BODY{
 	list-style: none;
 }
 
+#calendar ul li{
+	line-height: 10px;
+}
+
 #calendar a {
     font-size: 8px;
 }
@@ -352,15 +356,36 @@ HTML,BODY{
 }
 
 #document_browser .document{
-	color: #FFF;
+	position: relative;
+	/*color: #FFF;*/
+	color: #333;
 	cursor: pointer;
 	width: 465px;
 	margin: 5px;
 	padding: 5px;
-	background: #269926;
+	background: #EEE;
+	/*background: #269926;*/
 	/* This makes corners on the div. */
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	border: 1px solid #008500;
+	border: 1px solid #CCC;
+	/*border: 1px solid #008500;*/
+	overflow: hidden; 
+}
+
+#document_browser .document .document_description{
+	position: absolute;
+	margin-top: 7px;
+	overflow-y: scroll;
+	width: 98%;
+	height: 55px;
+}
+
+#form_element #id_name{
+	width: 100%;
+}
+
+#form_element #id_description{
+	width: 100%;
 }

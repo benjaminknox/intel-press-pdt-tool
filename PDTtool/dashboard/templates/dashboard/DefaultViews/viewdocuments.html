@@ -41,3 +41,19 @@
 	{% endif %}
 
 {% endblock %}
+
+{% block scripts %}
+	<script>
+		$(function(){
+
+		{% if request.GET.deleted_document %}
+			toastr.error('You deleted the document "{{ request.GET.deleted_document }}".');
+		{% endif %}
+
+		{% if request.GET.added_document %}
+			toastr.success('You added the document "{{ request.GET.added_document }}".');
+		{% endif %}
+
+		});
+	</script>
+{% endblock %}

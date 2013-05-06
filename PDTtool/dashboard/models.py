@@ -102,23 +102,23 @@ class File(models.Model):
 class Meeting(models.Model):
 
 	#The collection of documents attributed to this meeting.
-	documents = models.ManyToManyField('Document')
+	documents = models.ManyToManyField('Document',blank=True)
 
 	#The user that added it
 	added_user = models.ForeignKey(User)
-
+	
 	#The name of the meeting
 	name = models.CharField(max_length=255)
-
+	
 	#The Description of the meeting
 	description = models.TextField()
-
+	
 	#The date the meeting starts.
 	start_date = models.DateTimeField()
-
+	
 	#If this is false the field is deleted.
 	deleted = models.BooleanField(default=False)
-
+	
     #The date the row is created
 	created = models.DateTimeField(auto_now_add=True)
     
@@ -208,3 +208,16 @@ class Comment(models.Model):
  	
     #The date of the last edit of the row
 	lastmodified = models.DateTimeField(auto_now=True)
+
+class Schedule(models.Model):
+	legnth = models.IntegerField()
+
+class ScheduleItem(models.Model):
+	
+	document = models.ForeignKey(Meeting)
+
+	time = models.TimeField()
+
+	who = models.ForeignKey(User)
+
+#	action = 

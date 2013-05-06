@@ -58,10 +58,13 @@ def adddocument(request):
 
 			doc.file.add(uploadedfile)			
 
+			#Return the redirect.
+			return redirect('/?added_document=%s' % doc.name)
+
 		#Return the view
-		return render(request,
-					  'dashboard/SupervisorProgramManager/adddocumentaction.html',
-					  context)
+		#return render(request,
+		#			  'dashboard/SupervisorProgramManager/adddocumentaction.html',
+		#			  context)
 
 	#Return the view
 	return render(request,

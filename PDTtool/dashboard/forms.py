@@ -1,6 +1,7 @@
 #from django.forms import ModelForm
 from django import forms
 from dashboard.models import *
+from re import escape
 from django.forms import ModelForm, widgets, TextInput
 from django.contrib.auth.models import User
 
@@ -99,6 +100,11 @@ class DocumentForm(ModelForm):
 		#This is the model.
 		model = Document
 
+class CustomCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
+	def label_from_instance(self,obj):
+		return "Hello"
+		#return '{"document_name":"'+obj.name+'","document_user_first_name":"'+obj.user.first_name+'","document_description":"'+obj.description+'"}' 
+
 #This is the MeetingForm.
 class MeetingForm(ModelForm):
 	#This is the Meta.
@@ -114,17 +120,10 @@ class MeetingForm(ModelForm):
 		}					
 
 	#This initializes
-	def __init__(self, **kwargs):
+	def __init__(self, *args, **kwargs):
 		#This is the super meeting.
-   		super(MeetingForm, self).__init__(**kwargs)
-   		
-   		# This is json code that is used to create an interface
-   		#	for selecting documents.
-		def json_unicode_implementation(self):
-			return '{"document_name":"'+self.name+'","document_user_first_name":"'+self.user.first_name+'"}' 
-
-		#We redefine the unicode of the Document class.
-		Document.__unicode__ = json_unicode_implementation
+   		super(MeetingForm, self).__init__(*args, **kwargs)
 
 		#Output the document fields to grab.
    		self.fields['documents'].queryset = Document.objects.filter(deleted=False)
+   		self.fields['documents'].label_from_instance = lambda obj: '{"document_id":"'+str(obj.id)+'","document_name":"'+obj.name+'","document_user_first_name":"'+obj.user.first_name+'","document_description":"'+obj.description+'"}' 
