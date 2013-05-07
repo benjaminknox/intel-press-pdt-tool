@@ -1,0 +1,391 @@
+/* CSS styles */
+
+HTML,BODY{
+	width:100%;
+	height: 100%;
+	background: #f2f2f2;
+}
+
+/*
+* In the base_panel.html template 
+* 	this is used to style the h3
+*	tag at the top of the page.
+*/
+#page-title{
+	color: #072E57;
+}
+
+/*
+* These styles are in templates/dashboard/base_panel.htm
+*/
+
+/* This wraps the main app after login.*/
+#wrapper{
+
+	position: relative;
+	padding: 10px;
+	margin-top: 20px;
+	border: 1px solid #DDD;
+
+	/* This makes corners on the div. */
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+
+	/* This adds a gradient to the div. */
+	-webkit-box-shadow: 0px 3px 20px 0px #CCCCCC;
+	box-shadow: 0px 3px 20px 0px #CCCCCC;
+	background: #ffffff; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlZWVlZWUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top, #ffffff 0%, #eeeeee 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #ffffff 0%,#eeeeee 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ); /* IE6-8 */
+
+}
+
+/* The navbar is located inside of the #wrapper div */
+#navbar{
+	height: 100%;
+}
+	
+	/* This is a group of navigation elements. */
+	#navbar .nav-block{
+		position: relative;
+		border-top: 1px dotted #999999;
+		margin-top: 30px;
+	}
+
+		/* This is the title of group of navigation elements */
+		#navbar .nav-block h6{
+			margin: -20px 0 0 0;
+			padding: 0;
+			top: 0;
+		}
+
+	/* This is the content wrapper in the application */
+	#content-wrapper{
+		padding-left: 10px;
+		border-left: 1px solid #DDD;
+		min-height: 300px;
+	}
+		/* This contains the content from the templates */
+		#content-wrapper #content{
+			margin-top: 20px;
+		}
+
+	/* This is the logout button on each page */
+	#logout{
+		position: absolute;
+		right: 3px;
+		top: 3px;
+		cursor: pointer;
+	}
+
+	/* This is the admin button that shows if a user is a superuser*/
+	#admin{
+		position: absolute;
+		right: 70px;
+		top: 3px;
+		cursor: pointer;
+		background: #666;
+	}
+
+	#admin:hover{
+		background: #555;
+	}
+
+/*
+* End styles in templates/dashboard/base_panel.htm
+*/
+
+/*
+* These styles are in templates/dashboard/DefaultViews/viewdocuments.htm
+*/
+
+/* This displays the document with a description */ 
+.list-document{
+	padding: 5px;
+	margin-top: 10px;
+	width: 100%;
+	border: 1px solid #EEE;
+	cursor: pointer;
+
+	/* This makes corners on the div. */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background: #FAFAFA;
+}
+
+/* This is the delete document button, if the user owns the document it is shown */
+#delete_button{
+	position: absolute;
+	top: 50px;
+	right: 40px;
+}
+
+/* This is the release document button, if the user owns the document it is shown */
+#release_button{
+	position: absolute;
+	top: 50px;
+	right: 210px;
+}
+
+/* This is the page links at the bottom of the padge. */
+#pagination{
+	margin: inherit auto;
+	text-align: center;
+}
+
+/*
+* End styles in templates/dashboard/DefaultViews/viewdocuments.htm
+*/
+
+/*
+* These styles are used in dashboard.resources.comment_form.
+*	The template they are used in is dashboard/templates/GeneralUser/viewdocument.html
+*/
+
+/* This is the wrapper around the comment forms */
+.comment_form{
+	display: none;
+}
+	/* This is the textarea that is used in the form. */
+	.comment_form textarea{
+		width: 220px;
+		height: 50px;
+		margin-right: 10px;
+	}
+/*
+* End of the styles that are in dashboard.resources.comment_form.
+*/
+
+/*
+* These styles are in dashboard/templates/GeneralUser/viewdocument.html
+*/
+#comment_wrapper{
+	margin-top: 20px;
+	padding-top: 5px;
+	border-top: 1px dotted #DDD;
+	width: 100%;
+}
+/*
+* These styles can be found in dashboard.resources.comment_form,
+*	but are parsed into the template above.
+*/
+/* This is the comment at the top of the comment tree */
+.highest_parent_comment{
+	width: 100%;
+}
+/* This is any comment that has a parent */
+.child_comment{
+	width: 93%;
+	position: relative;
+}
+/* This wraps any comment reguardless of its relationship */
+.comment_content_wrapper{
+}
+	/* This is a wrapper of the content within a content */
+	.comment_content_wrapper .comment_content{
+		padding: 8px;
+		margin: 20px 0 5px 0;
+		width: 100%;
+		background: #F6F6F6;
+		border-top: 1px solid #DDD;
+		position: relative;
+	}
+	/* This contains the comment users first name and last name. */
+	.comment_content_wrapper .comment_content h6{
+		margin: 0;
+		padding: 0;
+	}
+	/* This is the reply button within each comment */
+	.comment_content_wrapper .comment_content .reply_button{
+		position: absolute;
+		top: 6px;
+		right: 3px;
+	}
+/*
+* End the styles found in dashboard.resources.comment_form
+*/
+/*
+* End of the styles that are in dashboard/templates/GeneralUser/viewdocument.html
+*/
+/*
+* These styles are in templates/dashboard/UserAuth/register.html.
+*/
+.form_table{
+	border: 1px solid #DDD;
+	background: #EEE;
+	text-align: center;
+	margin: 20px auto 0 auto;
+	width: 200px;
+	height: 100px;
+}
+#register_form{
+	width: 500px;
+}
+#register_form input{
+	margin-top: 5px;
+}
+/*
+* These are output by the Form helper class when validation is false.
+*/
+#register_form .errorlist{
+	list-style: none;
+	position: absolute;
+	margin: 0;
+	padding: 0;
+}
+#register_form .errorlist li{
+	padding: 5px;
+}
+/*
+* End of these that are output by the Form helper class when validation is false.
+*/
+/*
+* End of the styles that are in templates/dashboard/UserAuth/register.html.
+*/
+
+/*
+* These styles are in dashboard/templates/SupervisorProgramManager/adddocument.html
+*/
+/* This is the form for the document information */
+#document_info_table{
+	width: 100%;
+}
+	/* This is the row around the submit button in the Document info form. */
+	#document_info_table .submit_button_row{
+		text-align: center;
+	}
+/*
+* End the styles that are in dashboard/templates/SupervisorProgramManager/adddocument.html
+*/
+
+#calendar{
+	border: 1px solid #DDD;
+	background: #EEE;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	padding: 20px;
+	margin: 0 0 20px 0;
+	width: 100%;
+}
+
+#calendar table {
+    width: 100%;
+}
+
+#calendar table tr th {
+    text-align: center;
+    background-color: #FCFCFC;
+    color: #000;
+    border: 1px solid #BBB;
+}
+
+#calendar table tr td {
+    width: 10%;
+    border: 1px solid #BBB;
+    background: #FFF;
+    vertical-align: top;
+    height: 80px;
+    padding: 2px;
+}
+
+#calendar td.noday {
+    background-color: #eee;
+}
+
+#calendar td.filled {
+    background-color: #fff6bf;
+}
+
+#calendar td.today {
+    border: 4px solid #316497;
+}
+
+#calendar .dayNumber {
+    font-size: 16px !important;
+    font-weight: bold;
+}
+
+#calendar ul{
+	margin: 0 0 0 15px;
+	padding: 0;
+	list-style: none;
+}
+
+#calendar ul li{
+	line-height: 10px;
+}
+
+#calendar a {
+    font-size: 8px;
+}
+
+#document_browser{
+	margin-top: 34px;
+	height: 200px;
+	width: 500px;
+	overflow-y: scroll;
+	background: #FFF;
+	/* This makes corners on the bottom of the div. */
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-top-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+
+	border: 1px solid #DDD;
+}
+
+#document_browser_search{
+	position: absolute;
+	top:-32px;
+	right: 0;
+}
+
+#document_browser .document{
+	position: relative;
+	/*color: #FFF;*/
+	color: #333;
+	cursor: pointer;
+	width: 465px;
+	margin: 5px;
+	padding: 5px;
+	background: #EEE;
+	/*background: #269926;*/
+	/* This makes corners on the div. */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #CCC;
+	/*border: 1px solid #008500;*/
+	overflow: hidden; 
+}
+
+#document_browser .document .document_description{
+	position: absolute;
+	margin-top: 7px;
+	overflow-y: scroll;
+	width: 98%;
+	height: 55px;
+}
+
+#form_element #id_name{
+	width: 100%;
+}
+
+#form_element #id_description{
+	width: 100%;
+}
