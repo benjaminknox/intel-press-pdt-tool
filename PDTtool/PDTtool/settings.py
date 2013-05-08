@@ -43,6 +43,8 @@ INSTALLED_APPS = (
     'meeting_management',
     'schedule_management',
     'user_management',
+    # Extensions for utility.
+    'django_extensions',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,6 +55,13 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+"""
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.static',
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.request',
+    'django.core.context_processors.csrf',
+)"""
 
 ROOT_URLCONF = 'PDTtool.urls'
 
@@ -105,6 +114,14 @@ STATICFILES_DIRS = (
     # The template is in the static directory.
     ('www',os.path.join(BASE_DIR, "www")),
 )
+# Set the email SMTP server
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'the.pdt.portal@gmail.com'
+EMAIL_HOST_PASSWORD = 'cummings123'
+EMAIL_PORT = 587
+#The default login url if not specified.
+LOGIN_URL = '/login/'
 """""""""
 " End custom settings.
 """""""""

@@ -19,9 +19,7 @@ HTML,BODY{
 * These styles are in templates/dashboard/base_panel.htm
 */
 
-/* This wraps the main app after login.*/
-#wrapper{
-
+.wrapper_bg{
 	position: relative;
 	padding: 10px;
 	margin-top: 20px;
@@ -45,6 +43,26 @@ HTML,BODY{
 	background: -ms-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* IE10+ */
 	background: linear-gradient(to bottom, #ffffff 0%,#eeeeee 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ); /* IE6-8 */
+}
+
+#user_management_wrapper{
+	width: 500px; 
+	margin: 30px auto 30px auto;
+}
+
+#user_management_wrapper th{
+	padding-right: 20px;
+	width: 180px;
+	text-align: right;
+}
+
+.submit_login #register_btn{
+	margin-top: 5px;
+}
+
+/* This wraps the main app after login.*/
+#wrapper{
+
 
 }
 
