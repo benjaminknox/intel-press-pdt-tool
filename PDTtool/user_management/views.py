@@ -345,7 +345,7 @@ def accountsettings(request):
 		#Get the password field
 		password = request.POST['password']
 		#Get the phone number field
-		phonenumber = extendeduser.phonenumber
+		phonenumber = request.phonenumber
 
 		#Check the password of the user
 		if request.user.check_password(password):

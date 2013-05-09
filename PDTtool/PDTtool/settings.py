@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'author_management',
-    'document_management',
+    'topic_management',
     'meeting_management',
     'schedule_management',
     'user_management',

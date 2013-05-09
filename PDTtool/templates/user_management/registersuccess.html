@@ -1,0 +1,14 @@
+{% extends "user_auth_base.html" %}
+
+{% block content %}
+			<div class="well well-small" style="margin-top: 50px;">
+				<span class="text-success">Thank you, check your email for an activation link!</span>
+			</div><!-- .form-table -->
+{% endblock %}
+{% block scripts %}
+	<script>
+		$(function(){
+			var t = setTimeout("window.location = '/login/';", 3000);
+		});
+	</script>
+{% endblock %}
