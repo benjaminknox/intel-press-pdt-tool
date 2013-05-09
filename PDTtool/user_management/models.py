@@ -5,16 +5,27 @@ from django.contrib.auth.models import User, Group, Permission
 # This model is ment to extend the default user auth
 #		in the model class.
 class ExtendedUser(models.Model):
+
+	#The publicid.
+	publicid = UUIDField(version=4, unique=True)
+
 	#Get the user
 	user = models.OneToOneField(User)
 
 	#Create a collection of notifications.
 	notifications = models.ManyToManyField('Notification')
 
+	#The phone number for the user.
+	phonenumber = models.CharField(max_length = 255)
+
 # This model is for notifications in the system
 #		for things like uploaded documents, 
 #		or comments on documents.
 class Notification(models.Model):
+
+	#The publicid.
+	publicid = UUIDField(version=4, unique=True)
+
 	#The name of the field.
 	name = models.CharField(max_length=255)
 	#The reason for the notification.
@@ -28,6 +39,10 @@ class Notification(models.Model):
 # This model attributes a collection of users to an
 #		 organization.
 class Organization(models.Model):
+
+	#The publicid.
+	publicid = UUIDField(version=4, unique=True)
+
 	#The collection of users.
 	users = models.OneToOneField(User)
 	#The name of the organization
@@ -37,29 +52,33 @@ class Organization(models.Model):
 		return self.name
 
 # This model is the record for activating a user.
-#		The uuid is stored and when a user clicks on a
+#		The publicid is stored and when a user clicks on a
 #			link sent to their email they get activated
 #			and the record is removed from the database.
 class ActivateUserDB(models.Model):
+
+	#The publicid.
+	publicid = UUIDField(version=4, unique=True)
+
 	#The user.
 	user = models.OneToOneField(User)
-	#The uuid.
-	uuid = UUIDField(version=4)
 
 	#This is the unicode value.
 	def __unicode__(self):
-		return self.uuid
+		return self.publicid
 
 # This model is the record for a password reset form.
-#		The uuid is stored and when a user clicks on a
+#		The publicid is stored and when a user clicks on a
 #			link sent to their email the password gets
 #			reset.
 class ForgotPasswordDB(models.Model):
+
+	#The publicid.
+	publicid = UUIDField(version=4, unique=True)
+
 	#The user.
 	user = models.OneToOneField(User)
-	#The uuid.
-	uuid = UUIDField(version=4)
 
 	#This is the unicode value.
 	def __unicode__(self):
-		return self.uuid
+		return self.publicid

@@ -23,8 +23,11 @@ urlpatterns = patterns('',
 	
 	# These urls are in user_management.
 	
-	#The login script. 
-    #url(r'^value/$', user_management.login, name='login'),
+	#These are the account settings.
+    url(r'^accountsettings/$', views.accountsettings, name='accountsettings'),
+	
+	#Reset the password.
+    url(r'^resetpassword/$', views.resetpassword, name='resetpassword'),
 	
 	# End urls in user_management.
 	

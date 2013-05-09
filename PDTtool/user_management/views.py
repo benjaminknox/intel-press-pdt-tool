@@ -1,10 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, Group
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth.decorators import login_required
-from user_management.forms import RegisterForm, ForgotPassword
 from pdtresources.decorators import user_is_authenticated_decorator
+from user_management.forms import RegisterForm, ForgotPassword, AccountSettingsForm
 from user_management.models import ExtendedUser, ActivateUserDB, ForgotPasswordDB
 from django.contrib.auth import authenticate,login as userlogin,logout as userlogout
 from user_management.resources import send_activation_email, send_password_reset_email, send_new_password_email
@@ -20,6 +20,7 @@ def login(request):
 	context = {
 		'title': 'User Login',
 		'loginerror': False,
+		'loginscreen' : True,
 	}
 	"""
 	" This is the login logic.
@@ -107,6 +108,7 @@ def register(request):
 			'first_name' : request.POST['first_name'],
 			'last_name' : request.POST['last_name'],
 			'username' : request.POST['username'],
+			'phonenumber' : request.POST['phonenumber'],
 			#Password and confirm password are validated against each other.
 			'password' : request.POST['password'],
 			'confirm_password' : request.POST['confirm_password'],
@@ -139,10 +141,10 @@ def register(request):
 			#newuser.groups.add(GeneralUserGroup)
 
 			#Add the Extended user row
-			extuser = ExtendedUser(user=newuser)
+			extuser = ExtendedUser(user=newuser,phonenumber=formdata['phonenumber'])
 			extuser.save()
 
-			#Send the activation email, contains a uuid.
+			#Send the activation email, contains a publicid.
 			send_activation_email(newuser)
 
 			#Return the success view
@@ -169,15 +171,18 @@ def register(request):
 				  context)
 
 ########
-# Activate the user based on the uuid.
+# Activate the user based on the publicid.
 #	-The view file is user_management/activate.html 
 ########
 @user_is_authenticated_decorator
 def activate(request):
-	if request.method == 'GET' and 'id' in request.GET:
+	if request.method == 'GET' and 'publicid' in request.GET and 'userid' in request.GET:
 
-		#Get the uuid_string
-		uuid_string = request.GET['id']
+		#Get the publicid_string
+		publicid_string = request.GET['publicid']
+
+		#Get the publicid_string
+		extendeduser_publicid = request.GET['userid']
 
 		context = {
 			'title':'Activate Account',
@@ -186,21 +191,25 @@ def activate(request):
 		}
 
 		try:
-			#Get the uuid database field
-			uuid = ActivateUserDB.objects.get(uuid=uuid_string)
+			#Get the publicid database field
+			publicid = ActivateUserDB.objects.get(publicid=publicid_string)
+			#Get the publicid database field
+			extendeduser = ExtendedUser.objects.get(publicid=extendeduser_publicid)
 		except:
-			#UUID doesn't exist anymore
-			uuid = False
+			#publicid doesn't exist anymore
+			publicid = False
+			#Get the publicid database field
+			extendeduser = False
 
-		#Check if the uuid exists
-		if uuid:
+		#Check if the publicid exists
+		if publicid and extendeduser:
 
 			#Activate the user
-			uuid.user.is_active = True
-			uuid.user.save()
+			publicid.user.is_active = True
+			publicid.user.save()
 
-			#Delete the uuid
-			uuid.delete()
+			#Delete the publicid
+			publicid.delete()
 
 			#Turn on the activated context
 			context['activated'] = True
@@ -208,14 +217,14 @@ def activate(request):
 			#Assign a message.
 			context['message'] = "Your account has been successfully accessed."
 
-		#If the uuid doesn't exist
+		#If the publicid doesn't exist
 		else:
 
 			#Turn on the activated context
 			context['activated'] = False
 
 			#Assign a message.
-			context['message'] = "Sorry the uuid doesn't exists."
+			context['message'] = "Sorry the reset password request doesn't exist anymore."
 
 			#Send to the user register page.
 			return redirect('/login/')
@@ -229,7 +238,7 @@ def activate(request):
 
 
 ########
-# A series of forgot password links.
+# A series of forgot password screens.
 #	-The view file is user_management/forgotpassword.html 
 ########
 @user_is_authenticated_decorator
@@ -239,32 +248,38 @@ def forgotpassword(request):
 		'title':'Forgot Password',
 	}
 
-	#If there is a uuid in the get method
-	if request.method == 'GET' and 'resetid' in request.GET:
+	if request.method == 'GET' and 'publicid' in request.GET and 'userid' in request.GET:
 
-		#Get the uuid
-		uuid_string = request.GET['resetid']
+		#Get the publicid_string
+		publicid_string = request.GET['publicid']
+
+		#Get the publicid_string
+		extendeduser_publicid = request.GET['userid']
 
 		try:
-			#Get the uuid database field
-			uuid = ForgotPasswordDB.objects.get(uuid=uuid_string)
+			#Get the publicid database field
+			publicid = ActivateUserDB.objects.get(publicid=publicid_string)
+			#Get the publicid database field
+			extendeduser = ExtendedUser.objects.get(publicid=extendeduser_publicid)
 		except:
-			#UUID doesn't exist anymore
-			uuid = False
+			#publicid doesn't exist anymore
+			publicid = False
+			#The user doesn't exist.
+			extendeduser = False
 
-		#Check if the uuid exists
-		if uuid:
+		#Check if the publicid exists
+		if publicid and extendeduser:
 
 			#Generate a random password
 			newpassword = User.objects.make_random_password(length=8)
 			#Reset the user password
-			uuid.user.set_password(newpassword)
-			uuid.user.save()
-			#Delete the uuid
-			uuid.delete()
+			publicid.user.set_password(newpassword)
+			publicid.user.save()
+			#Delete the publicid
+			publicid.delete()
 
 			#Email the password to the user
-			send_new_password_email(uuid.user,newpassword)
+			send_new_password_email(publicid.user,newpassword)
 
 			return render(request,
 				'user_management/forgotpasswordresetlink.html',
@@ -299,4 +314,80 @@ def forgotpassword(request):
 
 	return render(request,
 			'user_management/forgotpassword.html',
+			context)
+
+########
+# These are the account settings, editing user content.
+#	-The view file is user_management/forgotpassword.html 
+########
+@login_required
+def accountsettings(request):
+
+	extendeduser = ExtendedUser.objects.get(user=request.user)
+
+	context = {
+		'title':'Account Settings',
+	}
+
+	#Check for the POST method
+	if request.method == 'POST':
+
+		#Get the account settings form with 
+		#		the POST data bound to it.
+		accountsettingsform = AccountSettingsForm(request.POST)
+	
+		#Get the first name field
+		first_name = request.POST['first_name']
+		#Get the last name field
+		last_name = request.POST['last_name']
+		#Get the email field
+		email = request.POST['email']
+		#Get the password field
+		password = request.POST['password']
+		#Get the phone number field
+		phonenumber = extendeduser.phonenumber
+
+		#Check the password of the user
+		if request.user.check_password(password):
+			#Reset the user First Name
+			request.user.first_name = first_name
+			#Reset the user Last Name
+			request.user.last_name = last_name
+			#Reset the user email
+			request.user.email = email
+			#Save the phonenumber
+			extendeduser.phonenumber = phonenumber
+			#Save the user.
+			request.user.save()
+
+	else:
+		#If there is no post data
+		first_name = request.user.first_name
+		last_name = request.user.last_name
+		email = request.user.email
+		phonenumber = extendeduser.phonenumber
+
+		user_form_contents = {
+			'first_name':first_name,
+			'last_name':last_name,
+			'email':email,
+			'phonenumber':phonenumber,
+		}
+
+		accountsettingsform = AccountSettingsForm(user_form_contents)
+
+	context['AccountSettingsForm'] = accountsettingsform
+
+	return render(request,
+			'user_management/accountsettings.html',
+			context)
+
+def resetpassword(request):
+
+	context = {
+		'title':'Reset Password',
+	}
+
+	return render(request,
+			'user_management/resetpassword.html',
 			context)

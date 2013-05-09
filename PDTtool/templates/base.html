@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="{% static 'www/bootstrap/css/bootstrap.min.css' %}"></link>
 	<link rel="stylesheet" href="{% static 'www/toastr/toastr.css' %}"></link>
 	<link rel="stylesheet" href="{% static 'www/jquery-ui/css/ui-lightness/jquery-ui.min.css' %}"></link>
-	<link rel="stylesheet" href="{% static 'www/css/style.css' %}"></link> 
+	<link rel="stylesheet" href="{% static 'www/css/style.css' %}"></link>
 	<!--
 		End stylesheet resources
 	-->
@@ -29,17 +29,20 @@
 	This is the UI template.
 
 -->
-<div id="wrapper" class="container">
+<div id="wrapper" class="wrapper_bg container">
 	{% if request.user.is_superuser %}
 	<a id="admin" class="btn btn-inverse" href="/admin/">admin</a>
 	{% endif %}
-	{% if request.user.is_authenticated %}
-	<a id="logout" class="btn btn-info" href="/logout/">logout</a>
-	{% endif %}
+	<a id="logout" class="btn btn-inverse" href="/logout/">logout</a>
 	<div id="navbar" class="span3">
 
+		<div class="nav-block">
+			<h6>User Management</h6>
+			<a href="/accountsettings/">Account Settings</a>
+		</div><!-- .nav-block -->
+
 		{% for group in user.groups.all %}
-			
+
 			{% if group.name == 'General User' %}
 			<div class="nav-block">
 				<h6>General User Navigation</h6>
@@ -65,16 +68,16 @@
 				{% endfor %} -->
 			</div><!-- .nav-block -->
 			{% endif %}
-		
-		{% endfor %}	
+
+		{% endfor %}
 	</div><!-- #navbar (bootstrap) .span3 -->
 	<div id="content-wrapper" class="span8">
 		<span class="label label-info">{{ title }}</span>
 		<div id="content">
-			{% block content %} 
+			{% block content %}
 
 
-				This is the template contents. 
+				This is the template contents.
 
 
 			{% endblock %}
@@ -83,7 +86,7 @@
 	</div><!-- #content-wrapper (bootstrap) .span8 -->
 	<div class="clear-fix"></div>
 </div><!-- #wrapper (bootstrap) .container -->
-<!-- 
+<!--
 
 	End UI template.
 
@@ -100,6 +103,7 @@
 <script src="{% static 'www/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'www/jquery-ui/js/jquery-ui.min.js' %}"></script>
 <script src="{% static 'www/js/jquery.cookie.js' %}"></script>
+<script src="{% static 'www/js/jquery.maskedinput.min.js' %}"></script>
 <script src="{% static 'www/toastr/toastr.js' %}"></script>
 <!--
 
@@ -144,6 +148,15 @@ if(datepicker.length > 0){
 		$(this).datepicker();
 	});
 }
+//Load the phonenumbers
+var phone = $(".phone");
+//Check for phone numbers
+if(phone.length > 0){
+	//Create a mask for the phone number.
+	phone.each(function(){
+		$(this).mask("(999) 999-9999");
+	});
+}
 //	loop();
 });
 
@@ -151,7 +164,7 @@ if(datepicker.length > 0){
 
 {% block scripts %}
 <!--
-	This block is for scripts that are 
+	This block is for scripts that are
 		used only on one template.
 -->
 {% endblock %}
