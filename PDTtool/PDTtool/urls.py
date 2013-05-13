@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     #		register/
     #       accountsettings/
     #       resetpassword/
+    #       
     url(r'^', include('user_management.urls')),
 
     # The meeting management urls.
@@ -25,6 +26,7 @@ urlpatterns = patterns('',
     #       addtopic/
     #       viewtopics/
     #       viewtopic/
+    #       download/
     url(r'^', include('topic_management.urls')),
 
     url(r'^admin/', include(admin.site.urls)),

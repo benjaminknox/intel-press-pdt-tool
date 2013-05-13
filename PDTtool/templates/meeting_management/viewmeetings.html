@@ -1,7 +1,18 @@
 {% extends "base.html" %}
 
 {% block content%}
+	<div style="text-align: right; margin-bottom: 15px;">
+		<a href="javascript:void(0);" onclick="add_modal();" class="btn btn-success btn-mini">Add</a>
+	</div>
 	<div id="calendar">
 	{{ calendar | safe }}
 	</div>
+{% endblock %}
+{% block scripts%}
+	function add_modal(){
+		$.modal({});
+	}
+	$(function(){
+
+	});
 {% endblock %}

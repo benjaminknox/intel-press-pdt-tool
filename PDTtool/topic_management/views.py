@@ -1,13 +1,13 @@
-import os
+import os,mimetypes
+from uuid import uuid4
 from topic_management.forms import TopicForm
-from django.shortcuts import render, redirect
 from pdtresources.handles import handle_uploaded_file
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, HttpResponse
 from topic_management.models import Topic, Document, Comment
 from pdtresources.comments import recursive_comments, comment_form
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from uuid import uuid4
 
 #This is the authentication library.
 @login_required
@@ -72,7 +72,7 @@ def addtopic(request):
 def viewtopics(request):
 
 	context = {
-		'title': 'View Topic'
+		'title': 'View Topics'
 	}
 
 	#Check to see if the user has filtered 
@@ -115,12 +115,18 @@ def viewtopic(request):
 
 	#If there is no topic.
 	notopic = True
-	#If true a Toastr notification for comments will be added.
+	#If true a Toastr notification for comments will be shown.
 	commentnotification = False
-	#If a document has been approved
+	#If a topic has been approved.
 	releasednotification = False
-	#If a document has been updated
+	#If a document has been updated.
 	updatednotification = False
+	#If a document has been added.
+	addednotification = False
+	#If a document has been deleted.
+	deleteddocumentdnotification = False
+	#Add a variable to check if the user owns the topic
+	user_is_owner = False
 
 	#Get the public id of the topic.
 	if 'publicid' in request.GET:
@@ -165,9 +171,14 @@ def viewtopic(request):
 			#Get the document
 			if updated_document.exists():
 
+				#Get the old file and delete.
 				old_file_path = updated_document.values()[0]['location']
 
-				os.remove(old_file_path)
+				try:
+					#Delete the old file.
+					os.remove(old_file_path)
+				except OSError:
+					print "deleted file not found, but it doesn't really matter"
 
 				#Get the uploaded file.
 				f = request.FILES['file']
@@ -185,6 +196,53 @@ def viewtopic(request):
 
 				#Updated notification
 				updatednotification = True
+
+		#We have an updated document.
+		if 'deleted_documentid' in request.POST:
+
+			#Get the updated document
+			deleted_document = topic_object.documents.filter(publicid=request.POST['deleted_documentid'])
+			#Get the document
+			if deleted_document.exists():
+
+				#Get the old file and delete.
+				file_path = deleted_document.values()[0]['location']
+
+				try:
+					#Delete the file
+					os.remove(file_path)
+				except OSError:
+					print "deleted file not found, but it doesn't really matter"
+
+				#Remove the m2m relationship.
+				topic_object.documents.remove(deleted_document.values()[0]['id'])
+				#Delete the document.
+				deleted_document.delete()
+				#Delete the document notification.
+				deleteddocumentdnotification = True
+
+
+		#We have added a document.
+		if 'add_document' in request.POST:
+
+			#Get the uploaded file.
+			f = request.FILES['file']
+
+			#Single file upload
+			#Get the file
+			name = f.name
+			fileName = "%s-%s" % (uuid4(),name)
+			location = '/home/programmer/upload_dir/%s' % fileName
+			fileSize = f.size
+			#This is the newdocument.
+			newdocument = Document(topic=topic_object,location=location,name=name,fileName=fileName,size=fileSize)
+			newdocument.save()
+			#Add the document to the topic.
+			topic_object.documents.add(newdocument)
+			#Upload the file
+			handle_uploaded_file(f,location)
+			#Updated notification
+			addednotification = True
 
 		"""
 		" The following adds comments to the specified object
@@ -270,15 +328,38 @@ def viewtopic(request):
 		for document in topic_object.documents.all()
 	]
 
+	#Check to see if the user owns the topic
+	if topic_object.user.id == request.user.id:
+		user_is_owner = True
+
 	context= {
-			'title':'View Topic',
-			'topic': topic,
-			'documents': documents,
-			'commentnotification': commentnotification,
-			'releasednotification' : releasednotification,
-			'updatednotification' : updatednotification,
+		'title':'View Topic',
+		'topic': topic,
+		'documents': documents,
+		'commentnotification': commentnotification,
+		'releasednotification' : releasednotification,
+		'updatednotification' : updatednotification,
+		'deleteddocumentdnotification' : deleteddocumentdnotification,
+		'addednotification' : addednotification,
+		'user_is_owner' : user_is_owner,
 	}
 
 	return render(request,
 		'topic_management/viewtopic.html',
 		context)
+
+@login_required
+def download(request,fileName):
+
+
+	filepath = "/home/programmer/upload_dir/%s" % fileName
+
+	f = open(filepath,"r")
+	mimetype = mimetypes.guess_type(filepath)[0]
+
+	if not mimetype: mimetype = "application/octet-stream"
+
+	response = HttpResponse(f.read(),mimetype=mimetype)
+	response["Content-Disposition"] =  "attachment; filename=%s" % os.path.split(filepath)[1]
+
+	return response

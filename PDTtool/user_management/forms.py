@@ -101,9 +101,21 @@ class AccountSettingsForm(forms.Form):
 	last_name = forms.CharField( max_length=255, label='Last Name'  )
 	#Email
 	email = forms.EmailField()
-
 	#Text input field for the users phone number.
 	phonenumber = forms.CharField( max_length=255, widget=TextInput(attrs={'class':'phone'}), label='Phone Number')
-
 	#Password
-	password = forms.CharField( max_length=255, widget=forms.PasswordInput,required=True)
+	password = forms.CharField( max_length=255, label="Current Password", widget=forms.PasswordInput,required=False)
+
+"""
+" This is for resetting the password.
+"""
+class ResetPasswordForm(forms.Form):	
+	
+	#New Password
+	newpassword = forms.CharField( max_length=255, label="New Password", widget=forms.PasswordInput(attrs={'autofocus':'autofocus'}),required=False)
+
+	#Confirm Password
+	confirmpassword = forms.CharField( max_length=255, label="Confirm Password", widget=forms.PasswordInput,required=False)
+
+	#Current Password
+	password = forms.CharField( max_length=255, label="Current Password", widget=forms.PasswordInput,required=False)

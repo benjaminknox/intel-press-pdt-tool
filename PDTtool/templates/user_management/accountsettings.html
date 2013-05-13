@@ -12,3 +12,17 @@
 		</table>
 	</form>
 {% endblock %}
+
+{% block scripts%}
+<script>
+	$(function(){
+		{% if BadPassword %}
+		toastr.error('The password you entered did not match our records.');
+		{% endif %}
+		
+		{% if UpdatedInformation %}
+		toastr.success('Your information is updated.');
+		{% endif %}
+	});
+</script>
+{% endblock %}

@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     #The forgot password sequence
     url(r'^forgotpassword/$', views.forgotpassword, name='forgotpassword'),
 	# End urls in UserAuth.
-
+	
 	
 	# These urls are in user_management.
 	

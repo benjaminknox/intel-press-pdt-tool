@@ -11,5 +11,8 @@ urlpatterns = patterns('',
 
 	#The viewtopic script
     url(r'^viewtopic/$', views.viewtopic, name='viewtopic'),
+
+	#The download script
+	url(r'^download/(.+)$', views.download, name='download'),
     
 )

@@ -119,13 +119,16 @@ HTML,BODY{
 * These styles are in templates/dashboard/DefaultViews/viewtopics.htm
 */
 
+.list-topic-td{
+	cursor: pointer;
+}
+
 /* This displays the document with a description */ 
 .list-topic{
 	padding: 5px;
 	margin-top: 10px;
-	width: 100%;
+	width: 98%;
 	border: 1px solid #EEE;
-	cursor: pointer;
 
 	/* This makes corners on the div. */
 	-webkit-border-radius: 5px;
@@ -405,10 +408,11 @@ HTML,BODY{
 .simplemodal-overlay{
 	background-color:rgba(0,0,0,0.5);
 }
-
+.simplemodal-data h4{
+	margin-bottom: 20px;
+}
 .simplemodal-data{
 	padding: 10px;
-	min-height: 300px;
 	width: 500px;
 	text-align: center;
 	border: 1px solid #DDD;

@@ -55,6 +55,7 @@
 <script src="{% static 'www/bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'www/jquery-ui/js/jquery-ui.min.js' %}"></script>
 <script src="{% static 'www/js/jquery.cookie.js' %}"></script>
+<script src="{% static 'www/js/jquery.maskedinput.min.js' %}"></script>
 <script src="{% static 'www/toastr/toastr.js' %}"></script>
 <!--
 
@@ -97,6 +98,16 @@ if(datepicker.length > 0){
 	//	the jQuery UI datepicker.
 	datepicker.each(function(){
 		$(this).datepicker();
+	});
+}
+
+//Load the phonenumbers
+var phone = $(".phone");
+//Check for phone numbers
+if(phone.length > 0){
+	//Create a mask for the phone number.
+	phone.each(function(){
+		$(this).mask("(999) 999-9999");
 	});
 }
 //	loop();

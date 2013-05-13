@@ -2,10 +2,10 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth.decorators import login_required
-from pdtresources.decorators import user_is_authenticated_decorator
-from user_management.forms import RegisterForm, ForgotPassword, AccountSettingsForm
 from user_management.models import ExtendedUser, ActivateUserDB
+from pdtresources.decorators import user_is_authenticated_decorator
 from django.contrib.auth import authenticate,login as userlogin,logout as userlogout
+from user_management.forms import RegisterForm, ForgotPassword, AccountSettingsForm, ResetPasswordForm
 from user_management.resources import send_activation_email, send_password_reset_email, send_new_password_email
 
 ########
@@ -317,7 +317,7 @@ def forgotpassword(request):
 
 ########
 # These are the account settings, editing user content.
-#	-The view file is user_management/forgotpassword.html 
+#	-The view file is user_management/accountsettings.html 
 ########
 @login_required
 def accountsettings(request):
@@ -327,6 +327,9 @@ def accountsettings(request):
 	context = {
 		'title':'Account Settings',
 	}
+
+	BadPassword = False
+	UpdatedInformation = False
 
 	#Check for the POST method
 	if request.method == 'POST':
@@ -344,7 +347,7 @@ def accountsettings(request):
 		#Get the password field
 		password = request.POST['password']
 		#Get the phone number field
-		phonenumber = request.phonenumber
+		phonenumber = request.POST['phonenumber']
 
 		#Check the password of the user
 		if request.user.check_password(password):
@@ -358,6 +361,11 @@ def accountsettings(request):
 			extendeduser.phonenumber = phonenumber
 			#Save the user.
 			request.user.save()
+			extendeduser.save()
+			UpdatedInformation = True
+		else:
+
+			BadPassword = True
 
 	else:
 		#If there is no post data
@@ -376,16 +384,60 @@ def accountsettings(request):
 		accountsettingsform = AccountSettingsForm(user_form_contents)
 
 	context['AccountSettingsForm'] = accountsettingsform
+	context['BadPassword'] = BadPassword
+	context['UpdatedInformation'] = UpdatedInformation
 
 	return render(request,
 			'user_management/accountsettings.html',
 			context)
 
+########
+# This is a form for resetting the password in the user panel.
+#	-The view file is user_management/resetpassword.html 
+########
+@login_required
 def resetpassword(request):
 
 	context = {
 		'title':'Reset Password',
 	}
+
+	#Notification flags.
+	BadPassword = False
+	PasswordMismatch = False
+	UpdatedInformation = False
+
+	#Check for POST data
+	if request.method == 'POST':
+		#This is the new password.
+		newpassword = request.POST['newpassword']
+		#This is the password we confirm.
+		confirmpassword = request.POST['confirmpassword']
+		#This is the old password.
+		password = request.POST['password']
+
+		#Check the old password.
+		if request.user.check_password(password):
+			#Check the new and confirmed password match.
+			if newpassword == confirmpassword:
+				#Set the users password to the new password.
+				request.user.set_password(newpassword)
+				request.user.save()
+				#Notify them that the password is updated.
+				UpdatedInformation = True
+			else:
+				#The passwords didn't match, notify the user.
+				PasswordMismatch = True
+		else:
+			#The password they entered didn't work, notify the user.
+			BadPassword = True
+
+	#Add the reset form.
+	context['ResetPasswordForm'] = ResetPasswordForm
+	#Add the notification flags.
+	context['UpdatedInformation'] = UpdatedInformation
+	context['PasswordMismatch'] = PasswordMismatch
+	context['BadPassword'] = BadPassword
 
 	return render(request,
 			'user_management/resetpassword.html',
