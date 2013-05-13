@@ -1,3 +1,4 @@
 from django.contrib import admin
+from schedule_management.models import ScheduleItem
 
-# Register your models here.
+admin.site.register(ScheduleItem)

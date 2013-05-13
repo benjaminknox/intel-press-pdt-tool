@@ -55,13 +55,17 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
-"""
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.static',
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
-)"""
+    #This context adds the usersgroups
+    #       variable to the templates.
+    'user_management.context.groups_context',
+    'topic_management.context.search_form',
+)
 
 ROOT_URLCONF = 'PDTtool.urls'
 

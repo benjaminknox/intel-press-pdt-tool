@@ -109,12 +109,6 @@ HTML,BODY{
 		position: absolute;
 		right: 70px;
 		top: 3px;
-		cursor: pointer;
-		background: #666;
-	}
-
-	#admin:hover{
-		background: #555;
 	}
 
 /*
@@ -122,11 +116,11 @@ HTML,BODY{
 */
 
 /*
-* These styles are in templates/dashboard/DefaultViews/viewdocuments.htm
+* These styles are in templates/dashboard/DefaultViews/viewtopics.htm
 */
 
 /* This displays the document with a description */ 
-.list-document{
+.list-topic{
 	padding: 5px;
 	margin-top: 10px;
 	width: 100%;
@@ -273,12 +267,12 @@ HTML,BODY{
 /*
 * These styles are in dashboard/templates/SupervisorProgramManager/adddocument.html
 */
-/* This is the form for the document information */
-#document_info_table{
+/* This is the form for the topic information */
+#topic_info_table{
 	width: 100%;
 }
 	/* This is the row around the submit button in the Document info form. */
-	#document_info_table .submit_button_row{
+	#topic_info_table .submit_button_row{
 		text-align: center;
 	}
 /*
@@ -406,4 +400,46 @@ HTML,BODY{
 
 #form_element #id_description{
 	width: 100%;
+}
+
+.simplemodal-overlay{
+	background-color:rgba(0,0,0,0.5);
+}
+
+.simplemodal-data{
+	padding: 10px;
+	min-height: 300px;
+	width: 500px;
+	text-align: center;
+	border: 1px solid #DDD;
+
+	/* This makes corners on the div. */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+
+	/* This adds a gradient to the div. */
+	-webkit-box-shadow: 0px 3px 20px 0px #333;
+	box-shadow: 0px 3px 20px 0px #333;
+	background: #ffffff; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlZWVlZWUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top, #ffffff 0%, #eeeeee 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #ffffff 0%,#eeeeee 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ); /* IE6-8 */
+
+}
+
+.yellow-tooltip{
+	margin: -20px 30px 0 0;
+	padding: 0;
+	background: #FFF0AA;
+	border: 1px solid #FFE773;
+	/* This adds a gradient to the div. */
+	-webkit-box-shadow: 0;
+	box-shadow: 0;
 }

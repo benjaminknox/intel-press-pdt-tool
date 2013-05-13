@@ -11,13 +11,14 @@
 			-Custome Stylesheets ({% static 'dashboard/css/style.css' %})
 
 	-->
-	<link rel="stylesheet" href="{% static 'www/bootstrap/css/bootstrap.min.css' %}"></link>
-	<link rel="stylesheet" href="{% static 'www/toastr/toastr.css' %}"></link>
+	<link rel="stylesheet" href="{% static 'www/bootstrap/css/bootstrap.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'www/toastr/toastr.css' %}" />
 	<link rel="stylesheet" href="{% static 'www/jquery-ui/css/ui-lightness/jquery-ui.min.css' %}"></link>
-	<link rel="stylesheet" href="{% static 'www/css/style.css' %}"></link>
+	<link rel="stylesheet" href="{% static 'www/css/style.css' %}" />
 	<!--
 		End stylesheet resources
 	-->
+	{% block stylesheets %}{% endblock %}
 </head>
 <body>
 
@@ -37,39 +38,27 @@
 	<div id="navbar" class="span3">
 
 		<div class="nav-block">
-			<h6>User Management</h6>
-			<a href="/accountsettings/">Account Settings</a>
+			<h6>Topics</h6>
+			<a href="/viewtopics/">View Topics</a>
+			{% if 'Program Manager' in usersgroups or 'Supervisor' in usersgroup %}
+			<br><a href="/addtopic/">Add a Topic</a>
+			{% endif %}
 		</div><!-- .nav-block -->
 
-		{% for group in user.groups.all %}
+		<div class="nav-block">
+			<h6>Meetings</h6>
+			<a href="/viewmeetings/">View Meetings</a>
+		</div><!-- .nav-block -->
 
-			{% if group.name == 'General User' %}
-			<div class="nav-block">
-				<h6>General User Navigation</h6>
-				<a href="/">View Documents</a><br>
-				<a href="/viewmeetings/">View Meetings</a>
-			</div><!-- .nav-block -->
+		<div class="nav-block">
+			<h6>User Management</h6>
+			<a href="/accountsettings/">My Account Settings</a>
+			{% if 'Supervisor' in usersgroups %}
+			<br><a href="/viewusers/">View the Users</a>
+			<br><a href="/adduser/">Add a User</a>
 			{% endif %}
+		</div><!-- .nav-block -->
 
-			{% if group.name == 'Program Manager' %}
-			<div class="nav-block">
-				<h6>Program Manager Navigation</h6>
-				<a href="/adddocument/">Add Document</a>
-			</div><!-- .nav-block -->
-			{% endif %}
-
-			{% if group.name == 'Supervisor' %}
-			<div class="nav-block">
-				<h6>Supervisor Navigation</h6>
-				<a href="/viewusers/">Users</a><br>
-				<a href="/addmeeting/">Add Meeting</a>
-				<!-- {% for models in dashboard_models %}
-					<a href="/objects/{{ models }}/">{{ models }}</a> <br>
-				{% endfor %} -->
-			</div><!-- .nav-block -->
-			{% endif %}
-
-		{% endfor %}
 	</div><!-- #navbar (bootstrap) .span3 -->
 	<div id="content-wrapper" class="span8">
 		<span class="label label-info">{{ title }}</span>

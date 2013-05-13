@@ -1,5 +1,5 @@
 from django.contrib import admin
-from user_management.models import *
+from user_management.models import ExtendedUser, Notification, Organization, ActivateUserDB,ForgotPasswordDB
 
 #These models get registered for CRUD
 #	in the admin site.

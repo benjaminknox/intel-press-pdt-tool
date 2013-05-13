@@ -20,5 +20,12 @@ urlpatterns = patterns('',
     # The meeting management urls.
     url(r'^', include('meeting_management.urls')),
 
+    # The topic management urls are included here.
+    #   The urls contained this app are:
+    #       addtopic/
+    #       viewtopics/
+    #       viewtopic/
+    url(r'^', include('topic_management.urls')),
+
     url(r'^admin/', include(admin.site.urls)),
 )
