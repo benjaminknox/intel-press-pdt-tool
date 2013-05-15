@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+	
+	{% if 'Supervisor' in usersgroups %}
+	<!-- Output the release button if the user is a supervisor-->
+	<form method="POST" action="{{ request.get_full_path }}">
+		{% csrf_token %}
+		<input type="hidden" name="released_topicid" value="{{ request.GET.publicid }}" />
+		<input type="submit" value="Release This Topic" id="release_button" class="btn btn-success" />
+	</form>
+	<!-- End output of the delete button -->
+	<!-- Output the delete button if the user owns the document -->
+	<form method="POST" action="{{ request.get_full_path }}">
+		{% csrf_token %}
+		<input type="hidden" name="deleted_topicid" value="{{ request.GET.publicid }}" />
+		<input type="submit" value="Delete This Topic" id="delete_button" class="btn btn-danger" />
+	</form>
+	<!-- End output of the delete button -->
+	{% endif %}
+
+	<div class=""></div>
+
+	<h5>{{topic.topic_object.name}}</h5>
+	<div>
+		<table class="table table-striped">
+			<tr>
+				<th class="document_item add_document" publicid="{{ topic.topic_object.publicid }}">Document
+					{% if user_is_owner %}
+					<i class="icon-plus-sign document_button" title="Add a document." publicid="{{ topic.topic_object.publicid }}"></i>
+					{% endif %}
+				</th>
+				<td style="width: 15px;"></td>
+				<td style="width: 15px;"></td>
+				<th># Comments</th>
+				<th></th>
+			</tr>
+		{% for document in documents %}
+
+			<tr class="document_item change_document" publicid="{{ document.document_object.publicid }}">
+				<td>
+					<a href="/download/{{ document.document_object.fileName }}">{{ document.document_object.name }}</a>
+				</td>
+				<td>
+					{% if user_is_owner %}
+					<i class="icon-upload document_button" title="Revise this document." publicid="{{ document.document_object.publicid }}"></i>
+					{% endif %}					
+				</td>
+				<td>
+					{% if user_is_owner %}
+					<i class="icon-trash document_button" title="Delete this document." publicid="{{ document.document_object.publicid }}"></i>
+					{% endif %}
+				</td>
+				</td>
+				<td>{{ document.document_object.comments.count }}</td>
+				<td>
+
+					{% if document.document_object.comments.count > 0 %}
+						<a href="javascript:$('#document_feedback_{{ document.document_object.publicid }}').toggle();" class="btn btn-success btn-mini pull-right">View Feedback</a>
+					{% else %}
+						<a href="javascript:$('#document_feedback_{{ document.document_object.publicid }}').toggle();" onclick="$('#document_comment_form_{{ document.document_object.publicid }}').toggle();" class="btn btn-primary btn-mini pull-right">Add Feedback</a>
+					{% endif %}
+				</td>
+			<tr>
+			<tr style="display: none;" class="document_feedback" id="document_feedback_{{ document.document_object.publicid }}">
+				<td colspan="5">
+
+					{% if document.document_object.comments.count > 0 %}
+						<a href="javascript:$('#document_comment_form_{{ document.document_object.publicid }}').toggle();" class="btn btn-primary btn-mini">Add Feedback</a>
+					{% endif %}
+
+					{{ document.comment_form|safe }}
+					{% for comment in document.comments %}
+						{{ comment.html | safe }}
+					{% endfor %}
+
+				</td>
+			</tr>
+
+		{% endfor %}
+		</table>
+	</div>
+	{{ topic.comment_form|safe }}
+	{% for comment in topic.comments %}
+		{{ comment.html|safe }}
+	{% endfor %}
+
+{% endblock %}
+{% block scripts %}
+<script>
+
+
+	$(function(){
+
+		{% if commentnotification %}
+			toastr.success('Your comment has been added.');
+		{% endif %}
+
+		{% if releasednotification %}
+			toastr.success('You have approved the topic.');
+		{% endif %}
+
+		{% if updatednotification %}
+			toastr.success('You have updated your topic.');
+		{% endif %}
+
+		{% if deleteddocumentdnotification %}
+			toastr.error('You have deleted one of your documents.');
+		{% endif %}
+
+		{% if addednotification %}
+			toastr.success('You have added a document.');
+		{% endif %}
+
+		{% for document in documents %}
+			
+		{% endfor %}
+
+		$('.change_document .document_button').hide();
+
+		$('.document_button').css({'cursor':'pointer'}).click(function(){
+
+				var html = "";
+			
+			if($(this).hasClass('icon-upload')){
+			
+				//Gets the parent tr with the publicid
+				var documentid = $(this).parent().parent().attr('publicid');
+
+				html+= "<div>";
+				html+= "<h4>Upload a Revised Document</h4>";
+				html+= 		'<form method="POST" enctype="multipart/form-data" action="{{ request.get_full_path }}">';
+				html+= 			"{% csrf_token %}";
+				html+=			'<input type="hidden" name="updated_documentid" value="'+documentid+'" />';
+				html+=			'<input type="file" name="file" id="file" class="file_form" />';
+				html+=			'<input type="submit" value="upload" class="btn" />';
+				html+= 		"</form>";
+				html+= "</div>";
+
+			}
+
+			if($(this).hasClass('icon-trash')){
+			
+				//Gets the parent tr with the publicid
+				var documentid = $(this).parent().parent().attr('publicid');
+				html+= "<div>";
+				html+= "<h4>Are you sure?</h4>";
+				html+= 		'<form method="POST" action="{{ request.get_full_path }}">';
+				html+= 			"{% csrf_token %}";
+				html+=			'<input type="hidden" name="deleted_documentid" value="'+documentid+'" />';
+				html+=			'<input type="submit" value="delete" class="btn btn-danger" />&nbsp;&nbsp;';
+				html+=			'<a href="javascript:void();" value="cancel" class="btn btn-primary simplemodal-close">cancel</a>';
+				html+= 		"</form>";
+				html+= "</div>";
+
+			}
+
+			if($(this).hasClass('icon-plus-sign')){
+			
+				//Gets the parent tr with the publicid
+				var documentid = $(this).parent().parent().attr('publicid');
+				html+= "<div>";
+				html+= "<h4>Add a document to the topic</h4>";
+				html+= 		'<form method="POST" enctype="multipart/form-data" action="{{ request.get_full_path }}">';
+				html+= 			"{% csrf_token %}";
+				html+=			'<input type="hidden" name="add_document" value="add a document" />';
+				html+=			'<input type="file" name="file" id="file" class="file_form" />';
+				html+=			'<input type="submit" value="upload" class="btn" />';
+				html+= 		"</form>";
+				html+= "</div>";
+
+			}
+
+			$.modal(html,{
+				overlayClose : true,
+			});
+
+		});
+
+		$('.document_item').hover(function(){
+
+			var publicid = $(this).attr('publicid');
+
+			$('i[publicid="'+publicid+'"]').each(function(){
+
+				$(this).tooltip({track:true, tooltipClass: "yellow-tooltip"});
+
+				$(this).show();
+				if($(this).hasClass('icon-upload')){
+					message = 'Upload a revision.';
+				}
+
+				if($(this).hasClass('icon-trash')){
+					message = 'Delete this document.';
+				}
+
+			});
+
+		},function(){
+			if($(this).hasClass('change_document')){
+				var publicid = $(this).attr('publicid');
+				$('i[publicid="'+publicid+'"]').each(function(){
+					$(this).hide();
+				});
+			}
+		});
+	});
+</script>
+{% endblock %}
