@@ -1,6 +1,5 @@
-import calendar
+from datetime import date, timedelta
 from django.shortcuts import render
-from django.http import HttpResponse
 from meeting_management.models import Meeting
 from pdtresources.MeetingsCalendar import MeetingCalendar
 from django.contrib.auth.decorators import login_required
@@ -44,7 +43,15 @@ def viewmeetings(request):
 	#This is the year
 	year = 2013
 	#This is the month
-	month = 05
+	month = 12
+
+	day = 01
+
+	thedate = date(year, month, day)
+
+#	nextdate = date(year, month + 1, day)
+
+#	print nextdate
 
 	#Get the calendar.
 	cal = MeetingCalendar(meetings).formatmonth(year, month)

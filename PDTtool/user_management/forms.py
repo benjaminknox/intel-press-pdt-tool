@@ -93,8 +93,7 @@ class ForgotPassword(forms.Form):
 """
 " This is the account settings form.
 """
-class AccountSettingsForm(forms.Form):	
-
+class AccountSettingsForm(forms.Form):
 	#The First Name
 	first_name = forms.CharField( max_length=255, label='First Name' )
 	#The Last Name
@@ -109,13 +108,20 @@ class AccountSettingsForm(forms.Form):
 """
 " This is for resetting the password.
 """
-class ResetPasswordForm(forms.Form):	
-	
+class ResetPasswordForm(forms.Form):
 	#New Password
 	newpassword = forms.CharField( max_length=255, label="New Password", widget=forms.PasswordInput(attrs={'autofocus':'autofocus'}),required=False)
-
 	#Confirm Password
 	confirmpassword = forms.CharField( max_length=255, label="Confirm Password", widget=forms.PasswordInput,required=False)
-
 	#Current Password
 	password = forms.CharField( max_length=255, label="Current Password", widget=forms.PasswordInput,required=False)
+
+class UserManagementForm(AccountSettingsForm):
+	#The Username
+	username = forms.CharField( max_length=255)
+	#The password
+	password = forms.CharField( max_length=255, label="Password",required=False)
+	#is_active
+	is_active = forms.BooleanField(required=False,label="Activated")
+	#is_active
+	is_program_manager = forms.BooleanField(required=False,label="Program Manager")

@@ -5,14 +5,26 @@
 		<a href="javascript:void(0);" onclick="add_modal();" class="btn btn-success btn-mini">Add</a>
 	</div>
 	<div id="calendar">
-	{{ calendar | safe }}
+		{{ calendar | safe }}
 	</div>
+	<ul class="pager" style="width: 106.5%;">
+		<li class="previous">
+			<a href="">&larr; Older</a>
+		</li>
+		<li class="next">
+			<a href="">Newer &rarr;</a>
+		</li>
+	</ul>
 {% endblock %}
 {% block scripts%}
+<script>
 	function add_modal(){
-		$.modal({});
+		$.modal("Add a meeting.",{
+			overlayClose : true,
+		});
 	}
 	$(function(){
 
 	});
+</script>
 {% endblock %}

@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 #		in the model class.
 class ExtendedUser(models.Model):
 
+	class Meta:
+		ordering = ['pk']
+
 	#The publicid.
 	publicid = UUIDField(version=4, unique=True)
 

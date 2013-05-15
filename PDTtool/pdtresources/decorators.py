@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 
 # A decorator user for UserAuth views,
 #	it checks to see if the user is authenticated. 

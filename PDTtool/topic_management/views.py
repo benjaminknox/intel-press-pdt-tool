@@ -1,16 +1,19 @@
 import os,mimetypes
 from uuid import uuid4
+from django.db.models import Q
 from topic_management.forms import TopicForm
 from pdtresources.handles import handle_uploaded_file
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, HttpResponse
 from topic_management.models import Topic, Document, Comment
 from pdtresources.comments import recursive_comments, comment_form
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required, user_passes_test
+
 
 #This is the authentication library.
 @login_required
+@user_passes_test(lambda u: u.groups.filter(Q(name='Supervisor') | Q(name='Program Manager')).count() != 0)
 def addtopic(request):
 	
 	context= {
@@ -350,8 +353,7 @@ def viewtopic(request):
 
 @login_required
 def download(request,fileName):
-
-
+	
 	filepath = "/home/programmer/upload_dir/%s" % fileName
 
 	f = open(filepath,"r")

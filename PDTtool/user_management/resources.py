@@ -134,3 +134,28 @@ def check_existing_user(username):
 
 	#Return the value of the user
 	return user_exists
+
+#Check if a user has a group.
+def check_user_groups(user, groupstocheck):
+	#Check that it is a string.
+	if isinstance(groupstocheck,str):
+		#Create a list to iterate over.
+		groupstocheck = [groupstocheck,]
+
+	#Create a flag to return.
+	user_has_group = False
+
+	#Get the user groups.
+	usergroups = user.groups.all()
+
+	#Loop through the groups to check.
+	for grouptocheckname in groupstocheck:
+		#Loop through the groups that the provided user has.
+		for gobj in usergroups:
+			#Check the name of the group object with the group.
+			if gobj.name == grouptocheckname:
+				#If the group is in it flag it.
+				user_has_group = True
+
+	#Return the user group.
+	return user_has_group

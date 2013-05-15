@@ -7,6 +7,10 @@ from django_extensions.db.fields import UUIDField
 #		documents and comments.
 class Topic(models.Model):
 
+	class Meta:
+		ordering = ['pk']
+
+
 	#The publicid.
 	publicid = UUIDField(version=4, unique=True)
 
@@ -76,6 +80,9 @@ class Document(models.Model):
 # This is a comment, it is the feedback on a
 #		topic, document, or comment.
 class Comment(models.Model):
+	
+	class Meta:
+		ordering = ['pk']
 
 	#The publicid.
 	publicid = UUIDField(version=4, unique=True)
