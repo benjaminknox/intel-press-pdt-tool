@@ -36,7 +36,7 @@ class MeetingCalendar(calendar.HTMLCalendar):
                     #Open list tag.
                     body.append('<li>')
                     #Close the append tag.
-                    body.append('<a href="#">')
+                    body.append('<a href="javascript:edit_meeting(\'%s\');" title="Click to edit \'%s\'">'%(meeting.publicid,meeting.name))
                     #Output the meeting.
                     body.append(esc(meeting.name))
                     #Close the link and the list tag.
@@ -60,7 +60,7 @@ class MeetingCalendar(calendar.HTMLCalendar):
     #Get a list of the meetings in a given day.
     def group_by_day(self, meetings):
         #return the meeting
-        field = lambda meeting: meeting.start_date.day
+        field = lambda meeting: meeting.startdate.day
         #Return 
         return dict(
             [(day, list(items)) for day, items in groupby(meetings, field)]

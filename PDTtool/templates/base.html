@@ -32,9 +32,9 @@
 -->
 <div id="wrapper" class="wrapper_bg container">
 	{% if request.user.is_superuser %}
-	<a id="admin" class="btn btn-inverse" href="/admin/">admin</a>
+	<a id="admin" class="btn btn-inverse dark-button" href="/admin/">admin</a>
 	{% endif %}
-	<a id="logout" class="btn btn-inverse" href="/logout/">logout</a>
+	<a id="logout" class="btn btn-inverse dark-button" href="/logout/">logout</a>
 	<div id="navbar" class="span3">
 
 		<div class="nav-block">
@@ -127,7 +127,24 @@
 	var t = setTimeout('loop()', 50);
 }
 */
+function bg_animate(element,color){
+	element.animate({
+		backgroundColor: color
+	}, 500);
+}
+
 $(function(){
+
+$('.dark-button').each(function(){
+
+	$(this).hover(function(){
+		bg_animate($(this),'#324A32');
+	},function(){
+		bg_animate($(this),'#4B6B4B');
+	});
+
+});
+
 //Load the datepicker
 var datepicker = $(".datepicker");
 //Check for any datepickers

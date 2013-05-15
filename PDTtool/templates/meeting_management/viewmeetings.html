@@ -1,8 +1,43 @@
 {% extends "base.html" %}
 
 {% block content%}
+	
+	{% for m in meetings %}
+
+		<div class="simplemodal-container" id="edit_meeting" publicid="{{ m.publicid }}" style="width: 700px;display: none;">
+			<h4>Edit Meeting</h4>
+			<form action="{{ request.get_full_path }}" method="POST">
+			{% csrf_token %}
+			<input type="hidden" name="edit_meeting" value="{{ m.publicid }}" />
+			<table>
+				{{ m.meetingform.as_table }}
+				<tr>
+					<td></td>
+					<td><input type="submit" class="btn btn-primary form-submit-button" value="submit" /></td>
+				</tr>
+			</table>
+			</form>
+		</div>
+
+	{% endfor %}
+
+	<div class="simplemodal-container" id="add_meeting" style="width: 700px;display: none;">
+		<h4>Add a Meeting</h4>
+		<form action="{{ request.get_full_path }}" method="POST">
+		{% csrf_token %}	
+		<input type="hidden" name="add_meeting" value="1" />
+		<table>
+			{{ MeetingForm.as_table }}
+			<tr>
+				<td></td>
+				<td><input type="submit" class="btn btn-primary form-submit-button" value="submit" /></td>
+			</tr>
+		</table>
+		</form>
+	</div>
+
 	<div style="text-align: right; margin-bottom: 15px;">
-		<a href="javascript:void(0);" onclick="add_modal();" class="btn btn-success btn-mini">Add</a>
+		<a href="javascript:void(0);" onclick="add_meeting_modal();" class="btn btn-success btn-mini">Add</a>
 	</div>
 	<div id="calendar">
 		{{ calendar | safe }}
@@ -18,13 +53,214 @@
 {% endblock %}
 {% block scripts%}
 <script>
-	function add_modal(){
-		$.modal("Add a meeting.",{
+
+	function edit_meeting(publicid){
+		$("div[publicid='"+publicid+"']").modal("Add a meeting.",{
 			overlayClose : true,
 		});
 	}
-	$(function(){
 
+	//add or remove the topic.
+	function add_remove_topic(randomIdentifier,publicid,title){
+		//Get the checkbox.
+		checkbox = $("input[publicid='"+publicid+"']");
+		//Get the check value and flip it.
+		checked = !checkbox.prop('checked');
+
+		//Check the box.
+		checkbox.prop('checked',checked);
+
+		//Get the option
+		option = $("ul[random-identifier='"+randomIdentifier+"']").parent()
+				   .children('div')
+				   .children('#selected_topic_browser,#topic_browser')
+				   .children("div[publicid='topic-"+publicid+"']");
+
+		//Get the parent
+		option_parent = option.parent().parent();
+
+		//Get the check button 
+		check_topic_button = option.children('.check_topic');
+
+		//Move the object to the right window.
+		if(checked){
+			check_topic_button.removeClass('icon-plus').addClass('icon-minus');
+			check_topic_button.attr('title','Remove  \''+title+'\'');
+			topic_browser = '#selected_topic_browser';
+		 }else{
+			check_topic_button.removeClass('icon-minus').addClass('icon-plus');
+			check_topic_button.attr('title','Add \''+title+'\'');
+			topic_browser = '#topic_browser';
+		}
+
+		//Get the option html.
+		option_html = option.clone();
+
+		//Delete the option.
+		option.remove();
+
+		//Append to the window
+		option_parent.children(topic_browser).append(option_html);
+		
+		$('.check_topic').tooltip({track:true, tooltipClass: "yellow-tooltip"});
+
+	}
+
+	//Enlarge a topic item select option.
+	function enlarge_topic(parent){
+		//Find the topic browser.
+		$('#topic_browser .topic').each(function(){
+			//Change the height.
+			$(this).height(20);
+		});
+		//Get the parent height.
+		parent_height = parent.height();
+		//Check the parent height.
+		if(parent_height < 30){
+			//If it is not expanded, expand to 80px height.
+			parent.height(80);
+		 }else{
+		 	//If it is expanded, change to 20px height.
+		 	parent.height(20);
+		}
+	}
+
+	//Search through the topics listed, this happens on keyup.
+	function search_topic_browser(value){
+		//Hide each topic.
+		$('#topic_browser .topic').hide();
+		//Run the textual search on each topic.
+		$('#topic_browser .topic').each(function(){
+			//Get the text the user has input.
+			var text = $(this).children('.topic_title').text().toLowerCase();
+			//Check if the string entered is in 
+			//		the title of the topic
+			if(text.indexOf(value.toLowerCase()) !== -1){
+				//Show the topic.
+				$(this).show();
+			}
+		});
+	}
+	
+	//Create a visual representation of checkbox form.
+	function create_topics(){
+		//Get topics div.
+		all_topics = $("ul[id='id_topics']");
+
+		all_topics.each(function(){
+
+			id_topics = $(this)
+
+			//Create a random identifier for the dialogue
+			randomIdentifier = Math.random().toString(36).substring(7);
+
+			//Add the randomClass string.
+			id_topics.attr('random-identifier',randomIdentifier);
+
+			//Get the topics parent div.
+			id_topics_parent = id_topics.parent();
+			//Hide the topics div.
+			id_topics.hide();
+
+					//This is the search form for a textual search.
+			html = '<div style="position: relative;">';
+						//A div to surround the browser search form.
+			html+=		'<div id="topic_browser_search" class="input-append">';
+							//This is the input button for the topics.
+			html+=			'<input type="text" id="search_topics" onkeyup="search_topic_browser($(this).val());" />';
+							//This is a button, it just makes sense, but doesn't 
+							//		do anything functional, the functionality
+							//		happens on the user keyup.
+			html+=			'<input type="button" class="btn btn-warning" value="Search" />';
+						//Output the div.
+			html+=		'</div>';
+		
+			//Create a variable for the deselected values.
+			deselected_values_html = "";
+			//Create a variable for the selected values.
+			selected_values_html   = "";
+			
+			//Loop through each of the topic select options.
+			id_topics.children('li').each(function(){
+
+				//Get the child label.
+				child_label = $(this).children('label');
+				//Get the label text, it is a JSON string
+				//		output from the model.
+				child_html = child_label.text();
+				//Get the checkbox
+				checkbox = child_label.children('label input[name="topics"]');
+
+				//Find out if the topic is checked.
+				checked = checkbox.prop("checked");
+
+				//Try to parse the JSON string
+				try{
+					//Parse the JSON string to an object
+					topic_object = $.parseJSON(child_html);
+
+					//Add the publicid to the checkbox dom
+					checkbox.attr('publicid',topic_object.topic_publicid)
+
+					if(checked){
+						icon_class= "icon-minus";
+						icon_tooltip = 'Remove \''+topic_object.topic_name+'\'';
+					}else{
+						icon_class= "icon-plus";
+						icon_tooltip = 'Add \''+topic_object.topic_name+'\''; 
+					}
+
+					//Get the html for the topic selection option.
+					var topic_option_html = "";
+
+										//This is the wrapper of the topic.
+					topic_option_html+=	'<div class="topic pull-left" publicid="topic-'+topic_object.topic_publicid+'">';
+											//This is the button that allows us to add the topic.
+					topic_option_html+=		'<i class="'+icon_class+' check_topic pull-left" title="'+icon_tooltip+'" onclick="add_remove_topic(\''+randomIdentifier+'\',\''+topic_object.topic_publicid+'\',\''+topic_object.topic_name+'\');"></i>';
+											//Output the name.
+					topic_option_html+=		'<span class="topic_title">'+topic_object.topic_name+'</span>';
+												//Create a button for showing more details.
+					topic_option_html+=		'<a href="javascript:void(0);" class="btn btn-primary btn-mini pull-right" onclick="enlarge_topic($(this).parent());">View Details</a>';
+												//List the details of the topic object.
+					topic_option_html+=		'<div class="topic_description">'+topic_object.topic_description+'</div>';
+					topic_option_html+=	'</div>';
+					
+					if(checked){
+						selected_values_html+= topic_option_html;
+					}else{
+						deselected_values_html+=topic_option_html;
+					}
+
+				//Throws an error if the label from the model is not a JSON string.
+				}catch(err){
+					//Add the error to the javascript console
+					console.log("Topic object not a JSON string.")
+				}
+
+			});
+
+
+			html+= '<div id="topic_browser" class="topic_browser">';
+			html+= deselected_values_html;
+			html+= '</div>';
+
+			html+= '<div id="selected_topic_browser" class="topic_browser">';
+			html+= selected_values_html
+			html+= '</div>'
+
+			id_topics_parent.prepend(html);
+		});
+	}
+
+	function add_meeting_modal(){
+		$('#add_meeting').modal("Add a meeting.",{
+			overlayClose : true,
+		});
+
+	}
+	$(function(){
+		create_topics();		
+		$('.check_topic').tooltip({track:true, tooltipClass: "yellow-tooltip"});
 	});
 </script>
 {% endblock %}

@@ -3,7 +3,7 @@
 
 	{{ search_form | safe }}
 
-	<a href="javascript:add_user();" class="btn btn-success" style="margin-bottom: 10px">Add User</a>
+	<a href="javascript:add_user();" class="btn btn-success light-button btn-mini" style="margin-bottom: 10px"><i class="icon-plus"></i></a>
 	
 	<div class="simplemodal-container" id="add_user" style="display: none;">
 		<h4>Add the User</h4>
@@ -14,9 +14,10 @@
 			{{ add_user_form.as_table }}
 			<tr>
 				<td></td>
-				<td><input type="submit" class="btn btn-primary" value="submit" /></td>
+				<td><input type="submit" class="btn btn-primary form-submit-button" value="submit" /></td>
 			</tr>
 		</table>
+		</form>
 	</div>
 
 	<table class="table table-striped table-bordered" style="background: #FEFEFE;">
@@ -26,7 +27,7 @@
 			<th>Username</th>
 			<th>Active</th>
 			<th>Program Manager</th>
-			<th>Edit</th>
+			<th></th>
 		</tr>
 
 		{% for u in users %}
@@ -36,7 +37,7 @@
 				<td>{{ u.user.username }}</td>
 				<td>{% if u.user.is_active %}yes{% else %}no{% endif %}</td>
 				<td>{% if u.is_program_manager or request.POST.is_program_manager and request.POST.edit_user == u.publicid %}yes{% else %}no{% endif %}</td>
-				<td style="text-align: center"><a href="javascript:edit_user('{{ u.extendeduser.publicid }}');" class="btn btn-warning">Edit</a>
+				<td style="text-align: center"><a href="javascript:edit_user('{{ u.extendeduser.publicid }}');" class="btn btn-warning medium-dark-button"><i class="icon-pencil icon-white"></i></a>
 
 					<div class="simplemodal-container" id="edit_user_{{ u.extendeduser.publicid }}" style="display: none;">
 						<div>
@@ -46,7 +47,7 @@
 							{{ u.user_form.as_table }}
 							<tr>
 								<td></td>
-								<td><input type="submit" class="btn btn-primary" value="submit" /></td>
+								<td><input type="submit" class="btn btn-primary form-submit-button" value="submit" /></td>
 							</tr>
 						</table>
 					</div>

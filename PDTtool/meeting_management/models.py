@@ -1,4 +1,5 @@
 from django.db import models
+from topic_management.models import Topic
 from django.contrib.auth.models import User
 from django_extensions.db.fields import UUIDField
 from schedule_management.models import ScheduleItem
@@ -8,6 +9,12 @@ class Meeting(models.Model):
 
 	#The publicid.
 	publicid = UUIDField(version=4, unique=True)
+
+	#name
+	name = models.CharField(max_length=255)
+
+	#description
+	description = models.TextField()
 
 	#This is the duedate.
 	duedate = models.DateTimeField()
@@ -19,7 +26,7 @@ class Meeting(models.Model):
 	startdate = models.DateTimeField()
 
 	#Collection of the users attending.
-	usersattending = models.ManyToManyField(User,related_name='usersattending')
+	#usersattending = models.ManyToManyField(User,related_name='usersattending')
 
 	#This is the user created.
 	user = models.ForeignKey(User,related_name='createduser')
@@ -28,7 +35,8 @@ class Meeting(models.Model):
 	duration = models.IntegerField()
 
 	#This is a collection of items.
-	scheduletems = models.ForeignKey(ScheduleItem)
+	#scheduleitems = models.ForeignKey(ScheduleItem)
+	topics = models.ManyToManyField(Topic)
 
 	#If this is false the field is deleted.
 	deleted = models.BooleanField(default=False)

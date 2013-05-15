@@ -38,7 +38,7 @@ def comment_form(request, commented_object = 'topic', commented_object_id=None):
 					#this is the textarea for the user input.
 	content+=		'<textarea name="content"></textarea><br>'
 					#This is the submit button.
-	content+=		'<button type="submit" class="btn btn-primary">Go</button>'
+	content+=		'<button type="submit" class="btn btn-primary lighter-button">Comment</button>'
 				#Close the form.
 	content+=	'</form>'
 				#Add a height fix for the floating elements.
