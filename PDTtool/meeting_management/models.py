@@ -13,6 +13,10 @@ class Meeting(models.Model):
 	#name
 	name = models.CharField(max_length=255)
 
+	#Define the name
+	def __unicode__(self):
+		return self.name
+		
 	#description
 	description = models.TextField()
 

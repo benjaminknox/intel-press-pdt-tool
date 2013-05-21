@@ -3,14 +3,11 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from user_management.models import ExtendedUser, ActivateUserDB, ForgotPasswordDB
 
-#This is the website domain, no http://.
-domain = '127.0.0.1:5486'
-
 # This sends an activation email, with a publicid in it.
 #		it requires a User model object, and and uses
 #		the ActivateUserDB model. It also uses the
 #		uuid.uuid4() method.
-def send_activation_email(inactive_user):
+def send_activation_email(request,inactive_user):
 
 	#Get the extended user object
 	extendeduser = ExtendedUser.objects.get(user=inactive_user)
@@ -44,7 +41,7 @@ def send_activation_email(inactive_user):
 
 	#Define a message.
 	message = "Thank you for registering to the PDT Portal %s %s,\r\n\r\n"%(first_name,last_name)
-	message+= "To activate your account go to this link: http://%s/activate/?publicid=%s&userid=%s" % (domain, publicid_string,extendeduser_publicid)
+	message+= "To activate your account go to this link: http://%s/activate/?publicid=%s&userid=%s" % (request.META['HTTP_HOST'], publicid_string,extendeduser_publicid)
 
 	#Send the email.
 	send_mail(subject, message, from_email, to_email, fail_silently=False)
@@ -54,7 +51,7 @@ def send_activation_email(inactive_user):
 #		it requires a User model object, and and uses
 #		the ForgotPasswordDB model. It also uses the
 #		uuid.uuid4() method.
-def send_password_reset_email(user):
+def send_password_reset_email(request,user):
 
 	#Get the extended user object
 	extendeduser = ExtendedUser.objects.get(user=user)
@@ -88,7 +85,7 @@ def send_password_reset_email(user):
 
 	#Define a message.
 	message = "Hi %s %s,\r\n\r\n" % (first_name,last_name)
-	message+= "To reset your password go to this link: http://%s/forgotpassword/?resetid=%s&userid=%s" % (domain, publicid_string,extendeduser_publicid)
+	message+= "To reset your password go to this link: http://%s/forgotpassword/?resetid=%s&userid=%s" % (request.META['HTTP_HOST'], publicid_string,extendeduser_publicid)
 
 	#Send the email.
 	send_mail(subject, message, from_email, to_email, fail_silently=False)

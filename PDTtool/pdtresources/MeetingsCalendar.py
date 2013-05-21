@@ -36,7 +36,7 @@ class MeetingCalendar(calendar.HTMLCalendar):
                     #Open list tag.
                     body.append('<li>')
                     #Close the append tag.
-                    body.append('<a href="javascript:edit_meeting(\'%s\');" title="Click to edit \'%s\'">'%(meeting.publicid,meeting.name))
+                    body.append('<a href="javascript:view_meeting(\'%s\');" class="meeting_link" title="Click to view \'%s\'">'%(meeting.publicid,meeting.name))
                     #Output the meeting.
                     body.append(esc(meeting.name))
                     #Close the link and the list tag.

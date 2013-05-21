@@ -17,6 +17,10 @@ class Topic(models.Model):
 	#Name of the topic.
 	name = models.CharField(max_length=255)
 
+	#Define the name
+	def __unicode__(self):
+		return self.name
+
 	#The description of the topic.
 	description = models.TextField()
 

@@ -6,4 +6,6 @@ urlpatterns = patterns('',
     url(r'^$', views.viewmeetings, name='viewmeetings'),
     #View the meetings script.
     url(r'^viewmeetings/$', views.viewmeetings, name='viewmeetings'),
+    #Add a meeting script.
+    url(r'^addmeeting/$', views.addmeeting, name='addmeeting'),
 )

@@ -39,7 +39,7 @@
 
 			<tr class="document_item change_document" publicid="{{ document.document_object.publicid }}">
 				<td>
-					<a href="/download/{{ document.document_object.fileName }}">{{ document.document_object.name }}</a>
+					<a href="/download/{{ document.document_object.fileName}}" class="download_link" title="{{ document.document_object.name }}">{{ document.document_object.name | truncatechars:50  }}</a>
 				</td>
 				<td>
 					{% if user_is_owner %}
@@ -204,6 +204,9 @@
 				});
 			}
 		});
+
+		$('.download_link').tooltip({track:true, tooltipClass: "yellow-tooltip"});
+
 	});
 </script>
 {% endblock %}

@@ -1,0 +1,79 @@
+{% extends "html_base.html" %}
+{% load staticfiles %}
+{% block stylesheets %}
+<style>
+BODY,HTML{
+	background: #679FD2;
+}
+.wrapper_bg{
+	/* This adds a gradient to the div. */
+	-webkit-box-shadow: 0px 3px 20px 0px #000000;
+	box-shadow: 0px 3px 20px 0px #000000;
+	width: 500px;
+}
+</style>
+{% endblock %}
+{% block htmlcontent %}
+	<div class="container wrapper_bg">
+		{% if 'step' in request.GET and request.GET.step = '2' %}
+		<a href="/addmeeting/?step=1" id="ios-arrow-left">Back</a>
+		{% endif %}
+		<h4>{{ title }}</h4>
+		{{ MeetingForm }}
+	</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'www/js/meeting_management/scripts.js' %}"></script>
+<script>
+function search_topics(search_value){
+	$('.topic_title').each(function(){
+
+		topic_title = $(this);
+
+		topic_option = $(this).parent();
+
+		label = topic_option.parent();
+
+		row = label.parent();
+
+		checkbox = label.children("input[name='topics']");
+
+		checked =checkbox.prop('checked');
+
+		if(!checked){
+
+			row.hide();
+		}
+
+		text = topic_title.text().toLowerCase();
+		search = (search_value.length > 0)? search_value.toLowerCase() : 0;
+
+		if(text.indexOf(search) != -1 || search == 0){
+			row.show();
+		}
+	})
+}
+$(function(){
+
+	$('ul').attr('id','id_topics')
+
+	topic_title = $('.topic_title');
+	if(topic_title.length > 0){
+		var id_topics = $('#id_topics');
+
+		id_topics.parent().prepend('<div id="topic_descriptions"></div>');
+
+		id_topics.parent().prepend('<input type="text" onkeyup="search_topics($(this).val());" placeholder="Filter Documents" id="search_input" />');
+		topic_title.each(function(){
+			$(this).hover(function(){
+				var html = $(this).parent().find('.topic_description').html();
+				$('#topic_descriptions').html(html).show();
+			},function(){
+				$('#topic_descriptions').hide();
+			});
+		});
+	}
+});
+</script>
+{% endblock %}

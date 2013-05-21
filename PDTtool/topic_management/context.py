@@ -32,6 +32,7 @@ def search_form(request):
 	html = 	'<div id="search_form">'
 	html+= 		'<div class="pull-right">'
 	html+= 			'<form action="%s" class="form-inline" method="GET">' % request_full_path
+	html+=				'<a href="%s" class="btn btn-link pull-left">clear</a>' % request.path
 	#html+= 				'<input type="hidden" name="csrfmiddlewaretoken" value="%s">' % token
 	#html+= 				'<input type="text" class="datepicker" name="date" style="width: 100px" placeholder="date" />'
 	html+= 				'<input type="text" name="search" value="%s" class="input-medium search-query" />'% value

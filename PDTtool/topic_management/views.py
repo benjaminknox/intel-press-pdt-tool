@@ -39,7 +39,7 @@ def addtopic(request):
 			#Get the file
 			name = f.name
 			fileName = "%s-%s" % (uuid4(),name)
-			location = '/home/programmer/upload_dir/%s' % fileName
+			location = '/uploads/%s' % fileName
 			fileSize = f.size
 
 			#Load a new uploaded file and save it.
@@ -80,9 +80,9 @@ def viewtopics(request):
 
 	#Check to see if the user has filtered 
 	#	the topics.
-	if request.method == 'POST':
+	if 'search' in request.GET:
 		#Get the user defined search filter
-		search = request.POST['search']
+		search = request.GET['search']
 		#Filter the topic list based on the users filtered information.
 		topics_list = Topic.objects.filter(name__icontains=search,deleted=False)
 	else:
@@ -90,7 +90,7 @@ def viewtopics(request):
 		topics_list = Topic.objects.filter(deleted=False)
 
 	#Put the topics into a paginator object
-	paginator = Paginator(topics_list, 10) # Show 25 documents per page
+	paginator = Paginator(topics_list, 5) # Show 5 documents per page
 	#Get the page
 	page = request.GET.get('page')
 
@@ -104,6 +104,15 @@ def viewtopics(request):
 	except EmptyPage:
 		# If page is out of range (e.g. 9999), deliver last page of results.
 		topics = paginator.page(paginator.num_pages)
+
+	#Create the query
+	queries_without_page = request.GET.copy()
+
+	if queries_without_page.has_key('page'):
+		del queries_without_page['page']
+
+	context['queries'] = queries_without_page
+
 
 	#Stor the topics.
 	context['topics'] = topics
@@ -190,7 +199,7 @@ def viewtopic(request):
 				#Get the file
 				name = f.name
 				fileName = "%s-%s" % (uuid4(),name)
-				location = '/home/programmer/upload_dir/%s' % fileName
+				location = '/uploads/%s' % fileName
 				fileSize = f.size
 
 				updated_document.update(location=location,name=name,fileName=fileName,size=fileSize)
@@ -354,7 +363,7 @@ def viewtopic(request):
 @login_required
 def download(request,fileName):
 	
-	filepath = "/home/programmer/upload_dir/%s" % fileName
+	filepath = "/uploads/%s" % fileName
 
 	f = open(filepath,"r")
 	mimetype = mimetypes.guess_type(filepath)[0]

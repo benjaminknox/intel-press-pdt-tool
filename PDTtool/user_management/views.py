@@ -145,7 +145,7 @@ def register(request):
 			extuser.save()
 
 			#Send the activation email, contains a publicid.
-			send_activation_email(newuser)
+			send_activation_email(request,newuser)
 
 			#Return the success view
 			return render(request,
@@ -299,7 +299,7 @@ def forgotpassword(request):
 			#Get the user
 			user = User.objects.get(username=username)
 			#Send the reset password email
-			send_password_reset_email(user)
+			send_password_reset_email(request,user)
 
 			return render(request,
 					'user_management/forgotpasswordresetemail.html',

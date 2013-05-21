@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'user_management',
     # Extensions for utility.
     'django_extensions',
+    'pdtresources',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -18,6 +18,9 @@ def comment_form(request, commented_object = 'topic', commented_object_id=None):
 	#This gets the page url
 	action_url = "%s?publicid=%s"%(request.path,request.GET['publicid'])
 
+	if 'currentmeeting' in request.GET:
+		action_url += '&currentmeeting=%s'%request.GET['currentmeeting']
+
 	#If it is a topic add a feedback 
 	#		button.
 	addfeedback = ''

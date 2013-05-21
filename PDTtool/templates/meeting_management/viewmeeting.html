@@ -1,0 +1,20 @@
+{% load filters %}
+<div id="view_meeting" class="simplemodal-data meetings-modal" publicid="{{ meeting.publicid }}">
+	<div class="close-modal"></div>
+	<h4>{{meeting.name}} at {{meeting.startdate}}</h4>
+	<table id="meeting_topics" class="table table-bordered">
+	<tr>
+		<th class="text-success">Documents Up for Review</th>
+	</tr>
+	{% for topic in meeting.topics.all %}
+	{% if not topic.deleted %}
+		<tr>
+			<td onclick="window.location='/viewtopic/?publicid={{ topic.publicid }}&currentmeeting={{ meeting.publicid}}'" title="{{topic.name}} has {{ topic.documents.all|length}} documents, click to view all documents.">
+				<h5>{{topic.name}} presented by {{ topic.user.get_full_name }}</h5>
+				<small>{{ topic.description | truncatechars:"200" }}</small>
+			</td>
+		</tr>
+	{% endif %}
+	{% endfor %}
+	</table>
+</div>
