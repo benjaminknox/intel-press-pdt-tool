@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="{% static 'www/toastr/toastr.css' %}" />
 	<link rel="stylesheet" href="{% static 'www/jquery-ui/css/ui-lightness/jquery-ui.min.css' %}"></link>
 	<link rel="stylesheet" href="{% static 'www/css/style.css' %}" />
-	<link rel="stylesheet" href="{% static 'www/css/jquery.ui.timepicker.css' %}" />
+	<link rel="stylesheet" href="{% static 'www/css/jquery.timepicker.css' %}" />
 	<!--
 		End stylesheet resources
 	-->
@@ -44,9 +44,9 @@
 <script src="{% static 'www/jquery-ui/js/jquery-ui.min.js' %}"></script>
 <script src="{% static 'www/js/jquery.cookie.js' %}"></script>
 <script src="{% static 'www/js/jquery.maskedinput.min.js' %}"></script>
-<script src="{% static 'www/js/jquery.simplemodal.min.js' %}"></script>
+<!--<script src="{% static 'www/js/jquery.simplemodal.min.js' %}"></script>-->
 <script src="{% static 'www/toastr/toastr.js' %}"></script>
-<script src="{% static 'www/js/jquery-ui-timepicker-addon.js' %}"></script>
+<script src="{% static 'www/js/jquery.timepicker.min.js' %}"></script>
 <!--
 
 	End javascript resources
@@ -108,17 +108,13 @@ if(datepicker.length > 0){
 	});
 }
 //Load the datepicker
-var datetimepicker = $(".datetimepicker");
+var timepicker = $(".timepicker");
 //Check for any datepickers
-if(datetimepicker.length > 0){
+if(timepicker.length > 0){
 	//If datepickers are found load
 	//	the jQuery UI datepicker.
-	datetimepicker.each(function(){
-		$(this).datetimepicker({
-			timeFormat: 'HH:mm:ss',
-			dateFormat: "yy-mm-dd",
-			sliderAccessArgs: { touchonly: false }
-		});
+	timepicker.each(function(){
+		$(this).timepicker();
 	});
 }
 //Load the phonenumbers

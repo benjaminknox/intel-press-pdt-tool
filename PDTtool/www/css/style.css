@@ -1,9 +1,39 @@
-sopictyles */
-
 HTML,BODY{
 	width:100%;
 	height: 100%;
 	background: #f2f2f2;
+}
+
+#addmeetingform1{
+	width: 610px;
+	display: none;
+}
+
+#addmeetingform2{
+	height: 300px;
+}
+
+#sortable{
+	list-style: none;
+	width: 200px;
+	margin-right: 40px;
+}
+
+#sortable li{
+	margin-bottom: 5px;
+}
+
+.modal_form{
+    margin: 5px;
+}
+
+.modal_form .btn{
+    width: 100px;
+}
+
+.modal_form #id_description{
+	height: 100px;
+	width: 100%;
 }
 
 .dark-button{
@@ -428,6 +458,10 @@ HTML,BODY{
     border: 4px solid #316497;
 }
 
+#calendar td.activated {
+    border: 4px solid #316497;
+}
+
 #calendar .dayNumber {
     font-size: 16px !important;
     font-weight: bold;
@@ -445,6 +479,12 @@ HTML,BODY{
 
 #calendar a {
     font-size: 8px;
+}
+
+.add_calendar_item{
+	float: right;
+	display: none;
+	cursor: pointer;
 }
 
 .topic_browser{
@@ -787,19 +827,10 @@ HTML,BODY{
 	margin-left: 25px;
 }
 
-/* css for timepicker */
-.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
-.ui-timepicker-div dl { text-align: left; }
-.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
-.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
-.ui-timepicker-div td { font-size: 90%; }
-.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+.timepicker{
+	width: 80px;
+}
 
-.ui-timepicker-rtl{ direction: rtl; }
-.ui-timepicker-rtl dl { text-align: right; }
-.ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }
-
- .ui-datepicker{
- 	margin-top: 40px;
- 	margin-left: 240px;
- }
+.datepicker{
+	width:80px;
+}

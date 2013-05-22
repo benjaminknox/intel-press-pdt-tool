@@ -3,7 +3,8 @@ from django.shortcuts import render
 from user_management.models import ExtendedUser
 from django.contrib.auth.models import User, Group
 from user_management.forms import UserManagementForm
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from pdtresources.handles import paginate
+from pdtresources.templates import form_modal
 from django.contrib.auth.decorators import login_required, user_passes_test
 from user_management.resources import check_existing_user, check_user_groups
 ########
@@ -139,33 +140,14 @@ def viewusers(request):
 		#Load the topic objects into a list
 		users_list = ExtendedUser.objects.exclude(user__is_superuser=True)
 
+
+	users_object = paginate(request,users_list)
+
 	"""
 	" End filter of the topics.
 	"""
 
-	"""
-	" Get the paginator object.
-	"""
-	#Put the topics into a paginator object
-	paginator = Paginator(users_list, 10) # Show 25 documents per page
-	#Get the page
-	page = request.GET.get('page')
-
-	#This block of code tries loading into a paginator object.
-	try:
-		#Load the documents for this page.
-		users_object = paginator.page(page)
-	except PageNotAnInteger:
-		# If page is not an integer, deliver first page.
-		users_object = paginator.page(1)
-	except EmptyPage:
-		# If page is out of range (e.g. 9999), deliver last page of results.
-		users_object = paginator.page(paginator.num_pages)
-	"""
-	" End the paginator object.
-	"""
-
-	#Get a function 
+	#Get a user 
 	def returnfunc(request,u):
 
 		if request.POST and 'edit_user' in request.POST and request.POST['edit_user'] == u.publicid:
@@ -185,31 +167,31 @@ def viewusers(request):
 		'publicid':u.publicid,
 		'extendeduser':u,
 		'user':u.user,
-		'user_form':UserManagementForm(returnfunc(request, u)),
+		'user_form':form_modal(request,
+													'edit_user',
+													UserManagementForm(returnfunc(request, u)).as_table(),
+													modal_title = 'Edit %s'% u.user.get_full_name(),
+													modal_id = 'edit_user_%s'% u.publicid,
+													table_class = 'edit_user_form ',
+													formname_value=u.publicid),
 		'is_program_manager' : check_user_groups(u.user,'Program Manager'),
 	}
 	for u in users_object
 	]
 
-	#Create a post
-	if request.POST and 'edit_user' not in request.POST:
-		usermanagementform = UserManagementForm(request.POST)
-	else:
-		usermanagementform = UserManagementForm
-
-	#Create the query
-	queries_without_page = request.GET.copy()
-
-	if queries_without_page.has_key('page'):
-		del queries_without_page['page']
-
-	context['queries'] = queries_without_page
+	#Create a user modal
+	add_user_form = form_modal(request,
+														'add_user',
+														UserManagementForm(request.POST if 'edit_user' in request.POST else None).as_table(),
+														modal_title='Add a User',
+														modal_id='add_user')
 
 	#Pass in the users.
 	context['users'] = users
 	context['paginated_users'] = users_object
-	context['add_user_form'] = usermanagementform
+	context['add_user_form'] = add_user_form
 	context['existingusernotification'] = existingusernotification
+	context['queries'] = users_object.qstring
 
 	return render(request,
 		'user_management/viewusers.html',

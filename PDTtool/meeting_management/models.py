@@ -2,7 +2,7 @@ from django.db import models
 from topic_management.models import Topic
 from django.contrib.auth.models import User
 from django_extensions.db.fields import UUIDField
-from schedule_management.models import ScheduleItem
+#from schedule_management.models import ScheduleItem
 
 # This is the meeting created by a supervisor.
 class Meeting(models.Model):
@@ -21,13 +21,16 @@ class Meeting(models.Model):
 	description = models.TextField()
 
 	#This is the duedate.
-	duedate = models.DateTimeField()
+	duedate = models.DateField()
 
 	#The maximum number of ScheduleItems.
 	maxscheduleitems = models.IntegerField()
 
 	#This is the date and time it starts.
-	startdate = models.DateTimeField()
+	startdate = models.DateField()
+
+	#This is the time it starts.
+	starttime = models.TimeField(blank=True)
 
 	#Collection of the users attending.
 	#usersattending = models.ManyToManyField(User,related_name='usersattending')

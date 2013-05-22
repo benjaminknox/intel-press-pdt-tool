@@ -44,11 +44,11 @@ class MeetingCalendar(calendar.HTMLCalendar):
                 #Close the list.
                 body.append('</ul>')
                 #Return the day cell.
-                return self.day_cell(cssclass, '%d %s' % (day, ''.join(body)))
+                return self.day_cell(cssclass, '%d %s' % (day, ''.join(body)),day)
             #Return the cssclass cell.
-            return self.day_cell(cssclass, day)
+            return self.day_cell(cssclass, day, day)
         #Return just a normal cell.
-        return self.day_cell('noday', '&nbsp;')
+        return self.day_cell('noday', '&nbsp;', day)
 
     #Format the month.
     def formatmonth(self, year, month):
@@ -67,6 +67,12 @@ class MeetingCalendar(calendar.HTMLCalendar):
         )
 
     #This is the day in the calendar.
-    def day_cell(self, cssclass, body):
+    def day_cell(self, cssclass, body, day):
+
+        if cssclass != 'noday':
+            add_calendar_item = '<i class="icon-plus-sign add_calendar_item"></i>'
+        else:
+            add_calendar_item = ''
+
         #Return the day in the calendar.
-        return '<td class="%s">%s</td>' % (cssclass, body)
+        return '<td class="%s" date-value="%s/%s/%s">%s%s</td>' % (cssclass,self.month,day,self.year,add_calendar_item,body)

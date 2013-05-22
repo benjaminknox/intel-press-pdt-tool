@@ -1,17 +1,14 @@
-#from datetime import date, timedelta
 from datetime import date
-from django.db.models import Q
-from django.shortcuts import render, redirect
-from topic_management.models import Topic
+#from django.db.models import Q
+#from topic_management.models import Topic
 from django.utils.safestring import mark_safe
 from meeting_management.models import Meeting
-from dateutil.relativedelta import relativedelta 
-from pdtresources.templates import output_form_as_table
-#from django.views.generic.dates import MonthArchiveView
+from django.shortcuts import render#, redirect
+from dateutil.relativedelta import relativedelta
 from pdtresources.MeetingsCalendar import MeetingCalendar
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib.auth.decorators import login_required, user_passes_test
-from meeting_management.forms import MeetingForm, MeetingFormStepOne, MeetingFormStepTwo
+from pdtresources.templates import modal,form_modal
+from meeting_management.forms import MeetingFormStepOne#, MeetingFormStepTwo
+from django.contrib.auth.decorators import login_required#, user_passes_test
 
 
 # Create your views here.
@@ -21,33 +18,107 @@ def viewmeetings(request):
 	#Get the date of this month.
 	today = date.today() + relativedelta(day=1)
 
-	#This is the year.
-	if 'year' in request.GET:
-		#Get the year.
-		year = request.GET['year']
-	else:
-		#Get the year.
-		year = today.year
-
-	year = int(year)
-
-	#This is the month.
-	if 'month' in request.GET:
-		#Get the month.
-		month = request.GET['month']
-	else:
-		#Get the month.
-		month = today.month	
-
-	month = int(month)
-
+	#Get the year of the current month.
+	year = int(request.GET['year']) if 'year' in request.GET else today.year
+	#Get the month.
+	month = int(request.GET['month']) if 'month' in request.GET else today.month
 	#The date that will be displayed.
 	displaydate = date(day=1,month=month,year=year)
-
-	#Get the previous month
+	#Get the previous month.
 	prev_month = displaydate+relativedelta(months=-1)
-	#Get the next month
+	#Get the next month.
 	next_month = displaydate+relativedelta(months=+1)
+
+	#Load the meeting objects into a list
+	meetings = Meeting.objects.filter(
+										  deleted=False,
+										  startdate__year=displaydate.year,
+										  startdate__month=displaydate.month,
+										  )
+
+	#Get the calendar.
+	cal = MeetingCalendar(meetings).formatmonth(year, month)
+
+	#Meeting Data
+	meetings = [{
+			#Get the meeting
+			'meeting':m,
+			#Get the publicid
+			'publicid':m.publicid,
+			#Get the view meeting modal.
+			'meeting_view': mark_safe(
+								#Load the modal.
+								modal(request, mark_safe(
+										#Load the meeting management template.
+										render(request,
+											'meeting_management/viewmeeting.html',
+											#Pass in a context.
+											{'meeting':m}
+										#This simply means return the html
+										).content 
+									),
+									#Add a title to the modal.
+									modal_title="%s at %s" % (m.name,m.startdate),
+									modal_id=m.publicid
+								).content
+							),
+		}
+		for m in meetings
+	]
+
+	#Load the addmeeting form.
+	if 'loadprevious' not in request.GET and 'loadnext' in request.GET and (
+			('addmeetingform' in request.session) 
+				or
+			('addmeetingform' in request.POST)
+		):
+		
+		request.session['addmeetingform'] = request.POST
+
+		addmeetingform2 = mark_safe(render(request,
+														'meeting_management/addmeetingform2.html',
+														{'topics':'topics'}).content
+											)
+
+		meetingform = mark_safe(
+				#Load a modal template object
+				modal(
+						request,
+						addmeetingform2,
+						modal_title='Add a Meeting Form',
+						modal_id='addmeetingform'
+				).content
+			)
+
+		loadform = True
+	
+	else:
+
+		loadform = True if 'loadprevious' in request.GET else False
+
+		if not loadform and 'addmeetingform' in request.session:
+			del request.session['addmeetingform']
+
+		#Get the first meeting form
+		meetingform = form_modal(request,
+										#Add the meeting form.
+										'addmeetingform',
+										#Get the actual form from the form model.
+										MeetingFormStepOne(
+												request.POST if request.method == 'POST' else 
+													request.session['addmeetingform'] if 'addmeetingform' in request.session else None
+										 ).as_table(),
+										#Name the modal_form.
+										table_class='modal_form',
+										#Add the topics.
+										submit_text='Add Topics',
+										#Add a get string
+										get_string='loadnext=1',
+										#Add a modal title.
+										modal_title='Add a Meeting',
+										#Add a modal_id.
+										modal_id='addmeetingform'
+									)
 
 	#This is the context
 	context = {
@@ -63,110 +134,23 @@ def viewmeetings(request):
 		'next_month':next_month,
 		#This is a textual version of the next month.
 		'next_month_textual':next_month.strftime("%b, %Y"),
-	}
-
-
-	#Check for POST data
-	if request.method == 'POST' and 'add_meeting' in request.POST:
-		#Create the meetingform
-		meetingform = MeetingForm(request.POST)
-
-		#Insert the meeting.
-		if meetingform.is_valid():
-			#this is the meeting.
-			newmeeting = Meeting(
-								#Get the name.
-								name = request.POST['name'],
-								#Get the description.
-								description = request.POST['description'],
-								#Get the duedate.
-								duedate = request.POST['duedate'],
-								#Get the maximum number of scheduled items.
-								maxscheduleitems = request.POST['maxscheduleitems'],
-								#Get the start date.
-								startdate = request.POST['startdate'],
-								#Get the user.
-								user = request.user,
-								#Get the duraction of the meetings.
-								duration = request.POST['duration'],
-								)
-			#Save the meeting.
-			newmeeting.save()
-			#Clear the topics.
-			newmeeting.topics.clear()
-			#Loop through all the topics.
-			for topicid in request.POST['topics']:
-				#Get the topic from the database
-				topic = Topic.objects.get(pk=topicid)
-				#Save the topic to the collection.
-				newmeeting.topics.add(topic)
-
-	else:
-		#Get the MeetingForm.
-		meetingform = MeetingForm
-
-
-	#Check to see if the user has filtered 
-	#	the meetings.
-	if request.method == 'POST' and False == True:
-		#Get the user defined search filter
-		search = request.POST['search']
-		#Filter the meeting list based on the users filtered information.
-		meeting_list = Meeting.objects.filter(
-											  name__icontains=search,
-											  startdate__year=displaydate.year,
-											  startdate__month=displaydate.month,
-											  deleted=False)
-	else:
-		#Load the meeting objects into a list
-		meeting_list = Meeting.objects.filter(
-											  deleted=False,
-											  startdate__year=displaydate.year,
-											  startdate__month=displaydate.month,
-											  )
-	
-	#Put the meetings into a paginator object
-	paginator = Paginator(meeting_list, 10) # Show 25 meetings per page
-	#Get the page
-	page = request.GET.get('page')
-
-	#This block of code tries loading into a paginator object.
-	try:
-		#Load the meetings for this page.
-		meetings = paginator.page(page)
-	except PageNotAnInteger:
-		# If page is not an integer, deliver first page.
-		meetings = paginator.page(1)
-	except EmptyPage:
-		# If page is out of range (e.g. 9999), deliver last page of results.
-		meetings = paginator.page(paginator.num_pages)
-
-	#Get the calendar.
-	cal = MeetingCalendar(meetings).formatmonth(year, month)
-
-	#Meeting Data
-	meetings = [{
-			'meeting':m,
-			'publicid':m.publicid,
-			'meeting_view': mark_safe(
-								render(
-									request,
-									'meeting_management/viewmeeting.html',
-									{'meeting':m}
-								).content
-							)
+		'meetings':meetings,
+		#Get the calendar
+		'calendar':mark_safe(cal),
+		#Get the meeting form
+		'meetingform':meetingform,
+		#Load the meeting form
+		'loadform':loadform,
 		}
-		for m in meetings
-	]
-
-	context['meetings'] = meetings
-	context['calendar'] = mark_safe(cal)
-	context['MeetingForm'] = meetingform
 
 	return render(request,
  			'meeting_management/viewmeetings.html',
 			context)
 
+
+
+
+"""
 @login_required
 @user_passes_test(lambda u: u.groups.filter(Q(name='Supervisor')).count() != 0)
 def addmeeting(request):
@@ -232,4 +216,4 @@ def addmeeting(request):
 
 	return render(request,
 		'meeting_management/addmeeting.html',
-		context)
+		context)"""

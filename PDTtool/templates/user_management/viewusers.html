@@ -1,25 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
 
+	<!-- Search form for browsing through users. -->
 	{{ search_form | safe }}
+	<!-- End the search form -->
 
-	<a href="javascript:add_user();" class="btn btn-success light-button btn-mini" style="margin-bottom: 10px"><i class="icon-plus"></i></a>
-	
-	<div class="simplemodal-container" id="add_user" style="display: none;">
-		<h4>Add the User</h4>
-		<form action="{{ request.get_full_path }}" method="POST">
-		{% csrf_token %}	
-		<input type="hidden" name="add_user" value="1"/>
-		<table>
-			{{ add_user_form.as_table }}
-			<tr>
-				<td></td>
-				<td><input type="submit" class="btn btn-primary form-submit-button" value="submit" /></td>
-			</tr>
-		</table>
-		</form>
-	</div>
+	<!-- Load a form for adding a user -->
+	{{ add_user_form }}
+	<!-- End the form for adding a user -->
 
+	<!-- Load a modal for each user to edit -->
+	{% for u in users %}						
+			{{ u.user_form }}
+	{% endfor %}
+	<!-- End the loading of a modal for each user -->
+
+	<a href="javascript:add_user();" class="btn btn-success light-button btn-mini" style="margin-bottom: 10px"><i class="icon-plus"></i></a><!-- A button for pulling up the add user modal -->
+
+	<!-- This table is a paginated list of all of the users -->
 	<table class="table table-striped table-bordered" style="background: #FEFEFE;">
 		<tr>
 			<th>First Name</th>
@@ -30,18 +28,40 @@
 			<th></th>
 		</tr>
 
+		<!-- The list of the users in the system that are not Site Admins -->
 		{% for u in users %}
 			<tr>
 				<td>{{ u.user.first_name }}</td>
 				<td>{{ u.user.last_name }}</td>
 				<td>{{ u.user.username }}</td>
-				<td>{% if u.user.is_active %}yes{% else %}no{% endif %}</td>
-				<td>{% if u.is_program_manager or request.POST.is_program_manager and request.POST.edit_user == u.publicid %}yes{% else %}no{% endif %}</td>
-				<td style="text-align: center"><a href="javascript:edit_user('{{ u.extendeduser.publicid }}');" class="btn btn-warning medium-dark-button"><i class="icon-pencil icon-white"></i></a>
-
-					<div class="simplemodal-container" id="edit_user_{{ u.extendeduser.publicid }}" style="display: none;">
-						<div>
-						<h4>Edit the User</h4>
+				<td>
+						{% if u.user.is_active %}
+							<!-- The user is active. -->
+							yes
+						{% else %}
+							<!-- The user is not active. -->
+							no
+						{% endif %}
+				</td>
+				<td>
+					{% if u.is_program_manager or request.POST.is_program_manager and request.POST.edit_user == u.publicid %}
+						<!-- They are a program manager. -->
+						yes
+					{% else %}
+						<!-- They are not a program manager. -->
+						no
+					{% endif %}
+				</td>
+				<td style="text-align: center">
+						<!-- A button for loading the user edit modal -->
+						<a href="javascript:edit_user('{{ u.extendeduser.publicid }}');" class="btn btn-warning medium-dark-button">
+							<i class="icon-pencil icon-white"></i>
+						</a>
+						<!-- End loading the button for the edit modal -->
+						<!-- This is the actual form for loading.
+						<div class="simplemodal-container" id="edit_user_{{ u.extendeduser.publicid }}" style="display: none;">
+							<div>
+							<h4>Edit the User</h4>
 						<input type="hidden" name="edit_user" value="{{ u.extendeduser.publicid }}" />
 						<table>
 							{{ u.user_form.as_table }}
@@ -51,12 +71,15 @@
 							</tr>
 						</table>
 					</div>
-					</div>
+					</div>-->
+
 				</td>
 			</tr>
 		{% endfor %}
+		<!-- End the list of the user that are not Site Admins -->
 
 	</table>
+	<!-- End the paginated list of all of the users -->
 
 	<!-- Output the pagination links. -->
 		<div id="pagination" class="pagination">
@@ -78,17 +101,11 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
+<script>	
+
 	function edit_user(publicid){
-
-		html = '<form action="{{ request.get_full_path }}" method="POST">';
-		html+= "{% csrf_token %}";
-		html+= $("#edit_user_"+publicid).html();
-		html+= '</form>';
-
-		$.modal(html,{
-			overlayClose : true,
-		});
+		//alert($('#edit_user_'+publicid).length)
+		$('#edit_user_'+publicid).modal();
 	}
 	
 	function add_user(){

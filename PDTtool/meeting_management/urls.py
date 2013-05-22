@@ -7,5 +7,5 @@ urlpatterns = patterns('',
     #View the meetings script.
     url(r'^viewmeetings/$', views.viewmeetings, name='viewmeetings'),
     #Add a meeting script.
-    url(r'^addmeeting/$', views.addmeeting, name='addmeeting'),
+  # url(r'^addmeeting/$', views.addmeeting, name='addmeeting'),
 )
