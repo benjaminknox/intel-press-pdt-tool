@@ -1,19 +1,26 @@
 <div id="addmeetingform2">
 
-  <ul id="topics" class="draggable pull-left" >
-    <li>Topics Available <input type="text" id="search_topics" /></li>
+  <div id="select_topics" class="pull-left">
+  <div class="title">Topics Available <input type="text" placeholder="Search Topics" id="search_topics" /></div>
+  <ul class="draggable pull-left">
     {% for t in topics %}
       <li class="topic schedule-item" publicid="{{ t.publicid }}" id="topic_{{ t.publicid }}">
         <h6>
-          {{ t.name }} by {{ t.user.get_full_name }} - {{ t.presentationlength }} minutes
+          {{ t.name }} <br> {{ t.category }} - {{ t.presentationlength }} minutes
         </h6>
       </li>
     {% endfor %}
-  </ul>
-
+  </ul> 
+  </div>
   <ul id="schedule" class="draggable pull-right">
     <li class="not_draggable">Schedule Scheduled</li>
     <li class="not_draggable placeholder">Drag Here</li>
   </ul>
 
 </div><!-- #addmeetingform2 -->
+<center>
+<form action="{{ request.path }}" method="post">
+<input type="hidden" name="topics" value="" />
+<input type="submit" class="btn btn-success btn-large" value="Create Schedule" />
+</form>
+</center>

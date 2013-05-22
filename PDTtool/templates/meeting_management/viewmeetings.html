@@ -90,7 +90,12 @@
 				$('#id_startdate').val(date_clicked);
 			}
 			//Add the meeting form.
-			$('#addmeetingform').modal();
+			meetingmodal = $('#addmeetingform1');
+			if(meetingmodal.length == 0){
+				meetingmodal = $('#addmeetingform');
+			}
+
+			meetingmodal.modal();
 	}
 	{% endif %}
 

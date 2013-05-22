@@ -22,12 +22,14 @@ class MeetingForm(forms.ModelForm):
 """
 class TopicForm(forms.Form):
 
-	#The name of the document
-	name = forms.CharField( max_length=255 )
+  #The name of the document
+  name = forms.CharField( max_length=255 )
 
-    #A short description of the document
-    #	written by the uploader
-	description = forms.CharField( widget=forms.Textarea )
+  #A short description of the document
+  #   written by the uploader
+  description = forms.CharField( widget=forms.Textarea )
+
+  category = forms.CharField( max_length=255 )
 
 class upload_document_form(forms.Form):
   file = forms.FileField(widget=forms.FileInput(attrs={'id':'file','class':'file_form'}))

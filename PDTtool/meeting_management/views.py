@@ -96,7 +96,7 @@ def viewmeetings(request):
 				modal(
 						request,
 						addmeetingform2,
-						modal_title='Add a Meeting Form',
+						modal_title='Create a Schedule',
 						modal_id='addmeetingform'
 				).content
 			)
@@ -128,7 +128,7 @@ def viewmeetings(request):
 										#Add a modal title.
 										modal_title='Add a Meeting',
 										#Add a modal_id.
-										modal_id='addmeetingform'
+										modal_id='addmeetingform1'
 									)
 
 	#This is the context

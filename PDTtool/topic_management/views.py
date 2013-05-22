@@ -26,12 +26,15 @@ def addtopic(request):
 		#Get the document post data
 		topic_name = request.POST['name']
 		topic_description = request.POST['description']
+		topic_category = request.POST['category']
 		topic_user = request.user
 		#Create a new Document and save it.
 		topic = Topic(
 									name=topic_name,
 									description=topic_description,
-									user=topic_user)
+									user=topic_user,
+									category=topic_category
+									)
 		topic.save()
 
 		#Get the files
@@ -79,7 +82,7 @@ def addtopic(request):
 def viewtopics(request):
 
 	context = {
-		'title': 'View Topics'
+		'title':'View Topics'
 	}
 
 	#Check to see if the user has filtered 
@@ -88,7 +91,12 @@ def viewtopics(request):
 		#Get the user defined search filter
 		search = request.GET['search']
 		#Filter the topic list based on the users filtered information.
-		topics_list = Topic.objects.filter(name__icontains=search,deleted=False)
+		topics_list = Topic.objects.filter((
+			Q(deleted=False) & 
+				(Q(name__icontains=search) | 
+				 Q(category__icontains=search) 
+			 	)
+			))
 	else:
 		#Load the topic objects into a list
 		topics_list = Topic.objects.filter(deleted=False)

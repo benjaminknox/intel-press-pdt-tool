@@ -9,7 +9,7 @@ class Topic(models.Model):
 
 	#Class Meta
 	class Meta:
-		ordering = ['pk']
+		ordering = ['-pk']
 
 	#The publicid.
 	publicid = UUIDField(version=4, unique=True)
@@ -23,6 +23,9 @@ class Topic(models.Model):
 
 	#The description of the topic.
 	description = models.TextField()
+
+	#The Category
+	category = models.CharField(max_length=255, default='Book')
 
 	#Collection of Documents.
 	documents = models.ManyToManyField('Document',related_name='topic_documents')
@@ -40,7 +43,7 @@ class Topic(models.Model):
 	user = models.ForeignKey(User)
 
 	#Collection of Comments.
-	comments = models.ManyToManyField('Comment')
+	comments = models.ManyToManyField('Comment',blank=True)
 
 	#If this is false the field is deleted.
 	deleted = models.BooleanField(default=False)
