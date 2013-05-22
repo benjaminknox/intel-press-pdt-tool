@@ -21,6 +21,13 @@
 
 	<div class=""></div>
 
+	{{topic.add_document}}
+
+	{% for document in documents %}
+		{{ document.update_document_form }}
+		{{ document.deleted_document_form }}
+	{% endfor %}
+
 	<h5>{{topic.topic_object.name}}</h5>
 	<div>
 		<table class="table table-striped">
@@ -79,6 +86,19 @@
 
 		{% endfor %}
 		</table>
+		<div id="release_interface">
+			<form method="POST" action="{{ request.get_full_path }}" class="form-inline">
+				{% csrf_token %}
+				<input type="hidden" name="release_topic_id" value="{{ topic.publicid }}"  />
+			{% if not topic.readyforreview %}
+				Presentation Length: <input type="text" style="width: 30px" name="topic_presentationlength" value="15" /> minutes
+				<input type="submit" class="btn btn-primary" value="Release for Review"  />
+			{% else %}
+				This has been readied for review. It is a {{ topic.presentationlength }} minute presentation.
+				<input type="submit" value="Change" class="btn btn-primary"  />
+			{% endif %}
+			</form>
+		</div><!-- #release_interface -->
 	</div>
 	{{ topic.comment_form|safe }}
 	{% for comment in topic.comments %}
@@ -112,9 +132,9 @@
 			toastr.success('You have added a document.');
 		{% endif %}
 
-		{% for document in documents %}
-			
-		{% endfor %}
+		if(window.location.hash == '#added'){
+			toastr.success('You added \'{{ topic.topic_object.name }}\'.');
+		}
 
 		$('.change_document .document_button').hide();
 
@@ -122,58 +142,22 @@
 
 				var html = "";
 			
-			if($(this).hasClass('icon-upload')){
-			
 				//Gets the parent tr with the publicid
 				var documentid = $(this).parent().parent().attr('publicid');
-
-				html+= "<div>";
-				html+= "<h4>Upload a Revised Document</h4>";
-				html+= 		'<form method="POST" enctype="multipart/form-data" action="{{ request.get_full_path }}">';
-				html+= 			"{% csrf_token %}";
-				html+=			'<input type="hidden" name="updated_documentid" value="'+documentid+'" />';
-				html+=			'<input type="file" name="file" id="file" class="file_form" />';
-				html+=			'<input type="submit" value="upload" class="btn" />';
-				html+= 		"</form>";
-				html+= "</div>";
-
-			}
+			
+				if($(this).hasClass('icon-upload')){
+					modal_id = '#update_document_'+documentid
+				}
 
 			if($(this).hasClass('icon-trash')){
-			
-				//Gets the parent tr with the publicid
-				var documentid = $(this).parent().parent().attr('publicid');
-				html+= "<div>";
-				html+= "<h4>Are you sure?</h4>";
-				html+= 		'<form method="POST" action="{{ request.get_full_path }}">';
-				html+= 			"{% csrf_token %}";
-				html+=			'<input type="hidden" name="deleted_documentid" value="'+documentid+'" />';
-				html+=			'<input type="submit" value="delete" class="btn btn-danger" />&nbsp;&nbsp;';
-				html+=			'<a href="javascript:void();" value="cancel" class="btn btn-primary simplemodal-close">cancel</a>';
-				html+= 		"</form>";
-				html+= "</div>";
-
+				modal_id = '#deleted_document_'+documentid
 			}
 
 			if($(this).hasClass('icon-plus-sign')){
-			
-				//Gets the parent tr with the publicid
-				var documentid = $(this).parent().parent().attr('publicid');
-				html+= "<div>";
-				html+= "<h4>Add a document to the topic</h4>";
-				html+= 		'<form method="POST" enctype="multipart/form-data" action="{{ request.get_full_path }}">';
-				html+= 			"{% csrf_token %}";
-				html+=			'<input type="hidden" name="add_document" value="add a document" />';
-				html+=			'<input type="file" name="file" id="file" class="file_form" />';
-				html+=			'<input type="submit" value="upload" class="btn" />';
-				html+= 		"</form>";
-				html+= "</div>";
-
+				modal_id = '#add_document'
 			}
-
-			$.modal(html,{
-				overlayClose : true,
-			});
+		
+			$(modal_id).modal();
 
 		});
 

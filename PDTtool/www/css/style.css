@@ -408,7 +408,7 @@ HTML,BODY{
 	width: 100%;
 }
 	/* This is the row around the submit button in the Document info form. */
-	#topic_info_table .submit_button_row{
+	.submit_button_row{
 		text-align: center;
 	}
 /*
@@ -833,4 +833,8 @@ HTML,BODY{
 
 .datepicker{
 	width:80px;
+}
+
+.margin-left-10{
+	margin-left:10px;
 }

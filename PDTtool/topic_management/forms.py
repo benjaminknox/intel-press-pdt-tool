@@ -28,3 +28,6 @@ class TopicForm(forms.Form):
     #A short description of the document
     #	written by the uploader
 	description = forms.CharField( widget=forms.Textarea )
+
+class upload_document_form(forms.Form):
+  file = forms.FileField(widget=forms.FileInput(attrs={'id':'file','class':'file_form'}))

@@ -13,20 +13,24 @@ def output_form_as_table(request,
 						 extra_fields="",
 						 get_string="",
 						 add_submit_button=True,
-						 formname_value='1'):
+						 formname_value='1',
+						 action=False):
 
 	
 	tr_string = lambda string: '<tr><td></td><td>%s<td></tr>'%string
 	input_string = lambda inputtype,name,classname=None,value=None: '<input type="%s" name="%s"  class="%s" value="%s" />' % (inputtype,name,classname,value)
 	submit_button_string = lambda value,classname="": '<input type="submit" value="%s"  class="btn %s" />' % (value,classname)
-	
+
+	if not action:
+		action = "%s?%s" % (request.path,get_string)
+
 	form_multipart = ''
 	if multipart:
 		form_multipart = 'enctype="multipart/form-data"'
 
 	form_string = ""
 
-	form_string+= '<form action="%s?%s" method="POST" %s>' % (request.path,get_string,form_multipart)
+	form_string+= '<form action="%s" method="POST" %s>' % (action,form_multipart)
 	form_string+= input_string('hidden','csrfmiddlewaretoken',value=request.COOKIES['csrftoken'])
 	form_string+= input_string('hidden',formname,value=formname_value)
 	form_string+= '<table class="%s">' % table_class
@@ -59,13 +63,21 @@ def modal(
 				content,
 				modal_title=False,
 				modal_id='modal_template',
-				modal_form=False):
+				modal_form=False,
+				submit_text='Save Changes',
+				submit_button_class='btn-primary',
+				close_button_text = 'close',
+				close_button_class= ''):
 
 	context = {
 		'content': content,
 		'modal_title':modal_title,
 		'modal_id':modal_id,
 		'modal_form':modal_form,
+		'submit_text':submit_text,
+		'submit_button_class':submit_button_class,
+		'close_button_text': close_button_text,
+		'close_button_class': close_button_class,
 	}
 
 	return render(request,'resources/modal.html',context)
@@ -77,13 +89,18 @@ def form_modal(request,
 							 form,
 							 modal_title=False,
 							 modal_id='modal_template',
-							 submit_text = 'submit',
 							 multipart=False,
 							 submit_class=True,
 							 table_class="modal_form_table",
 							 extra_fields="",
 							 get_string="",
-							 formname_value="1"):
+							 formname_value="1",
+							 action=False,
+							 add_submit_button=False,
+							 submit_text='Save Changes',
+							 submit_button_class='btn-primary',
+							 close_button_text='close',
+							 close_button_class=''):
 
 	#Get the actual form.
 	form = mark_safe(output_form_as_table(
@@ -96,9 +113,11 @@ def form_modal(request,
 												 table_class=table_class,
 												 extra_fields=extra_fields,
 												 get_string=get_string,
-												 add_submit_button=False,
-												 formname_value=formname_value)
+												 add_submit_button=add_submit_button,
+												 formname_value=formname_value,
+												 action=action)
 				 )
+
 
 	#Get the modal
 	returned_modal = modal(
@@ -106,6 +125,10 @@ def form_modal(request,
 												form,
 												modal_title=modal_title,
 												modal_id=modal_id,
-												modal_form=True)
+												modal_form=True,
+												submit_text=submit_text,
+												submit_button_class=submit_button_class,
+												close_button_text=close_button_text,
+												close_button_class=close_button_class)
 
 	return mark_safe(returned_modal.content)

@@ -7,9 +7,9 @@ from django_extensions.db.fields import UUIDField
 #		documents and comments.
 class Topic(models.Model):
 
+	#Class Meta
 	class Meta:
 		ordering = ['pk']
-
 
 	#The publicid.
 	publicid = UUIDField(version=4, unique=True)
@@ -26,6 +26,12 @@ class Topic(models.Model):
 
 	#Collection of Documents.
 	documents = models.ManyToManyField('Document',related_name='topic_documents')
+
+	#A flag for ready for review
+	readyforreview = models.BooleanField(default=False)
+
+	#A time in minutes for presenting.
+	presentationlength = models.IntegerField(default=0)
 
 	#The user who created it.
 	user = models.ForeignKey(User)

@@ -7,14 +7,16 @@
   </div>
   {% endif %}
 
+  {% if content %}
   <div class="modal-body">
     {{ content }}
   </div>
+  {% endif %}
 
   <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn {{close_button_class}}" data-dismiss="modal" aria-hidden="true">{{close_button_text}}</button>
     {% if modal_form %}
-    <a href="javascript:void(0);" onclick="$(this).parent().parent().children('.modal-body').find('form').submit();" class="btn btn-primary">Save changes</a>
+    <a href="javascript:void(0);" onclick="$(this).parent().parent().children('.modal-body').find('form').submit();" class="btn {{ submit_button_class }}">{{ submit_text }}</a>
     {% endif %}
   </div>
 </div><!-- #{{ modal_id }} -->

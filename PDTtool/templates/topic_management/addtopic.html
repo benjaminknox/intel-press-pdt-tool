@@ -16,16 +16,18 @@
 <!-- The main form, it does multiple file upload using a bit of JavaScript -->
 <form enctype="multipart/form-data" action="{{ request.get_full_path }}" method="POST">
 	{% csrf_token %}
+	<table id="topic_info_table">
+		{{ topicform.as_table }}
+		<tr>
+			<td colspan="2" class="submit_button_row"></td>
+		</tr>
+	</table><!-- #topic_info_table -->
+
 	<div id="file_container">
 	</div><!-- #file_container -->
 	<table id="docs" class="table table-striped">
 	</table><!-- #docs -->
-	<table id="topic_info_table">
-		{{ topicform.as_table }}
-		<tr>
-			<td colspan="2" class="submit_button_row"><input type="submit" value="Upload" /></td>
-		</tr>
-	</table><!-- #topic_info_table -->
+	<center><input type="submit" value="Upload" /></center>
 </form>
 <!-- End of the main form -->
 {% endblock %}

@@ -1,8 +1,9 @@
 import os,mimetypes
 from uuid import uuid4
 from django.db.models import Q
-from topic_management.forms import TopicForm
+from topic_management.forms import TopicForm, upload_document_form
 from pdtresources.handles import handle_uploaded_file
+from pdtresources.templates import form_modal
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, HttpResponse
 from topic_management.models import Topic, Document, Comment
@@ -27,7 +28,10 @@ def addtopic(request):
 		topic_description = request.POST['description']
 		topic_user = request.user
 		#Create a new Document and save it.
-		topic = Topic(name=topic_name, description=topic_description,user=topic_user)
+		topic = Topic(
+									name=topic_name,
+									description=topic_description,
+									user=topic_user)
 		topic.save()
 
 		#Get the files
@@ -56,7 +60,7 @@ def addtopic(request):
 			topic.documents.add(uploadedfile)
 
 		#Return the redirect.
-		return redirect('/viewtopics/#added')
+		return redirect('/viewtopic/?publicid=%s#added' % topic.publicid)
 
 	else:
 		#Create an unbound post data.
@@ -158,8 +162,13 @@ def viewtopic(request):
 		#		to the list of topics.
 		return redirect('/viewtopics/')
 
+
 	#Check for POST data
 	if request.method == 'POST':
+
+
+		if 'topic_release_id' in request.POST:
+			topic_object.readyforr
 
 		#We deleted the topic.
 		if 'deleted_topicid' in request.POST and request.POST['deleted_topicid'] == topic_object.publicid:
@@ -321,12 +330,45 @@ def viewtopic(request):
 		],
 		#Get the comment form for the topic.
 		'comment_form':comment_form(request,'topic',topic_object.publicid),
+		#Add this document.
+	  'add_document':form_modal(request,
+														'add_document',
+														upload_document_form().as_table(),
+														'Add a document to the topic',
+														multipart=True,
+														modal_id="add_document",
+														formname_value='add a document',
+														action=request.get_full_path(),
+														submit_text='upload'
+														),
 	}
 
 	#Get all of the documents with their comments. 
 	documents = [
 		#Get all of the documents.
 		{'document_object':document,
+
+		 'update_document_form':form_modal(request,
+																			'updated_documentid',
+																			upload_document_form().as_table(),
+																			'Upload a Revised Document',
+																			multipart=True,
+																			modal_id="update_document_"+document.publicid,
+																			formname_value=document.publicid,
+																			action=request.get_full_path()
+																			),
+		 'deleted_document_form':form_modal(request,
+																			'deleted_documentid',
+																			"You will delete '%s'"%document.name,
+																			'Are you sure?',
+																			modal_id="deleted_document_"+document.publicid,
+																			formname_value=document.publicid,
+																			action=request.get_full_path(),
+																			submit_text="Yes",
+																			submit_button_class="btn-danger",
+																			close_button_text='Cancel',
+																			close_button_class='pull-right margin-left-10'
+																			),
 		 #Get the comments.
 		 'comments':[
 		 	#Get the comments for each document.

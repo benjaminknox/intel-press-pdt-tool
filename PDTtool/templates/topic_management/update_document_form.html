@@ -1,0 +1,7 @@
+<h4>Upload a Revised Document</h4>
+  <form method="POST" enctype="multipart/form-data" action="{{ request.get_full_path }}">
+    {% csrf_token %}
+    <input type="hidden" name="updated_documentid" value="'+documentid+'" />
+    <input type="file" name="file" id="file" class="file_form" />
+    <input type="submit" value="upload" class="btn" />
+  </form>
