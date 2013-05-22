@@ -1,15 +1,17 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block content %}
-	
-	{% if 'Supervisor' in usersgroups %}
+	{% if Supervisor and not topic.topic_object.supervisor_released %}
 	<!-- Output the release button if the user is a supervisor-->
 	<form method="POST" action="{{ request.get_full_path }}">
 		{% csrf_token %}
 		<input type="hidden" name="released_topicid" value="{{ request.GET.publicid }}" />
 		<input type="submit" value="Release This Topic" id="release_button" class="btn btn-success light-button btn-mini" />
 	</form>
-	<!-- End output of the delete button -->
+	<!-- End output of the release button -->
+	{% endif %}
+
+	{% if Supervisor or user_is_owner %}
 	<!-- Output the delete button if the user owns the document -->
 	<form method="POST" action="{{ request.get_full_path }}">
 		{% csrf_token %}
@@ -17,9 +19,10 @@
 		<input type="submit" value="Delete This Topic" id="delete_button" class="btn light-button btn-mini" />
 	</form>
 	<!-- End output of the delete button -->
+	<div class=""></div>
 	{% endif %}
 
-	<div class=""></div>
+	{% if user_is_owner %}
 
 	{{topic.add_document}}
 
@@ -28,7 +31,12 @@
 		{{ document.deleted_document_form }}
 	{% endfor %}
 
-	<h5>{{topic.topic_object.name}}</h5>
+	{% endif %}
+
+	<h5>{{topic.topic_object.name}}
+	{% if  topic.topic_object.supervisor_released %}
+		<span class="label label-success margin-left-10">Approved</span>
+	{% endif %}</h5>
 	<div>
 		<table class="table table-striped">
 			<tr>
@@ -86,19 +94,23 @@
 
 		{% endfor %}
 		</table>
+		{% if Supervisor or user_is_owner %}
+		{% if not topic.topic_object.supervisor_released %}
 		<div id="release_interface">
 			<form method="POST" action="{{ request.get_full_path }}" class="form-inline">
 				{% csrf_token %}
-				<input type="hidden" name="release_topic_id" value="{{ topic.publicid }}"  />
-			{% if not topic.readyforreview %}
+				<input type="hidden" name="topic_ready_for_review_id" value="{{ topic.topic_object.publicid }}"  />
+			{% if not topic.topic_object.readyforreview %}
 				Presentation Length: <input type="text" style="width: 30px" name="topic_presentationlength" value="15" /> minutes
 				<input type="submit" class="btn btn-primary" value="Release for Review"  />
 			{% else %}
-				This has been readied for review. It is a {{ topic.presentationlength }} minute presentation.
+				<span class="text-success">This has been readied for review. It is a {{ topic.topic_object.presentationlength }} minute presentation.</span>
 				<input type="submit" value="Change" class="btn btn-primary"  />
 			{% endif %}
 			</form>
 		</div><!-- #release_interface -->
+		{% endif %}
+		{% endif %}
 	</div>
 	{{ topic.comment_form|safe }}
 	{% for comment in topic.comments %}

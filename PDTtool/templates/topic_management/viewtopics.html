@@ -15,6 +15,14 @@
 		{% for topic in topics %}
 			<tr>
 				<td class="list-topic-td" onclick="location.href = '/viewtopic/?publicid={{ topic.publicid }}';" title="Click for more on '{{ topic.name }}'.">
+					<div class="pull-right">
+					{% if  topic.readyforreview %}
+						<span class="label label-info">Needs Review</span>
+					{% endif %}
+					{% if  topic.supervisor_released %}
+						<span class="label label-success">Approved</span>
+					{% endif %}
+					</div>
 					<h6>{{ topic.name }} by {{ topic.user.first_name }} {{ topic.user.last_name }}</h6>
 					<div class="list-topic">
 						{{ topic.description | truncatechars:"200" }}

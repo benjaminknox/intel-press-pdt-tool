@@ -13,14 +13,49 @@ HTML,BODY{
 	height: 300px;
 }
 
-#sortable{
-	list-style: none;
-	width: 200px;
-	margin-right: 40px;
+#addmeetingform{
+	width: 900px;
+	margin-left: -450px;
 }
 
-#sortable li{
+#schedule{
+	margin-right: 30px;
+}
+
+.draggable{
+	list-style: none;
+	width: 360px;
+}
+
+.draggable li{
 	margin-bottom: 5px;
+	cursor: pointer;
+}
+
+.placeholder{
+	padding-top:10px;
+	height: 30px;
+	background: #FEFEFE;
+	border: 1px dashed #DDD;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	color: #DDD;
+	text-align: center;
+}
+
+.schedule-item{
+	height: 40px;
+	background: #EEE;
+	border: 1px solid #DDD;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+#topics{
+	padding-right: 45px;
+	border-right: 1px solid #CCC;
 }
 
 .modal_form{

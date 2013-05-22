@@ -33,6 +33,9 @@ class Topic(models.Model):
 	#A time in minutes for presenting.
 	presentationlength = models.IntegerField(default=0)
 
+	#Released
+	supervisor_released = models.BooleanField(default=False)
+
 	#The user who created it.
 	user = models.ForeignKey(User)
 

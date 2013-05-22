@@ -3,6 +3,7 @@ from datetime import date
 #from topic_management.models import Topic
 from django.utils.safestring import mark_safe
 from meeting_management.models import Meeting
+from topic_management.models import Topic
 from django.shortcuts import render#, redirect
 from dateutil.relativedelta import relativedelta
 from pdtresources.MeetingsCalendar import MeetingCalendar
@@ -68,20 +69,30 @@ def viewmeetings(request):
 
 	#Load the addmeeting form.
 	if 'loadprevious' not in request.GET and 'loadnext' in request.GET and (
+			#Check for meeting information in a form
 			('addmeetingform' in request.session) 
 				or
+			#Check for the meeting in the add form.
 			('addmeetingform' in request.POST)
 		):
 		
+		#Save the post data in to a session variable
 		request.session['addmeetingform'] = request.POST
 
+		#load the topics available
+		topics = Topic.objects.filter(readyforreview=True,
+																	supervisor_released=False,
+																	deleted=False)
+
+		#Add a meeting form.
 		addmeetingform2 = mark_safe(render(request,
 														'meeting_management/addmeetingform2.html',
-														{'topics':'topics'}).content
+														{'topics':topics}).content
 											)
 
+		#Check the meeting form.
 		meetingform = mark_safe(
-				#Load a modal template object
+				#Load a modal template 
 				modal(
 						request,
 						addmeetingform2,

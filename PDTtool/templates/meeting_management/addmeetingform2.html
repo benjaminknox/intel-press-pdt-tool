@@ -1,9 +1,19 @@
 <div id="addmeetingform2">
 
-  <ul id="sortable" class="pull-right">
-    <li class="ui-state-default">State1</li>
-    <li class="ui-state-default">State2</li>
-    <li class="ui-state-default">State3</li>
+  <ul id="topics" class="draggable pull-left" >
+    <li>Topics Available <input type="text" id="search_topics" /></li>
+    {% for t in topics %}
+      <li class="topic schedule-item" publicid="{{ t.publicid }}" id="topic_{{ t.publicid }}">
+        <h6>
+          {{ t.name }} by {{ t.user.get_full_name }} - {{ t.presentationlength }} minutes
+        </h6>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <ul id="schedule" class="draggable pull-right">
+    <li class="not_draggable">Schedule Scheduled</li>
+    <li class="not_draggable placeholder">Drag Here</li>
   </ul>
 
 </div><!-- #addmeetingform2 -->

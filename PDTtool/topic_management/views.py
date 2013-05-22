@@ -165,10 +165,33 @@ def viewtopic(request):
 
 	#Check for POST data
 	if request.method == 'POST':
+		
+		#Ready the topic for review
+		topic_ready_for_review_index = 'topic_ready_for_review_id'
 
+		#Check if the topic is ready for review.
+		if (
+			topic_ready_for_review_index in request.POST and
+			request.POST[topic_ready_for_review_index] == topic_object.publicid
+			):
+			
+			print 'yes'
 
-		if 'topic_release_id' in request.POST:
-			topic_object.readyforr
+			if 'topic_presentationlength' in request.POST:
+				readyforreview = True
+				presentationlength = int(request.POST['topic_presentationlength'])
+			else:
+				readyforreview = False
+				presentationlength = 15
+
+			topic_object.readyforreview = readyforreview
+			topic_object.presentationlength = presentationlength
+
+			topic_object.save()
+
+		else:
+
+			print 'no'
 
 		#We deleted the topic.
 		if 'deleted_topicid' in request.POST and request.POST['deleted_topicid'] == topic_object.publicid:
@@ -182,7 +205,8 @@ def viewtopic(request):
 
 		#We approved the document.
 		if 'released_topicid' in request.POST and request.POST['released_topicid'] == topic_object.publicid:
-			releasednotification = True
+			topic_object.supervisor_released = True
+			topic_object.save()
 
 		#We have an updated document.
 		if 'updated_documentid' in request.POST:
@@ -253,7 +277,7 @@ def viewtopic(request):
 			#Get the file
 			name = f.name
 			fileName = "%s-%s" % (uuid4(),name)
-			location = '/home/programmer/upload_dir/%s' % fileName
+			location = '/uploads/%s' % fileName
 			fileSize = f.size
 			#This is the newdocument.
 			newdocument = Document(topic=topic_object,location=location,name=name,fileName=fileName,size=fileSize)
