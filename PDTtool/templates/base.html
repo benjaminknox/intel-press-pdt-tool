@@ -19,8 +19,9 @@
 
 		<div class="nav-block">
 			<h6>Topics</h6>
-			<a href="/viewtopics/">View Topics</a>
-			{% if 'Program Manager' in usersgroups or 'Supervisor' in usersgroup %}
+			<a href="/viewtopics/">View All Topics</a>
+			{% if Program_Manager or Supervisor %}
+			<br><a href="/viewtopics/?mytopics=1">My Topics</a>
 			<br><a href="/addtopic/">Add a Topic</a>
 			{% endif %}
 		</div><!-- .nav-block -->
@@ -41,7 +42,7 @@
 
 	</div><!-- #navbar (bootstrap) .span3 -->
 	<div id="content-wrapper" class="span8">
-		<span class="label label-info">{{ title }}</span>
+		<h4>{{ title }}</h4>
 		<div id="content">
 			{% block content %}
 

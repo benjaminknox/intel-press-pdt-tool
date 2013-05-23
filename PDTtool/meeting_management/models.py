@@ -43,7 +43,7 @@ class Meeting(models.Model):
 
 	#This is a collection of items.
 	#scheduleitems = models.ForeignKey(ScheduleItem)
-	topics = models.ManyToManyField(Topic)
+	topics = models.ManyToManyField(Topic,related_name='_meetingtopics')
 
 	#If this is false the field is deleted.
 	deleted = models.BooleanField(default=False)

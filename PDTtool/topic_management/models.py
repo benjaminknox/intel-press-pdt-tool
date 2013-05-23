@@ -47,8 +47,20 @@ class Topic(models.Model):
 
 	#If this is false the field is deleted.
 	deleted = models.BooleanField(default=False)
-    
-    #The date the row is created
+
+	"""
+
+	#The object this topic is a part of.
+	meeting = models.ForeignKey(Meeting,related_name='_topic_meeting',blank=True)
+   
+	"""
+	
+	#The Topic has a meeting, don't allow to add to another meeting.
+	meeting = models.ForeignKey('meeting_management.Meeting',related_name='_topicinmeeting',null=True)
+	#The order in the schedule
+	scheduleorder = models.IntegerField(default=0)
+
+  #The date the row is created
 	created = models.DateTimeField(auto_now_add=True)
     
     #The date of the last edit of the row

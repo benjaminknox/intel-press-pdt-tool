@@ -14,13 +14,24 @@
   </div>
   <ul id="schedule" class="draggable pull-right">
     <li class="not_draggable">Schedule Scheduled</li>
+    
+    {% for t in topics_selected %}
+      <li class="schedule-item" publicid="{{ t.publicid }}">
+        <i class="icon-minus-sign pull-right" onclick="remove_schedule_item($(this));"></i>
+        <h6>
+          {{ t.name }} <br> {{ t.category }} - {{ t.presentationlength }} minutes
+        </h6>
+      </li>
+    {% endfor %}
+
     <li class="not_draggable placeholder">Drag Here</li>
   </ul>
 
 </div><!-- #addmeetingform2 -->
 <center>
 <form action="{{ request.path }}" method="post">
-<input type="hidden" name="topics" value="" />
+  {% csrf_token %}
+<input type="hidden" name="schedule_items" value="" />
 <input type="submit" class="btn btn-success btn-large" value="Create Schedule" />
 </form>
 </center>

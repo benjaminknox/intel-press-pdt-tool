@@ -11,6 +11,10 @@
 	<!-- Load a modal for each meeting. -->
 	{% for m in meetings %}
 		{{m.meeting_view}}
+
+		{{m.edit_meeting_form1}}
+		{{m.edit_meeting_form2}}
+
 	{% endfor %}
 	<!-- End the loading of the modals for each meeting. -->
 
@@ -36,8 +40,15 @@
 
 {% block scripts%}
 <script src="{% static 'www/js/draggable.calendar.js' %}"></script>
+<script src="{% static 'www/js/bootbox.min.js' %}"></script>
 <script>
 	$(function(){
+
+		$('.add_calendar_item').tooltip({track:true, tooltipClass: "yellow-tooltip"})
+
+		{% if 'schedule_items' in request.POST %}
+			toastr.success('Successfully created a meeting.');
+		{% endif %}
 
 		{% if Supervisor %}
 			{% if loadform %}
@@ -77,6 +88,15 @@
 		//Add a meeting tooltip.
 		$('.meeting_link').tooltip({track:true, tooltipClass: "yellow-tooltip"});
 
+    $('#addmeetingform').on('hide',function(){
+    	bootbox.confirm('Are you sure you want to close, you have unsaved data?',function(result){
+    		if(result){
+    			window.location = '{{ request.path }}';
+  			 }else{
+  			 	$('#addmeetingform').modal();
+  			}
+    	});
+    });
 	});
 	
 	{% if Supervisor %}
@@ -94,7 +114,6 @@
 			if(meetingmodal.length == 0){
 				meetingmodal = $('#addmeetingform');
 			}
-
 			meetingmodal.modal();
 	}
 	{% endif %}
@@ -114,5 +133,24 @@
 			$(this).css('background','inherit')
 		});
 	}
+
+	//Edit the meeting.
+	function edit_meeting(publicid){
+		$('#'+publicid).modal('hide');
+		//Load the meeting public id.
+		identifier = '#editmeetingform1_'+publicid;
+		//Check the modal.
+		$(identifier).modal();
+	}
+
+	//Edit the meeting schedule.
+	function edit_schedule(publicid){
+		$('#'+publicid).modal('hide');
+		//Load the meeting public id.
+		identifier = '#editmeetingform_'+publicid;
+		//Check the modal.
+		$(identifier).modal();
+	}
+
 </script>
 {% endblock %}

@@ -101,6 +101,15 @@ def viewtopics(request):
 		#Load the topic objects into a list
 		topics_list = Topic.objects.filter(deleted=False)
 
+
+	if 'mytopics' in request.GET: topics_list = topics_list.filter(user=request.user)
+
+	print "YES"
+
+	topics_list = topics_list.order_by('-readyforreview', 'supervisor_released')
+
+#	topics_list
+
 	#Put the topics into a paginator object
 	paginator = Paginator(topics_list, 5) # Show 5 documents per page
 	#Get the page

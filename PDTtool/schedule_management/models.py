@@ -11,7 +11,8 @@ class ScheduleItem(models.Model):
 
 	# This is the time this item is
 	#		scheduled to start
-	starttime = models.TimeField()
+	#starttime = models.TimeField()
+	length = models.IntegerField(default=15)
 
 	# Get the topic of this item.
 	topic = models.ForeignKey(Topic)

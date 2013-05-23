@@ -1,10 +1,11 @@
 from datetime import date
+from time import strptime,strftime
 #from django.db.models import Q
 #from topic_management.models import Topic
 from django.utils.safestring import mark_safe
 from meeting_management.models import Meeting
 from topic_management.models import Topic
-from django.shortcuts import render#, redirect
+from django.shortcuts import render, redirect
 from dateutil.relativedelta import relativedelta
 from pdtresources.MeetingsCalendar import MeetingCalendar
 from pdtresources.templates import modal,form_modal
@@ -15,6 +16,71 @@ from django.contrib.auth.decorators import login_required#, user_passes_test
 # Create your views here.
 @login_required
 def viewmeetings(request):
+	
+	#Check for a meeting.
+	if 'schedule_items' in request.POST and 'addmeetingform' in request.session:
+		#Add the meeting form a session variable.
+		form = request.session['addmeetingform']
+		#Get the publicid for all of the topics.
+		schedule_items = request.POST['schedule_items'].split(',')
+		#Format the date properly, this takes the month variables
+		#		and adds a 0 if it is one character long.
+		format_date = lambda t: '0'+ t if len(t) == 1 else t
+		#Format the duedate.
+		duedate = '/'.join([format_date(t) for t in form['duedate'].split('/')])
+		#Format the duedate into django format for a string.
+		duedate = "%s-%s-%s"%(duedate[6:],duedate[0:2],duedate[3:5])
+		#Format the startdate.
+		startdate = '/'.join([format_date(t) for t in form['startdate'].split('/')])
+		#Format the startdate into django format for a string.
+		startdate = "%s-%s-%s"%(startdate[6:],startdate[0:2],startdate[3:5])
+		#Get the starttime
+		starttime = strftime('%I:%M:%S',strptime(('0'+form['starttime'] if len(form['starttime']) == 6 
+														else form['starttime']).upper(),
+													'%I:%M%p'))
+		#Create a new meeting.
+		newmeeting = Meeting(
+											name = form['name'],
+											description=form['description'],
+											duedate=duedate,
+											startdate=startdate,
+											maxscheduleitems=len(schedule_items),
+											starttime=starttime,
+											user=request.user,
+											duration=0
+		)
+		#Save the new meeting.
+		newmeeting.save()
+		#Increment a variable.
+		i = 0
+		#Add an integer for the duration.
+		duration = 0
+		#Loop through the itemes.
+		for publicid in schedule_items:
+			#Increment the count.
+			i += 1
+			#Check to make sure the publicid is not null.
+			if publicid:
+				#Get the topic based on the publicid.
+				topic = Topic.objects.get(publicid=publicid)
+				#Get the topic schedule order.
+				topic.scheduleorder = i
+				#Add the meeting to the topic.
+				topic.meeting = newmeeting
+				#Save the topic.
+				topic.save()
+				#Add the topic to the meeting.
+				newmeeting.topics.add(topic)
+				#Add the duration to the meeting.
+				duration += topic.presentationlength
+		#Add a new meeting in the duration.
+		newmeeting.duration = duration
+		#Save the meeting.
+		newmeeting.save()
+
+		#Redirect to the meetings 
+		return redirect('/viewmeetings/')
+
 
 	#Get the date of this month.
 	today = date.today() + relativedelta(day=1)
@@ -40,6 +106,12 @@ def viewmeetings(request):
 	#Get the calendar.
 	cal = MeetingCalendar(meetings).formatmonth(year, month)
 
+	#load the topics available
+	topics = Topic.objects.filter(meeting=None,
+																readyforreview=True,
+																supervisor_released=False,
+																deleted=False)
+
 	#Meeting Data
 	meetings = [{
 			#Get the meeting
@@ -63,9 +135,46 @@ def viewmeetings(request):
 									modal_id=m.publicid
 								).content
 							),
+				'edit_meeting_form1':form_modal(request,
+									#Add the meeting form.
+									'editmeetingform_%s'%m.publicid,
+									#Get the actual form from the form model.
+									MeetingFormStepOne({
+										'name':m.name,
+										'description':m.description,
+										'duedate':m.duedate,
+										'startdate':m.startdate,
+										'starttime':m.starttime,
+									}).as_table(),
+									#Name the modal_form.
+									table_class='modal_form',
+									#Add the topics.
+									submit_text='Update',
+									#Add a modal title.
+									modal_title='Edit \'%s\'' % m.name,
+									#Add a modal_id.
+									modal_id='editmeetingform1_%s' % m.publicid
+								),
+				'edit_meeting_form2':mark_safe(
+						#Load a modal template 
+						modal(
+								request,
+								mark_safe(render(request,
+													'meeting_management/addmeetingform2.html',
+													{
+														'topics':topics,
+														'topics_schedule':m.topics
+													}).content
+										),
+								modal_title='Create a Schedule',
+								modal_id='editmeetingform_%s' % m.publicid
+						).content
+					),
 		}
 		for m in meetings
 	]
+
+#	topics_ready_count = len(Topic.objects.filter(,deleted=False))
 
 	#Load the addmeeting form.
 	if 'loadprevious' not in request.GET and 'loadnext' in request.GET and (
@@ -78,11 +187,6 @@ def viewmeetings(request):
 		
 		#Save the post data in to a session variable
 		request.session['addmeetingform'] = request.POST
-
-		#load the topics available
-		topics = Topic.objects.filter(readyforreview=True,
-																	supervisor_released=False,
-																	deleted=False)
 
 		#Add a meeting form.
 		addmeetingform2 = mark_safe(render(request,
@@ -116,7 +220,7 @@ def viewmeetings(request):
 										'addmeetingform',
 										#Get the actual form from the form model.
 										MeetingFormStepOne(
-												request.POST if request.method == 'POST' else 
+												request.POST if 'addmeetingform' in request.POST else 
 													request.session['addmeetingform'] if 'addmeetingform' in request.session else None
 										 ).as_table(),
 										#Name the modal_form.
@@ -157,7 +261,6 @@ def viewmeetings(request):
 	return render(request,
  			'meeting_management/viewmeetings.html',
 			context)
-
 
 
 

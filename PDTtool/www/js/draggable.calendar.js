@@ -3,6 +3,7 @@ $(function(){
     $( "#schedule" ).sortable({
       //Stop the dragging classes with .not_draggable
       items: "li:not(.not_draggable)",
+      stop: update_schedule_list
     });
 
     $('.draggable').disableSelection();
@@ -37,12 +38,16 @@ function dropSchedule(event,ui){
     var topic = $("#"+attribute);
     //Get the schedule item.
     var schedule_item = '<li class="schedule-item" publicid="'+publicid+'"><i class="icon-minus-sign pull-right" onclick="remove_schedule_item($(this));"></i>'+topic.html()+'</li>';
+
     //Add a flag for the actual selected-item.
     topic.attr('selected-item','selected');
     //Append it before the drag item.
     $("#schedule li:last").before(schedule_item);
     //Hide the object.
     $("#"+attribute).hide();
+
+    update_schedule_list();
+
   }
 }
 
@@ -67,7 +72,6 @@ function search_topics(event){
       //Show the topic.
       $(this).show();
     }
-
   });
 }
 
@@ -88,4 +92,20 @@ function remove_schedule_item(obj){
   });
   //Remove the schedule item.
   schedule_item.remove();
+  update_schedule_list()
+}
+
+function update_schedule_list(){
+
+  var schedule_list = "";
+
+  $('#schedule > li').each(function(){
+    var publicid = $(this).attr('publicid');
+    if(publicid){
+      schedule_list += publicid+",";
+    }
+  });
+
+  $('input[name="schedule_items"]').val(schedule_list);
+
 }

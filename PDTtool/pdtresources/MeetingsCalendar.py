@@ -70,7 +70,7 @@ class MeetingCalendar(calendar.HTMLCalendar):
     def day_cell(self, cssclass, body, day):
 
         if cssclass != 'noday':
-            add_calendar_item = '<i class="icon-plus-sign add_calendar_item"></i>'
+            add_calendar_item = '<i class="icon-plus-sign add_calendar_item" title="Add Meeting"></i>'
         else:
             add_calendar_item = ''
 

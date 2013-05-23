@@ -33,10 +33,15 @@
 
 	{% endif %}
 
-	<h5>{{topic.topic_object.name}}
+	<h5>
+	{{topic.topic_object.name}}
+	{% if topic.topic_object.meeting %}
+		&nbsp;&nbsp;&nbsp;<a href="/viewmeetings/#{{ topic.topic_object.meeting.publicid }}">View Meeting Schedule</a>
+	{% endif %}
 	{% if  topic.topic_object.supervisor_released %}
 		<span class="label label-success margin-left-10">Approved</span>
-	{% endif %}</h5>
+	{% endif %}
+	</h5>
 	<div>
 		<table class="table table-striped">
 			<tr>
