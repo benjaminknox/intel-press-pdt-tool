@@ -36,6 +36,6 @@
 <input type="hidden" name="update_meeting_schedule_publicid" value="{{ meeting.publicid }}" />
 {% endif %}
 <input type="hidden" name="schedule_items" value="" />
-<input type="submit" class="btn btn-success btn-large" value="Create Schedule" />
+<input type="submit" class="btn btn-success btn-large" value="{% if meeting %} Update Schedule{% else %}Create Schedule{% endif %}" />
 </form>
 </center>

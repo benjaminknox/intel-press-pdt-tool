@@ -3,9 +3,16 @@ import random
 
 from django import template
 
+"""
+" This was downloaded from django snippets.
+"""
+
+#Register the template library.
 register = template.Library()
 
+#Register the tag name into the templates.
 @register.tag(name="randomgen")
+#This is a random number/hash generator.
 def randomgen(parser, token):
     items = []
     bits =  token.split_contents()

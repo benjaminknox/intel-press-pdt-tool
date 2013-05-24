@@ -1,5 +1,9 @@
 from django import template
 
+"""
+" This isn't used right now.
+"""
+
 register = template.Library()
 
 @register.filter

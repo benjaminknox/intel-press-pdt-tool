@@ -36,7 +36,7 @@ class MeetingCalendar(calendar.HTMLCalendar):
                     #Open list tag.
                     body.append('<li>')
                     #Close the append tag.
-                    body.append('<a href="javascript:view_meeting(\'%s\');" class="meeting_link" title="Click to view \'%s\'">'%(meeting.publicid,meeting.name))
+                    body.append('<a href="javascript:view_meeting(\'%s\');" class="meeting_link" title="Click to view \'%s\'. %s topics.">'%(meeting.publicid,meeting.name,len(meeting.topics.all())))
                     #Output the meeting.
                     body.append(esc(meeting.name))
                     #Close the link and the list tag.
@@ -68,7 +68,7 @@ class MeetingCalendar(calendar.HTMLCalendar):
 
     #This is the day in the calendar.
     def day_cell(self, cssclass, body, day):
-
+        
         if cssclass != 'noday':
             add_calendar_item = '<i class="icon-plus-sign add_calendar_item" title="Add Meeting"></i>'
         else:

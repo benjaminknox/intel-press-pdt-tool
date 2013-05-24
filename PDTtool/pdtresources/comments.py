@@ -57,33 +57,43 @@ def comment_form(request, commented_object = 'topic', commented_object_id=None):
 #		recursively to return Comment objects that have a collection 
 #		of Comment objects. 
 def recursive_comments(request, parentcommentid, top_comment=True):
-
+	#Get the parent comment object.
 	parentcomment = Comment.objects.get(publicid=parentcommentid)
-	
+	#Get the comment text
 	comment_text = strip_tags(parentcomment.content)
-
-	if not top_comment:
-		commentclass = 'child_comment'
-	else:
-		commentclass = 'highest_parent_comment'
-
+	
+	#If a comment is the highest comment on the child.
+	commentclass ='highest_parent_comment' if top_comment else 'child_comment'
+	
+	#Define the html content of the comment
 	content = '<div class="comment_content">'
-	content+=	'<h6>'+parentcomment.user.first_name+' '+parentcomment.user.last_name+' says:</h6>'
+	#List the name of the comment user.
+	content+=	'<h6>%s says:</h6>' % parentcomment.user.get_full_name()
+	#Div to wrap the comment body.
 	content+=	'<div class="comment_body">'
+	#This is the comment text.
 	content+= 		comment_text
-	content+=	'</div>'
+	#Close the comment body.
+	content+=	'</div><!-- .comment_body -->'
+	#This is  button to reply to a comment.
 	content+=	'<a href="javascript:void(0)" class="btn btn-small reply_button" style="margin-top: -4px;" onclick="$(\'#comment_comment_form_%s\').toggle();">reply</a>'% parentcomment.publicid
+	#This fixes floating elements.
 	content+= 	'<div class="clear-fix"></div>'
-	content+= '</div>'
+	#Close the comment content.
+	content+= '</div><!-- .commetn_content -->'
 
+	#Get the form for this comment box.
 	content += comment_form(request,'comment',parentcomment.publicid)
 
+	#Get the list of parents child comments 
 	childcomments = parentcomment.comments
 
+	#Check that child comments exist.
 	if childcomments.count() > 0:
-
+		#Loop through all the child comments.
 		for childcomment in childcomments.all():
-
+			#Create the recursive comments.
 			content += recursive_comments(request,childcomment.publicid,False)
 
-	return '<div class="comment_content_wrapper '+commentclass+' pull-right">'+content+'<div class="clear-fix"></div></div>'
+	#Create the comments.
+	return '<div class="comment_content_wrapper %s pull-right">%s<div class="clear-fix"></div></div><!-- .%s -->'% (commentclass, content,commentclass) 
