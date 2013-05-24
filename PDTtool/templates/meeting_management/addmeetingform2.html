@@ -33,7 +33,7 @@
 <form action="{{ request.path }}" method="post">
 {% csrf_token %}
 {% if meeting %}
-<input type="hidden" name="meeting_publicid" value="{{ meeting.publicid }}" />
+<input type="hidden" name="update_meeting_schedule_publicid" value="{{ meeting.publicid }}" />
 {% endif %}
 <input type="hidden" name="schedule_items" value="" />
 <input type="submit" class="btn btn-success btn-large" value="Create Schedule" />

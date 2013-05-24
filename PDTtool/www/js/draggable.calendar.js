@@ -1,6 +1,7 @@
-var schedule_droppable_class = '.schedule'
-var topic_draggable_item = '.topic'
-var topic_list_selector = '.select_topics > .draggable > .topic'
+var schedule_droppable_class = '.schedule';
+var topic_draggable_item = '.topic';
+var topic_list_parent_selector = '.select_topics > .draggable';
+var topic_list_selector = topic_list_parent_selector+' > .topic';
 
 $(function(){
     //Make the sortable div
@@ -30,14 +31,17 @@ function create_draggable_topics(){
     zIndex: 1200});
 }
 
+//This is the schedule_item_html
 function schedule_item_html(publicid,html){
   return '<li class="schedule-item" publicid="'+publicid+'"><i class="icon-minus-sign pull-right" onclick="remove_schedule_item($(this));"></i>'+html+'</li>';
 }
 
+//This is the topic_item_html
 function topic_item_html(publicid,html){
   return '<li class="topic schedule-item ui-draggable" publicid="'+publicid+'" id="topic_'+Math.random().toString(36).substring(7)+'_'+publicid+'">'+html+'</li>'
 }
 
+//This is the get_meeting_form
 function get_meeting_form(object){
   return object.closest('.addmeetingform2');
 }
@@ -78,7 +82,7 @@ function remove_schedule_item(button){
   //Get the topics.
   topics = parent.find(topic_list_selector);
   //Get the topics parent.
-  var topic_parent = topics.parent();
+  var topic_parent = parent.find(topic_list_parent_selector);
   //A flag to see if the topic is present.
   var topic_present = false
   //Show the schedule item.
@@ -98,7 +102,6 @@ function remove_schedule_item(button){
   });
 
   if(!topic_present){
-
     //Get the topic item.
     topic_item = schedule_item.clone();
     //Find the topic item.

@@ -5,41 +5,6 @@ from django import forms #CheckboxSelectMultiple, ModelForm, TextInput
 from django.utils.safestring import mark_safe
 
 ###
-# This is the MeetingForm.
-###
-class MeetingForm(forms.ModelForm):
-	#This is the Meta.
-	class Meta:
-		#This is the model that is loaded.
-		model = Meeting
-		#We exclude these fields.
-		#exclude = ('user','deleted','scheduleitems','Usersattending')
-		#This fields have special attributes here
-		widgets = {
-			'duedate': forms.TextInput(),
-			'startdate': forms.TextInput(),
-			'topics': forms.CheckboxSelectMultiple(),
-		}
-		#These are the fields we net to get.
-		fields = [
-				  'name',
-				  'topics',
-				  'description',
-				  'duration',
-				  'maxscheduleitems',
-				  'duedate',
-				  'startdate',
-				  ] 
-	#This initializes
-	def __init__(self, *args, **kwargs):
-		#This is the super meeting.
-			super(MeetingForm, self).__init__(*args, **kwargs)
-		#Output the document fields to grab.
-			self.fields['topics'].queryset = Topic.objects.filter(deleted=False)
-			#This outputs data to the form that we use for display information.
-			self.fields['topics'].label_from_instance = lambda obj: '{"topic_id":"'+str(obj.id)+'","topic_publicid":"'+str(obj.publicid)+'","topic_name":"'+obj.name+'","topic_user_first_name":"'+obj.user.first_name+'","topic_description":"'+obj.description+'"}' 
-
-###
 # This is the first step of the meeting form.
 #			-This first step allows us to make a meeting form.
 ###

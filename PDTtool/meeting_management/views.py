@@ -31,6 +31,10 @@ def format_time(thetime):
 def update_meeting_schedule(meeting,schedule_items,new=True):
 
 		if not new:
+			for topic in meeting.topics.all():
+				topic.meeting = None
+				topic.save()
+
 			meeting.topics.clear()
 
 		#Increment a variable.
@@ -45,9 +49,6 @@ def update_meeting_schedule(meeting,schedule_items,new=True):
 			if publicid:
 				#Get the topic based on the publicid.
 				topic = Topic.objects.get(publicid=publicid)
-				if not new:
-					topic.meeting = None
-					topic.save()
 				#Get the topic schedule order.
 				topic.scheduleorder = i
 				#Add the meeting to the topic.
@@ -78,13 +79,7 @@ def viewmeetings(request):
 
 	if 'update_meeting_schedule_publicid' in request.POST:
 		meeting_to_edit = Meeting.objects.get(publicid=request.POST['update_meeting_schedule_publicid'])
-
-		print meeting_to_edit
-
 		schedule_items = request.POST['schedule_items'].split(',')
-
-		print schedule_items
-
 		update_meeting_schedule(meeting_to_edit,schedule_items,new=False)
 		meeting_to_edit.maxscheduleitems = len(schedule_items)
 		meeting_to_edit.save()
@@ -115,7 +110,6 @@ def viewmeetings(request):
 		)
 		#Save the new meeting.
 		newmeeting.save()
-
 		#Add Schedule
 		update_meeting_schedule(newmeeting,schedule_items);
 

@@ -49,7 +49,7 @@ class Topic(models.Model):
 	deleted = models.BooleanField(default=False)
 	
 	#The Topic has a meeting, don't allow to add to another meeting.
-	meeting = models.ForeignKey('meeting_management.Meeting',related_name='_topicinmeeting',null=True)
+	meeting = models.ForeignKey('meeting_management.Meeting',related_name='_topicinmeeting',null=True,blank=True)
 	#The order in the schedule
 	scheduleorder = models.IntegerField(default=0)
 
