@@ -19,7 +19,7 @@
 def search_form(request):
 
 	#Get the CSRF token from the request cookie
-	token = request.COOKIES['csrftoken']
+	#token = request.COOKIES['csrftoken']
 
 	#Get the request path
 	request_full_path = request.path
