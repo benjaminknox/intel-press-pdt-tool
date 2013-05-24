@@ -16,14 +16,18 @@ def output_form_as_table(request,
 						 formname_value='1',
 						 action=False):
 
-	
+	#This is a function for generating a table row string.
 	tr_string = lambda string: '<tr><td></td><td>%s<td></tr>'%string
+	#This is a function for generating an input string.
 	input_string = lambda inputtype,name,classname=None,value=None: '<input type="%s" name="%s"  class="%s" value="%s" />' % (inputtype,name,classname,value)
+	#This is a submit button input string.
 	submit_button_string = lambda value,classname="": '<input type="submit" value="%s"  class="btn %s" />' % (value,classname)
 
+	#If there is not an action defined by the person
 	if not action:
+		#Put a string in the action.
 		action = "%s?%s" % (request.path,get_string)
-
+		
 	form_multipart = ''
 	if multipart:
 		form_multipart = 'enctype="multipart/form-data"'

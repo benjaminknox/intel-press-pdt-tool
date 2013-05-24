@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django_extensions.db.fields import UUIDField
+from random import choice
+import string
+
 
 # The Topic is an subject that is to be reviewed 
 #		by the Program Manager, it has many 
@@ -39,6 +42,9 @@ class Topic(models.Model):
 	#Released
 	supervisor_released = models.BooleanField(default=False)
 
+	#A quick reference string.
+	#topic_slug = models.CharField(max_length=8)
+
 	#The user who created it.
 	user = models.ForeignKey(User)
 
@@ -56,9 +62,26 @@ class Topic(models.Model):
   #The date the row is created
 	created = models.DateTimeField(auto_now_add=True)
     
-    #The date of the last edit of the row
+  #The date of the last edit of the row
 	lastmodified = models.DateTimeField(auto_now=True)
 
+	#Override the save method.
+#	def save(self, **kwargs):
+
+#		if not self.slug_str:
+#			unique = False
+#			while not unique:
+#				slug_generator = lambda X:''.join(choice(string.lowercase) for x in range(X))
+#				slug_str = slug_generator(8)
+#				unique = True
+#				for t in Topic.objects.all():
+#					if t.slug_str == slug_str: unique = False
+
+
+#		print slug_str
+
+		# unique_slugify(self, slug_str) 
+#		super(Topic, self).save()
 
 # These are the documents that are uploaded
 #		to the documents.
