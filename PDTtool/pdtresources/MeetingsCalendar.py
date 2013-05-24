@@ -75,4 +75,4 @@ class MeetingCalendar(calendar.HTMLCalendar):
             add_calendar_item = ''
 
         #Return the day in the calendar.
-        return '<td class="%s" date-value="%s/%s/%s">%s%s</td>' % (cssclass,self.month,day,self.year,add_calendar_item,body)
+        return '<td class="%s" date-value="%s-%s-%s">%s%s</td>' % (cssclass,self.year,self.month,day,add_calendar_item,body)

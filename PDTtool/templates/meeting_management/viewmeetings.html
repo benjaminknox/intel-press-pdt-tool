@@ -2,19 +2,19 @@
 {% load staticfiles %}
 {% block content%}
 
+	{% if Supervisor %}
 	<!-- Load the meeting form depending on which step we are on. -->
 	{{ meetingform }}
 	<!-- End the loading of the meeting form -->
-
-
+	{% endif %}
 
 	<!-- Load a modal for each meeting. -->
 	{% for m in meetings %}
 		{{m.meeting_view}}
-
+		{% if Supervisor %}
 		{{m.edit_meeting_form1}}
 		{{m.edit_meeting_form2}}
-
+		{% endif %}
 	{% endfor %}
 	<!-- End the loading of the modals for each meeting. -->
 
@@ -116,6 +116,28 @@
 			}
 			meetingmodal.modal();
 	}
+
+	//Edit the meeting.
+	function edit_meeting(publicid){
+
+		$('#'+publicid).modal('hide');
+		//Load the meeting public id.
+		identifier = '#editmeetingform1_'+publicid;
+		//This is the modal.
+		modal = $(identifier);
+		//Check the modal.
+		modal.modal();
+	}
+
+	//Edit the meeting schedule.
+	function edit_schedule(publicid){
+		$('#'+publicid).modal('hide');
+		//Load the meeting public id.
+		identifier = '#editmeetingform_'+publicid;
+		//Check the modal.
+		$(identifier).modal();
+	}
+
 	{% endif %}
 
 	//View the meeting.
@@ -134,23 +156,6 @@
 		});
 	}
 
-	//Edit the meeting.
-	function edit_meeting(publicid){
-		$('#'+publicid).modal('hide');
-		//Load the meeting public id.
-		identifier = '#editmeetingform1_'+publicid;
-		//Check the modal.
-		$(identifier).modal();
-	}
-
-	//Edit the meeting schedule.
-	function edit_schedule(publicid){
-		$('#'+publicid).modal('hide');
-		//Load the meeting public id.
-		identifier = '#editmeetingform_'+publicid;
-		//Check the modal.
-		$(identifier).modal();
-	}
 
 </script>
 {% endblock %}

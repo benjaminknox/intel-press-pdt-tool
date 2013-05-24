@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from user_management.models import ExtendedUser, ActivateUserDB
 from pdtresources.decorators import user_is_authenticated_decorator
+from pdtresources.handles import create_groups
 from django.contrib.auth import authenticate,login as userlogin,logout as userlogout
 from user_management.forms import RegisterForm, ForgotPassword, AccountSettingsForm, ResetPasswordForm
 from user_management.resources import send_activation_email, send_password_reset_email, send_new_password_email
@@ -46,6 +47,10 @@ def login(request):
 				#Login the user
 				userlogin(request,user)
 
+				#This is the is_superuser
+				if user.is_superuser:
+					create_groups(user)
+
 				#Check the next variable in the url
 				#	for redirect to the original request.
 				if 'next' in request.GET:
@@ -54,6 +59,7 @@ def login(request):
 				else:
 					#Redirect to the default view.
 					return redirect('/')
+
 			else:
 				context['loginerror'] = "You have not been activated, please check your email"
 		else:

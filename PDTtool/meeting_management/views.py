@@ -13,31 +13,95 @@ from meeting_management.forms import MeetingFormStepOne#, MeetingFormStepTwo
 from django.contrib.auth.decorators import login_required#, user_passes_test
 
 
+def format_date(thedate):
+		#Format the date properly, this takes the month variables
+		#		and adds a 0 if it is one character long.
+		format_date = lambda t: '0'+ t if len(t) == 1 else t
+
+		formatteddate = '-'.join([format_date(t) for t in thedate.split('-')])
+		#Format the duedate into django format for a string.
+		#formatteddate = "%s-%s-%s"%(formatteddate[6:],formatteddate[0:2],formatteddate[3:5])
+		return formatteddate
+
+def format_time(thetime):
+	return strftime('%I:%M:%S',strptime(('0'+thetime if len(thetime) == 6 
+														else thetime).upper(),
+													'%I:%M%p'))
+
+def update_meeting_schedule(meeting,schedule_items,new=True):
+
+		if not new:
+			meeting.topics.clear()
+
+		#Increment a variable.
+		i = 0
+		#Add an integer for the duration.
+		duration = 0
+		#Loop through the itemes.
+		for publicid in schedule_items:
+			#Increment the count.
+			i += 1
+			#Check to make sure the publicid is not null.
+			if publicid:
+				#Get the topic based on the publicid.
+				topic = Topic.objects.get(publicid=publicid)
+				if not new:
+					topic.meeting = None
+					topic.save()
+				#Get the topic schedule order.
+				topic.scheduleorder = i
+				#Add the meeting to the topic.
+				topic.meeting = meeting
+				#Save the topic.
+				topic.save()
+				#Add the topic to the meeting.
+				meeting.topics.add(topic)
+				#Add the duration to the meeting.
+				duration += topic.presentationlength
+		#Add a new meeting in the duration.
+		meeting.duration = duration
+		#Save the meeting.
+		meeting.save()
+
 # Create your views here.
 @login_required
 def viewmeetings(request):
-	
+
+	if 'update_meeting_information' in request.POST:
+		
+		meeting_to_edit = Meeting.objects.get(publicid=request.POST['update_meeting_information'])
+		meeting_to_edit.name = request.POST['name']
+		meeting_to_edit.description = request.POST['description']
+		meeting_to_edit.starttime =format_time(request.POST['starttime'])
+
+		meeting_to_edit.save()
+
+	if 'update_meeting_schedule_publicid' in request.POST:
+		meeting_to_edit = Meeting.objects.get(publicid=request.POST['update_meeting_schedule_publicid'])
+
+		print meeting_to_edit
+
+		schedule_items = request.POST['schedule_items'].split(',')
+
+		print schedule_items
+
+		update_meeting_schedule(meeting_to_edit,schedule_items,new=False)
+		meeting_to_edit.maxscheduleitems = len(schedule_items)
+		meeting_to_edit.save()
+
+
 	#Check for a meeting.
 	if 'schedule_items' in request.POST and 'addmeetingform' in request.session:
 		#Add the meeting form a session variable.
 		form = request.session['addmeetingform']
 		#Get the publicid for all of the topics.
 		schedule_items = request.POST['schedule_items'].split(',')
-		#Format the date properly, this takes the month variables
-		#		and adds a 0 if it is one character long.
-		format_date = lambda t: '0'+ t if len(t) == 1 else t
 		#Format the duedate.
-		duedate = '/'.join([format_date(t) for t in form['duedate'].split('/')])
-		#Format the duedate into django format for a string.
-		duedate = "%s-%s-%s"%(duedate[6:],duedate[0:2],duedate[3:5])
+		duedate = format_date(form['duedate'])
 		#Format the startdate.
-		startdate = '/'.join([format_date(t) for t in form['startdate'].split('/')])
-		#Format the startdate into django format for a string.
-		startdate = "%s-%s-%s"%(startdate[6:],startdate[0:2],startdate[3:5])
+		startdate =  format_date(form['startdate'])
 		#Get the starttime
-		starttime = strftime('%I:%M:%S',strptime(('0'+form['starttime'] if len(form['starttime']) == 6 
-														else form['starttime']).upper(),
-													'%I:%M%p'))
+		starttime = format_time(form['starttime'])
 		#Create a new meeting.
 		newmeeting = Meeting(
 											name = form['name'],
@@ -51,36 +115,12 @@ def viewmeetings(request):
 		)
 		#Save the new meeting.
 		newmeeting.save()
-		#Increment a variable.
-		i = 0
-		#Add an integer for the duration.
-		duration = 0
-		#Loop through the itemes.
-		for publicid in schedule_items:
-			#Increment the count.
-			i += 1
-			#Check to make sure the publicid is not null.
-			if publicid:
-				#Get the topic based on the publicid.
-				topic = Topic.objects.get(publicid=publicid)
-				#Get the topic schedule order.
-				topic.scheduleorder = i
-				#Add the meeting to the topic.
-				topic.meeting = newmeeting
-				#Save the topic.
-				topic.save()
-				#Add the topic to the meeting.
-				newmeeting.topics.add(topic)
-				#Add the duration to the meeting.
-				duration += topic.presentationlength
-		#Add a new meeting in the duration.
-		newmeeting.duration = duration
-		#Save the meeting.
-		newmeeting.save()
+
+		#Add Schedule
+		update_meeting_schedule(newmeeting,schedule_items);
 
 		#Redirect to the meetings 
 		return redirect('/viewmeetings/')
-
 
 	#Get the date of this month.
 	today = date.today() + relativedelta(day=1)
@@ -153,7 +193,9 @@ def viewmeetings(request):
 									#Add a modal title.
 									modal_title='Edit \'%s\'' % m.name,
 									#Add a modal_id.
-									modal_id='editmeetingform1_%s' % m.publicid
+									modal_id='editmeetingform1_%s' % m.publicid,
+									#Add an extra field html.
+									extra_fields='<input type="hidden" name="update_meeting_information" value="%s"/>' % m.publicid
 								),
 				'edit_meeting_form2':mark_safe(
 						#Load a modal template 

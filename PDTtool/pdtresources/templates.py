@@ -33,8 +33,8 @@ def output_form_as_table(request,
 	form_string+= '<form action="%s" method="POST" %s>' % (action,form_multipart)
 	form_string+= input_string('hidden','csrfmiddlewaretoken',value=request.COOKIES['csrftoken'])
 	form_string+= input_string('hidden',formname,value=formname_value)
-	form_string+= '<table class="%s">' % table_class
 	form_string+= extra_fields
+	form_string+= '<table class="%s">' % table_class
 	form_string+= form
 	if add_submit_button:
 		form_string+= tr_string(submit_button_string(submit_text))

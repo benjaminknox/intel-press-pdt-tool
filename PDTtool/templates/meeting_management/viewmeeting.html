@@ -6,7 +6,9 @@
 <tr>
 	<th class="text-success">
     Documents Up for Review
+    {% if Supervisor %}
     <a href="javascript:edit_schedule('{{ meeting.publicid }}');" class="pull-right">Edit Schedule</a>
+    {% endif %}
   </th>
 </tr>
 {% for topic in meeting.topics.all %}

@@ -104,7 +104,9 @@ if(datepicker.length > 0){
 	//If datepickers are found load
 	//	the jQuery UI datepicker.
 	datepicker.each(function(){
-		$(this).datepicker();
+		$(this).datepicker({
+			dateFormat:'yy-mm-dd'
+		});
 	});
 }
 //Load the datepicker

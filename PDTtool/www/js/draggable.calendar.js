@@ -77,6 +77,8 @@ function remove_schedule_item(button){
   parent = get_meeting_form(schedule_item);
   //Get the topics.
   topics = parent.find(topic_list_selector);
+  //Get the topics parent.
+  var topic_parent = topics.parent();
   //A flag to see if the topic is present.
   var topic_present = false
   //Show the schedule item.
@@ -96,6 +98,7 @@ function remove_schedule_item(button){
   });
 
   if(!topic_present){
+
     //Get the topic item.
     topic_item = schedule_item.clone();
     //Find the topic item.
@@ -103,14 +106,14 @@ function remove_schedule_item(button){
     //Get the topic html.
     topic_html = topic_item_html(publicid,topic_item.html());
     //Append to the list.
-    topics.parent().append(topic_html);
+    topic_parent.append(topic_html);
     //Create the draggable topics.
     create_draggable_topics();
   }
 
   //Remove the item.
   schedule_item.remove();
-  update_schedule_input(button);
+  update_schedule_input(topic_parent);
 }
 
 function update_schedule_input(object){
