@@ -163,11 +163,16 @@ def viewmeetings(request):
 													'meeting_management/addmeetingform2.html',
 													{
 														'topics':topics,
-														'topics_schedule':m.topics
+														'topics_scheduled':m.topics.all(),
+														'meeting':m
 													}).content
 										),
+								#Add the modal title
 								modal_title='Create a Schedule',
-								modal_id='editmeetingform_%s' % m.publicid
+								#Add the modal id
+								modal_id='editmeetingform_%s' % m.publicid,
+								#Add a class to the modal
+								modal_class='addmeetingform'
 						).content
 					),
 		}
@@ -201,7 +206,9 @@ def viewmeetings(request):
 						request,
 						addmeetingform2,
 						modal_title='Create a Schedule',
-						modal_id='addmeetingform'
+						modal_id='addmeetingform',
+						#Add a class to the modal
+						modal_class='addmeetingform'
 				).content
 			)
 

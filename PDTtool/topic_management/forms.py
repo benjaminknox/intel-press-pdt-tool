@@ -29,7 +29,15 @@ class TopicForm(forms.Form):
   #   written by the uploader
   description = forms.CharField( widget=forms.Textarea )
 
-  category = forms.CharField( max_length=255 )
+  #These are the choices for the categories.
+  choices = (
+      ('Proposal','Proposal'),
+      ('Outline','Outline'),
+      ('Guest Visit','Guest Visit'),
+      ('Opens','Opens'),
+  )
+  #This is the category.
+  category = forms.ChoiceField(choices=choices)
 
 class upload_document_form(forms.Form):
   file = forms.FileField(widget=forms.FileInput(attrs={'id':'file','class':'file_form'}))

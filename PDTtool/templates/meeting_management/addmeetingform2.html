@@ -1,21 +1,22 @@
-<div id="addmeetingform2">
+{% load randomgen %}
+<div class="addmeetingform2">
 
-  <div id="select_topics" class="pull-left">
-  <div class="title">Topics Available <input type="text" placeholder="Search Topics" id="search_topics" /></div>
+  <div class="select_topics pull-left">
+  <div class="title">Topics Available<input type="text" placeholder="Search Topics" class="search_topics" /></div>
   <ul class="draggable pull-left">
     {% for t in topics %}
-      <li class="topic schedule-item" publicid="{{ t.publicid }}" id="topic_{{ t.publicid }}">
+      <li class="topic schedule-item" publicid="{{ t.publicid }}" id="topic_{% randomgen hash %}_{{ t.publicid }}">
         <h6>
           {{ t.name }} <br> {{ t.category }} - {{ t.presentationlength }} minutes
         </h6>
       </li>
     {% endfor %}
-  </ul> 
+  </ul>
   </div>
-  <ul id="schedule" class="draggable pull-right">
+  <ul class="schedule draggable pull-right">
     <li class="not_draggable">Schedule Scheduled</li>
-    
-    {% for t in topics_selected %}
+
+    {% for t in topics_scheduled %}
       <li class="schedule-item" publicid="{{ t.publicid }}">
         <i class="icon-minus-sign pull-right" onclick="remove_schedule_item($(this));"></i>
         <h6>
@@ -30,7 +31,10 @@
 </div><!-- #addmeetingform2 -->
 <center>
 <form action="{{ request.path }}" method="post">
-  {% csrf_token %}
+{% csrf_token %}
+{% if meeting %}
+<input type="hidden" name="meeting_publicid" value="{{ meeting.publicid }}" />
+{% endif %}
 <input type="hidden" name="schedule_items" value="" />
 <input type="submit" class="btn btn-success btn-large" value="Create Schedule" />
 </form>

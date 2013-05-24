@@ -47,13 +47,6 @@ class Topic(models.Model):
 
 	#If this is false the field is deleted.
 	deleted = models.BooleanField(default=False)
-
-	"""
-
-	#The object this topic is a part of.
-	meeting = models.ForeignKey(Meeting,related_name='_topic_meeting',blank=True)
-   
-	"""
 	
 	#The Topic has a meeting, don't allow to add to another meeting.
 	meeting = models.ForeignKey('meeting_management.Meeting',related_name='_topicinmeeting',null=True)

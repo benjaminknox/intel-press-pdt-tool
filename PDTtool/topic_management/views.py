@@ -102,11 +102,10 @@ def viewtopics(request):
 		topics_list = Topic.objects.filter(deleted=False)
 
 
-	if 'mytopics' in request.GET: topics_list = topics_list.filter(user=request.user)
-
-	print "YES"
-
-	topics_list = topics_list.order_by('-readyforreview', 'supervisor_released')
+	if 'mytopics' in request.GET:
+		topics_list = topics_list.filter(user=request.user).order_by('readyforreview', '-supervisor_released')
+	else:
+		topics_list = topics_list.order_by('-readyforreview', 'supervisor_released')
 
 #	topics_list
 

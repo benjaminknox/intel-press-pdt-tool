@@ -13,25 +13,25 @@ HTML,BODY{
 	height: 400px;
 }
 
-#addmeetingform{
+.addmeetingform{
 	width: 900px;
 	margin-left: -450px;
 }
 
-#addmeetingform .modal-body{
+.addmeetingform .modal-body{
 	min-height:500px;
 }
 
-#schedule{
+.schedule{
 	margin-right: 30px;
 }
 
-#select_topics{
+.select_topics{
 	padding-right: 45px;
 	border-right: 1px solid #CCC;
 }
 
-#select_topics .title{
+.select_topics .title{
 	margin-left: 20px;
 }
 
@@ -42,15 +42,13 @@ HTML,BODY{
 	overflow-y: auto;
 }
 
-#addmeetingform li{
-	padding-left: 5px;
-	width: 320px;
-	list-style:none;
-}
 
 .draggable li{
 	margin-bottom: 5px;
 	cursor: pointer;
+	padding-left: 5px;
+	width: 320px;
+	list-style:none;
 }
 
 .list-topic-td .category{
