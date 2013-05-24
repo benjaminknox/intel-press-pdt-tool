@@ -16,20 +16,38 @@ from meeting_management.resources import format_time, format_date, update_meetin
 @login_required
 def viewmeetings(request):
 
+	#Update the meeting information, this updates just this information:
+	#		-The name.
+	#		-The description.
+	#		-The start time.
 	if 'update_meeting_information' in request.POST:
 		
+		#Get the meeting to edit.
 		meeting_to_edit = Meeting.objects.get(publicid=request.POST['update_meeting_information'])
+		
+		#Update the meeting name.
 		meeting_to_edit.name = request.POST['name']
+		#Update the meeting description.
 		meeting_to_edit.description = request.POST['description']
+		#Update the meeting start time.
 		meeting_to_edit.starttime =format_time(request.POST['starttime'])
 
+		#Save the meeting.
 		meeting_to_edit.save()
 
+	#Update the meeting schedule order, the order is the right way.
 	if 'update_meeting_schedule_publicid' in request.POST:
+
+		#Get the meeting to edit.
 		meeting_to_edit = Meeting.objects.get(publicid=request.POST['update_meeting_schedule_publicid'])
+
+		#Get the schedule_items.
 		schedule_items = request.POST['schedule_items'].split(',')
+		#Update the meeting schedule.
 		update_meeting_schedule(meeting_to_edit,schedule_items,new=False)
+		#Update the items on the schedule.
 		meeting_to_edit.maxscheduleitems = len(schedule_items)
+		#Save the meeting information.
 		meeting_to_edit.save()
 
 
@@ -114,9 +132,11 @@ def viewmeetings(request):
 									),
 									#Add a title to the modal.
 									modal_title="%s at %s" % (m.name,m.startdate),
+									#Change the modal.
 									modal_id=m.publicid
 								).content
 							),
+				#Get the meeting form to edit.
 				'edit_meeting_form1':form_modal(request,
 									#Add the meeting form.
 									'editmeetingform_%s'%m.publicid,
@@ -139,23 +159,28 @@ def viewmeetings(request):
 									#Add an extra field html.
 									extra_fields='<input type="hidden" name="update_meeting_information" value="%s"/>' % m.publicid
 								),
+				#Get the schedule editor for this interface.
 				'edit_meeting_form2':mark_safe(
 						#Load a modal template 
-						modal(
-								request,
+						modal(request,
+								#Get the schedule editor, this is the drag and drop for the meetingform.
 								mark_safe(render(request,
+													#This is the template name.
 													'meeting_management/addmeetingform2.html',
 													{
+														#Add the topics that are in the meeting.
 														'topics':topics,
+														#Add the topics scheduled.
 														'topics_scheduled':m.topics.all(),
+														#Get the meeting.
 														'meeting':m
 													}).content
 										),
-								#Add the modal title
+								#Add the modal title.
 								modal_title='Create a Schedule',
-								#Add the modal id
+								#Add the modal id.
 								modal_id='editmeetingform_%s' % m.publicid,
-								#Add a class to the modal
+								#Add a class to the modal.
 								modal_class='addmeetingform'
 						).content
 					),
@@ -182,27 +207,29 @@ def viewmeetings(request):
 														'meeting_management/addmeetingform2.html',
 														{'topics':topics}).content
 											)
-
 		#Check the meeting form.
 		meetingform = mark_safe(
 				#Load a modal template 
-				modal(
-						request,
+				modal(request,
+						#This is the meetingform.
 						addmeetingform2,
+						#This is the modal title.
 						modal_title='Create a Schedule',
+						#This is the add meeting form.
 						modal_id='addmeetingform',
-						#Add a class to the modal
+						#Add a class to the modal.
 						modal_class='addmeetingform'
 				).content
 			)
-
+		#Load the form.
 		loadform = True
-	
 	else:
-
+		#Load the form.
 		loadform = True if 'loadprevious' in request.GET else False
 
+		#If the form is the meeting form.
 		if not loadform and 'addmeetingform' in request.session:
+			#Delete the meeting.
 			del request.session['addmeetingform']
 
 		#Get the first meeting form
@@ -211,7 +238,11 @@ def viewmeetings(request):
 										'addmeetingform',
 										#Get the actual form from the form model.
 										MeetingFormStepOne(
+												#If there is request POST information,
+												#			populate the form with it.
 												request.POST if 'addmeetingform' in request.POST else 
+													#If there is session from the previous form populate the form with it.
+													#		otherwise the form can be empty.
 													request.session['addmeetingform'] if 'addmeetingform' in request.session else None
 										 ).as_table(),
 										#Name the modal_form.
@@ -249,76 +280,7 @@ def viewmeetings(request):
 		'loadform':loadform,
 		}
 
+	#Render the request information.
 	return render(request,
  			'meeting_management/viewmeetings.html',
 			context)
-
-
-
-"""
-@login_required
-@user_passes_test(lambda u: u.groups.filter(Q(name='Supervisor')).count() != 0)
-def addmeeting(request):
-
-	if 'step' in request.GET and int(request.GET['step']) == 2 and request.POST:
-		request.session['form1'] = request.POST
-		meetingform = MeetingFormStepTwo()
-		step = "Two"
-		nextstepquerystring = ""
-		name = 'meeting_form2'
-
-	else:
-
-		if 'form1' in request.session:
-			meetingform = MeetingFormStepOne(request.session['form1'])
-		else:
-			meetingform = MeetingFormStepOne()
-
-		step = "One"
-		name = 'meeting_form1'
-		nextstepquerystring = "&step=2"
-
-	#Save the meeting.
-	if 'meeting_form2' in request.POST and 'form1' in request.session:
-
-		form1 = request.session['form1']
-		form2 = request.POST
-
-		for key,value in request.POST.lists():
-			if key == 'topics':
-				selected_topics = value
-
-		newmeeting = Meeting(
-						name=form1['name'],
-						description=form1['description'],
-						maxscheduleitems=form1['maxscheduleitems'],
-						duedate=form1['duedate'],
-						startdate=form1['startdate'],
-						duration=form2['duration'],
-						user=request.user,
-					)
-
-		newmeeting.save()
-
-		for topicid in selected_topics:
-			topic = Topic.objects.get(pk=topicid)
-			newmeeting.topics.add(topic)
-
-		return redirect('/viewmeetings/#%s'%newmeeting.publicid)
- 
-	meetingform = output_form_as_table(
-										request,
-										name,
-										meetingform.as_table(),
-										table_class='form-table',
-										get_string=nextstepquerystring,
-										)
-
-	context= {
-			'title':'Meeting Form Step %s' % step,
-			'MeetingForm':mark_safe(meetingform),
-	}
-
-	return render(request,
-		'meeting_management/addmeeting.html',
-		context)"""
