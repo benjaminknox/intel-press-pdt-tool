@@ -1,8 +1,5 @@
-from pdtresources.templates import topic_html
-from topic_management.models import Topic
 from meeting_management.models import Meeting
 from django import forms #CheckboxSelectMultiple, ModelForm, TextInput
-from django.utils.safestring import mark_safe
 
 ###
 # This is the first step of the meeting form.
@@ -36,41 +33,7 @@ class MeetingFormStepOne(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		#This is the super meeting.
 		super(MeetingFormStepOne, self).__init__(*args, **kwargs)
-
 		#We change the label of fields in the form.
 		self.fields['name'].label = "Meeting Name"
 		self.fields['duedate'].label = "Submission Cut Off Date"
 		self.fields['startdate'].label = "Meeting Start Date/Time"
-
-
-#This is the second step of the meeting form.
-class MeetingFormStepTwo(forms.ModelForm):
-	#This is the meta class
-	class Meta:
-		#Load the model of the form.
-		model = Meeting
-		#Get the widgets.
-		widgets = {
-			'topics': forms.CheckboxSelectMultiple(),
-		}
-		#Get the fields for this form.
-		fields = [
-				  'topics',
-				  'duration',
-				  ]
-
-
- 	#This initializes
-	def __init__(self, *args, **kwargs):
-		#This is the super meeting.
-		super(MeetingFormStepTwo, self).__init__(*args, **kwargs)
-
-		#Change the label of the duration.
-		self.fields['duration'].label = "Meeting Duration (hrs)"
-
-		#Output the document fields to grab.
-		self.fields['topics'].queryset = Topic.objects.filter(deleted=False)
-		#Change the label of topics.
-		self.fields['topics'].label = ''
-		#Get the html from the templates.
-		self.fields['topics'].label_from_instance = lambda obj: mark_safe(topic_html(obj))
