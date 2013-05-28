@@ -7,19 +7,19 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
+
     def forwards(self, orm):
 
-        pass
+        db.add_column(u'topic_management_topic', 'meeting_id',models.IntegerField(null=True))
 
         # Changing field 'Topic.meeting'
- #       db.alter_column(u'topic_management_topic', 'meeting_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['meeting_management.Meeting']))
+        db.alter_column(u'topic_management_topic', 'meeting_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['meeting_management.Meeting']))
 
     def backwards(self, orm):
-        
-        pass
 
         # Changing field 'Topic.meeting'
-#        db.alter_column(u'topic_management_topic', 'meeting_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['meeting_management.Meeting']))
+        db.alter_column(u'topic_management_topic', 'meeting_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['meeting_management.Meeting']))
+
 
     models = {
         u'auth.group': {
@@ -112,13 +112,14 @@ class Migration(SchemaMigration):
             'documents': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'topic_documents'", 'symmetrical': 'False', 'to': u"orm['topic_management.Document']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'lastmodified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'meeting': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'_topicinmeeting'", 'null': 'True', 'to': u"orm['meeting_management.Meeting']"}),
+            'meeting': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'_topicinmeeting'", 'null': 'True', 'to': u"orm['meeting_management.Meeting']"}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'presentationlength': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'publicid': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '36', 'blank': 'True'}),
             'readyforreview': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'scheduleorder': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'supervisor_released': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'topic_slug': ('django.db.models.fields.CharField', [], {'default': "'Slug'", 'max_length': '8'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         }
     }

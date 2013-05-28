@@ -9,6 +9,8 @@ echo "Syncing DB schema:"
 
 ./manage.py syncdb
 
-./manage.py schemamigration topic_management meeting_management --auto
+./manage.py schemamigration meeting_management --auto
+./manage.py migrate meeting_management
 
-./manage.py migrate
+./manage.py schemamigration topic_management --auto
+./manage.py migrate topic_management
