@@ -26,7 +26,7 @@
 						<span class="label label-default">In Progress</span>
 					{% endif %}
 					</div>
-					<h5>{{ topic.name }} by {{ topic.user.first_name }} {{ topic.user.last_name }}</h5>
+					<h5>{{ topic.name }} by {{ topic.user.first_name }} {{ topic.user.last_name }}&nbsp;&nbsp;<small>{{topic.topic_slug}}</small></h5> 
 					<div class="list-topic">
 						{{ topic.description | truncatechars:"200" }}
 					</div><!-- .list-document -->

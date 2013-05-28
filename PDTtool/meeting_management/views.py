@@ -22,8 +22,11 @@ def viewmeetings(request):
 	#		-The start time.
 	if 'update_meeting_information' in request.POST:
 		
+		#Update this publicid
+		publicid = request.POST['update_meeting_information']
+
 		#Get the meeting to edit.
-		meeting_to_edit = Meeting.objects.get(publicid=request.POST['update_meeting_information'])
+		meeting_to_edit = Meeting.objects.get(publicid=publicid)
 		
 		#Update the meeting name.
 		meeting_to_edit.name = request.POST['name']
@@ -35,11 +38,16 @@ def viewmeetings(request):
 		#Save the meeting.
 		meeting_to_edit.save()
 
+		return redirect('/viewmeetings/#%s'%publicid)
+
 	#Update the meeting schedule order, the order is the right way.
 	if 'update_meeting_schedule_publicid' in request.POST:
+		
+		#Update this publicid
+		publicid = request.POST['update_meeting_schedule_publicid']
 
 		#Get the meeting to edit.
-		meeting_to_edit = Meeting.objects.get(publicid=request.POST['update_meeting_schedule_publicid'])
+		meeting_to_edit = Meeting.objects.get(publicid=publicid)
 
 		#Get the schedule_items.
 		schedule_items = request.POST['schedule_items'].split(',')
@@ -49,6 +57,8 @@ def viewmeetings(request):
 		meeting_to_edit.maxscheduleitems = len(schedule_items)
 		#Save the meeting information.
 		meeting_to_edit.save()
+
+		return redirect('/viewmeetings/#%s'%publicid)
 
 
 	#Check for a meeting.
@@ -126,7 +136,10 @@ def viewmeetings(request):
 										render(request,
 											'meeting_management/viewmeeting.html',
 											#Pass in a context.
-											{'meeting':m}
+											{
+												'meeting':m,
+												'topics':m.topics.order_by('scheduleorder')
+											}
 										#This simply means return the html
 										).content 
 									),
@@ -157,7 +170,9 @@ def viewmeetings(request):
 									#Add a modal_id.
 									modal_id='editmeetingform1_%s' % m.publicid,
 									#Add an extra field html.
-									extra_fields='<input type="hidden" name="update_meeting_information" value="%s"/>' % m.publicid
+									extra_fields='<input type="hidden" name="update_meeting_information" value="%s"/>' % m.publicid,
+									#Add a special form action
+									action="%s#%s"% (request.get_full_path(),m.publicid)
 								),
 				#Get the schedule editor for this interface.
 				'edit_meeting_form2':mark_safe(

@@ -15,7 +15,6 @@
   </div>
   <ul class="schedule draggable pull-right">
     <li class="not_draggable">Schedule Scheduled</li>
-
     {% for t in topics_scheduled %}
       <li class="schedule-item" publicid="{{ t.publicid }}">
         <i class="icon-minus-sign pull-right" onclick="remove_schedule_item($(this));"></i>
@@ -30,7 +29,7 @@
 
 </div><!-- #addmeetingform2 -->
 <center>
-<form action="{{ request.path }}" method="post">
+<form action="{{ request.path }}#{{meeting.publicid}}" method="post">
 {% csrf_token %}
 {% if meeting %}
 <input type="hidden" name="update_meeting_schedule_publicid" value="{{ meeting.publicid }}" />

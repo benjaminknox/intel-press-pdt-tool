@@ -720,7 +720,7 @@ HTML,BODY{
 }
 
 .meetings-modal{
-	width: 600px;
+	width: 900px;
 	max-height: 500px;
 	overflow-y: auto;
 }
@@ -735,6 +735,10 @@ HTML,BODY{
 
 #meeting_topics td{
 	cursor: pointer;
+}
+
+#meeting_topics h5{
+	margin: 0;
 }
 
 #current_meeting_button{

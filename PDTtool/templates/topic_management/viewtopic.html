@@ -34,7 +34,7 @@
 	{% endif %}
 
 	<h5>
-	{{topic.topic_object.name}}
+	{{topic.topic_object.name}}&nbsp;&nbsp;<small>{{topic.topic_object.topic_slug}}</small>
 	{% if topic.topic_object.meeting %}
 		&nbsp;&nbsp;&nbsp;<a href="/viewmeetings/#{{ topic.topic_object.meeting.publicid }}">View Meeting Schedule</a>
 	{% endif %}
