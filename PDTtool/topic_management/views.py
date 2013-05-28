@@ -7,7 +7,8 @@ from pdtresources.templates import form_modal
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, HttpResponse
 from topic_management.models import Topic, Document, Comment
-from pdtresources.comments import recursive_comments, comment_form
+from topic_management.resources import generate_topic_slug
+from pdtresources.comments import recursive_comments, comment_formge
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required, user_passes_test
 
@@ -33,7 +34,8 @@ def addtopic(request):
 									name=topic_name,
 									description=topic_description,
 									user=topic_user,
-									category=topic_category
+									category=topic_category,
+									topic_slug = generate_topic_slug()
 									)
 		topic.save()
 
