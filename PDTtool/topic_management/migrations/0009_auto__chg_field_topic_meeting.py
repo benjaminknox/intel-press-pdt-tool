@@ -9,13 +9,17 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
 
+        print "altered"
+
         # Changing field 'Topic.meeting'
-        db.alter_column(u'topic_management_topic', 'meeting_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['meeting_management.Meeting']))
+ #       db.alter_column(u'topic_management_topic', 'meeting_id', self.gf('django.db.models.fields.related.ForeignKey')(null=True, to=orm['meeting_management.Meeting']))
 
     def backwards(self, orm):
+        
+        print "altered" 
 
         # Changing field 'Topic.meeting'
-        db.alter_column(u'topic_management_topic', 'meeting_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['meeting_management.Meeting']))
+#        db.alter_column(u'topic_management_topic', 'meeting_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['meeting_management.Meeting']))
 
     models = {
         u'auth.group': {

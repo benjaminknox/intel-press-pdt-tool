@@ -12,7 +12,7 @@ class Migration(SchemaMigration):
         # Renaming column for 'Topic.topicinmeeting' to match new field type.
         db.rename_column(u'topic_management_topic', 'topicinmeeting', 'topicinmeeting_id')
         # Changing field 'Topic.topicinmeeting'
-        db.alter_column(u'topic_management_topic', 'topicinmeeting_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['meeting_management.Meeting']))
+       # db.alter_column(u'topic_management_topic', 'topicinmeeting_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['meeting_management.Meeting']))
         # Adding index on 'Topic', fields ['topicinmeeting']
         db.create_index(u'topic_management_topic', ['topicinmeeting_id'])
 

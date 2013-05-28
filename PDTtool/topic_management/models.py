@@ -5,6 +5,12 @@ from random import choice
 import string
 
 
+def slug_generator():
+
+	return "Slug"
+
+	#''.join(choice(string.lowercase) for x in range(X))
+
 # The Topic is an subject that is to be reviewed 
 #		by the Program Manager, it has many 
 #		documents and comments.
@@ -43,7 +49,7 @@ class Topic(models.Model):
 	supervisor_released = models.BooleanField(default=False)
 
 	#A quick reference string.
-	#topic_slug = models.CharField(max_length=8)
+	topic_slug = models.CharField(max_length=8,default=slug_generator)
 
 	#The user who created it.
 	user = models.ForeignKey(User)

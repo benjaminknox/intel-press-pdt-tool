@@ -8,6 +8,9 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Deleting field 'Meeting.starttime'
+        db.delete_column(u'meeting_management_meeting', 'starttime')
+        
         # Adding field 'Meeting.starttime'
         db.add_column(u'meeting_management_meeting', 'starttime',
                       self.gf('django.db.models.fields.TimeField')(default=datetime.datetime(2013, 5, 21, 0, 0), blank=True),

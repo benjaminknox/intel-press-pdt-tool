@@ -8,21 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting field 'Topic.topicinmeeting'
-        db.delete_column(u'topic_management_topic', 'topicinmeeting_id')
-
-        # Adding field 'Topic.meeting'
-        #db.add_column(u'topic_management_topic', 'meeting',
-       #               self.gf('django.db.models.fields.related.ForeignKey')(default=0, related_name='_topicinmeeting', to=orm['meeting_management.Meeting']),
-        #              keep_default=False)
+        # Adding field 'Topic.topic_slug'
+        db.add_column(u'topic_management_topic', 'topic_slug',
+                      self.gf('django.db.models.fields.CharField')(default='Slug', max_length=8),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-
-        # User chose to not deal with backwards NULL issues for 'Topic.topicinmeeting'
-        raise RuntimeError("Cannot reverse this migration. 'Topic.topicinmeeting' and its values cannot be restored.")
-        # Deleting field 'Topic.meeting'
-        db.delete_column(u'topic_management_topic', 'meeting_id')
+        # Deleting field 'Topic.topic_slug'
+        db.delete_column(u'topic_management_topic', 'topic_slug')
 
 
     models = {
@@ -116,13 +110,14 @@ class Migration(SchemaMigration):
             'documents': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'topic_documents'", 'symmetrical': 'False', 'to': u"orm['topic_management.Document']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'lastmodified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'meeting': ('django.db.models.fields.related.ForeignKey', [], {'default': '0', 'related_name': "'_topicinmeeting'", 'to': u"orm['meeting_management.Meeting']"}),
+            'meeting': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'_topicinmeeting'", 'null': 'True', 'to': u"orm['meeting_management.Meeting']"}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'presentationlength': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'publicid': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '36', 'blank': 'True'}),
             'readyforreview': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'scheduleorder': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'supervisor_released': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'topic_slug': ('django.db.models.fields.CharField', [], {'default': "'Slug'", 'max_length': '8'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         }
     }
