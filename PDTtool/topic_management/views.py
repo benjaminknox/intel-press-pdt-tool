@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, HttpResponse
 from topic_management.models import Topic, Document, Comment
 from topic_management.resources import generate_topic_slug
-from pdtresources.comments import recursive_comments, comment_formge
+from pdtresources.comments import recursive_comments, comment_form
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required, user_passes_test
 
@@ -18,24 +18,28 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 @user_passes_test(lambda u: u.groups.filter(Q(name='Supervisor') | Q(name='Program Manager')).count() != 0)
 def addtopic(request):
 	
+	print "Hello"
+
 	context= {
 			'title':'Add Topic',
 	}
 
 	#Check for POST data.
 	if request.method == 'POST':
-		#Get the document post data
+		#Get the topic post data
 		topic_name = request.POST['name']
 		topic_description = request.POST['description']
 		topic_category = request.POST['category']
 		topic_user = request.user
-		#Create a new Document and save it.
+		topic_slug = generate_topic_slug()
+
+		#Create a new topic and save it.
 		topic = Topic(
 									name=topic_name,
 									description=topic_description,
 									user=topic_user,
 									category=topic_category,
-									topic_slug = generate_topic_slug()
+									topic_slug = topic_slug
 									)
 		topic.save()
 
@@ -96,7 +100,8 @@ def viewtopics(request):
 		topics_list = Topic.objects.filter((
 			Q(deleted=False) & 
 				(Q(name__icontains=search) | 
-				 Q(category__icontains=search) 
+				 Q(category__icontains=search) |
+				 Q(topic_slug__icontains=search) 
 			 	)
 			))
 	else:
