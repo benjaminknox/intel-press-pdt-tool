@@ -85,6 +85,23 @@ function bg_animate(element,color){
 	}, 500);
 }
 
+//This initializes a datepicker field.
+function create_datepicker(datepicker,altField){
+
+	datepicker.datepicker({
+		dateFormat:'yy-mm-dd'
+	});
+	
+	if(altField) datepicker.datepicker("option","altField",altField)
+
+}
+
+//This initializes a timepicker field.
+//This initializes a datepicker field.
+function create_timepicker(timepicker){
+		timepicker.timepicker();
+}
+
 $(function(){
 
 $('.dark-button').each(function(){
@@ -98,26 +115,20 @@ $('.dark-button').each(function(){
 });
 
 //Load the datepicker
-var datepicker = $(".datepicker");
+var datepicker = $(".datepicker,.datepicker2");
 //Check for any datepickers
 if(datepicker.length > 0){
 	//If datepickers are found load
 	//	the jQuery UI datepicker.
-	datepicker.each(function(){
-		$(this).datepicker({
-			dateFormat:'yy-mm-dd'
-		});
-	});
+	create_datepicker(datepicker,false);
 }
 //Load the datepicker
-var timepicker = $(".timepicker");
+var timepicker = $(".timepicker,.timepicker2");
 //Check for any datepickers
 if(timepicker.length > 0){
 	//If datepickers are found load
 	//	the jQuery UI datepicker.
-	timepicker.each(function(){
-		$(this).timepicker();
-	});
+	create_timepicker(timepicker);
 }
 //Load the phonenumbers
 var phone = $(".phone");

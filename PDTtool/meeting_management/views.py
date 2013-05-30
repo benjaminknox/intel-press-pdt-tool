@@ -8,7 +8,7 @@ from django.shortcuts import render, redirect
 from dateutil.relativedelta import relativedelta
 from pdtresources.MeetingsCalendar import MeetingCalendar
 from pdtresources.templates import modal,form_modal
-from meeting_management.forms import MeetingFormStepOne#, MeetingFormStepTwo
+from meeting_management.forms import MeetingFormStepOne, AddMeetingForm#, MeetingFormStepTwo
 from django.contrib.auth.decorators import login_required#, user_passes_test
 from meeting_management.resources import format_time, format_date, update_meeting_schedule, get_next_meeting, edit_meeting_form1, edit_meeting_form2, view_meeting
 
@@ -273,7 +273,7 @@ def viewmeetings(request):
 										#Add the meeting form.
 										'addmeetingform',
 										#Get the actual form from the form model.
-										MeetingFormStepOne(
+										AddMeetingForm(
 												#If there is request POST information,
 												#			populate the form with it.
 												request.POST if 'addmeetingform' in request.POST else 

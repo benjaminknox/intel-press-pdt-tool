@@ -118,7 +118,7 @@ HTML,BODY{
     width: 100px;
 }
 
-.modal_form #id_description{
+.modal_form .textarea{
 	height: 100px;
 	width: 100%;
 }

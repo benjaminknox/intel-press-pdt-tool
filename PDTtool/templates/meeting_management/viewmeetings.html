@@ -175,7 +175,37 @@ function checkforms(){
 
 $(function(){
 
+	//Check the forms.
 	checkforms();
+
+	//This initializes each of the forms
+	$('input[name="update_meeting_information"]').each(function(){
+		//This is the publicid of the item.
+		var publicid = $(this).val();
+		//Select the fields.
+		var fields = $(this).parent().find('.modal_form').find('input, textarea');
+		//Output the fields.
+		fields.each(function(){
+			//Get the field.
+			var field = $(this);
+			//Get the id.
+			var id = $(this).attr('id');
+			//Create a new id string.
+			var newid = id+publicid;
+			//Get the attribute.
+			$(this).attr('id',newid);
+			var idstring = '#'+newid
+			//Check if it is a datepicker
+			if(field.hasClass('stand_alone_datepicker')){
+				//This is the datepicker.
+				create_datepicker(field,idstring);
+			}
+			if(field.hasClass('stand_alone_timepicker')){
+				create_timepicker(field,idstring);
+			}
+		});
+
+	});
 
 	{% if 'added' in request.GET%}
 	//Then we put out a new meeting value.
