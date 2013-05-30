@@ -775,6 +775,18 @@ HTML,BODY{
 	margin: 0;
 }
 
+#description_edit{
+	display: none;
+}
+#description_edit form{
+	margin: 0;
+}
+#description_edit textarea{
+	width: 570px;
+	height: 200px;
+	margin: 0;
+}
+
 #current_meeting_button{
 
 	padding: 20px;

@@ -214,6 +214,10 @@ def viewtopic(request):
 
 	#Check for POST data
 	if request.method == 'POST':
+
+		if 'update_topic_description' in request.POST and topic_object.publicid == request.POST['update_topic_description']:
+			topic_object.description = request.POST['description']
+			topic_object.save()
 		
 		#Ready the topic for review
 		topic_ready_for_review_index = 'topic_ready_for_review_id'

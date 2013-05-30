@@ -42,6 +42,7 @@
 		<span class="label label-success margin-left-10">Approved</span>
 	{% endif %}
 	</h5>
+
 	<div>
 		<table class="table table-striped">
 			<tr>
@@ -99,6 +100,29 @@
 
 		{% endfor %}
 		</table>
+
+		<div class="well well-small">
+			<div id="description_display">
+				{% if Supervisor or user_is_owner %}
+					<i class="icon-edit pull-right document_button" title="Edit description."></i>
+				{% endif %}
+				{{topic.topic_object.description}}
+			</div>
+			{% if Supervisor or user_is_owner %}
+			<div id="description_edit">
+				<i class="icon-remove description_remove_button pull-right document_button" title="Cancel."></i>
+				<form action="{{ request.get_full_path }}" method="POST">
+					{% csrf_token %}
+					<input type="hidden" name="update_topic_description" value="{{ topic.topic_object.publicid }}" />
+					<textarea name="description">{{topic.topic_object.description}}</textarea><br>
+					<center>
+						<input type="submit" value="Save" class="btn btn-primary" />
+					</center>
+				</form>
+			</div>
+			{% endif %}
+		</div>
+
 		{% if Supervisor or user_is_owner %}
 		{% if not topic.topic_object.supervisor_released %}
 		<div id="release_interface">
@@ -158,6 +182,24 @@
 
 		$('.document_button').css({'cursor':'pointer'}).click(function(){
 
+				if($(this).hasClass('description_remove_button')){
+
+					$("#description_display").show();
+					$("#description_edit").hide();
+
+
+
+					return false;
+				}
+
+				if($(this).hasClass('icon-edit')){
+
+					$("#description_display").hide();
+					$("#description_edit").show();
+
+					return false;
+				}
+
 				var html = "";
 			
 				//Gets the parent tr with the publicid
@@ -207,7 +249,7 @@
 			}
 		});
 
-		$('.download_link').tooltip({track:true, tooltipClass: "yellow-tooltip"});
+		$('.download_link,.icon-edit,.description_remove_button').tooltip({track:true, tooltipClass: "yellow-tooltip"});
 
 	});
 </script>
