@@ -50,6 +50,8 @@ def login(request):
 				#This is the is_superuser
 				if user.is_superuser:
 					create_groups(user)
+					extendeduser = ExtendedUser(user=user,phonenumber="000000000")
+					extendeduser.save()
 
 				#Check the next variable in the url
 				#	for redirect to the original request.
