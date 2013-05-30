@@ -190,13 +190,14 @@ def viewtopic(request):
 	deleteddocumentdnotification = False
 	#Add a variable to check if the user owns the topic
 	user_is_owner = False
-	#The directory of the location of the documents
-	topicdirectory = "%s/%s"% (settings.UPLOADED_TOPIC_DIR, request.GET['publicid'])
-
 	#Get the public id of the topic.
 	if 'publicid' in request.GET:
 		#This is the publicid.
 		publicid = request.GET['publicid']
+
+		#The directory of the location of the documents
+		topicdirectory = "%s/%s"% (settings.UPLOADED_TOPIC_DIR, publicid)
+
 		try:
 			#Check for a topic.
 			topic_object = Topic.objects.get(publicid=publicid,deleted=False)
