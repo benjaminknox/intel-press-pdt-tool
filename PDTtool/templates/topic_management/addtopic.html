@@ -105,7 +105,7 @@
 		//The removefile function deletes the uploaded
 		//		file form element from the form.
 		function removefile(file_form_id){
-			$("#file_form_"+file_form_id).remove();
+			$("input[name='file_"+file_form_id+"']").remove();
 			$("#row_"+file_form_id).remove();
 		}
 
