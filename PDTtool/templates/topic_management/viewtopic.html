@@ -77,9 +77,9 @@
 				<td>
 
 					{% if document.document_object.comments.count > 0 %}
-						<a href="javascript:$('#document_feedback_{{ document.document_object.publicid }}').toggle();" class="btn btn-success btn-mini pull-right lighter-button">View Feedback</a>
+						<a href="javascript:void(0);" onclick="$('#document_feedback_{{ document.document_object.publicid }}').toggle();" class="btn btn-success btn-mini pull-right lighter-button">View Feedback</a>
 					{% else %}
-						<a href="javascript:$('#document_feedback_{{ document.document_object.publicid }}').toggle();" onclick="$('#document_comment_form_{{ document.document_object.publicid }}').toggle();" class="btn btn-primary btn-mini pull-right lighter-button">Add Feedback</a>
+						<a href="javascript:void(0);" onclick="$('#document_feedback_{{ document.document_object.publicid }}').toggle();$('#document_comment_form_{{ document.document_object.publicid }}').toggle();" class="btn btn-primary btn-mini pull-right lighter-button">Add Feedback</a>
 					{% endif %}
 				</td>
 			<tr>
@@ -87,7 +87,7 @@
 				<td colspan="5">
 
 					{% if document.document_object.comments.count > 0 %}
-						<a href="javascript:$('#document_comment_form_{{ document.document_object.publicid }}').toggle();" class="btn btn-primary btn-mini lighter-button">Add Feedback</a>
+						<a href="javascript:void(0);" onclick="$('#document_comment_form_{{ document.document_object.publicid }}').toggle();" class="btn btn-primary btn-mini lighter-button">Add Feedback</a>
 					{% endif %}
 
 					{{ document.comment_form|safe }}
