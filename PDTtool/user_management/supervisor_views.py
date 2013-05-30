@@ -7,9 +7,10 @@ from pdtresources.handles import paginate
 from pdtresources.templates import form_modal
 from django.contrib.auth.decorators import login_required, user_passes_test
 from user_management.resources import check_existing_user, check_user_groups
-########
-# This is an interface for editing users.
-########
+
+###
+# This allows for editing the user.
+###
 @login_required
 @user_passes_test(lambda u: u.groups.filter(Q(name='Supervisor')).count() != 0)
 def viewusers(request):

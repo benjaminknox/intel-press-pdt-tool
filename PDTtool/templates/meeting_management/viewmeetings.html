@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load nextmeeting %}
 {% block content%}
 
+{{ nextmeeting.next_view_meeting }}
+
 {% if Supervisor %}
+{{ nextmeeting.next_edit_meeting_form1 }}
+{{ nextmeeting.next_edit_meeting_form2 }}
 <!-- Load the meeting form depending on which step we are on. -->
 {{ meetingform }}
 <!-- End the loading of the meeting form -->
@@ -17,6 +22,8 @@
 {% endif %}
 
 {% endfor %}
+
+{% nextmeeting request %}
 
 <!-- Links for paging through each calendar -->
 <ul class="pager" style="width: 106.5%;">
@@ -74,12 +81,6 @@ function add_meeting_modal(date_clicked){
 		//Change the meeting_modal.
 		meetingmodal.modal();
 }
-{% endif %}
-
-{% if 'scheduleitems' in request.POST%}
-	//Then we put out a new meeting value.
-	toastr.success('Added a meeting.');
-{% endif %}
 
 //Edit the meeting.
 function edit_meeting(publicid){
@@ -101,61 +102,145 @@ function edit_schedule(publicid){
 	//Check the modal.
 	$(identifier).modal();
 }
+{% endif %}
+
+//This loops through and checks each of the
+//		elements for the right information.
+function checkforms(){
+	//Select the forms and loop through each one.
+	$('form').each(function(){
+		//On submit check the fields.
+		$(this).submit(function(){
+			//This is the form.
+			var form = $(this);
+			//Create a boolean for the validity.
+			var invalid = false;
+			//Get the input fields.
+			var inputFields = $(this).find('input,textarea');
+			var fieldcheckstr = '';
+			//Loop through each of the fields.
+			inputFields.each(function(){
+				var field = $(this)
+				var fieldclass = field.attr('class');
+				var fieldid = field.attr('id');
+				var fieldname = field.attr('name')
+				var fieldvalue = field.val();
+				var fieldlabel = form.find('label[for="'+fieldid+'"]').text();
+
+				var error_start = 'For the '+fieldlabel.toLowerCase().replace(':','');
+
+				//Make sure there is a name
+				if(
+					fieldid == 'id_name' &&
+					fieldvalue.length == 0
+				){
+					fieldcheckstr +=  error_start+', please enter a value. \r\n';
+					invalid = true;
+				}
+
+				//Check the date fields.
+				if(
+					fieldclass && 
+					fieldclass.indexOf('datepicker') != -1 &&
+					!fieldvalue.match(/(\d{4})-(\d|\d{2})-(\d|\d{2})/)
+				){
+					fieldcheckstr += error_start+', please use this format: yyyy-mm-dd \r\n';
+					invalid = true;
+				}
+
+				//Check the time fields.
+				if(
+					fieldclass &&
+					fieldclass.indexOf('timepicker') != -1 &&
+					!fieldvalue.match(/(\d|\d{2}):(\d{2})(am|pm)/)
+				){
+					fieldcheckstr +=  error_start+', please use this format: 00:00am/pm \r\n';
+					invalid = true;
+				}
+
+			});
+			
+			if(invalid){
+				//Alert the errors.
+				alert(fieldcheckstr);
+				//Don't allow them to move on.
+				return false;
+			}else{
+				//Return the variable
+				return true;//invalid;
+			}
+		});
+	});
+}
 
 $(function(){
-		//Get the window location hash.
-		if(window.location.hash){
-				//Load the meeting information.
-				view_meeting(window.location.hash.substr(1));
-		}
-		//Add a tooltip to the item.
-		$('.add_calendar_item').tooltip({track:true, tooltipClass: "yellow-tooltip"})
 
-		//Add a meeting tooltip.
-		$('.meeting_link').tooltip({track:true, tooltipClass: "yellow-tooltip"});
+	checkforms();
 
-		{% if Supervisor %}
+	{% if 'added' in request.GET%}
+	//Then we put out a new meeting value.
+	toastr.success('Added a meeting \'{{ request.GET.added }}\'');
+	{% endif %}
 
-			{% if loadform %}
-				//Load the meeting modal.
-				add_meeting_modal(false);
-			{% endif %}
-			//Create the code that makes a hover.
-			$('#calendar td').hover(function(){
-					//Show the calendar item on hover.
-					$(this).children('.add_calendar_item').show();
-			},function(){
-					//Hide the calendar item on hover off.
-					$(this).children('.add_calendar_item').hide();
-			});
+	{% if 'updated' in request.GET %}
+	//Then we put out a new meeting value.
+	toastr.success('Updated meeting \'{{ request.GET.updated }}\'');
+	{% endif %}
 
-			//Add a calendar item.
-			$('.add_calendar_item').click(function(){
-					//Get the date clicked.
-					date_clicked = $(this).parent().attr('date-value');
-					//Add the meeting modal.
-					add_meeting_modal(date_clicked);
-			});
+	//Get the window location hash.
+	if(window.location.hash){
+			//Load the meeting information.
+			view_meeting(window.location.hash.substr(1));
+	}
+	//Add a tooltip to the item.
+	$('.add_calendar_item').tooltip({track:true, tooltipClass: "yellow-tooltip"})
 
-			//Add a bootbox confirm dialogue, to check
-			//		if the user wants to save.
-		  $('#addmeetingform').on('hide',function(){
-	  	//This is the confirm message.
-			bootbox.confirm('Are you sure you want to close, you have unsaved data?',function(result){
-				//Check the result.
-				if(result){
-					//Reload the window if the answer is ok.
-					window.location = '{{ request.path }}';
-				 }else{
-				 	//Otherwise pull up the modal.
-				 	$('#addmeetingform').modal();
-				}
-			});
+	//Add a meeting tooltip.
+	$('.meeting_link').tooltip({track:true, tooltipClass: "yellow-tooltip"});
+
+	{% if Supervisor %}
+
+		{% if loadform %}
+			//Load the meeting modal.
+			add_meeting_modal(false);
+		{% endif %}
+		//Create the code that makes a hover.
+		$('#calendar td').hover(function(){
+				//Show the calendar item on hover.
+				$(this).children('.add_calendar_item').show();
+		},function(){
+				//Hide the calendar item on hover off.
+				$(this).children('.add_calendar_item').hide();
+		});
+
+		//Add a calendar item.
+		$('.add_calendar_item').click(function(){
+				//Get the date clicked.
+				date_clicked = $(this).parent().attr('date-value');
+				//Add the meeting modal.
+				add_meeting_modal(date_clicked);
+		});
+
+		//Add a bootbox confirm dialogue, to check
+		//		if the user wants to save.
+	  $('#addmeetingform').on('hide',function(){
+  	//This is the confirm message.
+		bootbox.confirm('Are you sure you want to close, you have unsaved data?',function(result){
+			//Check the result.
+			if(result){
+				//Reload the window if the answer is ok.
+				window.location = '{{ request.path }}';
+			 }else{
+			 	//Otherwise pull up the modal.
+			 	$('#addmeetingform').modal();
+			}
+		});
 });
 
 		{% endif %}
 
 });
+
 
 </script>
 {% endblock %}

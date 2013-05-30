@@ -1,5 +1,12 @@
+from datetime import datetime
+from django.db.models import Q
 from time import strptime,strftime
+from pdtresources.templates import form_modal, modal
 from topic_management.models import Topic
+from meeting_management.models import Meeting
+from django.utils.safestring import mark_safe
+from meeting_management.forms import MeetingFormStepOne
+from django.shortcuts import render
 
 """
 " These are functions for meeting management, they
@@ -73,3 +80,114 @@ def update_meeting_schedule(meeting,schedule_items,new=True):
     meeting.duration = duration
     #Save the meeting.
     meeting.save()
+
+#This is the next meeting.
+def get_next_meeting():
+    #This is the current datetime.
+    nowdate = datetime.now()
+    #This the current time.
+    nowtime = datetime.time(nowdate)
+
+    #Load the next meeting.
+    nextmeeting = Meeting.objects.filter(
+
+      Q(startdate__gt=nowdate) |
+        Q(startdate__gte=nowdate) &
+        Q(starttime__gte=nowtime)
+
+    ).order_by('startdate','starttime')
+
+    return nextmeeting[0]
+
+#Get the first meeting information form
+def edit_meeting_form1(request, meeting):
+    
+    form = MeetingFormStepOne({
+                                    'name':meeting.name,
+                                    'description':meeting.description,
+                                    'duedate':meeting.duedate,
+                                    'startdate':meeting.startdate,
+                                    'starttime':meeting.starttime,
+                                }).as_table()
+
+
+    modal_content = form_modal(request,
+                                #Add the meeting form.
+                                'editmeetingform_%s'%meeting.publicid,
+                                #Get the actual form from the form model.
+                                form,
+                                #Name the modal_form.
+                                table_class='modal_form',
+                                #Add the topics.
+                                submit_text='Update',
+                                #Add a modal title.
+                                modal_title='Edit \'%s\'' % meeting.name,
+                                #Add a modal_id.
+                                modal_id='editmeetingform1_%s' % meeting.publicid,
+                                #Add an extra field html.
+                                extra_fields='<input type="hidden" name="update_meeting_information" value="%s"/>' % meeting.publicid,
+                                #Add a special form action
+                                action="%s#%s"% (request.get_full_path(),meeting.publicid)
+                            )
+
+    edit_meeting_form1 = mark_safe(modal_content)
+
+    return edit_meeting_form1
+
+#Get the second meeting information.
+def edit_meeting_form2(request,topics,meeting):
+    #Load the view for.
+    view = render(request,
+            #This is the template name.
+            'meeting_management/addmeetingform2.html',
+            {
+                #Add the topics that are in the meeting.
+                'topics':topics,
+                #Add the topics scheduled.
+                'topics_scheduled':meeting.topics.all(),
+                #Get the meeting.
+                'meeting':meeting
+            }).content
+
+    #Put the view into a modal.
+    modal_content = modal(request,
+        #Get the schedule editor, this is the drag and drop for the meetingform.
+        mark_safe(view),
+        #Add the modal title.
+        modal_title='Create a Schedule',
+        #Add the modal id.
+        modal_id='editmeetingform_%s' % meeting.publicid,
+        #Add a class to the modal.
+        modal_class='addmeetingform'
+    ).content
+
+    #Edit the second meeting form.
+    edit_meeting_form2 = mark_safe(modal_content)
+
+    return edit_meeting_form2
+
+#Get the next meeting information.
+def view_meeting(request,meeting):
+    #Load the meeting view.
+    view = render(request,
+        'meeting_management/viewmeeting.html',
+        #Pass in a context.
+        {
+            'meeting':meeting,
+            'topics':meeting.topics.order_by('scheduleorder')
+        }
+    #This simply means return the html
+    ).content 
+
+    #Put the view into a modal.
+    modal_content = modal(request,
+     mark_safe(view),
+        #Add a title to the modal.
+        modal_title="%s at %s" % (meeting.name,meeting.startdate),
+        #Change the modal.
+        modal_id=meeting.publicid
+    ).content
+    #Create the modal.
+    view_meeting = mark_safe(modal_content)
+
+    return view_meeting

@@ -1,19 +1,24 @@
 import os,mimetypes
 from uuid import uuid4
+from shutil import copyfile
+from PDTtool import settings
+from datetime import datetime
 from django.db.models import Q
-from topic_management.forms import TopicForm, upload_document_form
-from pdtresources.handles import handle_uploaded_file
 from pdtresources.templates import form_modal
 from django.core.exceptions import ObjectDoesNotExist
+from topic_management.resources import generate_topic_slug
 from django.shortcuts import render, redirect, HttpResponse
 from topic_management.models import Topic, Document, Comment
-from topic_management.resources import generate_topic_slug
+from topic_management.forms import TopicForm, upload_document_form
 from pdtresources.comments import recursive_comments, comment_form
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required, user_passes_test
+from pdtresources.handles import create_directory, delete_topic, handle_uploaded_file
 
-
-#This is the authentication library.
+###
+# View addtopic allows a Supervisor or
+#		Program Manager add a topic.
+###
 @login_required
 @user_passes_test(lambda u: u.groups.filter(Q(name='Supervisor') | Q(name='Program Manager')).count() != 0)
 def addtopic(request):
@@ -32,7 +37,7 @@ def addtopic(request):
 		topic_category = request.POST['category']
 		topic_user = request.user
 		topic_slug = generate_topic_slug()
-
+		
 		#Create a new topic and save it.
 		topic = Topic(
 									name=topic_name,
@@ -43,24 +48,30 @@ def addtopic(request):
 									)
 		topic.save()
 
+		#Create a new directory for the topic.
+		directory = create_directory(topic,settings.UPLOADED_TOPIC_DIR)
+
 		#Get the files
 		files = request.FILES
 
+		#Thesea re the names of hte files.
 		for name,f in files.iteritems():
 
 			#Single file upload
 			#Get the file
 			name = f.name
 			fileName = "%s-%s" % (uuid4(),name)
-			location = '/uploads/%s' % fileName
+			#The uploaded_topic_dir is in PDTtool.settings.
+			location = '%s/%s' % (directory, fileName)
+			#Handle the filesize.
 			fileSize = f.size
 
 			#Load a new uploaded file and save it.
 			uploadedfile = Document(topic=topic,
-								location = location,
-							    name=name,
-							    fileName=fileName,
-							    size=fileSize)
+															location = location,
+														  name=name,
+														  fileName=fileName,
+														  size=fileSize)
 			uploadedfile.save()
 
 			#Save the file on to the directory.
@@ -83,7 +94,14 @@ def addtopic(request):
 					'topic_management/addtopic.html',
 					context)
 
-# This is a list of the topics.
+###
+# View viewtopics is a list of the
+#		topics. Any user can access it.
+#
+#	For the Supervisor or Program Manager
+#		to view his own topics a get
+#		variable 'mytopics' can be added.
+###
 @login_required
 def viewtopics(request):
 
@@ -113,8 +131,6 @@ def viewtopics(request):
 		topics_list = topics_list.filter(user=request.user).order_by('readyforreview', '-supervisor_released')
 	else:
 		topics_list = topics_list.order_by('-readyforreview', 'supervisor_released')
-
-#	topics_list
 
 	#Put the topics into a paginator object
 	paginator = Paginator(topics_list, 5) # Show 5 documents per page
@@ -148,7 +164,15 @@ def viewtopics(request):
 			'topic_management/viewtopics.html',
 			context)
 
-# View the file.
+###
+# View viewtopic is a list of the
+#		documents uploaded to the
+#		for the topic. Any user can
+#		access it.
+#
+#	An owner of a topic has a special
+#		gui.
+###
 @login_required
 def viewtopic(request):
 
@@ -166,6 +190,8 @@ def viewtopic(request):
 	deleteddocumentdnotification = False
 	#Add a variable to check if the user owns the topic
 	user_is_owner = False
+	#The directory of the location of the documents
+	topicdirectory = "%s/%s"% (settings.UPLOADED_TOPIC_DIR, request.GET['publicid'])
 
 	#Get the public id of the topic.
 	if 'publicid' in request.GET:
@@ -174,10 +200,10 @@ def viewtopic(request):
 		try:
 			#Check for a topic.
 			topic_object = Topic.objects.get(publicid=publicid,deleted=False)
-			notopic=False
+			notopic = False
 		except ObjectDoesNotExist:
 			#If the topic does not exist.
-			notopic=True
+			notopic = True
 
 	#If there is no topic.
 	if notopic:
@@ -197,12 +223,11 @@ def viewtopic(request):
 			topic_ready_for_review_index in request.POST and
 			request.POST[topic_ready_for_review_index] == topic_object.publicid
 			):
-			
-			print 'yes'
 
 			if 'topic_presentationlength' in request.POST:
 				readyforreview = True
 				presentationlength = int(request.POST['topic_presentationlength'])
+				topic_object.datesetforreview = datetime.now()
 			else:
 				readyforreview = False
 				presentationlength = 15
@@ -212,24 +237,35 @@ def viewtopic(request):
 
 			topic_object.save()
 
-		else:
-
-			print 'no'
-
 		#We deleted the topic.
 		if 'deleted_topicid' in request.POST and request.POST['deleted_topicid'] == topic_object.publicid:
 			#Delete the topic object
 			topic_object.deleted = True
 			topic_object.save()
 
+			#Move the files to a 'deleted' directory.
+			delete_topic(topic_object)
+
 			#Redirect to the list of topics, there is a hash
 			#		for a notification.
-			return redirect('/viewtopics/#deleted')
+			return redirect('/viewtopics/?deleted=%s' % topic_object.name)
 
 		#We approved the document.
 		if 'released_topicid' in request.POST and request.POST['released_topicid'] == topic_object.publicid:
 			topic_object.supervisor_released = True
 			topic_object.save()
+
+			directory = create_directory(topic_object,settings.APPROVED_TOPIC_DIR)
+
+			#Loop throught the document and copy
+			#		them to the right directory.
+			for document in topic_object.documents.all():
+
+				#Get the approved file.
+				approved_file = "%s/%s" % (directory,document.fileName)
+
+				#Make a copy of the file.
+				copyfile(document.location, approved_file)
 
 		#We have an updated document.
 		if 'updated_documentid' in request.POST:
@@ -255,11 +291,13 @@ def viewtopic(request):
 				#Get the file
 				name = f.name
 				fileName = "%s-%s" % (uuid4(),name)
-				location = '/uploads/%s' % fileName
+				#The uploaded_topic_dir is in PDTtool.settings.
+				location = '%s/%s' % (topicdirectory, fileName)
+				#Get the file size.
 				fileSize = f.size
-
+				#Get the updated document
 				updated_document.update(location=location,name=name,fileName=fileName,size=fileSize)
- 
+ 				#handle the uploaded file.
 				handle_uploaded_file(f,location)
 
 				#Updated notification
@@ -300,7 +338,9 @@ def viewtopic(request):
 			#Get the file
 			name = f.name
 			fileName = "%s-%s" % (uuid4(),name)
-			location = '/uploads/%s' % fileName
+
+			#The uploaded_topic_dir is in PDTtool.settings.
+			location = '%s/%s' % (topicdirectory, fileName)
 			fileSize = f.size
 			#This is the newdocument.
 			newdocument = Document(topic=topic_object,location=location,name=name,fileName=fileName,size=fileSize)
@@ -449,10 +489,14 @@ def viewtopic(request):
 		'topic_management/viewtopic.html',
 		context)
 
+###
+# Download allows the user to download a file.
+#		Any user can download it.
+###
 @login_required
-def download(request,fileName):
+def download(request,topic_publicid,fileName):
 	
-	filepath = "/uploads/%s" % fileName
+	filepath = "%s/%s/%s" % (settings.UPLOADED_TOPIC_DIR,topic_publicid,fileName)
 
 	f = open(filepath,"r")
 	mimetype = mimetypes.guess_type(filepath)[0]

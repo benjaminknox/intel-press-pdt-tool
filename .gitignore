@@ -37,3 +37,9 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+
+# The Ignore what's in these directorys #
+#########################################
+approved
+deleted
+uploads

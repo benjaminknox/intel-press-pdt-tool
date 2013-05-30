@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load nextmeeting %}
 {% block content%}
 
 	{% if Supervisor %}
@@ -44,6 +45,8 @@
 <script src="{% static 'www/js/bootbox.min.js' %}"></script>
 <script>
 	$(function(){
+
+		check_forms();
 
 		$('.add_calendar_item').tooltip({track:true, tooltipClass: "yellow-tooltip"})
 
@@ -158,6 +161,11 @@
 		});
 	}
 
+	function checkforms(){
+		$('form').each(function(){
+			alert($(this).html())
+		});
+	}
 
 </script>
 {% endblock %}

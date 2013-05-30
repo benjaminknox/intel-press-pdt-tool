@@ -128,6 +128,18 @@ EMAIL_HOST_PASSWORD = 'cummings123'
 EMAIL_PORT = 587
 #The default login url if not specified.
 LOGIN_URL = '/login/'
+#A prefix for the directory where your projects
+#   download files will be stored.
+TOPIC_PREFIX_DIR = os.path.abspath(os.path.join(PROJECT_DIR, '..','uploaded_topics'))
+#This is a custom setting for the
+#   upload directory.
+UPLOADED_TOPIC_DIR = "%s/uploads" % TOPIC_PREFIX_DIR
+#This is a custom setting for the
+#   approved directory.
+APPROVED_TOPIC_DIR = "%s/approved" % TOPIC_PREFIX_DIR
+#This is a custom setting for the
+#   approved directory.
+DELETED_TOPIC_DIR = "%s/deleted" % TOPIC_PREFIX_DIR
 """""""""
 " End custom settings.
 """""""""

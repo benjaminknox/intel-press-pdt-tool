@@ -1,14 +1,50 @@
+import os
+from PDTtool import settings
+from shutil import rmtree,move
+from django.contrib.auth.models import Group
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
-from django.contrib.auth.models import Group, Permission
 
+#This creates a directory for the topic.
+def create_directory(topic,base_dir=settings.PROJECT_DIR,delete=True):
+  
+  
+
+  #Define a directory with the topic publicid in it.
+  directory = "%s/%s" % (base_dir,topic.publicid)
+  #If the path already exists delete it.
+  if os.path.exists(directory) and delete: rmtree(directory)
+  #Make the directory
+  os.makedirs(directory)
+  #Return the directory
+  return directory
+
+#This handles an uploaded file.
 def handle_uploaded_file(f,location):
-    with open(location, 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
+  #This uploads a file.
+  with open(location, 'wb+') as destination:
+    #This is a chunk of the file.
+    for chunk in f.chunks():
+      #This is the destination.
+      destination.write(chunk)
 
-    return location
+  return location
 
-#This is a snippet to create pagination objects.
+#Move the deleted documents to another a deleted directory
+def delete_topic(topic):
+  directory = "%s/%s"% (settings.UPLOADED_TOPIC_DIR, topic.publicid)
+  deldirectory = "%s/%s"% (settings.DELETED_TOPIC_DIR, topic.publicid)
+  if os.path.exists(directory):
+    move(directory,deldirectory)
+
+#Delete the directory where the uploads for a topic are.
+def permantently_delete_topic(topic):
+  directory = "%s/%s"% (settings.DELETED_TOPIC_DIR, topic.publicid)
+  if os.path.exists(directory): rmtree(directory)
+
+"""
+" This creates a pagination object based on 
+"   some object passed in.
+"""
 def paginate(request, objects, count=10, param_name='page'):
 
   #This is a paginator object.

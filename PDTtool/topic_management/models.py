@@ -33,10 +33,13 @@ class Topic(models.Model):
 	#A flag for ready for review
 	readyforreview = models.BooleanField(default=False)
 
+	#The date that is set for review.
+	datesetforreview = models.DateTimeField(default=None, null=True)
+
 	#A time in minutes for presenting.
 	presentationlength = models.IntegerField(default=0)
 
-	#Released
+	#Released.
 	supervisor_released = models.BooleanField(default=False)
 
 	#A quick reference string.
@@ -53,13 +56,14 @@ class Topic(models.Model):
 	
 	#The Topic has a meeting, don't allow to add to another meeting.
 	meeting = models.ForeignKey('meeting_management.Meeting',related_name='_topicinmeeting',null=True,blank=True)
-	#The order in the schedule
+
+	#The order in the schedule.
 	scheduleorder = models.IntegerField(default=0)
 
-  #The date the row is created
+  #The date the row is created.
 	created = models.DateTimeField(auto_now_add=True)
     
-  #The date of the last edit of the row
+  #The date of the last edit of the row.
 	lastmodified = models.DateTimeField(auto_now=True)
 
 

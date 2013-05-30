@@ -1,9 +1,10 @@
 {% extends "html_base.html" %}
 {% load staticfiles %}
 {% block htmlcontent %}
+{% load nextmeeting %}
 <div class="container" style="margin-bottom: -40px;">
 
-	<h3 id="page-title">PDT Portal</h3><!-- #page-title -->
+	<h3 id="page-title" class="disable-select">PDT Portal</h3><!-- #page-title -->
 </div><!-- (boostrap) .container -->
 <!--
 
@@ -15,7 +16,7 @@
 	<a id="admin" class="btn btn-inverse dark-button" href="/admin/">admin</a>
 	{% endif %}
 	<a id="logout" class="btn btn-inverse dark-button" href="/logout/">logout</a>
-	<div id="navbar" class="span3">
+	<div id="navbar" class="span3 disable-select">
 
 		<div class="nav-block">
 			<h6>Topics</h6>
@@ -40,9 +41,11 @@
 			{% endif %}
 		</div><!-- .nav-block -->
 
+		{% sidebarmeeting request %}
+
 	</div><!-- #navbar (bootstrap) .span3 -->
 	<div id="content-wrapper" class="span8">
-		<h4>{{ title }}</h4>
+		<h4 class="disable-select">{{ title }}</h4>
 		<div id="content">
 			{% block content %}
 

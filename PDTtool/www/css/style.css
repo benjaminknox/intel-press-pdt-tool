@@ -4,6 +4,41 @@ HTML,BODY{
 	background: #f2f2f2;
 }
 
+.disable-select{
+	-webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+}
+
+.corner{
+	/* This makes corners on the div. */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.nextmeeting{
+	background: #EEEEEE;
+	border: 1px solid #CCC;
+	text-align: center;
+}
+
+#nextmeeting{
+	padding: 5px;
+	margin: 0 0 10px 0;
+	width: 105%;
+}
+
+#sidebarmeeting{
+	padding: 0 0 0 10px;
+	margin: 40px 0;
+}
+
+.nextmeeting h6{
+	margin: 0;
+}
+
 #addmeetingform1{
 	width: 610px;
 	display: none;
@@ -181,7 +216,6 @@ HTML,BODY{
 #page-title{
 	color: #072E57;
 }
-
 /*
 * These styles are in templates/dashboard/base_panel.htm
 */

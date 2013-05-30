@@ -36,4 +36,5 @@ class MeetingFormStepOne(forms.ModelForm):
 		#We change the label of fields in the form.
 		self.fields['name'].label = "Meeting Name"
 		self.fields['duedate'].label = "Submission Cut Off Date"
-		self.fields['startdate'].label = "Meeting Start Date/Time"
+		self.fields['startdate'].label = "Meeting Start Date"
+		self.fields['starttime'].label = "Meeting Start Time"

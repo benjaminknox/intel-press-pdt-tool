@@ -36,7 +36,7 @@
 	<h5>
 	{{topic.topic_object.name}}&nbsp;&nbsp;<small>{{topic.topic_object.topic_slug}}</small>
 	{% if topic.topic_object.meeting %}
-		&nbsp;&nbsp;&nbsp;<a href="/viewmeetings/#{{ topic.topic_object.meeting.publicid }}">View Meeting Schedule</a>
+		&nbsp;&nbsp;&nbsp;<a href="/viewmeetings/?month={{ topic.topic_object.meeting.startdate.month }}&year={{ topic.topic_object.meeting.startdate.year }}#{{ topic.topic_object.meeting.publicid }}">View Meeting Schedule</a>
 	{% endif %}
 	{% if  topic.topic_object.supervisor_released %}
 		<span class="label label-success margin-left-10">Approved</span>
@@ -59,7 +59,7 @@
 
 			<tr class="document_item change_document" publicid="{{ document.document_object.publicid }}">
 				<td>
-					<a href="/download/{{ document.document_object.fileName}}" class="download_link" title="{{ document.document_object.name }}">{{ document.document_object.name | truncatechars:50  }}</a>
+					<a href="/download/{{ topic.topic_object.publicid}}/{{ document.document_object.fileName}}" class="download_link" title="{{ document.document_object.name }}">{{ document.document_object.name | truncatechars:50  }}</a>
 				</td>
 				<td>
 					{% if user_is_owner %}
@@ -110,7 +110,8 @@
 				<input type="submit" class="btn btn-primary" value="Release for Review"  />
 			{% else %}
 				<span class="text-success">This has been readied for review. It is a {{ topic.topic_object.presentationlength }} minute presentation.</span>
-				<input type="submit" value="Change" class="btn btn-primary"  />
+				<input type="submit" value="Change" class="btn btn-primary"  /><br>
+				<small>This was set at {{topic.topic_object.datesetforreview}}</small>
 			{% endif %}
 			</form>
 		</div><!-- #release_interface -->

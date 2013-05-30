@@ -1,0 +1,10 @@
+<div id="sidebarmeeting" class="nextmeeting corner">
+<h6>Next Meeting</h6>
+
+{% if 'viewmeetings' in request.get_full_path %}
+<a href="javascript:view_meeting('{{ nextmeeting.publicid }}');">{{nextmeeting.name}}</a><br>
+{% else %}
+<a href="/viewmeetings/?month={{ nextmeeting.startdate.month }}&year={{ nextmeeting.startdate.year }}#{{ nextmeeting.publicid }}">{{nextmeeting.name}}</a><br>
+{% endif %}
+{{nextmeeting.startdate}},{{nextmeeting.starttime}}<br>
+</div><!-- -->

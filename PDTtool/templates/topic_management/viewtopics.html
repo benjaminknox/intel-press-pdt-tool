@@ -2,7 +2,7 @@
 
 {% block content %}
 	
-	<h4 class="pull-left text-success">All Topics</h4>
+	<h4 class="pull-left text-success disable-select">All Topics</h4>
 
 	<!-- Load the search form from dashboard.context_processors.dashboard -->
 	{{ search_form|safe }}
@@ -10,7 +10,7 @@
 	<!-- Load the topics that have been uploaded -->
 	{% if topics|length > 0 %}
 
-		<table class="table table-bordered table-striped" style="background: #F0F0F0">
+		<table class="table table-bordered table-striped" style="background: #F0F0F0;">
 		<!-- Display the topics -->
 		{% for topic in topics %}
 			<tr>
@@ -19,11 +19,14 @@
 					{% if  topic.supervisor_released %}
 						<span class="label label-success">Approved</span>
 					{% endif %}
-					{% if not  topic.supervisor_released and topic.readyforreview %}
+					{% if not  topic.supervisor_released and topic.readyforreview and not topic.meeting %}
 						<span class="label label-info">Needs Review</span>
 					{% endif %}
 					{% if not topic.supervisor_released and not topic.readyforreview %}
 						<span class="label label-default">In Progress</span>
+					{% endif %}
+					{% if topic.meeting %}
+						<a href="/viewmeetings/?month={{ topic.meeting.startdate.month }}&year={{ topic.meeting.startdate.year }}#{{topic.meeting.publicid}}"><span class="label label-important">In Meeting: '{{ topic.meeting.name }}'</span></a>
 					{% endif %}
 					</div>
 					<h5>{{ topic.name }} by {{ topic.user.first_name }} {{ topic.user.last_name }}&nbsp;&nbsp;<small>{{topic.topic_slug}}</small></h5> 
@@ -66,9 +69,9 @@
 	<script>
 		$(function(){
 
-			if(window.location.hash == '#deleted:'){
-				toastr.error('You deleted the topic.');
-			}
+			{% if Supervisor and request.GET.deleted%}
+				toastr.error('You deleted \'{{ request.GET.deleted}}\'.');	
+			{% endif %}
 
 			$(".list-topic-td").tooltip({track:true, tooltipClass: "yellow-tooltip"});
 

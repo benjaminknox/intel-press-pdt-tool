@@ -1,16 +1,16 @@
-from datetime import date
-#from django.db.models import Q
+from django.db.models import Q
+from datetime import date, datetime
 #from topic_management.models import Topic
+from topic_management.models import Topic
 from django.utils.safestring import mark_safe
 from meeting_management.models import Meeting
-from topic_management.models import Topic
 from django.shortcuts import render, redirect
 from dateutil.relativedelta import relativedelta
 from pdtresources.MeetingsCalendar import MeetingCalendar
 from pdtresources.templates import modal,form_modal
 from meeting_management.forms import MeetingFormStepOne#, MeetingFormStepTwo
 from django.contrib.auth.decorators import login_required#, user_passes_test
-from meeting_management.resources import format_time, format_date, update_meeting_schedule
+from meeting_management.resources import format_time, format_date, update_meeting_schedule, get_next_meeting, edit_meeting_form1, edit_meeting_form2, view_meeting
 
 @login_required
 def viewmeetings(request):
@@ -18,7 +18,7 @@ def viewmeetings(request):
 	"""
 	" Generate the handlers for all of the data.
 	"""
-	
+
 	"""
 	" Handle the update of the meeting information.
 	"""
@@ -44,7 +44,7 @@ def viewmeetings(request):
 		#Save the meeting.
 		meeting_to_edit.save()
 
-		return redirect('/viewmeetings/#%s'%publicid)
+		return redirect('/viewmeetings/?updated=%s#%s'%(meeting_to_edit.name,publicid))
 
 	"""
 	" End the handle of updating meeting information.
@@ -72,7 +72,7 @@ def viewmeetings(request):
 		#Save the meeting information.
 		meeting_to_edit.save()
 
-		return redirect('/viewmeetings/#%s'%publicid)
+		return redirect('/viewmeetings/?updated=%s#%s'%(meeting_to_edit.name,publicid))
 
 	"""
 	" End the handle of the update of the schedule for this meeting.
@@ -110,7 +110,7 @@ def viewmeetings(request):
 		update_meeting_schedule(newmeeting,schedule_items);
 
 		#Redirect to the meetings 
-		return redirect('/viewmeetings/')
+		return redirect('/viewmeetings/?added=%s#%s'%(newmeeting.name,newmeeting.publicid))
 
 	"""
 	" End the handle of the add meeting form.
@@ -148,11 +148,10 @@ def viewmeetings(request):
 										  deleted=False,
 										  startdate__year=displaydate.year,
 										  startdate__month=displaydate.month,
-										  )
+										  ).order_by('startdate','starttime')
 	"""
 	" End of the meetings that will be on the calendar.
 	"""
-
 
 
 	"""
@@ -166,6 +165,28 @@ def viewmeetings(request):
 
 	#Create a list with meetings in it.
 	meetings_list = []
+
+	"""
+	" Get the next meeting.
+	"""
+	nextm = get_next_meeting()
+
+
+	if nextm.startdate.month != month or nextm.startdate.year != year:
+
+		print str(nextm.startdate.month)+":"+str(nextm.startdate.year)
+		print str(month)+":"+str(year)
+
+		nextmeeting = {
+			'next_view_meeting':view_meeting(request,nextm),
+			'next_edit_meeting_form1':edit_meeting_form1(request,nextm),
+			'next_edit_meeting_form2':edit_meeting_form2(request,topics,nextm),
+		}
+
+	else:
+
+		nextmeeting = None
+
 	#Loop through each meeting on the calendar.
 	for m in meetings:
 
@@ -175,116 +196,23 @@ def viewmeetings(request):
 		" This loads the meeting view, when you click on a calendar
 		"		item this is the modal that gets loaded.
 		"""
-		#Load the meeting view.
-		view = render(request,
-											'meeting_management/viewmeeting.html',
-											#Pass in a context.
-											{
-												'meeting':m,
-												'topics':m.topics.order_by('scheduleorder')
-											}
-										#This simply means return the html
-										).content 
-
-		#Put the view into a modal.
-		modal_content = modal(request,
-								 mark_safe(view),
-									#Add a title to the modal.
-									modal_title="%s at %s" % (m.name,m.startdate),
-									#Change the modal.
-									modal_id=m.publicid
-								).content
-
-		#Create the modal.
-		view_meeting = mark_safe(modal_content)
-
-		#Merge to the meeting context variable.
-		meeting_dict['view_meeting'] = view_meeting
-
-		del view, modal_content
-
-		"""
-		" End the loading of the view meeting dict.
-		"""
-
+		view_meeting_var = view_meeting(request,m)
 		"""
 		" Load the edit meeting information form.
 		"""
-
-		form = MeetingFormStepOne({
-										'name':m.name,
-										'description':m.description,
-										'duedate':m.duedate,
-										'startdate':m.startdate,
-										'starttime':m.starttime,
-									}).as_table()
-
-
-		modal_content = form_modal(request,
-									#Add the meeting form.
-									'editmeetingform_%s'%m.publicid,
-									#Get the actual form from the form model.
-									form,
-									#Name the modal_form.
-									table_class='modal_form',
-									#Add the topics.
-									submit_text='Update',
-									#Add a modal title.
-									modal_title='Edit \'%s\'' % m.name,
-									#Add a modal_id.
-									modal_id='editmeetingform1_%s' % m.publicid,
-									#Add an extra field html.
-									extra_fields='<input type="hidden" name="update_meeting_information" value="%s"/>' % m.publicid,
-									#Add a special form action
-									action="%s#%s"% (request.get_full_path(),m.publicid)
-								)
-
-		edit_meeting_form1 = mark_safe(modal_content)
-
-		#Merge to the meeting context variable.
-		meeting_dict['edit_meeting_form1'] = edit_meeting_form1
-
-		"""
-		" End the loading of the edit meeting information form.
-		"""
-
+		edit_meeting_form1_var = edit_meeting_form1(request, m)
 		"""
 		" Load the meeting schedule editor.
 		"""
-		#Load the view for.
-		view = render(request,
-													#This is the template name.
-													'meeting_management/addmeetingform2.html',
-													{
-														#Add the topics that are in the meeting.
-														'topics':topics,
-														#Add the topics scheduled.
-														'topics_scheduled':m.topics.all(),
-														#Get the meeting.
-														'meeting':m
-													}).content
+		edit_meeting_form2_var = edit_meeting_form2(request,topics,m)
 
-		#Put the view into a modal.
-		modal_content = modal(request,
-												#Get the schedule editor, this is the drag and drop for the meetingform.
-												mark_safe(view),
-												#Add the modal title.
-												modal_title='Create a Schedule',
-												#Add the modal id.
-												modal_id='editmeetingform_%s' % m.publicid,
-												#Add a class to the modal.
-												modal_class='addmeetingform'
-										).content
-
-		#Edit the second meeting form.
-		edit_meeting_form2 = mark_safe(modal_content)
-
+		#Merge to the meeting context variable.
+		meeting_dict['view_meeting'] = view_meeting_var
+		#Merge to the meeting context variable.
+		meeting_dict['edit_meeting_form1'] = edit_meeting_form1_var
 		#Load the edit meeting dict.
-		meeting_dict['edit_meeting_form2'] = edit_meeting_form2
+		meeting_dict['edit_meeting_form2'] = edit_meeting_form2_var
 
-		"""
-		" End the loading of the schedule editor.
-		"""
 
 		#Add the meetings to the list.
 		meetings_list.append(meeting_dict)
@@ -385,6 +313,7 @@ def viewmeetings(request):
 		'meetings_list':meetings_list,
 		'meetingform':meetingform,
 		'calendar': calendar,
+		'nextmeeting':nextmeeting,
 		
 		###
 		# These are the month variables.
