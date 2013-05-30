@@ -50,11 +50,9 @@ def login(request):
 				#This is the is_superuser
 				if user.is_superuser:
 					create_groups(user)
-					try:
+					if ExtendedUser.objects.filter(user=user).count() == 0:
 						extendeduser = ExtendedUser(user=user,phonenumber="000000000")
 						extendeduser.save()
-					except:
-						pass
 
 				#Check the next variable in the url
 				#	for redirect to the original request.
