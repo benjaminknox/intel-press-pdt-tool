@@ -11,13 +11,16 @@ def sidebarmeeting(request):
 
   nextmeeting = get_next_meeting()
 
-  context = {
-    'nextmeeting': nextmeeting,
-  }
+  if nextmeeting:
+    context = {
+      'nextmeeting': nextmeeting,
+    }
 
-  template = render(request,'meeting_management/sidebarmeeting.html',context)
+    template = render(request,'meeting_management/sidebarmeeting.html',context)
 
-  return template.content
+    return template.content
+
+  return ""
 
 #Register the tag name into the templates.
 @register.simple_tag(name="nextmeeting")
@@ -25,10 +28,13 @@ def sidebarmeeting(request):
 
   nextmeeting = get_next_meeting()
 
-  context = {
-    'nextmeeting':nextmeeting,
-  }
+  if nextmeeting:
+    context = {
+      'nextmeeting':nextmeeting,
+    }
 
-  template = render(request,'meeting_management/nextmeeting.html',context)
+    template = render(request,'meeting_management/nextmeeting.html',context)
 
-  return template.content
+    return template.content
+
+  return ""

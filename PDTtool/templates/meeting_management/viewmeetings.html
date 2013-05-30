@@ -142,7 +142,11 @@ function checkforms(){
 				if(
 					fieldclass && 
 					fieldclass.indexOf('datepicker') != -1 &&
-					!fieldvalue.match(/(\d{4})-(\d|\d{2})-(\d|\d{2})/)
+					(
+						
+						!fieldvalue.match(/(\d{4})-(\d|\d{2})-(\d|\d{2})/) ||
+						fieldvalue.length > 10
+					)
 				){
 					fieldcheckstr += error_start+', please use this format: yyyy-mm-dd \r\n';
 					invalid = true;

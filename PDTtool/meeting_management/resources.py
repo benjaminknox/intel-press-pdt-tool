@@ -97,18 +97,21 @@ def get_next_meeting():
 
     ).order_by('startdate','starttime')
 
-    return nextmeeting[0]
+    if nextmeeting.count() > 0:
+        return nextmeeting[0]
+    else:
+        return False
 
 #Get the first meeting information form
 def edit_meeting_form1(request, meeting):
     
     form = MeetingFormStepOne({
-                                    'name':meeting.name,
-                                    'description':meeting.description,
-                                    'duedate':meeting.duedate,
-                                    'startdate':meeting.startdate,
-                                    'starttime':meeting.starttime,
-                                }).as_table()
+                                'name':meeting.name,
+                                'description':meeting.description,
+                                'duedate':meeting.duedate,
+                                'startdate':meeting.startdate,
+                                'starttime':meeting.starttime,
+                            }).as_table()
 
 
     modal_content = form_modal(request,

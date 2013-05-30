@@ -80,7 +80,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'HOST': 'localhost',
-        'NAME': 'django_db3',
+        'NAME': 'test_migration',
         'USER': 'django_login',
         'PASSWORD': 'Password',
     }

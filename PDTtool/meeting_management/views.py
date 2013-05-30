@@ -172,7 +172,7 @@ def viewmeetings(request):
 	nextm = get_next_meeting()
 
 
-	if nextm.startdate.month != month or nextm.startdate.year != year:
+	if nextm and (nextm.startdate.month != month or nextm.startdate.year != year):
 
 		print str(nextm.startdate.month)+":"+str(nextm.startdate.year)
 		print str(month)+":"+str(year)
