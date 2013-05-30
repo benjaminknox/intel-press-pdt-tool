@@ -504,6 +504,7 @@ def download(request,topic_publicid,fileName):
 	if not mimetype: mimetype = "application/octet-stream"
 
 	response = HttpResponse(f.read(),mimetype=mimetype)
-	response["Content-Disposition"] =  "attachment; filename=%s" % os.path.split(filepath)[1]
+	if mimetype != 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+		response["Content-Disposition"] =  "attachment; filename=%s" % os.path.split(filepath)[1]
 
 	return response

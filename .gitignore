@@ -40,6 +40,6 @@ Thumbs.db
 
 # The Ignore what's in these directorys #
 #########################################
-uploads/[^.]*
-approved/[^.]*
-deleted/[^.]*
+uploads
+approved
+deleted
