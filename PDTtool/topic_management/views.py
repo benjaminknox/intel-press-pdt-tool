@@ -504,7 +504,16 @@ def download(request,topic_publicid,fileName):
 	if not mimetype: mimetype = "application/octet-stream"
 
 	response = HttpResponse(f.read(),mimetype=mimetype)
-	if mimetype != 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+
+	#Microsoft documents error with Content-Disposition
+	#		header attached for some reason, however, if you
+	#		don't add it doesn't corrupt the file.
+	content_types = (
+		'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+	)
+
+	if mimetype not in content_types:
 		response["Content-Disposition"] =  "attachment; filename=%s" % os.path.split(filepath)[1]
 
 	return response
