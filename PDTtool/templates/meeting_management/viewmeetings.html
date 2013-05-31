@@ -47,6 +47,24 @@
 <script src="{% static 'www/js/bootbox.min.js' %}"></script>
 <script>
 
+function filter_results(publicid,search){
+	var identifier = "#"+publicid;
+	var rows = $(identifier).find('#meeting_topics > tbody > tr');
+
+	rows.each(function(){
+		var text = $(this).find('h5').text().toLowerCase();
+		var search_text = (search.length > 0)? search.toLowerCase() : 0;
+		
+		$(this).hide();
+
+		if(search_text == 0 || text.indexOf(search_text) != -1){
+			$(this).show();
+		}
+
+	});
+
+}
+
 //This function loads the meeting view.
 function view_meeting(publicid){
 	//Create an identifier for the modal.

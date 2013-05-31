@@ -1,16 +1,20 @@
 {% load filters %}
 {% if Supervisor %}
-<a href="javascript:edit_meeting('{{ meeting.publicid }}');" class="pull-right">Edit Meeting</a>
+<div class="pull-right">
+  <a href="javascript:edit_meeting('{{ meeting.publicid }}');" class="btn btn-primary btn-mini">Edit Meeting</a>&nbsp;&nbsp;
+  <a href="javascript:edit_schedule('{{ meeting.publicid }}');" class="btn btn-primary btn-mini">Edit Schedule</a>
+</div>
 {% endif %}
 <table id="meeting_topics" class="table table-bordered">
+<thead>
 <tr>
 	<th class="text-success" colspan="2">
     {{ meeting.topics.count }} Topic(s) {{ meeting.duration }} min(s)
-    {% if Supervisor %}
-    <a href="javascript:edit_schedule('{{ meeting.publicid }}');" class="pull-right">Edit Schedule</a>
-    {% endif %}
+    <input type="text" placeholder="Search Topics" class="pull-right" onkeyup="filter_results('{{ meeting.publicid }}',$(this).val());" />
   </th>
 </tr>
+</thead>
+<tbody>
 {% for topic in topics %}
 {% if not topic.deleted %}
 	<tr>
@@ -25,4 +29,5 @@
 	</tr>
 {% endif %}
 {% endfor %}
+</tbody>
 </table>
