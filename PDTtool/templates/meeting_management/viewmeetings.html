@@ -53,6 +53,8 @@ function view_meeting(publicid){
 	var identifier = '#'+publicid
 	//Show the modal.
 	$(identifier).modal();
+	//Show the modal.
+	$(identifier).css({'width':'900px','margin-left':'-450px'});
 	//Create a tooltip for the meeting.
 		$(identifier).find('td').tooltip({track:true, tooltipClass: "yellow-tooltip"}).hover(function(){
 			//Change the background of the topic on hover.
