@@ -27,13 +27,10 @@ def viewmeetings(request):
 	#		-The description.
 	#		-The start time.
 	if 'update_meeting_information' in request.POST:
-		
 		#Update this publicid
 		publicid = request.POST['update_meeting_information']
-
 		#Get the meeting to edit.
 		meeting_to_edit = Meeting.objects.get(publicid=publicid)
-		
 		#Update the meeting name.
 		meeting_to_edit.name = request.POST['name']
 		#Update the meeting description.

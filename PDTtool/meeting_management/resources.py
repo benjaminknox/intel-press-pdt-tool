@@ -147,7 +147,7 @@ def edit_meeting_form2(request,topics,meeting):
                 #Add the topics that are in the meeting.
                 'topics':topics,
                 #Add the topics scheduled.
-                'topics_scheduled':meeting.topics.all(),
+                'topics_scheduled':meeting.topics.all().order_by('scheduleorder'),
                 #Get the meeting.
                 'meeting':meeting
             }).content
