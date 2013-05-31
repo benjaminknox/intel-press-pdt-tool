@@ -241,6 +241,11 @@ $(function(){
 	toastr.success('Updated meeting \'{{ request.GET.updated }}\'');
 	{% endif %}
 
+	{% if 'deleted' in request.GET %}
+	//Then we put out a new meeting value.
+	toastr.error('Deleted meeting \'{{ request.GET.deleted }}\'');
+	{% endif %}
+
 	//Get the window location hash.
 	if(window.location.hash){
 			//Load the meeting information.

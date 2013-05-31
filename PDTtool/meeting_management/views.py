@@ -20,6 +20,40 @@ def viewmeetings(request):
 	"""
 
 	"""
+	" Handle the deletion of a meeting.
+	"""
+	#Update the meeting information, this updates just this information:
+	#		-The name.
+	#		-The description.
+	#		-The start time.
+	if 'delete_meeting' in request.POST:
+		#Update this publicid
+		publicid = request.POST['delete_meeting']
+		#Get the meeting to edit.
+		meeting_to_delete = Meeting.objects.get(publicid=publicid)
+		#Get the name of the meeting.
+		name = meeting_to_delete.name
+		#Get the topics associated with the meeting.
+		meeting_topics =	meeting_to_delete.topics
+		#Loop through all of the meeting topics
+		for t in meeting_topics.all():
+			#Set the meeting to None.
+			t.meeting = None
+			#Save the meeting.
+			t.save()
+		#Clear the meeting topics.
+		meeting_topics.clear()
+		
+		#Save the meeting.
+		meeting_to_delete.delete()
+
+		return redirect('/viewmeetings/?deleted=%s'% name)
+
+	"""
+	" End the handle of updating meeting information.
+	"""
+
+	"""
 	" Handle the update of the meeting information.
 	"""
 	#Update the meeting information, this updates just this information:

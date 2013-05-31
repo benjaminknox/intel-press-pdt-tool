@@ -1,8 +1,13 @@
 {% load filters %}
 {% if Supervisor %}
 <div class="pull-right">
+  <form action="{{ request.get_full_path }}" method="post" class="form-inline">
+  {% csrf_token %}
   <a href="javascript:edit_meeting('{{ meeting.publicid }}');" class="btn btn-primary btn-mini">Edit Meeting</a>&nbsp;&nbsp;
-  <a href="javascript:edit_schedule('{{ meeting.publicid }}');" class="btn btn-primary btn-mini">Edit Schedule</a>
+  <a href="javascript:edit_schedule('{{ meeting.publicid }}');" class="btn btn-primary btn-mini">Edit Schedule</a>&nbsp;&nbsp;
+    <input type="hidden" name="delete_meeting" value="{{ meeting.publicid }}" />
+    <input type="submit" class="btn btn-danger btn-mini" value="Delete Meeting" />
+  </form>
 </div>
 {% endif %}
 <table id="meeting_topics" class="table table-bordered">

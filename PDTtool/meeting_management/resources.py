@@ -180,13 +180,22 @@ def view_meeting(request,meeting):
             'topics':meeting.topics.order_by('scheduleorder')
         }
     #This simply means return the html
-    ).content 
+    ).content
+
+    mstartdate = meeting.startdate
+    mstarttime = meeting.starttime
+
+    textualdate = "%s %d at %s" % (
+                                 mstartdate.strftime('%B'),
+                                 mstartdate.day,
+                                 mstarttime.strftime('%I:%M %p').lstrip("0").replace('AM','a.m.').replace('PM','p.m.')
+                                )
 
     #Put the view into a modal.
     modal_content = modal(request,
      mark_safe(view),
         #Add a title to the modal.
-        modal_title="%s at %s" % (meeting.name,meeting.startdate),
+        modal_title="%s, %s" % (meeting.name,textualdate,),
         #Change the modal.
         modal_id=meeting.publicid
     ).content

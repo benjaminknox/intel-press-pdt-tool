@@ -175,7 +175,6 @@ def viewtopics(request):
 ###
 @login_required
 def viewtopic(request):
-
 	#If there is no topic.
 	notopic = True
 	#If true a Toastr notification for comments will be shown.
@@ -215,9 +214,12 @@ def viewtopic(request):
 
 	#Check for POST data
 	if request.method == 'POST':
-
+		
+		#Update the description of the topic.
 		if 'update_topic_description' in request.POST and topic_object.publicid == request.POST['update_topic_description']:
+			#Update the description.
 			topic_object.description = request.POST['description']
+			#Save the topic_object.
 			topic_object.save()
 		
 		#Ready the topic for review
@@ -229,18 +231,42 @@ def viewtopic(request):
 			request.POST[topic_ready_for_review_index] == topic_object.publicid
 			):
 
+			#Update the topic presentation length.
 			if 'topic_presentationlength' in request.POST:
+				#Set the topic ready for review.
 				readyforreview = True
+				#Set the presentation length to the length entered.
 				presentationlength = int(request.POST['topic_presentationlength'])
+				#Add a datetime for the time it was set.
 				topic_object.datesetforreview = datetime.now()
 			else:
+				#The topic is not ready for review.
 				readyforreview = False
+				#Update the presentationlength.
 				presentationlength = 15
 
+			#Set the fields in the database.
 			topic_object.readyforreview = readyforreview
 			topic_object.presentationlength = presentationlength
 
+			#Save the topic object.
 			topic_object.save()
+
+			#Reset the meeting duration.
+			if topic_object.meeting:
+				#This is the topic_meeting.
+				topic_meeting = topic_object.meeting;
+				#Set the duration to 0.
+				duration = 0
+				#Loop through each of the topic in the meeting.
+				for t in topic_meeting.topics.all():
+					#Increment the duration.
+					duration += t.presentationlength
+
+				#Set the meeting duration.
+				topic_meeting.duration = duration
+				#Save the topic meeting.
+				topic_meeting.save()
 
 		#We deleted the topic.
 		if 'deleted_topicid' in request.POST and request.POST['deleted_topicid'] == topic_object.publicid:
