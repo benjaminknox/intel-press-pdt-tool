@@ -12,6 +12,21 @@ from meeting_management.forms import MeetingFormStepOne, AddMeetingForm#, Meetin
 from django.contrib.auth.decorators import login_required#, user_passes_test
 from meeting_management.resources import format_time, format_date, update_meeting_schedule, get_next_meeting, edit_meeting_form1, edit_meeting_form2, view_meeting
 
+def meeting_url_string(meetingpublicid,special_vars=False):
+
+	meeting = Meeting.objects.get(publicid=meetingpublicid)
+
+	publicid = meeting.publicid
+	month = meeting.startdate.month
+	year = meeting.startdate.year
+
+	varstring = ""
+	if special_vars:
+		for v in special_vars:
+			varstring += "&%s=%s"%(v[0],v[1])
+
+	return '/viewmeetings/?month=%d&year=%d%s#%s'%(month,year,varstring,publicid)
+
 @login_required
 def viewmeetings(request):
 
@@ -44,10 +59,14 @@ def viewmeetings(request):
 		#Clear the meeting topics.
 		meeting_topics.clear()
 		
+		redirect_url_string = meeting_url_string(meeting_to_delete.publicid,(('deleted',meeting_to_delete.name),))
+
 		#Save the meeting.
 		meeting_to_delete.delete()
 
-		return redirect('/viewmeetings/?deleted=%s'% name)
+		#Redirect to the meetings 
+		return redirect(redirect_url_string)
+		#return redirect('/viewmeetings/?deleted=%s'% name)
 
 	"""
 	" End the handle of updating meeting information.
@@ -75,7 +94,10 @@ def viewmeetings(request):
 		#Save the meeting.
 		meeting_to_edit.save()
 
-		return redirect('/viewmeetings/?updated=%s#%s'%(meeting_to_edit.name,publicid))
+		#Redirect to the meetings 
+		return redirect(meeting_url_string(meeting_to_edit.publicid,(('updated',meeting_to_edit.name),)))
+
+		#return redirect('/viewmeetings/?updated=%s#%s'%(meeting_to_edit.name,publicid))
 
 	"""
 	" End the handle of updating meeting information.
@@ -103,7 +125,10 @@ def viewmeetings(request):
 		#Save the meeting information.
 		meeting_to_edit.save()
 
-		return redirect('/viewmeetings/?updated=%s#%s'%(meeting_to_edit.name,publicid))
+		#Redirect to the meetings 
+		return redirect(meeting_url_string(meeting_to_edit.publicid,(('updated',meeting_to_edit.name),)))
+
+		#return redirect('/viewmeetings/?updated=%s#%s'%(meeting_to_edit.name,publicid))
 
 	"""
 	" End the handle of the update of the schedule for this meeting.
@@ -141,7 +166,7 @@ def viewmeetings(request):
 		update_meeting_schedule(newmeeting,schedule_items);
 
 		#Redirect to the meetings 
-		return redirect('/viewmeetings/?added=%s#%s'%(newmeeting.name,newmeeting.publicid))
+		return redirect(meeting_url_string(newmeeting.publicid,(('added',newmeeting.name),)))
 
 	"""
 	" End the handle of the add meeting form.
