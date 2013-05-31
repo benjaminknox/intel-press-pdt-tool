@@ -33,6 +33,8 @@ class TopicForm(forms.Form):
   choices = (
       ('Proposal','Proposal'),
       ('Outline','Outline'),
+      ('Workbook','Workbook'),
+      ('Book','Book'),
       ('Guest Visit','Guest Visit'),
       ('Opens','Opens'),
   )
