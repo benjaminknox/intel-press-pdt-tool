@@ -15,3 +15,4 @@ class Topic_managementViewsTestCase(TestCase):
       resp = self.client.get('/viewtopic/')
       self.assertEqual(resp.status_code, 200)
 
+  def test_vi

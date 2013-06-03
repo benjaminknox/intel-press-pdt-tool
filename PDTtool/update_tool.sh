@@ -6,6 +6,7 @@ pip install south
 pip install django_extensions
 pip install psycopg2
 pip install python-dateutil
+pip install django-jenkins
 
 echo "Pulling from git repo:"
 

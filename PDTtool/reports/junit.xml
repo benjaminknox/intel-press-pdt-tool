@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites><testsuite name="user_management.tests.User_managementViewTestCase"><testcase classname="user_management.tests.User_managementViewTestCase" name="test_activate" time="0.219464"><error message="value too long for type character varying(30)&#10;">Traceback (most recent call last):
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/IntelPress/PDTtool/user_management/tests.py", line 94, in test_activate
+    'email' : 'bknox.contact@gmail.com'
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/local/lib/python2.7/site-packages/django/test/client.py", line 463, in post
+    response = super(Client, self).post(path, data=data, content_type=content_type, **extra)
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/local/lib/python2.7/site-packages/django/test/client.py", line 297, in post
+    return self.request(**r)
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/local/lib/python2.7/site-packages/django/test/client.py", line 424, in request
+    six.reraise(*exc_info)
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 115, in get_response
+    response = callback(request, *callback_args, **callback_kwargs)
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/IntelPress/PDTtool/pdtresources/decorators.py", line 15, in wrappedFunction
+    return fn(*args, **kw)
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/IntelPress/PDTtool/user_management/views.py", line 142, in register
+    email=formdata['email'])
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/local/lib/python2.7/site-packages/django/contrib/auth/models.py", line 186, in create_user
+    user.save(using=self._db)
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/local/lib/python2.7/site-packages/django/db/models/base.py", line 546, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/local/lib/python2.7/site-packages/django/db/models/base.py", line 650, in save_base
+    result = manager._insert([self], fields=fields, return_id=update_pk, using=using, raw=raw)
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/local/lib/python2.7/site-packages/django/db/models/manager.py", line 215, in _insert
+    return insert_query(self.model, objs, fields, **kwargs)
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/local/lib/python2.7/site-packages/django/db/models/query.py", line 1661, in insert_query
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/local/lib/python2.7/site-packages/django/db/models/sql/compiler.py", line 937, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/local/lib/python2.7/site-packages/django/db/backends/postgresql_psycopg2/base.py", line 58, in execute
+    six.reraise(utils.DatabaseError, utils.DatabaseError(*tuple(e.args)), sys.exc_info()[2])
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/local/lib/python2.7/site-packages/django/db/backends/postgresql_psycopg2/base.py", line 54, in execute
+    return self.cursor.execute(query, args)
+DatabaseError: value too long for type character varying(30)
+
+</error></testcase><testcase classname="user_management.tests.User_managementViewTestCase" name="test_login" time="0.246904"></testcase><testcase classname="user_management.tests.User_managementViewTestCase" name="test_register" time="0.162134"><failure message="Template 'user_management/registre.html' was not a template used to render the response. Actual template(s) used: user_management/register.html, user_auth_base.html, html_base.html">Traceback (most recent call last):
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/IntelPress/PDTtool/user_management/tests.py", line 80, in test_register
+    self.view_test('/register/','user_management/registre.html')
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/IntelPress/PDTtool/user_management/tests.py", line 54, in view_test
+    self.assertTemplateUsed(resp, view)
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/local/lib/python2.7/site-packages/django/test/testcases.py", line 767, in assertTemplateUsed
+    (template_name, ', '.join(template_names)))
+AssertionError: Template 'user_management/registre.html' was not a template used to render the response. Actual template(s) used: user_management/register.html, user_auth_base.html, html_base.html
+</failure></testcase></testsuite><testsuite name="topic_management.tests.Topic_managementViewsTestCase"><testcase classname="topic_management.tests.Topic_managementViewsTestCase" name="test_addtopic" time="0.003311"><failure message="302 != 200">Traceback (most recent call last):
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/IntelPress/PDTtool/topic_management/tests.py", line 8, in test_addtopic
+    self.assertEqual(resp.status_code, 200)
+AssertionError: 302 != 200
+</failure></testcase><testcase classname="topic_management.tests.Topic_managementViewsTestCase" name="test_viewtopic" time="0.002197"><failure message="302 != 200">Traceback (most recent call last):
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/IntelPress/PDTtool/topic_management/tests.py", line 16, in test_viewtopic
+    self.assertEqual(resp.status_code, 200)
+AssertionError: 302 != 200
+</failure></testcase><testcase classname="topic_management.tests.Topic_managementViewsTestCase" name="test_viewtopics" time="0.002082"><failure message="302 != 200">Traceback (most recent call last):
+  File "/home/programmer/.virtualenvs/PDTtoolJenkins/IntelPress/PDTtool/topic_management/tests.py", line 12, in test_viewtopics
+    self.assertEqual(resp.status_code, 200)
+AssertionError: 302 != 200
+</failure></testcase></testsuite></testsuites>
