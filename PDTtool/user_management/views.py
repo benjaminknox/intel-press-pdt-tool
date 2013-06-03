@@ -21,12 +21,11 @@ def login(request):
 	context = {
 		'title': 'User Login',
 		'loginerror': False,
-		'loginscreen' : True,
 	}
 	"""
 	" This is the login logic.
 	"""
-	if request.method == 'POST' and request.POST['username'] is not None and request.POST['password'] is not None:
+	if 'username' in request.POST and 'password' in request.POST:
 
 		#Get the formdata
 		formdata = {
@@ -39,8 +38,7 @@ def login(request):
 		user = authenticate(username=formdata['username'], password=formdata['password'])
 		
 		#Check if the user authenticated properly.
-		if user is not None:
-
+		if user:
 			#Check if the user is active.
 			if user.is_active:
 
@@ -49,20 +47,24 @@ def login(request):
 
 				#This is the is_superuser
 				if user.is_superuser:
+					#If the user is a super user we check to
+					#		see if the user groups are created.
 					create_groups(user)
+					#If there is not an ExtendedUser object associated with
+					#		the admin we have to create one for the admin.
 					if ExtendedUser.objects.filter(user=user).count() == 0:
+						#Create a temporary phone number.
 						extendeduser = ExtendedUser(user=user,phonenumber="000000000")
+						#Save the ExtendedUser.
 						extendeduser.save()
-
 				#Check the next variable in the url
 				#	for redirect to the original request.
-				if 'next' in request.GET:
+				if 'next' in request.GET and request.GET['next'] != '/logout/':
 					#Redirect to the original request.
 					return redirect(request.GET['next'])
 				else:
 					#Redirect to the default view.
-					return redirect('/')
-
+					return redirect('/awefwef')
 			else:
 				context['loginerror'] = "You have not been activated, please check your email"
 		else:
@@ -185,7 +187,8 @@ def register(request):
 ########
 @user_is_authenticated_decorator
 def activate(request):
-	if request.method == 'GET' and 'publicid' in request.GET and 'userid' in request.GET:
+	
+	if 'userid' in request.GET:
 
 		#Get the publicid_string
 		publicid_string = request.GET['publicid']
@@ -256,7 +259,7 @@ def forgotpassword(request):
 		'title':'Forgot Password',
 	}
 
-	if request.method == 'GET' and 'publicid' in request.GET and 'userid' in request.GET:
+	if 'publicid' in request.GET and 'userid' in request.GET:
 
 		#Get the publicid_string
 		publicid_string = request.GET['publicid']
