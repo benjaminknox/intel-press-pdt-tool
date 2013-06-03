@@ -7,10 +7,10 @@ urlpatterns = patterns('',
 	url(r'^addtopic/$', views.addtopic, name='addtopic'),
 
 	#The viewtopics script
-    url(r'^viewtopics/$', views.viewtopics, name='viewtopics'),
+  url(r'^viewtopics/$', views.viewtopics, name='viewtopics'),
 
 	#The viewtopic script
-    url(r'^viewtopic/$', views.viewtopic, name='viewtopic'),
+   url(r'^viewtopic/$', views.viewtopic, name='viewtopic'),
 
 	#The download script
 	url(r'^download/(.+)/(.+)$', views.download, name='download'),

@@ -22,8 +22,6 @@ from pdtresources.handles import create_directory, delete_topic, handle_uploaded
 @login_required
 @user_passes_test(lambda u: u.groups.filter(Q(name='Supervisor') | Q(name='Program Manager')).count() != 0)
 def addtopic(request):
-	
-	print "Hello"
 
 	context= {
 			'title':'Add Topic',
