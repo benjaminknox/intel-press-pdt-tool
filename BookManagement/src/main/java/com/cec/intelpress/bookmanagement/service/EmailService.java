@@ -2,15 +2,17 @@ package com.cec.intelpress.bookmanagement.service;
 
 import java.util.Properties;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import com.cec.intelpress.bookmanagement.domain.PdfBook;
+import com.cec.intelpress.bookmanagement.domain.TechnicalArticle;
+import com.cec.intelpress.bookmanagement.domain.User;
 
 /**
  * This is a email service used to save settings and send emails much easier
@@ -70,6 +72,23 @@ public class EmailService {
 				+ "\n\n"
 				+ "The converted file is availbile at the following location. "
 				+ serverAddress + "downloadepub/" + pdfBook.getId()
+				+ "\n\n"
+				+ "If this is a mistake, please contact CEC at the following email: support@cummings-inc.com"
+				+ "\n\n" + "Thanks!");
+		System.out.println("About to send message");
+		sendMessage(message);
+		System.out.println("Sent message");
+	}
+	
+	public void sendAssignUserEmail(User user) {
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(user.getEmail());
+		message.setSubject("You have been asigned a Technical Article!");
+		message.setFrom("no-reply@cummings-inc.com");
+		message.setText("This email has been sent in response to a Technical Article being assigned to you in the CEC Article Management System."
+				+ "\n\n"
+				+ "The converted file is availbile at the following location. "
+				+ serverAddress + "suggestedreading"
 				+ "\n\n"
 				+ "If this is a mistake, please contact CEC at the following email: support@cummings-inc.com"
 				+ "\n\n" + "Thanks!");

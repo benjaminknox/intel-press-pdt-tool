@@ -63,7 +63,7 @@ body {
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
 				</a> <a class="brand" href="/bookmanagement/"><img
-					src="/bookmanagement/img/logo-small.png" alt="logo" /></a>
+					src="/bookmanagement/img/logo-current.png" alt="logo" /></a>
 				<ul class="nav pull-left bar-root">
 					<li class="divider-vertical"></li>
 				</ul>
@@ -105,7 +105,7 @@ body {
 					<ul class="nav nav-list">
 
 						<li><a href="<c:url value="/suggestedreading"/>"><i
-								class="icon-th"></i><span>Book Management</span></a></li>
+								class="icon-th"></i><span>Article Management</span></a></li>
 
 						<li><a href="<c:url value="/" />"><i
 								class="icon-th-large"></i><span>Statistics</span></a></li>

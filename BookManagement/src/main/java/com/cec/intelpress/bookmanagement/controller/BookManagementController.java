@@ -25,6 +25,7 @@ import com.cec.intelpress.bookmanagement.domain.User;
 import com.cec.intelpress.bookmanagement.service.ArticleService;
 import com.cec.intelpress.bookmanagement.service.BookService;
 import com.cec.intelpress.bookmanagement.service.ChapterService;
+import com.cec.intelpress.bookmanagement.service.EmailService;
 import com.cec.intelpress.bookmanagement.service.UserService;
 import com.cec.intelpress.bookmanagement.util.Util;
 
@@ -50,6 +51,9 @@ public class BookManagementController {
 	
 	@Resource(name = "UserService")
 	private UserService userService;
+	
+	@Resource(name="emailService")
+	private EmailService emailService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView getBookManagement(Model model) {
@@ -178,6 +182,8 @@ public class BookManagementController {
 		if(chapter != null && user != null) {
 			chapter.setAssignedUser(user);
 			chapterService.edit(chapter);
+			//Fire off an email to the user!
+			emailService.sendAssignUserEmail(user);
 		}
 		
 		return "redirect:/suggestedreading#success=2";

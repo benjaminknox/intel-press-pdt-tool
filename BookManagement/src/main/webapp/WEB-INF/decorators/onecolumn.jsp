@@ -49,7 +49,7 @@ body {
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
 				</a> <a class="brand" href="/bookmanagement/"><img
-					src="img/logo-small.png" alt="logo" /></a>
+					src="img/logo-current.png" alt="logo" /></a>
 			</div>
 		</div>
 	</div>
