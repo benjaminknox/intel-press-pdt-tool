@@ -57,11 +57,20 @@
 					</div>
 
 					<div class="control-group">
-						<label class="control-label" for="article">Article</label>
+						<label class="control-label" for="article">Article Docx</label>
 						<div class="controls">
 							<input id="article" name="article"
 								class="input-xlarge focused" for="article"
 								placeholder="article" type="file">
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="articlePdf">Article Pdf</label>
+						<div class="controls">
+							<input id="articlePdf" name="articlePdf"
+								class="input-xlarge focused" for="articlePdf"
+								placeholder="articlePdf" type="file">
 						</div>
 					</div>
 					

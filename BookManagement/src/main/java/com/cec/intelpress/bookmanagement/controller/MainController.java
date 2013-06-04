@@ -157,29 +157,43 @@ public class MainController {
 	public String addArticle(@ModelAttribute("article") TechnicalArticle article, @PathVariable(value = "chapterId") int chapterId) throws Exception {
 		if (article != null) {
 			CommonsMultipartFile articleFile = article.getArticle();
-			if (articleFile != null) {
+			CommonsMultipartFile articlePdfFile = article.getArticlePdf();
+			
+			if (articleFile != null && articlePdfFile != null) {
 				String orgName = article.getArticle().getOriginalFilename();
-				//TODO: This, and everything that looks like this is 100% vaulnrable to many bad things
+				String orgPdfName = article.getArticlePdf().getOriginalFilename();
+				
+				//TODO: This, and everything that looks like this is 100% vulnerable to many bad things
 				String[] test = orgName.split("\\.");
-				if(test.length >= 2 && !article.getTitle().equals("")) {
+				String[] testPdf = orgPdfName.split("\\.");
+				
+				if(test.length >= 2 && testPdf.length >= 2 && !article.getTitle().equals("")) {
 					String newName = String.valueOf(UUID.randomUUID()) +"."+test[1];
+					String newPdfName = String.valueOf(UUID.randomUUID()) +"."+testPdf[1];
 					
 					//TODO: Dirty hacky please for the love of god change this later
 					String filePath = Util.UPLOADS_DIR + newName;
+					String pdfFilePath = Util.UPLOADS_DIR + newPdfName;
 					
 					//Confirm that the uploads dir exists
 					Util.validateUploads();
 					
-					if (Util.validArticleExtensions.contains(test[1])) {
+					if (Util.validArticleExtensions.contains(test[1]) && testPdf[1].equalsIgnoreCase("pdf")) {
 						File dest = new File(filePath);
+						File destPdf = new File(pdfFilePath);
 						Util.writeFileToFileSystem(article.getArticle(), dest);
-
+						Util.writeFileToFileSystem(article.getArticlePdf(), destPdf);
+						
 						Chapter chapter = chapterService.get(chapterId);
 						if (chapter != null) {
 							article.setArticleName(newName);
 							article.setArticle(null);
+							article.setArticlePdf(null);
+							article.setArticlePdfName(newPdfName);
 							articleService.add(article);
 					
+							logger.info("Pdf Upload Name!!"+newPdfName);
+							
 							logger.info("~~~~~~~ Created Article  ["+article.getId()+"] ~~~~~~~~~~~");
 							
 							chapter.setArticle(article);

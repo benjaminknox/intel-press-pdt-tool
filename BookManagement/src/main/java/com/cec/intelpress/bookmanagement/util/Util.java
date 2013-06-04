@@ -28,10 +28,18 @@ import com.cec.intelpress.bookmanagement.service.UserService;
 
 public class Util {
 
-	//public final static String UPLOADS_DIR = "src/main/webapp/uploads/";
-	public final static String UPLOADS_DIR = "webapps/bookmanagement/uploads/";
-	//public final static String PDF_DIR = "src/main/webapp/pdfs/";
-	public final static String PDF_DIR = "webapps/bookmanagement/pdfs/";
+	/* Development Dir*/
+	public final static String UPLOADS_DIR = "src/main/webapp/uploads/";
+	
+	/* Production Dir*/
+	//public final static String UPLOADS_DIR = "webapps/bookmanagement/uploads/";
+	
+	/* Development Dir*/
+	public final static String PDF_DIR = "src/main/webapp/pdfs/";
+	
+	/* PRoduction Dir*/
+	//public final static String PDF_DIR = "webapps/bookmanagement/pdfs/";
+	
 	public final static String RESOURCE_DIR = "";
 	public final static String PDF_SERVER_LOCATION = "localhost";
 	public final static int PDF_SERVER_PORT = 2000;
@@ -129,7 +137,7 @@ public class Util {
 				out.write(buf, 0, len);
 			out.close();
 			in.close();
-			logger.debug("Wrote new file to ["+destination.getAbsolutePath()+"]");
+			logger.error("Wrote new file to ["+destination.getAbsolutePath()+"]");
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("Error in writeFileToFileSystem");

@@ -29,6 +29,12 @@ public class TechnicalArticle implements Serializable {
 	@Column(name = "article")
 	private CommonsMultipartFile article;
 	
+	@Column(name = "article_pdf")
+	private CommonsMultipartFile articlePdf;	
+	
+	@Column(name = "article_pdf_name")
+	private String articlePdfName;
+	
 	@Column(name = "article_name")
 	private String articleName;
 	
@@ -85,6 +91,22 @@ public class TechnicalArticle implements Serializable {
 
 	public void setArticleName(String articleName) {
 		this.articleName = articleName;
+	}
+
+	public CommonsMultipartFile getArticlePdf() {
+		return articlePdf;
+	}
+
+	public void setArticlePdf(CommonsMultipartFile articlePdf) {
+		this.articlePdf = articlePdf;
+	}
+
+	public String getArticlePdfName() {
+		return articlePdfName;
+	}
+
+	public void setArticlePdfName(String articlePdfName) {
+		this.articlePdfName = articlePdfName;
 	}
 
 }

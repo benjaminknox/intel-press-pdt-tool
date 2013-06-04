@@ -27,7 +27,8 @@
 				<th>Name</th>
 				<th>Technical Article</th>
 				<th>Assignee</th>
-				<th>Article</th>
+				<th>Article Doc</th>
+				<th>Article Pdf</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -64,8 +65,13 @@
 							<td><a class="btn btn-maniadmin-8"
 								href="<c:url value="/uploads/${chapter.article.articleName}"/>"><i
 									class="icon-circle-arrow-down"></i></a></td>
+									
+							<td><a class="btn btn-maniadmin-8"
+								href="<c:url value="/uploads/${chapter.article.articlePdfName}"/>"><i
+									class="icon-circle-arrow-down"></i></a></td>
 						</c:when>
 						<c:otherwise>
+								<td></td>
 								<td></td>
 						</c:otherwise>
 					</c:choose>

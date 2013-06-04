@@ -21,7 +21,8 @@
 				<div id="content" class="span9 section-body">
 					<h1>Pending Conversions</h1>
 					<div id="section-body">
-						<p>The PDF conversion system is a very time and computation intensive process. On this page you can watch all of the PDF's and thier progress as they travel through the system. If a PDF is no longer listed, that means it has been completed. Completed Conversions are available <a href="/bookmanagement/pastpdf/">here</a></p>
+						<p>The PDF conversion system is a very time- and computation-intensive process. On this page you can watch all of the PDFs and their progress as they travel through the system. If a PDF is no longer listed, that means it has been completed. Completed Conversions are available 
+						  <a href="/bookmanagement/pastpdf/">here</a></p>
 						<br>
 						<table class="table table-striped">
 		                    <thead>
