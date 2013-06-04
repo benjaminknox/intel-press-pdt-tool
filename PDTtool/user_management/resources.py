@@ -36,12 +36,18 @@ def send_activation_email(request,inactive_user):
 	#Get the last name.
 	last_name = inactive_user.last_name
 
+	#Check for an HTTP_HOST
+	if 'HTTP_HOST' in request.META:
+		http_host = request.META['HTTP_HOST']
+	else:
+		http_host = 'server'
+
 	#Get the subject.
 	subject = "PDT Portal Account Activation"
 
 	#Define a message.
 	message = "Thank you for registering to the PDT Portal %s %s,\r\n\r\n"%(first_name,last_name)
-	message+= "To activate your account go to this link: http://%s/activate/?publicid=%s&userid=%s" % (request.META['HTTP_HOST'], publicid_string,extendeduser_publicid)
+	message+= "To activate your account go to this link: http://%s/activate/?publicid=%s&userid=%s" % (http_host, publicid_string,extendeduser_publicid)
 
 	#Send the email.
 	send_mail(subject, message, from_email, to_email, fail_silently=False)
@@ -80,12 +86,18 @@ def send_password_reset_email(request,user):
 	#Get the last name.
 	last_name = user.last_name
 
+	#Check for an HTTP_HOST
+	if 'HTTP_HOST' in request.META:
+		http_host = request.META['HTTP_HOST']
+	else:
+		http_host = 'server'
+
 	#Get the subject.
 	subject = "PDT Portal Reset Password"
 
 	#Define a message.
 	message = "Hi %s %s,\r\n\r\n" % (first_name,last_name)
-	message+= "To reset your password go to this link: http://%s/forgotpassword/?resetid=%s&userid=%s" % (request.META['HTTP_HOST'], publicid_string,extendeduser_publicid)
+	message+= "To reset your password go to this link: http://%s/forgotpassword/?resetid=%s&userid=%s" % (http_host, publicid_string,extendeduser_publicid)
 
 	#Send the email.
 	send_mail(subject, message, from_email, to_email, fail_silently=False)

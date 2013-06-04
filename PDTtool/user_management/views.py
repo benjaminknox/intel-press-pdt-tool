@@ -4,8 +4,8 @@ from django.shortcuts import render, redirect
 from pdtresources.handles import create_groups
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth.decorators import login_required
-from user_management.models import ExtendedUser, ActivateUserDB
 from pdtresources.decorators import user_is_authenticated_decorator
+from user_management.models import ExtendedUser, ActivateUserDB, ForgotPasswordDB
 from django.contrib.auth import authenticate,login as userlogin,logout as userlogout
 from user_management.forms import RegisterForm, ForgotPassword, AccountSettingsForm, ResetPasswordForm
 from user_management.resources import send_activation_email, send_password_reset_email, send_new_password_email
@@ -269,7 +269,7 @@ def forgotpassword(request):
 
 		try:
 			#Get the publicid database field
-			publicid = ActivateUserDB.objects.get(publicid=publicid_string)
+			publicid = ForgotPasswordDB.objects.get(publicid=publicid_string)
 			#Get the publicid database field
 			extendeduser = ExtendedUser.objects.get(publicid=extendeduser_publicid)
 		except:
@@ -298,15 +298,20 @@ def forgotpassword(request):
 
 	#Check for post data.
 	if request.method == 'POST':
+
+		###
+		# The only piece of information we are looking
+		#		for is request.POST['username'].
+		###
+
 		#If post data exists bind it to the form.
 		forgotpassword = ForgotPassword(request.POST)
 
 		#If the form is valid
 		if forgotpassword.is_valid():
-
+			
 			#Get the username.
 			username = request.POST['username']
-
 			#Get the user
 			user = User.objects.get(username=username)
 			#Send the reset password email

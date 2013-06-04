@@ -26,15 +26,15 @@ def viewusers(request):
 		"""
 		" Get the form data.
 		"""
-		#Get the username
+		#Get the username.
 		newusername = request.POST['username']
-		#Get the first name
+		#Get the first name.
 		newfirst_name = request.POST['first_name']
-		#Get the last name
+		#Get the last name.
 		newlast_name = request.POST['last_name']
-		#Get the email
+		#Get the email.
 		newemail = request.POST['email']
-		#Get the phone number
+		#Get the phone number.
 		newphonenumber = request.POST['phonenumber']
 		#Get the password.
 		newpassword = request.POST['password']

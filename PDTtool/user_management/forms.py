@@ -1,7 +1,6 @@
 #from django.forms import ModelForm
-from re import escape
 from django import forms
-from django.forms import ModelForm, widgets, TextInput
+from django.forms import TextInput
 from user_management.resources import check_existing_user
 
 """
