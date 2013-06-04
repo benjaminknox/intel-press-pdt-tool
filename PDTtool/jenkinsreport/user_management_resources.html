@@ -5,7 +5,7 @@
     
     
     <meta http-equiv='X-UA-Compatible' content='IE=emulateIE7' />
-    <title>Coverage for user_management/resources: 72%</title>
+    <title>Coverage for user_management/resources: 92%</title>
     <link rel='stylesheet' href='style.css' type='text/css'>
     
     <script type='text/javascript' src='jquery-1.4.3.min.js'></script>
@@ -21,16 +21,16 @@
 <div id='header'>
     <div class='content'>
         <h1>Coverage for <b>user_management/resources</b> :
-            <span class='pc_cov'>72%</span>
+            <span class='pc_cov'>92%</span>
         </h1>
         <img id='keyboard_icon' src='keybd_closed.png'>
         <h2 class='stats'>
             63 statements &nbsp;
-            <span class='run hide_run shortkey_r button_toggle_run'>52 run</span>
-            <span class='mis shortkey_m button_toggle_mis'>11 missing</span>
+            <span class='run hide_run shortkey_r button_toggle_run'>61 run</span>
+            <span class='mis shortkey_m button_toggle_mis'>2 missing</span>
             <span class='exc shortkey_x button_toggle_exc'>0 excluded</span>
             
-                <span class='par run hide_run shortkey_p button_toggle_par'>2 partial</span>
+                <span class='par run hide_run shortkey_p button_toggle_par'>4 partial</span>
             
         </h2>
     </div>
@@ -212,27 +212,27 @@
 <p id='n147' class='pln'><a href='#n147'>147</a></p>
 <p id='n148' class='stm run hide_run'><a href='#n148'>148</a></p>
 <p id='n149' class='pln'><a href='#n149'>149</a></p>
-<p id='n150' class='stm mis'><a href='#n150'>150</a></p>
+<p id='n150' class='stm par run hide_run'><a href='#n150'>150</a></p>
 <p id='n151' class='pln'><a href='#n151'>151</a></p>
-<p id='n152' class='stm mis'><a href='#n152'>152</a></p>
+<p id='n152' class='stm run hide_run'><a href='#n152'>152</a></p>
 <p id='n153' class='pln'><a href='#n153'>153</a></p>
 <p id='n154' class='pln'><a href='#n154'>154</a></p>
-<p id='n155' class='stm mis'><a href='#n155'>155</a></p>
+<p id='n155' class='stm run hide_run'><a href='#n155'>155</a></p>
 <p id='n156' class='pln'><a href='#n156'>156</a></p>
 <p id='n157' class='pln'><a href='#n157'>157</a></p>
-<p id='n158' class='stm mis'><a href='#n158'>158</a></p>
+<p id='n158' class='stm run hide_run'><a href='#n158'>158</a></p>
 <p id='n159' class='pln'><a href='#n159'>159</a></p>
 <p id='n160' class='pln'><a href='#n160'>160</a></p>
-<p id='n161' class='stm mis'><a href='#n161'>161</a></p>
+<p id='n161' class='stm run hide_run'><a href='#n161'>161</a></p>
 <p id='n162' class='pln'><a href='#n162'>162</a></p>
-<p id='n163' class='stm mis'><a href='#n163'>163</a></p>
+<p id='n163' class='stm run hide_run'><a href='#n163'>163</a></p>
 <p id='n164' class='pln'><a href='#n164'>164</a></p>
-<p id='n165' class='stm mis'><a href='#n165'>165</a></p>
+<p id='n165' class='stm par run hide_run'><a href='#n165'>165</a></p>
 <p id='n166' class='pln'><a href='#n166'>166</a></p>
-<p id='n167' class='stm mis'><a href='#n167'>167</a></p>
+<p id='n167' class='stm run hide_run'><a href='#n167'>167</a></p>
 <p id='n168' class='pln'><a href='#n168'>168</a></p>
 <p id='n169' class='pln'><a href='#n169'>169</a></p>
-<p id='n170' class='stm mis'><a href='#n170'>170</a></p>
+<p id='n170' class='stm run hide_run'><a href='#n170'>170</a></p>
                 
             </td>
             <td class='text' valign='top'>
@@ -385,27 +385,27 @@
 <p id='t147' class='pln'><span class='com'>#Check if a user has a group.</span><span class='strut'>&nbsp;</span></p>
 <p id='t148' class='stm run hide_run'><span class='key'>def</span> <span class='nam'>check_user_groups</span><span class='op'>(</span><span class='nam'>user</span><span class='op'>,</span> <span class='nam'>groupstocheck</span><span class='op'>)</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
 <p id='t149' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='com'>#Check that it is a string.</span><span class='strut'>&nbsp;</span></p>
-<p id='t150' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>if</span> <span class='nam'>isinstance</span><span class='op'>(</span><span class='nam'>groupstocheck</span><span class='op'>,</span><span class='nam'>str</span><span class='op'>)</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t150' class='stm par run hide_run'><span class='annotate' title='no jump to this line number'>155</span>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>if</span> <span class='nam'>isinstance</span><span class='op'>(</span><span class='nam'>groupstocheck</span><span class='op'>,</span><span class='nam'>str</span><span class='op'>)</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
 <p id='t151' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='com'>#Create a list to iterate over.</span><span class='strut'>&nbsp;</span></p>
-<p id='t152' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>groupstocheck</span> <span class='op'>=</span> <span class='op'>[</span><span class='nam'>groupstocheck</span><span class='op'>,</span><span class='op'>]</span><span class='strut'>&nbsp;</span></p>
+<p id='t152' class='stm run hide_run'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>groupstocheck</span> <span class='op'>=</span> <span class='op'>[</span><span class='nam'>groupstocheck</span><span class='op'>,</span><span class='op'>]</span><span class='strut'>&nbsp;</span></p>
 <p id='t153' class='pln'><span class='strut'>&nbsp;</span></p>
 <p id='t154' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='com'>#Create a flag to return.</span><span class='strut'>&nbsp;</span></p>
-<p id='t155' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>user_has_group</span> <span class='op'>=</span> <span class='nam'>False</span><span class='strut'>&nbsp;</span></p>
+<p id='t155' class='stm run hide_run'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>user_has_group</span> <span class='op'>=</span> <span class='nam'>False</span><span class='strut'>&nbsp;</span></p>
 <p id='t156' class='pln'><span class='strut'>&nbsp;</span></p>
 <p id='t157' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='com'>#Get the user groups.</span><span class='strut'>&nbsp;</span></p>
-<p id='t158' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>usergroups</span> <span class='op'>=</span> <span class='nam'>user</span><span class='op'>.</span><span class='nam'>groups</span><span class='op'>.</span><span class='nam'>all</span><span class='op'>(</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
+<p id='t158' class='stm run hide_run'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>usergroups</span> <span class='op'>=</span> <span class='nam'>user</span><span class='op'>.</span><span class='nam'>groups</span><span class='op'>.</span><span class='nam'>all</span><span class='op'>(</span><span class='op'>)</span><span class='strut'>&nbsp;</span></p>
 <p id='t159' class='pln'><span class='strut'>&nbsp;</span></p>
 <p id='t160' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='com'>#Loop through the groups to check.</span><span class='strut'>&nbsp;</span></p>
-<p id='t161' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>for</span> <span class='nam'>grouptocheckname</span> <span class='key'>in</span> <span class='nam'>groupstocheck</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t161' class='stm run hide_run'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>for</span> <span class='nam'>grouptocheckname</span> <span class='key'>in</span> <span class='nam'>groupstocheck</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
 <p id='t162' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='com'>#Loop through the groups that the provided user has.</span><span class='strut'>&nbsp;</span></p>
-<p id='t163' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>for</span> <span class='nam'>gobj</span> <span class='key'>in</span> <span class='nam'>usergroups</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t163' class='stm run hide_run'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>for</span> <span class='nam'>gobj</span> <span class='key'>in</span> <span class='nam'>usergroups</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
 <p id='t164' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='com'>#Check the name of the group object with the group.</span><span class='strut'>&nbsp;</span></p>
-<p id='t165' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>if</span> <span class='nam'>gobj</span><span class='op'>.</span><span class='nam'>name</span> <span class='op'>==</span> <span class='nam'>grouptocheckname</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
+<p id='t165' class='stm par run hide_run'><span class='annotate' title='no jump to this line number'>163</span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>if</span> <span class='nam'>gobj</span><span class='op'>.</span><span class='nam'>name</span> <span class='op'>==</span> <span class='nam'>grouptocheckname</span><span class='op'>:</span><span class='strut'>&nbsp;</span></p>
 <p id='t166' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='com'>#If the group is in it flag it.</span><span class='strut'>&nbsp;</span></p>
-<p id='t167' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>user_has_group</span> <span class='op'>=</span> <span class='nam'>True</span><span class='strut'>&nbsp;</span></p>
+<p id='t167' class='stm run hide_run'>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class='nam'>user_has_group</span> <span class='op'>=</span> <span class='nam'>True</span><span class='strut'>&nbsp;</span></p>
 <p id='t168' class='pln'><span class='strut'>&nbsp;</span></p>
 <p id='t169' class='pln'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='com'>#Return the user group.</span><span class='strut'>&nbsp;</span></p>
-<p id='t170' class='stm mis'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>user_has_group</span><span class='strut'>&nbsp;</span></p>
+<p id='t170' class='stm run hide_run'>&nbsp; &nbsp; &nbsp; &nbsp; <span class='key'>return</span> <span class='nam'>user_has_group</span><span class='strut'>&nbsp;</span></p>
                 
             </td>
         </tr>
