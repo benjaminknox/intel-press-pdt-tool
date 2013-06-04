@@ -103,6 +103,7 @@ public class BookService {
 		existingBook.setPublisher(book.getPublisher());
 		existingBook.setTitle(book.getTitle());
 		existingBook.setIntelPage(book.getIntelPage());
+		existingBook.setFcsDate(book.getFcsDate());
 		existingBook.setBookcovername(book.getBookcovername());
 		session.merge(existingBook);
 	}
@@ -127,6 +128,7 @@ public class BookService {
 		existingBook.setPublisher(book.getPublisher());
 		existingBook.setTitle(book.getTitle());
 		existingBook.setIntelPage(book.getIntelPage());
+		existingBook.setFcsDate(book.getFcsDate());
 		if (book.getBookcovername() != null) {
 			existingBook.setBookcovername(book.getBookcovername());
 		} else {

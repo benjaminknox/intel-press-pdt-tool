@@ -108,6 +108,14 @@
 								value="${book.intelPage}" type="text">
 						</div>
 					</div>
+					
+										<div class="control-group">
+						<label class="control-label" for="fcsDate">First Customer Shipment Date</label>
+						<div class="controls">
+							<input id="fcsDate" name="fcsDate" class="input-xlarge focused"
+								value="${book.fcsDate}" type="text" >
+						</div>
+					</div>
 
 					<div class="control-group">
 						<label class="control-label" for="suggestedReading">Suggested

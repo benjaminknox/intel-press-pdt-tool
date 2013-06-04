@@ -10,7 +10,7 @@
 <meta name='description' content='A simple page'>
 </head>
 <body>
-	<div class="span5">
+	<div class="row-fluid">
 		<img src="<c:url value="/uploads/${book.bookcovername }"/>"
 			width="100" height="120" align="left" style="padding: 10px;">
 		<h3>
@@ -24,6 +24,7 @@
 			<span><b>Publisher:</b>${book.publisher}</span><br>
 			<span><b>Author:</b>${book.author}</span><br>
 			<span><b>ISBN:</b>${book.isbn}</span><br>
+			<span><b>First Customer Ship Date:</b>${book.fcsDate}</span><br>
 		</div>
 	</div>
 	<br>

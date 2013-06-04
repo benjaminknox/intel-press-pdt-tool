@@ -172,6 +172,14 @@
 					</div>
 
 					<div class="control-group">
+						<label class="control-label" for="fcsDate">First Customer Shipment Date</label>
+						<div class="controls">
+							<input id="fcsDate" name="fcsDate" class="input-xlarge focused"
+								placeholder="January 1st 2012" type="text" >
+						</div>
+					</div>
+
+					<div class="control-group">
 						<label class="control-label" for="buyurl">BuyUrl</label>
 						<div class="controls">
 							<input id="buyurl" name="buyurl" class="input-xlarge focused"

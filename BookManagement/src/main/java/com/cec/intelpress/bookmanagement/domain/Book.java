@@ -1,6 +1,7 @@
 package com.cec.intelpress.bookmanagement.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +18,6 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 @Entity
@@ -47,6 +47,9 @@ public class Book implements Serializable {
 	@Column(name = "description", length=2560)
 	private String description;
 
+	@Column(name = "fcs_date")
+	private String fcsDate;
+	
 	@Column(name = "bookcovername")
 	private String bookcovername;
 	
@@ -161,6 +164,14 @@ public class Book implements Serializable {
 
 	public void setIntelPage(String intelPage) {
 		this.intelPage = intelPage;
+	}
+
+	public String getFcsDate() {
+		return fcsDate;
+	}
+
+	public void setFcsDate(String fcsDate) {
+		this.fcsDate = fcsDate;
 	}
 
 }
