@@ -74,7 +74,7 @@
 				
 			</div>
 			<br />
-			<a class="btn" href="/bookmanagement/admin/usermanagement/" >Back</a>
+			<a class="btn" href="/bookmanagement/" >Back</a>
 		</div>
 		<!-- Row -->
 	</div>
