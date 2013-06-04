@@ -1,6 +1,7 @@
 #! /bin/bash
 #./manage.py migrate
 echo "Installing Needed Software"
+pip install openssl-devel
 pip install django==1.5.1
 pip install south
 pip install django_extensions
