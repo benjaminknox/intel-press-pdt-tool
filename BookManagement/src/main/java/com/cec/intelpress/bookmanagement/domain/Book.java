@@ -55,6 +55,9 @@ public class Book implements Serializable {
 
 	@Column(name = "buyurl")
 	private String buyurl;
+	
+	@Column(name = "intel_page")
+	private String intelPage;
 
 	@Column(name = "category")
 	private String category;
@@ -150,6 +153,14 @@ public class Book implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getIntelPage() {
+		return intelPage;
+	}
+
+	public void setIntelPage(String intelPage) {
+		this.intelPage = intelPage;
 	}
 
 }

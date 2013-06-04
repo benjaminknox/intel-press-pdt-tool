@@ -100,6 +100,14 @@
 								value="${book.buyurl}" type="text">
 						</div>
 					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="intelPage">Intel Page</label>
+						<div class="controls">
+							<input id="intelPage" name="intelPage" class="input-xlarge focused"
+								value="${book.intelPage}" type="text">
+						</div>
+					</div>
 
 					<div class="control-group">
 						<label class="control-label" for="suggestedReading">Suggested

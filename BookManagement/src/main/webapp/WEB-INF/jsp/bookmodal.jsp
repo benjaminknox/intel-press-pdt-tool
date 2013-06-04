@@ -18,6 +18,15 @@
 		</h3>
 		<p>${book.description}</p>
 	</div>
+	<br>
+	<div class="row-fluid">
+		<div class="span12">
+			<span><b>Publisher:</b>${book.publisher}</span><br>
+			<span><b>Author:</b>${book.author}</span><br>
+			<span><b>ISBN:</b>${book.isbn}</span><br>
+		</div>
+	</div>
+	<br>
 	<c:if test="${fn:length(book.bookChapters) > 0}" >
 	
 	<table class="table table-bordered table-striped" id="example">
@@ -122,6 +131,11 @@
 			<button type="button" class="btn btn-primary" data-toggle="button">Buy
 				Now</button>
 		</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="${book.intelPage}" target="_blank">
+			<button type="button" class="btn btn-info" data-toggle="button">Intel Page</button>
+		</a>
+		
 	</div>
 	<br />
 

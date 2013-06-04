@@ -102,6 +102,7 @@ public class BookService {
 		existingBook.setIsbn(book.getIsbn());
 		existingBook.setPublisher(book.getPublisher());
 		existingBook.setTitle(book.getTitle());
+		existingBook.setIntelPage(book.getIntelPage());
 		existingBook.setBookcovername(book.getBookcovername());
 		session.merge(existingBook);
 	}
@@ -125,6 +126,7 @@ public class BookService {
 		existingBook.setIsbn(book.getIsbn());
 		existingBook.setPublisher(book.getPublisher());
 		existingBook.setTitle(book.getTitle());
+		existingBook.setIntelPage(book.getIntelPage());
 		if (book.getBookcovername() != null) {
 			existingBook.setBookcovername(book.getBookcovername());
 		} else {
