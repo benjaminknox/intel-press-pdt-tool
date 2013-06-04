@@ -297,7 +297,7 @@ class User_managementViewTestCase(TestCase):
 
     self.create_user('test.superuser', 'test')
 
-    
 
+    
     resp = self.client.get('/resetpassword/')
     self.assertEqual(resp.status_code,200) 

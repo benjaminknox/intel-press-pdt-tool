@@ -64,7 +64,7 @@ def login(request):
 					return redirect(request.GET['next'])
 				else:
 					#Redirect to the default view.
-					return redirect('/awefwef')
+					return redirect('/')
 			else:
 				context['loginerror'] = "You have not been activated, please check your email"
 		else:
