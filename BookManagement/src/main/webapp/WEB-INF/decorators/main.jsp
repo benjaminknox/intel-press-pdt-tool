@@ -104,8 +104,23 @@ body {
 				<div class="sidebar-nav">
 					<ul class="nav nav-list">
 
+						<!-- Old way -->
+						<!-- 
 						<li><a href="<c:url value="/suggestedreading"/>"><i
 								class="icon-th"></i><span>Article Management</span></a></li>
+						-->
+						<li class="accordion-menu"><a href="#collapseTwo"
+							data-toggle="collapse" class="accordion-toggle"><i
+								class="icon-list-alt"></i><span> Article Management <i
+									class="icon-chevron-down pull-right"></i></span></a>
+							<div class="accordion-body collapse dropdown" id="collapseTwo">
+								<div class="accordion-inner">
+									<ul class="nav nav-list">
+										<li><a href="<c:url value="/suggestedreading" />">All Books</a></li>
+										<li><a href="<c:url value="/myarticles" />">My Assigned Articles</a></li>
+									</ul>
+								</div>
+							</div></li>	
 
 						<li><a href="<c:url value="/" />"><i
 								class="icon-th-large"></i><span>Statistics</span></a></li>

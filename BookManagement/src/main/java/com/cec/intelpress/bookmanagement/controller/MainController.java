@@ -96,6 +96,18 @@ public class MainController {
 	    return mav;
 	}
 	
+	@RequestMapping(value = "/myarticles", method = RequestMethod.GET)
+	public ModelAndView getMyArticles(Model model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("myarticles");
+
+		User user = getCurrentLoggedInUser();
+	    List<Chapter> assigedArticles = chapterService.getAllFromUser(user);
+	    mav.addObject("user", user);
+	    mav.addObject("assigedArticles", assigedArticles);
+	    return mav;
+	}
+	
 	/**
 	 * This is used to reset a user's password, the old password must be correct,
 	 *  and the two new password's should match!

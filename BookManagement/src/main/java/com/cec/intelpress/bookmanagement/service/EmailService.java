@@ -88,7 +88,7 @@ public class EmailService {
 		message.setText("This email has been sent in response to a Technical Article being assigned to you in the CEC Article Management System."
 				+ "\n\n"
 				+ "The converted file is availbile at the following location. "
-				+ serverAddress + "suggestedreading"
+				+ serverAddress + "myarticles"
 				+ "\n\n"
 				+ "If this is a mistake, please contact CEC at the following email: support@cummings-inc.com"
 				+ "\n\n" + "Thanks!");
