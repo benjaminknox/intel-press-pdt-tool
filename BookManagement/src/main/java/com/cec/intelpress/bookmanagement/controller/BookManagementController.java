@@ -316,16 +316,14 @@ public class BookManagementController {
 			Util.writeFileToFileSystem(book.getBookcover(), dest);
 			
 			book.setBookcovername(newName);
-			book.setBookcover(null);
-			
-			bookService.edit(book, bookId);
-	
-			logger.info("Updated book!");
-			
-			return "redirect:/admin/bookmanagement/";
-		} else {
-			return "redirect:/admin/bookmanagement/editbook/"+bookId+"#error=1";
 		}
+		book.setBookcover(null);
+
+		bookService.edit(book, bookId);
+
+		logger.info("Updated book!");
+			
+		return "redirect:/admin/bookmanagement/";
 	}
 
 }

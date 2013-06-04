@@ -90,6 +90,8 @@ public class BookService {
 	public void edit(Book book) {
 		Session session = sessionFactory.getCurrentSession();
 
+		
+		
 		Book existingBook = (Book) session.get(Book.class, book.getId());
 		existingBook.setAuthor(book.getAuthor());
 		existingBook.setBookChapters(book.getBookChapters());
@@ -113,8 +115,9 @@ public class BookService {
 		Session session = sessionFactory.getCurrentSession();
 
 		Book existingBook = (Book) session.get(Book.class, oldBookId);
+		
 		existingBook.setAuthor(book.getAuthor());
-		existingBook.setBookChapters(book.getBookChapters());
+		existingBook.setBookChapters(existingBook.getBookChapters());
 		existingBook.setBookcover(book.getBookcover());
 		existingBook.setBuyurl(book.getBuyurl());
 		existingBook.setCategory(book.getCategory());
@@ -122,7 +125,11 @@ public class BookService {
 		existingBook.setIsbn(book.getIsbn());
 		existingBook.setPublisher(book.getPublisher());
 		existingBook.setTitle(book.getTitle());
-		existingBook.setBookcovername(book.getBookcovername());
+		if (book.getBookcovername() != null) {
+			existingBook.setBookcovername(book.getBookcovername());
+		} else {
+			existingBook.setBookcovername(existingBook.getBookcovername());
+		}
 		session.merge(existingBook);
 	}
 }
