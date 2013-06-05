@@ -14,7 +14,7 @@
 </div><!-- #form_element -->
 
 <!-- The main form, it does multiple file upload using a bit of JavaScript -->
-<form enctype="multipart/form-data" action="{{ request.get_full_path }}" method="POST">
+<form enctype="multipart/form-data" action="{{ request.get_full_path }}" method="POST" id="addtopicform_tag">
 	{% csrf_token %}
 	<table id="topic_info_table">
 		{{ topicform.as_table }}
@@ -87,19 +87,18 @@
 				html = '<tr id="row_'+file_form_id+'">';
 				//This is a delete file in the 
 				html+= 		'<td>';
-							//This lists the name of the document in the table.
+				//This lists the name of the document in the table.
 				html+=			'<span class="label label-success">'+uploaded_topic_name+'</span>';
 				html+=		'</td>';
 				html+= 		'<td>';
-								//This is a button to delete the file, it is within the row.
+				//This is a button to delete the file, it is within the row.
 				html+=			'<a href="javascript:void(0);" onclick="removefile('+file_form_id+')" class="del badge badge-important">x</a>';
 				html+= 		'</td>';
 				html+= "</tr>";
-
+				
 				//Append the row into the table
 				$("#docs").append(html);
 			}
-
 		}
 
 		//The removefile function deletes the uploaded
@@ -109,12 +108,44 @@
 			$("#row_"+file_form_id).remove();
 		}
 
-		//Run document load action
+		//Run document load action.
 		$(function(){
 			//Clone the first file 
 			//	form element.
 			clone_form();
+
+			//In the topic form tag add special code to format.
+			$("#addtopicform_tag").submit(function(){
+				//Define a flag to check if it is true.
+				var valid = true;
+				//Define an string for the error.
+				var err_string = "";
+				//Loop through each of the form inputs.
+				$('input,textarea,select').each(function(){
+					//Select the field input.
+					var field = $(this);
+					//Select the next tr in the dom.
+					var parent = field.closest('tr');
+					//Get the value of the field.
+					var value = field.val();
+					//Get the value of the name attribute in the field.
+					var name = field.attr('name');
+					//Get the label text value, lowercase and remove the colon.
+					var label = parent.find('label').text().toLowerCase().replace(':','');
+					//Check the length of the label if it exists
+					//		and check the length of the value.
+					if(label.length > 0 && value.length < 1){
+						//Add an error message to the string.
+						err_string += "Please fill out a "+label+".\r\n";
+						//Mark the farm as invalid.
+						valid = false;
+					}
+				});
+				//If there is a length to the error string.
+				if(err_string.length) alert(err_string);
+				//Return if the string is valid.
+				return valid;
+			});
 		});
-		
 	</script>
 {% endblock %}

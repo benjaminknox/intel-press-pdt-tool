@@ -16,13 +16,14 @@
 #		to be escaped.
 #
 ###
-def search_form(request):
+def search_form(request=None):
 
 	#Get the CSRF token from the request cookie
 	#token = request.COOKIES['csrftoken']
 
-	#Get the request path
+	#Get the request full path
 	request_full_path = request.path
+
 
 	value = ""
 	if 'search' in request.GET:
@@ -32,7 +33,7 @@ def search_form(request):
 	html = 	'<div id="search_form">'
 	html+= 		'<div class="pull-right">'
 	html+= 			'<form action="%s" class="form-inline" method="GET">' % request_full_path
-	html+=				'<a href="%s" class="btn btn-link pull-left">clear</a>' % request.path
+	html+=				'<a href="%s" class="btn btn-link pull-left">clear</a>' % request_full_path
 	#html+= 				'<input type="hidden" name="csrfmiddlewaretoken" value="%s">' % token
 	#html+= 				'<input type="text" class="datepicker" name="date" style="width: 100px" placeholder="date" />'
 	html+= 				'<input type="text" name="search" value="%s" class="input-medium search-query" />'% value

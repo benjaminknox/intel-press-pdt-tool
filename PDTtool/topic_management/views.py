@@ -29,56 +29,61 @@ def addtopic(request):
 
 	#Check for POST data.
 	if request.method == 'POST':
-		#Get the topic post data
-		topic_name = request.POST['name']
-		topic_description = request.POST['description']
-		topic_category = request.POST['category']
-		topic_user = request.user
-		topic_slug = generate_topic_slug()
-		
-		#Create a new topic and save it.
-		topic = Topic(
-									name=topic_name,
-									description=topic_description,
-									user=topic_user,
-									category=topic_category,
-									topic_slug = topic_slug
-									)
-		topic.save()
 
-		#Create a new directory for the topic.
-		directory = create_directory(topic,settings.UPLOADED_TOPIC_DIR)
+		topicform = TopicForm(request.POST)
 
-		#Get the files
-		files = request.FILES
+		if topicform.is_valid():
 
-		#Thesea re the names of hte files.
-		for name,f in files.iteritems():
+			#Get the topic post data
+			topic_name = request.POST['name']
+			topic_description = request.POST['description']
+			topic_category = request.POST['category']
+			topic_user = request.user
+			topic_slug = generate_topic_slug()
+			
+			#Create a new topic and save it.
+			topic = Topic(
+										name=topic_name,
+										description=topic_description,
+										user=topic_user,
+										category=topic_category,
+										topic_slug = topic_slug
+										)
+			topic.save()
 
-			#Single file upload
-			#Get the file
-			name = f.name
-			fileName = "%s-%s" % (uuid4(),name)
-			#The uploaded_topic_dir is in PDTtool.settings.
-			location = '%s/%s' % (directory, fileName)
-			#Handle the filesize.
-			fileSize = f.size
+			#Create a new directory for the topic.
+			directory = create_directory(topic,settings.UPLOADED_TOPIC_DIR)
 
-			#Load a new uploaded file and save it.
-			uploadedfile = Document(topic=topic,
-															location = location,
-														  name=name,
-														  fileName=fileName,
-														  size=fileSize)
-			uploadedfile.save()
+			#Get the files
+			files = request.FILES
 
-			#Save the file on to the directory.
-			handle_uploaded_file(f,location)
+			#Thesea re the names of hte files.
+			for name,f in files.iteritems():
 
-			topic.documents.add(uploadedfile)
+				#Single file upload
+				#Get the file
+				name = f.name
+				fileName = "%s-%s" % (uuid4(),name)
+				#The uploaded_topic_dir is in PDTtool.settings.
+				location = '%s/%s' % (directory, fileName)
+				#Handle the filesize.
+				fileSize = f.size
 
-		#Return the redirect.
-		return redirect('/viewtopic/?publicid=%s#added' % topic.publicid)
+				#Load a new uploaded file and save it.
+				uploadedfile = Document(topic=topic,
+																location = location,
+															  name=name,
+															  fileName=fileName,
+															  size=fileSize)
+				uploadedfile.save()
+
+				#Save the file on to the directory.
+				handle_uploaded_file(f,location)
+
+				topic.documents.add(uploadedfile)
+
+			#Return the redirect.
+			return redirect('/viewtopic/?publicid=%s#added' % topic.publicid)
 
 	else:
 		#Create an unbound post data.
@@ -124,10 +129,13 @@ def viewtopics(request):
 		#Load the topic objects into a list
 		topics_list = Topic.objects.filter(deleted=False)
 
-
+	#Check for the mytopics variable 
+	#		in the get request.
 	if 'mytopics' in request.GET:
+		#Filter the topics_list by the current logged in user=Topic.user.
 		topics_list = topics_list.filter(user=request.user).order_by('readyforreview', '-supervisor_released')
 	else:
+		#Update the 
 		topics_list = topics_list.order_by('-readyforreview', 'supervisor_released')
 
 	#Put the topics into a paginator object
@@ -281,7 +289,9 @@ def viewtopic(request):
 
 		#We approved the document.
 		if 'released_topicid' in request.POST and request.POST['released_topicid'] == topic_object.publicid:
+			#In the topic_object set the supervisor_released true.
 			topic_object.supervisor_released = True
+			#Save the topic.
 			topic_object.save()
 
 			directory = create_directory(topic_object,settings.APPROVED_TOPIC_DIR)
@@ -386,47 +396,50 @@ def viewtopic(request):
 		"""
 		#Add a comment to the topic
 		if 'topicid' in request.POST and request.POST['topicid'] == topic_object.publicid:
+			#This is the content of a topic
 			content = request.POST['content']
-
+			#Create a new comment.
 			newcomment = Comment(user=request.user,content=content)
+			#Save the comment.
 			newcomment.save()
-
+			#Add the comment to the topic.
 			topic_object.comments.add(newcomment)
-
+			#Create a variable to notify the user of success.
 			commentnotification = True
 
 		#Assumes the document exists.
 		#Add a comment to the document
 		if 'documentid' in request.POST:
-
+			#This is the publicid of the commented document.
 			documentid = request.POST['documentid']
-
+			#Get the document.
 			document_object = Document.objects.get(publicid=documentid)
-
+			#Get the content of the comment.
 			content = request.POST['content']
-			
+			#Create a new comment object.
 			newcomment = Comment(user=request.user,content=content)
+			#Save the comment.
 			newcomment.save()
-			
+			#Add the comment to the document.
 			document_object.comments.add(newcomment)
-
+			#Create a variable to notify the user of success.
 			commentnotification = True
 
 		#Assumes the comment exists.
 		#Add a reply to the comment.
 		if 'commentid' in request.POST:
-
+			#Get the publicid of the comment being replied to..
 			commentid = request.POST['commentid']
-
+			#Get the comment being replied to by publicid.
 			comment_object = Comment.objects.get(publicid=commentid)
-
+			#Get the content of the reply.
 			content = request.POST['content']
-			
+			#Create a new comment object.
 			newcomment = Comment(user=request.user,content=content)
 			newcomment.save()
-			
+			#Add the comment to the collection of comments.
 			comment_object.comments.add(newcomment)
-
+			#Add a variable to notify the user of success.
 			commentnotification = True
 
 		"""
@@ -463,35 +476,60 @@ def viewtopic(request):
 	documents = [
 		#Get all of the documents.
 		{'document_object':document,
-
+			#Get the form for updating a document, this just replaces 
+			#		the file with a new one in the topics collection of documents.
+			#	There is no revision control.
 		 'update_document_form':form_modal(request,
+		 																	#The name of the variable to identify
+		 																	#		an update document variable.
 																			'updated_documentid',
+																			#Get the form html as a table.
 																			upload_document_form().as_table(),
+																			#This is the title of the bootstrap modal.
 																			'Upload a Revised Document',
+																			#Create a text/multipart type for the form
 																			multipart=True,
+																			#Add a special identifier to the form.
 																			modal_id="update_document_"+document.publicid,
+																			#Add a custom value to the form name, it is
+																			#		used to identify the topic.
 																			formname_value=document.publicid,
+																			#Create a special action for the form to submit to.
 																			action=request.get_full_path()
 																			),
+		 #Create a modal to check if the user wants to delete the 
+		 #		document from a collection of topics.
 		 'deleted_document_form':form_modal(request,
+		 																	#This is the name of the form.
 																			'deleted_documentid',
+																			#This is the message for the document name.
 																			"You will delete '%s'"%document.name,
+																			#This is the content of the modal.
 																			'Are you sure?',
+																			#Add a special identifier to the form.
 																			modal_id="deleted_document_"+document.publicid,
+																			#Add a custom value to the form name, it is 
+																			#			used to identify the topic.
 																			formname_value=document.publicid,
+																			#Specify a custom request string.
 																			action=request.get_full_path(),
+																			#Custom submit button text.
 																			submit_text="Yes",
+																			#A custom button class.
 																			submit_button_class="btn-danger",
+																			#Custom cancel button text.
 																			close_button_text='Cancel',
+																			#Custom close button classes.
 																			close_button_class='pull-right margin-left-10'
 																			),
-		 #Get the comments.
+		 #Get the comments for the topic.
 		 'comments':[
 		 	#Get the comments for each document.
 			{'html':str(recursive_comments(request, comment.publicid))}
 			#Run a loop on the comments.
 			for comment in document.comments.all()
 		],
+		#Add a comment to the form.
 		'comment_form':comment_form(request,'document',document.publicid),
 		}
 		#Run a loop on the documents
@@ -500,20 +538,39 @@ def viewtopic(request):
 
 	#Check to see if the user owns the topic
 	if topic_object.user.id == request.user.id:
+		#Add a user to the owner of the form.
 		user_is_owner = True
 
+	#Load in some context variables.
 	context= {
+		#The textual title of the page.
 		'title':'View Topic',
+		#Add a topic to the template.
 		'topic': topic,
+		#Add documents to the template.
 		'documents': documents,
+		#A flag for whether or not a success notification
+		#		for the comments should go up.
 		'commentnotification': commentnotification,
+		#A flag for whether or not a success notification
+		#		for the release of topic should go up.
 		'releasednotification' : releasednotification,
+		#A flag for whether or not a success notification
+		#		for the updating of a document should go up.
 		'updatednotification' : updatednotification,
+		#A flag for whether or not an notification for
+		#		the updating of a document should go up.
 		'deleteddocumentdnotification' : deleteddocumentdnotification,
+		#A flag for whether or not a success notification
+		#		for the adding of a document to the
+		#		collection of topics.
 		'addednotification' : addednotification,
+		#A flag to indicate if the currently logged  in user
+		#		owns the document.
 		'user_is_owner' : user_is_owner,
 	}
 
+	#Render the template and return it for the user.
 	return render(request,
 		'topic_management/viewtopic.html',
 		context)
@@ -524,25 +581,29 @@ def viewtopic(request):
 ###
 @login_required
 def download(request,topic_publicid,fileName):
-	
+	#Get the filepath for an uploaded document
 	filepath = "%s/%s/%s" % (settings.UPLOADED_TOPIC_DIR,topic_publicid,fileName)
-
+  #Open the filepath.
 	f = open(filepath,"r")
+	#Generate the right mimetype
 	mimetype = mimetypes.guess_type(filepath)[0]
-
+	#Assign a default mimetype if none is found.
 	if not mimetype: mimetype = "application/octet-stream"
-
+	#Create an HttpResponse with the mimetype
 	response = HttpResponse(f.read(),mimetype=mimetype)
 
 	#Microsoft documents error with Content-Disposition
 	#		header attached for some reason, however, if you
 	#		don't add it doesn't corrupt the file.
-	content_types = (
+	mime_types = (
 		'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 	)
 
-	if mimetype not in content_types:
+	#Check that the mimetype isn't in the mime types above.
+	if mimetype not in mime_types:
+		#Add a Content-Disposition header to the HttpResponse.
 		response["Content-Disposition"] =  "attachment; filename=%s" % os.path.split(filepath)[1]
 
+	#Return the response.
 	return response

@@ -1,17 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 	<div class="well text-success">Thank you for uploading your files!</div><!-- (bootstrap) .well .text-success -->
-
 {% endblock %}
 
 {% block scripts %}
 <script>
 $(function(){
-
 	toastr.success('Your topic has been uploaded and can be viewed.');
-
 	var t = setTimeout("window.location = '/viewtopics/';", 2000);
 });
 </script>

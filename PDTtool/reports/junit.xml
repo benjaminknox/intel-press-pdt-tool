@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<testsuites><testsuite name="user_management.tests.User_managementViewTestCase"><testcase classname="user_management.tests.User_managementViewTestCase" name="test_accountsettings" time="0.484148"></testcase><testcase classname="user_management.tests.User_managementViewTestCase" name="test_activate" time="0.297925"></testcase><testcase classname="user_management.tests.User_managementViewTestCase" name="test_forgotpassword" time="0.388833"></testcase><testcase classname="user_management.tests.User_managementViewTestCase" name="test_login" time="0.595748"><system-out>Creating Supervisor group.
-Creating Program Manager group.
-Creating Guest group.
-</system-out></testcase><testcase classname="user_management.tests.User_managementViewTestCase" name="test_logout" time="0.266322"></testcase><testcase classname="user_management.tests.User_managementViewTestCase" name="test_register" time="0.250982"></testcase><testcase classname="user_management.tests.User_managementViewTestCase" name="test_resetpassword" time="0.647876"></testcase><testcase classname="user_management.tests.User_managementViewTestCase" name="test_viewusers" time="1.189753"></testcase></testsuite></testsuites>
+<testsuites><testsuite name="topic_management.tests.Topic_managementViewsTestCase"><testcase classname="topic_management.tests.Topic_managementViewsTestCase" name="test_MeetingForm" time="0.105090"><error message="ModelForm has no model class specified.">Traceback (most recent call last):
+  File "/home/programmer/.virtualenvs/PDTtool/IntelPress/PDTtool/topic_management/tests.py", line 26, in test_MeetingForm
+    meetingform = MeetingForm()
+  File "/home/programmer/.virtualenvs/PDTtool/IntelPress/PDTtool/topic_management/forms.py", line 9, in __init__
+    super(MeetingForm, self).__init__(*args, **kwargs)
+  File "/home/programmer/.virtualenvs/PDTtool/local/lib/python2.7/site-packages/django/forms/models.py", line 238, in __init__
+    raise ValueError('ModelForm has no model class specified.')
+ValueError: ModelForm has no model class specified.
+</error></testcase><testcase classname="topic_management.tests.Topic_managementViewsTestCase" name="test_addtopic" time="0.103867"></testcase><testcase classname="topic_management.tests.Topic_managementViewsTestCase" name="test_search_form" time="0.115510"></testcase><testcase classname="topic_management.tests.Topic_managementViewsTestCase" name="test_viewtopic" time="0.112838"></testcase><testcase classname="topic_management.tests.Topic_managementViewsTestCase" name="test_viewtopics" time="0.119485"></testcase></testsuite></testsuites>

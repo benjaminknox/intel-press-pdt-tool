@@ -19,18 +19,17 @@
 		<input type="submit" value="Delete This Topic" id="delete_button" class="btn light-button btn-mini" />
 	</form>
 	<!-- End output of the delete button -->
-	<div class=""></div>
 	{% endif %}
 
 	{% if user_is_owner %}
 
 	{{topic.add_document}}
-
+	<!-- Start the output of the document. -->
 	{% for document in documents %}
 		{{ document.update_document_form }}
 		{{ document.deleted_document_form }}
 	{% endfor %}
-
+	<!-- End the output of the document. -->
 	{% endif %}
 
 	<h5>
@@ -39,11 +38,11 @@
 		&nbsp;&nbsp;&nbsp;<a href="/viewmeetings/?month={{ topic.topic_object.meeting.startdate.month }}&year={{ topic.topic_object.meeting.startdate.year }}#{{ topic.topic_object.meeting.publicid }}">View Meeting Schedule</a>
 	{% endif %}
 	{% if  topic.topic_object.supervisor_released %}
-		<span class="label label-success margin-left-10">Approved</span>
+		<span class="label label-success margin-left-10">Approved</span><!-- .margin-left-10 (boostrap) .label .label-sucess -->
 	{% endif %}
 	</h5>
 
-	<div>
+	<div id="wrap_documents">
 		<table class="table table-striped">
 			<tr>
 				<th class="document_item add_document" publicid="{{ topic.topic_object.publicid }}">Document
@@ -99,18 +98,24 @@
 			</tr>
 
 		{% endfor %}
-		</table>
+		</table><!-- (boostrap) .table .table-striped -->
 
+		<!-- This is the display/edit of the description of the topic -->
 		<div class="well well-small">
+
+			<!-- This is the display of the description -->
 			<div id="description_display">
 				{% if Supervisor or user_is_owner %}
-					<i class="icon-edit pull-right document_button" title="Edit description."></i>
+					<i class="icon-edit pull-right document_button" title="Edit description."></i><!-- .document_button (bootstrap) .icon-edit .pull-right-->
 				{% endif %}
 				{{topic.topic_object.description}}
-			</div>
+			</div><!-- #description_display -->
+			<!-- End the display of the description -->
+
 			{% if Supervisor or user_is_owner %}
+			<!-- This is the edit form for the description -->
 			<div id="description_edit">
-				<i class="icon-remove description_remove_button pull-right document_button" title="Cancel."></i>
+				<i class="icon-remove description_remove_button pull-right document_button" title="Cancel."></i><!--.description_remove_button .document_button (bootstrap) .icon-remove .pull-right -->
 				<form action="{{ request.get_full_path }}" method="POST">
 					{% csrf_token %}
 					<input type="hidden" name="update_topic_description" value="{{ topic.topic_object.publicid }}" />
@@ -119,12 +124,18 @@
 						<input type="submit" value="Save" class="btn btn-primary" />
 					</center>
 				</form>
-			</div>
+			</div><!-- #description_edit -->
+			<!-- End the edit form for the description -->
 			{% endif %}
-		</div>
+
+		</div><!-- (bootstrap) .well .well-small -->
+		<!-- End the display/edit of the description of the topic -->
 
 		{% if Supervisor or user_is_owner %}
-		{% if not topic.topic_object.supervisor_released %}
+		
+		{% if not topic.topic_object.readyforreview %}
+
+		<!-- Start the output of a release button for adding to a meeting. -->
 		<div id="release_interface">
 			<form method="POST" action="{{ request.get_full_path }}" class="form-inline">
 				{% csrf_token %}
@@ -137,113 +148,146 @@
 				<input type="submit" value="Change" class="btn btn-primary"  /><br>
 				<small>This was set at {{topic.topic_object.datesetforreview}}</small>
 			{% endif %}
-			</form>
+			</form><!-- (bootstrap) .form-inline -->
 		</div><!-- #release_interface -->
+		<!-- End the output of a release button for adding to a meeting. -->
+
 		{% endif %}
+
 		{% endif %}
-	</div>
+	</div><!-- #wrap_documents -->
+
+	<!-- Output a form for adding feedback to the topic. -->
 	{{ topic.comment_form|safe }}
+	<!-- End output a form for adding feedback to the topic. -->
+
+	<!-- Output the comments on the form -->
 	{% for comment in topic.comments %}
 		{{ comment.html|safe }}
 	{% endfor %}
+	<!-- End output the comments on the form -->
 
 {% endblock %}
 {% block scripts %}
 <script>
-
-
 	$(function(){
 
 		{% if commentnotification %}
+			//If a comment has been added output a success notification.
 			toastr.success('Your comment has been added.');
 		{% endif %}
 
 		{% if releasednotification %}
+			//If the comment has been approved by the supervisor,
+			//		a success notification.
 			toastr.success('You have approved the topic.');
 		{% endif %}
 
 		{% if updatednotification %}
+			//If a topic has been updated, output a success notification.
 			toastr.success('You have updated your topic.');
 		{% endif %}
 
 		{% if deleteddocumentdnotification %}
+			//If a document has been deleted from the topics collection 
+			//	of documents output a red dialogue.
 			toastr.error('You have deleted one of your documents.');
 		{% endif %}
 
 		{% if addednotification %}
+			//If a document has been added to the topics collection of 
+			//	of documents.
 			toastr.success('You have added a document.');
 		{% endif %}
 
+		//Check the hash of the url for an added topic.
 		if(window.location.hash == '#added'){
+			//If a topic has been added we redirect to this 
+			//		page with the hash at the end of the url.
+			//		We output a notification.
 			toastr.success('You added \'{{ topic.topic_object.name }}\'.');
 		}
 
+		//Hide the document buttons for the interface.
 		$('.change_document .document_button').hide();
 
+		//Add a cursor pointer to the document button.
+		//Add a click action to the .document_button
+		//		objects.
 		$('.document_button').css({'cursor':'pointer'}).click(function(){
-
+				//This is shown when a user has click the edit icon next 
+				//	to the description form.
+				//If the description remove icon is clicked hide the description
+				//	form and show the description value.
 				if($(this).hasClass('description_remove_button')){
-
+					//Hide the description form.
 					$("#description_display").show();
+					//Show the description 
 					$("#description_edit").hide();
-
-
-
+					//Return to stop execution.
 					return false;
 				}
-
+				//If the description remove icon is clicked show the description
+				//	form and hide the description value.
 				if($(this).hasClass('icon-edit')){
-
+					//Show the description.
 					$("#description_display").hide();
+					//Hide the description.
 					$("#description_edit").show();
-
+					//Return to stop the execution.
 					return false;
 				}
+				
+				//The following code displays a modal based on the icon clicked.
+				//	it is the interface for editing the topic information.
 
+				//Define a variable to return the html.
 				var html = "";
-			
 				//Gets the parent tr with the publicid
 				var documentid = $(this).parent().parent().attr('publicid');
-			
+				//If .icon-upload is clicked load an upload form.
 				if($(this).hasClass('icon-upload')){
+					//Update the document id.
 					modal_id = '#update_document_'+documentid
 				}
-
-			if($(this).hasClass('icon-trash')){
-				modal_id = '#deleted_document_'+documentid
-			}
-
-			if($(this).hasClass('icon-plus-sign')){
-				modal_id = '#add_document'
-			}
-		
-			$(modal_id).modal();
-
-		});
-
-		$('.document_item').hover(function(){
-
-			var publicid = $(this).attr('publicid');
-
-			$('i[publicid="'+publicid+'"]').each(function(){
-
-				$(this).tooltip({track:true, tooltipClass: "yellow-tooltip"});
-
-				$(this).show();
-				if($(this).hasClass('icon-upload')){
-					message = 'Upload a revision.';
-				}
-
+				//If .icon-trash is clicked load a delete confirm dialogue.
 				if($(this).hasClass('icon-trash')){
-					message = 'Delete this document.';
+					//Load the deleted document form.
+					modal_id = '#deleted_document_'+documentid
 				}
-
+				//If .icon-plus-sign is click load a add document dialogue.
+				if($(this).hasClass('icon-plus-sign')){
+					//Add the modal_id
+					modal_id = '#add_document'
+				}
+				//Load the modal.
+				$(modal_id).modal();
+		});
+		//Attach a hover event to each .document_item 
+		$('.document_item').hover(
+		//On mouseover do this.
+		function(){
+			//Get the public id  of the document.s
+			var publicid = $(this).attr('publicid');
+			//Loop through each icon, the icons are interface buttons.
+			$('i[publicid="'+publicid+'"]').each(function(){
+				//Add a tooltip to each button.
+				$(this).tooltip({track:true, tooltipClass: "yellow-tooltip"});
+				//Show the icon.
+				$(this).show();
+				if($(this).hasClass('icon-upload'))	message = 'Upload a revision.';
+				if($(this).hasClass('icon-trash'))	message = 'Delete this document.';
 			});
-
-		},function(){
+		},
+		//On mouseout do this.
+		function(){
+			//Go through a class.
 			if($(this).hasClass('change_document')){
+				//Get the publicid of the topic.
 				var publicid = $(this).attr('publicid');
+				//Select each of the icons.
 				$('i[publicid="'+publicid+'"]').each(function(){
+					//Hide this topic.
 					$(this).hide();
 				});
 			}

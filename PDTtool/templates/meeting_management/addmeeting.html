@@ -1,5 +1,8 @@
 {% extends "html_base.html" %}
 {% load staticfiles %}
+
+<!-- THIS IS NOT USED RIGHT NOW | COULD BE DELETED SOON -->
+
 {% block stylesheets %}
 <style>
 BODY,HTML{
@@ -20,17 +23,19 @@ BODY,HTML{
 		{% endif %}
 		<h4>{{ title }}</h4>
 		{{ MeetingForm }}
-	</div>
+	</div><!-- .wrapper_bg (bootstrap) .container -->
 {% endblock %}
 
 {% block scripts %}
 <script src="{% static 'www/js/meeting_management/scripts.js' %}"></script>
 <script>
+//Search through the topics available.
 function search_topics(search_value){
+	//Get the title of the topic.
 	$('.topic_title').each(function(){
-
+		//Get the topic object.
 		topic_title = $(this);
-
+		//Get the topic option.
 		topic_option = $(this).parent();
 
 		label = topic_option.parent();

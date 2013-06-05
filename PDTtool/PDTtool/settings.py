@@ -89,21 +89,14 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'America/Phoenix'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
-
 STATIC_URL = '/static/'
 
 """""""""
@@ -141,6 +134,9 @@ APPROVED_TOPIC_DIR = "%s/approved" % TOPIC_PREFIX_DIR
 #This is a custom setting for the
 #   approved directory.
 DELETED_TOPIC_DIR = "%s/deleted" % TOPIC_PREFIX_DIR
+#This is the coverage of the excluded folders.
+COVERAGE_EXCLUDES_FOLDERS = ['/topic_management/migrations/*']
+
 """""""""
 " End custom settings.
 """""""""

@@ -8,18 +8,18 @@
     <input type="hidden" name="delete_meeting" value="{{ meeting.publicid }}" />
     <input type="submit" class="btn btn-danger btn-mini" value="Delete Meeting" />
   </form>
-</div>
+</div><!-- (bootstrap) .pull-right -->
 {% endif %}
 <table id="meeting_topics" class="table table-bordered">
-<thead>
-<tr>
-	<th class="text-success" colspan="2">
-    {{ meeting.topics.count }} Topic(s) {{ meeting.duration }} min(s)
-    <input type="text" placeholder="Search Topics" class="pull-right" onkeyup="filter_results('{{ meeting.publicid }}',$(this).val());" />
-  </th>
-</tr>
-</thead>
-<tbody>
+  <thead>
+  <tr>
+  	<th class="text-success" colspan="2">
+      {{ meeting.topics.count }} Topic(s) {{ meeting.duration }} min(s)
+      <input type="text" placeholder="Search Topics" class="pull-right" onkeyup="filter_results('{{ meeting.publicid }}',$(this).val());" />
+    </th><!-- (bootstrap) .text-success -->
+  </tr>
+  </thead>
+  <tbody>
 {% for topic in topics %}
 {% if not topic.deleted %}
 	<tr>
@@ -35,4 +35,4 @@
 {% endif %}
 {% endfor %}
 </tbody>
-</table>
+</table><!-- #meeting_topics (boostrap) .table .table-bordered -->
