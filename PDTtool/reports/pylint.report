@@ -1949,11 +1949,565 @@ user_management/views.py:425: [C0103, resetpassword] Invalid name "UpdatedInform
 user_management/views.py:444: [C0103, resetpassword] Invalid name "UpdatedInformation" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
 user_management/views.py:447: [C0103, resetpassword] Invalid name "PasswordMismatch" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
 user_management/views.py:450: [C0103, resetpassword] Invalid name "BadPassword" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/__init__.py:7: [W0312] Found indentation with tabs instead of spaces
+pdtresources/__init__.py:8: [W0312] Found indentation with tabs instead of spaces
+pdtresources/__init__.py:3: [C0103] Invalid name "PDTtool_path" for type constant (should match (([A-Z_][A-Z0-9_]*)|([a-z_][a-z0-9_]*)|(__.*__)|register|urlpatterns)$)
+pdtresources/__init__.py:4: [C0103] Invalid name "PDTtool_subfolders" for type constant (should match (([A-Z_][A-Z0-9_]*)|([a-z_][a-z0-9_]*)|(__.*__)|register|urlpatterns)$)
+pdtresources/__init__.py:7: [C0324] Comma not followed by a space
+	package = os.path.join(PDTtool_path,subfolder)
+                                    ^^
+pdtresources/__init__.py:8: [C0324] Comma not followed by a space
+	sys.path.insert(0,package)
+                  ^^
+pdtresources/handles.py:10: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:12: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:14: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:16: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:21: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:23: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/handles.py:25: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:27: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:31: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:32: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:33: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:35: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:36: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:38: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:39: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/handles.py:43: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:44: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:53: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:56: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:58: [W0311] Bad indentation. Found 6 spaces, expected 8
+pdtresources/handles.py:60: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:62: [W0311] Bad indentation. Found 6 spaces, expected 8
+pdtresources/handles.py:64: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:66: [W0311] Bad indentation. Found 6 spaces, expected 8
+pdtresources/handles.py:67: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:69: [W0311] Bad indentation. Found 6 spaces, expected 8
+pdtresources/handles.py:72: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:75: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:77: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/handles.py:81: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:102: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:104: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/handles.py:105: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/handles.py:107: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:108: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:109: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:110: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/handles.py:111: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:113: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:116: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/handles.py:117: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/handles.py:119: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:120: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:121: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:122: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/handles.py:123: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:125: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:128: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/handles.py:129: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/handles.py:131: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:132: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:133: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:134: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/handles.py:135: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:137: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/handles.py:139: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/handles.py:141: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/handles.py:142: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/handles.py:3: [C0324] Comma not followed by a space
+from shutil import rmtree,move
+                         ^^
+pdtresources/handles.py:8: [C0324, create_directory] Comma not followed by a space
+def create_directory(topic,base_dir=settings.PROJECT_DIR,delete=True):
+                          ^^
+pdtresources/handles.py:10: [C0324, create_directory] Comma not followed by a space
+  directory = "%s/%s" % (base_dir,topic.publicid)
+                                 ^^
+pdtresources/handles.py:12: [C0321, create_directory] More than one statement on a single line
+pdtresources/handles.py:19: [C0324, handle_uploaded_file] Comma not followed by a space
+def handle_uploaded_file(f,location):
+                          ^^
+pdtresources/handles.py:19: [C0103, handle_uploaded_file] Invalid name "f" for type argument (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/handles.py:19: [C0103, handle_uploaded_file] Invalid name "f" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/handles.py:39: [C0324, delete_topic] Comma not followed by a space
+    move(directory,deldirectory)
+                  ^^
+pdtresources/handles.py:44: [C0321, permantently_delete_topic] More than one statement on a single line
+pdtresources/handles.py:49: [W0105] String statement has no effect
+pdtresources/handles.py:99: [W0105] String statement has no effect
+pdtresources/handles.py:104: [C0103, create_groups] Invalid name "Supervisor" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/handles.py:107: [C0103, create_groups] Invalid name "Supervisor" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/handles.py:111: [C0103, create_groups] Invalid name "Supervisor" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/handles.py:116: [C0103, create_groups] Invalid name "ProgramManager" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/handles.py:119: [C0103, create_groups] Invalid name "ProgramManager" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/handles.py:123: [C0103, create_groups] Invalid name "ProgramManager" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/handles.py:128: [C0103, create_groups] Invalid name "Guest" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/handles.py:131: [C0103, create_groups] Invalid name "Guest" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/handles.py:135: [C0103, create_groups] Invalid name "Guest" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/handles.py:139: [C0324, create_groups] Comma not followed by a space
+    user.groups.add(Supervisor,ProgramManager)
+                              ^^
+pdtresources/MeetingsCalendar.py:39: [C0301] Line too long (198/160)
+pdtresources/MeetingsCalendar.py:39: [C0324, MeetingCalendar.formatday] Comma not followed by a space
+                    body.append('<a href="javascript:view_meeting(\'%s\');" class="meeting_link" title="Click to view \'%s\'. %s topics.">'%(meeting.publicid,meeting.name,len(meeting.topics.all())))
+                                                                                                                                                             ^^
+pdtresources/MeetingsCalendar.py:47: [C0324, MeetingCalendar.formatday] Comma not followed by a space
+                return self.day_cell(cssclass, '%d %s' % (day, ''.join(body)),day)
+                                                                             ^^
+pdtresources/MeetingsCalendar.py:54: [W0221, MeetingCalendar.formatmonth] Arguments number differs from overridden method
+pdtresources/MeetingsCalendar.py:78: [C0324, MeetingCalendar.day_cell] Comma not followed by a space
+        return '<td class="%s" date-value="%s-%s-%s">%s%s</td>' % (cssclass,self.year,self.month,day,add_calendar_item,body)
+                                                                           ^^
+pdtresources/MeetingsCalendar.py:56: [W0201, MeetingCalendar.formatmonth] Attribute 'month' defined outside __init__
+pdtresources/MeetingsCalendar.py:56: [W0201, MeetingCalendar.formatmonth] Attribute 'year' defined outside __init__
+pdtresources/comments.py:12: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:14: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:16: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:19: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:21: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:22: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:24: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:25: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:26: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:27: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:31: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:32: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:34: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:37: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:39: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:41: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:43: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:45: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:47: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:49: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:51: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:53: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:55: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:58: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:66: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:68: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:71: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:74: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:76: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:78: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:80: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:82: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:84: [C0301] Line too long (188/160)
+pdtresources/comments.py:84: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:86: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:88: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:91: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:94: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:97: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:99: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:101: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:104: [W0312] Found indentation with tabs instead of spaces
+pdtresources/comments.py:19: [C0323, comment_form] Operator not followed by a space
+	action_url = "%s?publicid=%s"%(request.path,request.GET['publicid'])
+                              ^
+pdtresources/comments.py:22: [C0323, comment_form] Operator not followed by a space
+		action_url += '&currentmeeting=%s'%request.GET['currentmeeting']
+                                    ^
+pdtresources/comments.py:34: [C0322, comment_form] Operator not preceded by a space
+		addfeedback+= '<a href="javascript:void(0);" onclick="$(\'#%s\').toggle();">Add Feedback</a>'%form_div_id
+             ^^
+pdtresources/comments.py:39: [C0322, comment_form] Operator not preceded by a space
+	content+= '<div id="%s" class="comment_form">'% form_div_id
+        ^^
+pdtresources/comments.py:41: [C0322, comment_form] Operator not preceded by a space
+	content+= 	'<form action="%s" method="POST">'% action_url
+        ^^
+pdtresources/comments.py:43: [C0322, comment_form] Operator not preceded by a space
+	content+= 		'<input type="hidden" name="csrfmiddlewaretoken" value="%s" />'% csrftoken
+        ^^
+pdtresources/comments.py:45: [C0322, comment_form] Operator not preceded by a space
+	content+=		'<input type="hidden" name="%s" value="%s" />'% (commented_object_field_name, commented_object_id_string,)
+        ^^
+pdtresources/comments.py:47: [C0322, comment_form] Operator not preceded by a space
+	content+=		'<textarea name="content"></textarea><br>'
+        ^^
+pdtresources/comments.py:49: [C0322, comment_form] Operator not preceded by a space
+	content+=		'<button type="submit" class="btn btn-primary lighter-button">Comment</button>'
+        ^^
+pdtresources/comments.py:51: [C0322, comment_form] Operator not preceded by a space
+	content+=	'</form>'
+        ^^
+pdtresources/comments.py:53: [C0322, comment_form] Operator not preceded by a space
+	content+= 	'<div class="clear-fix"></div> <!-- (bootstrap) .clear-fix -->'
+        ^^
+pdtresources/comments.py:55: [C0322, comment_form] Operator not preceded by a space
+	content+= '</div><!-- #%s -->'% form_div_id
+        ^^
+pdtresources/comments.py:76: [C0322, recursive_comments] Operator not preceded by a space
+	content+=	'<h6>%s says:</h6>' % parentcomment.user.get_full_name()
+        ^^
+pdtresources/comments.py:78: [C0322, recursive_comments] Operator not preceded by a space
+	content+=	'<div class="comment_body">'
+        ^^
+pdtresources/comments.py:80: [C0322, recursive_comments] Operator not preceded by a space
+	content+= 		comment_text
+        ^^
+pdtresources/comments.py:82: [C0322, recursive_comments] Operator not preceded by a space
+	content+=	'</div><!-- .comment_body -->'
+        ^^
+pdtresources/comments.py:84: [C0322, recursive_comments] Operator not preceded by a space
+	content+=	'<a href="javascript:void(0)" class="btn btn-small reply_button" style="margin-top: -4px;" onclick="$(\'#comment_comment_form_%s\').toggle();">reply</a>'% parentcomment.publicid
+        ^^
+pdtresources/comments.py:86: [C0322, recursive_comments] Operator not preceded by a space
+	content+= 	'<div class="clear-fix"></div>'
+        ^^
+pdtresources/comments.py:88: [C0322, recursive_comments] Operator not preceded by a space
+	content+= '</div><!-- .commetn_content -->'
+        ^^
+pdtresources/comments.py:91: [C0324, recursive_comments] Comma not followed by a space
+	content += comment_form(request,'comment',parentcomment.publicid)
+                                ^^
+pdtresources/comments.py:101: [C0324, recursive_comments] Comma not followed by a space
+			content += recursive_comments(request,childcomment.publicid,False)
+                                        ^^
+pdtresources/comments.py:104: [C0324, recursive_comments] Comma not followed by a space
+	return '<div class="comment_content_wrapper %s pull-right">%s<div class="clear-fix"></div></div><!-- .%s -->'% (commentclass, content,commentclass)
+                                                                                                                                      ^^
+pdtresources/tests.py:9: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/tests.py:11: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/tests.py:12: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/tests.py:13: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/tests.py:16: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/tests.py:19: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/tests.py:21: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/tests.py:22: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/tests.py:25: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/tests.py:37: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/tests.py:39: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/tests.py:42: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/tests.py:16: [C0324, Pdtresources_TestCase.test_meetingcalendar] Comma not followed by a space
+    calendar = MeetingCalendar({}).formatmonth(year,month)
+                                                   ^^
+pdtresources/tests.py:19: [C0324, Pdtresources_TestCase.test_meetingcalendar] Comma not followed by a space
+    self.assertIn('today',calendar)
+                         ^^
+pdtresources/tests.py:22: [C0324, Pdtresources_TestCase.test_meetingcalendar] Comma not followed by a space
+    extuser = self.create_user(username,password='test')
+                                       ^^
+pdtresources/tests.py:42: [C0324, Pdtresources_TestCase.test_meetingcalendar] Comma not followed by a space
+    self.assertIn('filled',calendar)
+                          ^^
+pdtresources/tests.py:7: [R0904, Pdtresources_TestCase] Too many public methods (74/50)
+pdtresources/testsimplifier.py:10: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/testsimplifier.py:11: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:12: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:15: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/testsimplifier.py:16: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:17: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:20: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/testsimplifier.py:21: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:22: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:25: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/testsimplifier.py:26: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:27: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:30: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/testsimplifier.py:33: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:34: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:36: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:40: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:42: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:43: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:44: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:46: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:48: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:51: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/testsimplifier.py:54: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:66: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:69: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/testsimplifier.py:77: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:82: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:83: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:84: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:86: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:88: [W0311] Bad indentation. Found 8 spaces, expected 12
+pdtresources/testsimplifier.py:90: [W0311] Bad indentation. Found 8 spaces, expected 12
+pdtresources/testsimplifier.py:91: [W0311] Bad indentation. Found 8 spaces, expected 12
+pdtresources/testsimplifier.py:92: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:93: [W0311] Bad indentation. Found 8 spaces, expected 12
+pdtresources/testsimplifier.py:97: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:99: [W0311] Bad indentation. Found 8 spaces, expected 12
+pdtresources/testsimplifier.py:100: [W0311] Bad indentation. Found 12 spaces, expected 16
+pdtresources/testsimplifier.py:101: [W0311] Bad indentation. Found 14 spaces, expected 20
+pdtresources/testsimplifier.py:102: [W0311] Bad indentation. Found 12 spaces, expected 16
+pdtresources/testsimplifier.py:104: [W0311] Bad indentation. Found 14 spaces, expected 20
+pdtresources/testsimplifier.py:106: [W0311] Bad indentation. Found 14 spaces, expected 20
+pdtresources/testsimplifier.py:108: [W0311] Bad indentation. Found 12 spaces, expected 16
+pdtresources/testsimplifier.py:111: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:115: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/testsimplifier.py:117: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:120: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:122: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:125: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:128: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/testsimplifier.py:134: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/testsimplifier.py:143: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:146: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:150: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:156: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:157: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:159: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:161: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/testsimplifier.py:163: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:164: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:166: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/testsimplifier.py:168: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/testsimplifier.py:169: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/testsimplifier.py:172: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/testsimplifier.py:179: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/testsimplifier.py:180: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/testsimplifier.py:181: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/testsimplifier.py:185: [W0311] Bad indentation. Found 6 spaces, expected 12
+pdtresources/testsimplifier.py:10: [C0324, Testsimplifier.checkTemplateUsed] Comma not followed by a space
+  def checkTemplateUsed(self,resp,templatename,resp_status_code=200):
+                            ^^
+pdtresources/testsimplifier.py:12: [C0324, Testsimplifier.checkTemplateUsed] Comma not followed by a space
+    self.assertTemplateUsed(resp,templatename)
+                                ^^
+pdtresources/testsimplifier.py:15: [C0324, Testsimplifier.checkRespContains] Comma not followed by a space
+  def checkRespContains(self,resp,string,resp_status_code=200):
+                            ^^
+pdtresources/testsimplifier.py:17: [C0324, Testsimplifier.checkRespContains] Comma not followed by a space
+    self.assertContains(resp,string)
+                            ^^
+pdtresources/testsimplifier.py:20: [C0324, Testsimplifier.checkRespNotContains] Comma not followed by a space
+  def checkRespNotContains(self,resp,string,resp_status_code=200):
+                               ^^
+pdtresources/testsimplifier.py:22: [C0324, Testsimplifier.checkRespNotContains] Comma not followed by a space
+    self.assertNotContains(resp,string)
+                               ^^
+pdtresources/testsimplifier.py:25: [C0324, Testsimplifier.checkRedirects] Comma not followed by a space
+  def checkRedirects(self,resp,urlstring='/',resp_status_code=302,target_status_code=200):
+                         ^^
+pdtresources/testsimplifier.py:27: [C0324, Testsimplifier.checkRedirects] Comma not followed by a space
+    self.assertRedirects(resp,urlstring,target_status_code=target_status_code)
+                             ^^
+pdtresources/testsimplifier.py:30: [C0324, Testsimplifier.checkUserLoginViews] Comma not followed by a space
+  def checkUserLoginViews(self,url,redirect_url):
+                              ^^
+pdtresources/testsimplifier.py:40: [C0103, Testsimplifier.checkUserLoginViews] Invalid name "C" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/testsimplifier.py:42: [C0324, Testsimplifier.checkUserLoginViews] Comma not followed by a space
+    C.login(username='test.user',password='test')
+                                ^^
+pdtresources/testsimplifier.py:44: [C0324, Testsimplifier.checkUserLoginViews] Comma not followed by a space
+    self.checkRedirects(resp, redirect_url,target_status_code=302)
+                                          ^^
+pdtresources/testsimplifier.py:51: [C0324, Testsimplifier.register_form] Comma not followed by a space
+  def register_form(self,username):
+                        ^^
+pdtresources/testsimplifier.py:88: [C0324, Testsimplifier.create_user] Comma not followed by a space
+        exttestuser = ExtendedUser(user=testuser,phonenumber='0000000000')
+                                                ^^
+pdtresources/testsimplifier.py:99: [C0103, Testsimplifier.create_user] Invalid name "g" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/testsimplifier.py:133: [W0105, Testsimplifier] String statement has no effect
+pdtresources/testsimplifier.py:134: [C0103, Testsimplifier.view_test] Invalid name "C" for type argument (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/testsimplifier.py:137: [C0103, Testsimplifier.view_test] Invalid name "C" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/testsimplifier.py:156: [C0324, Testsimplifier.view_test] Comma not followed by a space
+    C.login(username=username,password=password)
+                             ^^
+pdtresources/testsimplifier.py:159: [C0324, Testsimplifier.view_test] Comma not followed by a space
+    self.assertEqual(resp.status_code,302)
+                                     ^^
+pdtresources/testsimplifier.py:159: [E1103, Testsimplifier.view_test] Instance of 'WSGIRequest' has no 'status_code' member (but some types could not be inferred)
+pdtresources/testsimplifier.py:161: [C0324, Testsimplifier.add_topic_form] Comma not followed by a space
+  def add_topic_form(self,C,url='/addtopic/',description=''):
+                         ^^
+pdtresources/testsimplifier.py:161: [C0103, Testsimplifier.add_topic_form] Invalid name "C" for type argument (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/testsimplifier.py:161: [C0103, Testsimplifier.add_topic_form] Invalid name "C" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/testsimplifier.py:163: [C0103, Testsimplifier.add_topic_form] Invalid name "f1" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/testsimplifier.py:164: [C0103, Testsimplifier.add_topic_form] Invalid name "f2" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/testsimplifier.py:166: [C0321, Testsimplifier.add_topic_form] More than one statement on a single line
+pdtresources/testsimplifier.py:172: [C0103, Testsimplifier.add_topic_form] Invalid name "postData" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/testsimplifier.py:179: [C0324, Testsimplifier.add_topic_form] Comma not followed by a space
+      resp = C.post(url,postData)
+                       ^^
+pdtresources/testsimplifier.py:181: [C0324, Testsimplifier.add_topic_form] Comma not followed by a space
+      self.assertIn('viewtopic/',resp['Location'])
+                                ^^
+pdtresources/testsimplifier.py:185: [C0324, Testsimplifier.add_topic_form] Comma not followed by a space
+      return Topic.objects.get(name = document_name,description=document_desc)
+                                                   ^^
+pdtresources/testsimplifier.py:8: [R0904, Testsimplifier] Too many public methods (73/50)
+pdtresources/testsimplifier.py:5: [W0611] Unused import Document
+pdtresources/decorators.py:8: [W0312] Found indentation with tabs instead of spaces
+pdtresources/decorators.py:10: [W0312] Found indentation with tabs instead of spaces
+pdtresources/decorators.py:10: [W0301] Unnecessary semicolon
+pdtresources/decorators.py:12: [W0312] Found indentation with tabs instead of spaces
+pdtresources/decorators.py:13: [W0312] Found indentation with tabs instead of spaces
+pdtresources/decorators.py:15: [W0312] Found indentation with tabs instead of spaces
+pdtresources/decorators.py:17: [W0312] Found indentation with tabs instead of spaces
+pdtresources/decorators.py:7: [C0103, user_is_authenticated_decorator] Invalid name "fn" for type argument (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/decorators.py:7: [C0103, user_is_authenticated_decorator] Invalid name "fn" for type variable (should match [a-z_][a-z0-9_]{2,30}$)
+pdtresources/templates.py:13: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:20: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:25: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:30: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:52: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:53: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:54: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:55: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:60: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:65: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:67: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:72: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:73: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:74: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:75: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:79: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:80: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:81: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:82: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:86: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:100: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:113: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:117: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:118: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:119: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:119: [W0301] Unnecessary semicolon
+pdtresources/templates.py:120: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:122: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:123: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:123: [W0301] Unnecessary semicolon
+pdtresources/templates.py:124: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:125: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:126: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:128: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:142: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:154: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:178: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:195: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:207: [W0312] Found indentation with tabs instead of spaces
+pdtresources/templates.py:24: [C0324, submit_button_string] Comma not followed by a space
+def submit_button_string(value,classname=""):
+                              ^^
+pdtresources/templates.py:25: [C0324, submit_button_string] Comma not followed by a space
+	return '<input type="submit" value="%s"  class="btn %s" />' % (value,classname)
+                                                                     ^^
+pdtresources/templates.py:30: [C0323, tr_string] Operator not followed by a space
+	return '<tr><td></td><td>%s<td></tr>'%string
+                                      ^
+pdtresources/templates.py:35: [R0913, output_form_as_table] Too many arguments (14/10)
+pdtresources/templates.py:35: [R0914, output_form_as_table] Too many local variables (18/15)
+pdtresources/templates.py:60: [C0324, output_form_as_table] Comma not followed by a space
+	hidden_fields_list.append(input_string('hidden',formname,value=formname_value))
+                                                ^^
+pdtresources/templates.py:67: [C0324, output_form_as_table] Comma not followed by a space
+		action = "%s?%s" % (request.path,get_string)
+                                  ^^
+pdtresources/templates.py:118: [C0324, topic_html] Comma not followed by a space
+	html = '<div id="%s" class="topic_option" publicid="%s">' % (topic.id,publicid)
+                                                                      ^^
+pdtresources/templates.py:119: [C0322, topic_html] Operator not preceded by a space
+	html+= 		'<div class="topic_title">';
+     ^^
+pdtresources/templates.py:120: [C0322, topic_html] Operator not preceded by a space
+	html+= 		'%s by %s'%(topic.name,topic.user.get_full_name())
+     ^^
+pdtresources/templates.py:122: [C0322, topic_html] Operator not preceded by a space
+	html+= 		'</div>'
+     ^^
+pdtresources/templates.py:123: [C0322, topic_html] Operator not preceded by a space
+	html+= 		'<div class="topic_description">';
+     ^^
+pdtresources/templates.py:124: [C0322, topic_html] Operator not preceded by a space
+	html+= topic.description
+     ^^
+pdtresources/templates.py:125: [C0322, topic_html] Operator not preceded by a space
+	html+= 		'</div>'
+     ^^
+pdtresources/templates.py:126: [C0322, topic_html] Operator not preceded by a space
+	html+= '</div>'
+     ^^
+pdtresources/templates.py:154: [C0324, modal] Comma not followed by a space
+	return render(request,'resources/modal.html',context)
+                      ^^
+pdtresources/templates.py:158: [R0913, form_modal] Too many arguments (18/10)
+pdtresources/templates.py:158: [R0914, form_modal] Too many local variables (19/15)
+pdtresources/templatetags/filters.py:11: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/templatetags/filters.py:20: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/templatetags/filters.py:21: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/templatetags/filters.py:22: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/templatetags/filters.py:23: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/templatetags/filters.py:24: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/templatetags/filters.py:25: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/templatetags/filters.py:26: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/templatetags/filters.py:27: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/templatetags/filters.py:28: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/templatetags/filters.py:29: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/templatetags/filters.py:30: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/templatetags/filters.py:31: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/templatetags/filters.py:5: [W0105] String statement has no effect
+pdtresources/templatetags/randomgen.py:8: [W0105] String statement has no effect
+pdtresources/templatetags/randomgen.py:40: [C0324, RandomgenNode.render] Comma not followed by a space
+            result = random.randrange(1,300000000)
+                                       ^^
+pdtresources/templatetags/nextmeeting.py:12: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/templatetags/nextmeeting.py:14: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/templatetags/nextmeeting.py:15: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/templatetags/nextmeeting.py:19: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/templatetags/nextmeeting.py:21: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/templatetags/nextmeeting.py:23: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/templatetags/nextmeeting.py:29: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/templatetags/nextmeeting.py:31: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/templatetags/nextmeeting.py:32: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/templatetags/nextmeeting.py:36: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/templatetags/nextmeeting.py:38: [W0311] Bad indentation. Found 4 spaces, expected 8
+pdtresources/templatetags/nextmeeting.py:40: [W0311] Bad indentation. Found 2 spaces, expected 4
+pdtresources/templatetags/nextmeeting.py:19: [W0621, sidebarmeeting] Redefining name 'template' from outer scope (line 1)
+pdtresources/templatetags/nextmeeting.py:19: [C0324, sidebarmeeting] Comma not followed by a space
+    template = render(request,'meeting_management/sidebarmeeting.html',context)
+                             ^^
+pdtresources/templatetags/nextmeeting.py:36: [W0621, sidebarmeeting] Redefining name 'template' from outer scope (line 1)
+pdtresources/templatetags/nextmeeting.py:27: [E0102, sidebarmeeting] function already defined line 10
+pdtresources/templatetags/nextmeeting.py:36: [C0324, sidebarmeeting] Comma not followed by a space
+    template = render(request,'meeting_management/nextmeeting.html',context)
+                             ^^
 
 
 Report
 ======
-1347 statements analysed.
+1709 statements analysed.
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |2199   |53.99 |2228     |-29.00     |
++----------+-------+------+---------+-----------+
+|docstring |336    |8.25  |336      |=          |
++----------+-------+------+---------+-----------+
+|comment   |948    |23.28 |946      |+2.00      |
++----------+-------+------+---------+-----------+
+|empty     |590    |14.49 |591      |-1.00      |
++----------+-------+------+---------+-----------+
+
+
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |41     |41         |=          |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |31     |31         |=          |3.23        |6.45     |
++---------+-------+-----------+-----------+------------+---------+
+|method   |42     |42         |=          |33.33       |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|function |51     |51         |=          |3.92        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+
+
 
 Duplication
 -----------
@@ -1974,13 +2528,13 @@ Messages by category
 +-----------+-------+---------+-----------+
 |type       |number |previous |difference |
 +===========+=======+=========+===========+
-|convention |259    |219      |+40.00     |
+|convention |361    |361      |=          |
 +-----------+-------+---------+-----------+
-|refactor   |15     |10       |+5.00      |
+|refactor   |21     |21       |=          |
 +-----------+-------+---------+-----------+
-|warning    |1220   |997      |+223.00    |
+|warning    |1484   |1482     |+2.00      |
 +-----------+-------+---------+-----------+
-|error      |54     |43       |+11.00     |
+|error      |56     |56       |=          |
 +-----------+-------+---------+-----------+
 
 
@@ -1988,49 +2542,71 @@ Messages by category
 % errors / warnings by module
 -----------------------------
 
-+---------------------------------+------+--------+---------+-----------+
-|module                           |error |warning |refactor |convention |
-+=================================+======+========+=========+===========+
-|user_management.supervisor_views |27.78 |6.64    |13.33    |3.09       |
-+---------------------------------+------+--------+---------+-----------+
-|user_management.forms            |22.22 |3.77    |0.00     |3.09       |
-+---------------------------------+------+--------+---------+-----------+
-|user_management.views            |16.67 |12.95   |0.00     |6.56       |
-+---------------------------------+------+--------+---------+-----------+
-|meeting_management.views         |9.26  |11.23   |13.33    |6.95       |
-+---------------------------------+------+--------+---------+-----------+
-|meeting_management.forms         |9.26  |1.15    |0.00     |0.00       |
-+---------------------------------+------+--------+---------+-----------+
-|topic_management.views           |7.41  |15.25   |26.67    |14.29      |
-+---------------------------------+------+--------+---------+-----------+
-|topic_management.tests           |5.56  |17.21   |20.00    |26.25      |
-+---------------------------------+------+--------+---------+-----------+
-|meeting_management.resources     |1.85  |0.49    |0.00     |1.93       |
-+---------------------------------+------+--------+---------+-----------+
-|user_management.tests            |0.00  |10.57   |6.67     |15.06      |
-+---------------------------------+------+--------+---------+-----------+
-|meeting_management.tests         |0.00  |5.00    |20.00    |9.65       |
-+---------------------------------+------+--------+---------+-----------+
-|user_management.resources        |0.00  |4.59    |0.00     |4.25       |
-+---------------------------------+------+--------+---------+-----------+
-|topic_management.models          |0.00  |3.44    |0.00     |2.32       |
-+---------------------------------+------+--------+---------+-----------+
-|user_management.models           |0.00  |3.11    |0.00     |0.39       |
-+---------------------------------+------+--------+---------+-----------+
-|topic_management.context         |0.00  |1.23    |0.00     |3.47       |
-+---------------------------------+------+--------+---------+-----------+
-|meeting_management.models        |0.00  |1.23    |0.00     |0.77       |
-+---------------------------------+------+--------+---------+-----------+
-|user_management.context          |0.00  |0.74    |0.00     |0.39       |
-+---------------------------------+------+--------+---------+-----------+
-|topic_management.resources       |0.00  |0.66    |0.00     |0.39       |
-+---------------------------------+------+--------+---------+-----------+
-|topic_management.forms           |0.00  |0.57    |0.00     |0.77       |
-+---------------------------------+------+--------+---------+-----------+
-|user_management.ajax             |0.00  |0.08    |0.00     |0.00       |
-+---------------------------------+------+--------+---------+-----------+
-|meeting_management.urls          |0.00  |0.08    |0.00     |0.00       |
-+---------------------------------+------+--------+---------+-----------+
++--------------------------------------+------+--------+---------+-----------+
+|module                                |error |warning |refactor |convention |
++======================================+======+========+=========+===========+
+|user_management.supervisor_views      |26.79 |5.46    |9.52     |2.22       |
++--------------------------------------+------+--------+---------+-----------+
+|user_management.forms                 |21.43 |3.10    |0.00     |2.22       |
++--------------------------------------+------+--------+---------+-----------+
+|user_management.views                 |16.07 |10.65   |0.00     |4.71       |
++--------------------------------------+------+--------+---------+-----------+
+|meeting_management.views              |8.93  |9.23    |9.52     |4.99       |
++--------------------------------------+------+--------+---------+-----------+
+|meeting_management.forms              |8.93  |0.94    |0.00     |0.00       |
++--------------------------------------+------+--------+---------+-----------+
+|topic_management.views                |7.14  |12.53   |19.05    |10.25      |
++--------------------------------------+------+--------+---------+-----------+
+|topic_management.tests                |5.36  |14.15   |14.29    |18.84      |
++--------------------------------------+------+--------+---------+-----------+
+|pdtresources.testsimplifier           |1.79  |4.78    |4.76     |8.03       |
++--------------------------------------+------+--------+---------+-----------+
+|pdtresources.templatetags.nextmeeting |1.79  |0.94    |0.00     |0.55       |
++--------------------------------------+------+--------+---------+-----------+
+|meeting_management.resources          |1.79  |0.40    |0.00     |1.39       |
++--------------------------------------+------+--------+---------+-----------+
+|user_management.tests                 |0.00  |8.69    |4.76     |10.80      |
++--------------------------------------+------+--------+---------+-----------+
+|meeting_management.tests              |0.00  |4.11    |14.29    |6.93       |
++--------------------------------------+------+--------+---------+-----------+
+|pdtresources.handles                  |0.00  |4.04    |0.00     |5.26       |
++--------------------------------------+------+--------+---------+-----------+
+|user_management.resources             |0.00  |3.77    |0.00     |3.05       |
++--------------------------------------+------+--------+---------+-----------+
+|topic_management.models               |0.00  |2.83    |0.00     |1.66       |
++--------------------------------------+------+--------+---------+-----------+
+|pdtresources.comments                 |0.00  |2.76    |0.00     |6.37       |
++--------------------------------------+------+--------+---------+-----------+
+|pdtresources.templates                |0.00  |2.63    |19.05    |3.88       |
++--------------------------------------+------+--------+---------+-----------+
+|user_management.models                |0.00  |2.56    |0.00     |0.28       |
++--------------------------------------+------+--------+---------+-----------+
+|topic_management.context              |0.00  |1.01    |0.00     |2.49       |
++--------------------------------------+------+--------+---------+-----------+
+|meeting_management.models             |0.00  |1.01    |0.00     |0.55       |
++--------------------------------------+------+--------+---------+-----------+
+|pdtresources.templatetags.filters     |0.00  |0.94    |0.00     |0.00       |
++--------------------------------------+------+--------+---------+-----------+
+|pdtresources.tests                    |0.00  |0.81    |4.76     |1.11       |
++--------------------------------------+------+--------+---------+-----------+
+|user_management.context               |0.00  |0.61    |0.00     |0.28       |
++--------------------------------------+------+--------+---------+-----------+
+|topic_management.resources            |0.00  |0.54    |0.00     |0.28       |
++--------------------------------------+------+--------+---------+-----------+
+|topic_management.forms                |0.00  |0.47    |0.00     |0.55       |
++--------------------------------------+------+--------+---------+-----------+
+|pdtresources.decorators               |0.00  |0.47    |0.00     |0.55       |
++--------------------------------------+------+--------+---------+-----------+
+|pdtresources.MeetingsCalendar         |0.00  |0.20    |0.00     |1.11       |
++--------------------------------------+------+--------+---------+-----------+
+|pdtresources                          |0.00  |0.13    |0.00     |1.11       |
++--------------------------------------+------+--------+---------+-----------+
+|pdtresources.templatetags.randomgen   |0.00  |0.07    |0.00     |0.28       |
++--------------------------------------+------+--------+---------+-----------+
+|user_management.ajax                  |0.00  |0.07    |0.00     |0.00       |
++--------------------------------------+------+--------+---------+-----------+
+|meeting_management.urls               |0.00  |0.07    |0.00     |0.00       |
++--------------------------------------+------+--------+---------+-----------+
 
 
 
@@ -2040,39 +2616,47 @@ Messages
 +-----------+------------+
 |message id |occurrences |
 +===========+============+
-|W0312      |747         |
+|W0312      |833         |
 +-----------+------------+
-|W0311      |409         |
+|W0311      |573         |
 +-----------+------------+
-|C0324      |159         |
+|C0324      |205         |
 +-----------+------------+
-|C0103      |72          |
+|C0103      |96          |
 +-----------+------------+
-|W0105      |46          |
+|W0105      |51          |
++-----------+------------+
+|C0322      |43          |
 +-----------+------------+
 |E1101      |27          |
 +-----------+------------+
-|E1103      |24          |
+|E1103      |25          |
 +-----------+------------+
-|C0322      |19          |
+|R0914      |8           |
 +-----------+------------+
-|W0611      |6           |
+|C0323      |8           |
 +-----------+------------+
-|R0914      |6           |
+|W0621      |7           |
 +-----------+------------+
-|W0621      |5           |
+|W0611      |7           |
 +-----------+------------+
-|C0323      |5           |
+|W0301      |5           |
++-----------+------------+
+|R0904      |5           |
 +-----------+------------+
 |R0915      |4           |
 +-----------+------------+
-|W0612      |3           |
+|C0321      |4           |
 +-----------+------------+
-|R0904      |3           |
+|W0612      |3           |
 +-----------+------------+
 |E1002      |3           |
 +-----------+------------+
-|W0301      |2           |
+|C0301      |3           |
++-----------+------------+
+|W0201      |2           |
++-----------+------------+
+|R0913      |2           |
 +-----------+------------+
 |R0912      |2           |
 +-----------+------------+
@@ -2080,44 +2664,27 @@ Messages
 +-----------+------------+
 |W0622      |1           |
 +-----------+------------+
+|W0221      |1           |
++-----------+------------+
 |W0101      |1           |
 +-----------+------------+
-|C0321      |1           |
-+-----------+------------+
-|C0301      |1           |
+|E0102      |1           |
 +-----------+------------+
 
 
 
 Global evaluation
 -----------------
-Your code has been rated at -3.10/10 (previous run: -3.47/10)
-
-Statistics by type
-------------------
-
-+---------+-------+-----------+-----------+------------+---------+
-|type     |number |old number |difference |%documented |%badname |
-+=========+=======+===========+===========+============+=========+
-|module   |28     |20         |+8.00      |0.00        |0.00     |
-+---------+-------+-----------+-----------+------------+---------+
-|class    |27     |21         |+6.00      |3.70        |7.41     |
-+---------+-------+-----------+-----------+------------+---------+
-|method   |24     |22         |+2.00      |33.33       |0.00     |
-+---------+-------+-----------+-----------+------------+---------+
-|function |30     |21         |+9.00      |3.33        |0.00     |
-+---------+-------+-----------+-----------+------------+---------+
-
-
+Your code has been rated at -2.56/10 (previous run: -2.56/10)
 
 External dependencies
 ---------------------
 ::
 
     PDTtool 
-      \-settings (topic_management.tests,topic_management.views)
+      \-settings (pdtresources.handles,pdtresources.testsimplifier,topic_management.tests,topic_management.views)
     datetime 
-      \-date (meeting_management.views)
+      \-date (pdtresources.tests,pdtresources.MeetingsCalendar,meeting_management.views)
       \-datetime (meeting_management.resources,meeting_management.views,topic_management.views)
     dateutil 
       \-relativedelta 
@@ -2139,7 +2706,7 @@ External dependencies
       |   \-login (user_management.views)
       |   \-logout (user_management.views)
       |   \-models 
-      |     \-Group (user_management.supervisor_views)
+      |     \-Group (pdtresources.handles,pdtresources.testsimplifier,user_management.supervisor_views)
       |     \-User (user_management.views,user_management.models,meeting_management.models,user_management.supervisor_views,user_management.resources,topic_management.models)
       \-core 
       | \-exceptions 
@@ -2147,9 +2714,10 @@ External dependencies
       | \-mail 
       | | \-send_mail (user_management.resources)
       | \-paginator 
-      |   \-EmptyPage (topic_management.views)
+      |   \-EmptyPage (pdtresources.handles,topic_management.views)
+      |   \-InvalidPage (pdtresources.handles)
       |   \-PageNotAnInteger (topic_management.views)
-      |   \-Paginator (topic_management.views)
+      |   \-Paginator (pdtresources.handles,topic_management.views)
       \-db 
       | \-models (topic_management.models,meeting_management.models,user_management.models)
       |   \-Q (meeting_management.resources,meeting_management.views,user_management.supervisor_views,topic_management.views)
@@ -2157,15 +2725,22 @@ External dependencies
       | \-TextInput (user_management.forms)
       \-shortcuts 
       | \-HttpResponse (topic_management.views)
-      | \-redirect (user_management.views,meeting_management.views,topic_management.views)
-      | \-render (user_management.views,meeting_management.resources,meeting_management.views,user_management.supervisor_views,topic_management.views)
+      | \-redirect (user_management.views,meeting_management.views,pdtresources.decorators,topic_management.views)
+      | \-render (user_management.views,pdtresources.templatetags.nextmeeting,pdtresources.templates,topic_management.views,meeting_management.resources,user_management.supervisor_views,meeting_management.views)
+      \-template (pdtresources.templatetags.nextmeeting,pdtresources.templatetags.filters,pdtresources.templatetags.randomgen)
       \-test 
+      | \-TestCase (pdtresources.testsimplifier)
       | \-client 
-      |   \-Client (user_management.tests)
+      |   \-Client (pdtresources.testsimplifier,user_management.tests)
       \-utils 
+        \-html 
+        | \-conditional_escape (pdtresources.MeetingsCalendar)
+        | \-strip_tags (pdtresources.comments)
         \-safestring 
-        | \-mark_safe (meeting_management.resources,meeting_management.views)
+        | \-mark_safe (meeting_management.resources,meeting_management.views,pdtresources.templates)
         \-simplejson (user_management.ajax)
+        \-text 
+          \-truncate_words (pdtresources.templatetags.filters)
     django_extensions 
       \-db 
         \-fields 
@@ -2175,37 +2750,17 @@ External dependencies
       | \-AddMeetingForm (meeting_management.views)
       | \-MeetingFormStepOne (meeting_management.resources,meeting_management.views)
       \-models 
-      | \-Meeting (meeting_management.forms,meeting_management.resources,meeting_management.tests,meeting_management.views,meeting_management.admin,topic_management.tests)
+      | \-Meeting (pdtresources.tests,meeting_management.forms,meeting_management.resources,meeting_management.tests,meeting_management.views,meeting_management.admin,topic_management.tests)
       \-resources 
       | \-edit_meeting_form1 (meeting_management.views)
       | \-edit_meeting_form2 (meeting_management.views)
       | \-format_date (meeting_management.views)
       | \-format_time (meeting_management.views)
-      | \-get_next_meeting (meeting_management.views)
+      | \-get_next_meeting (pdtresources.templatetags.nextmeeting,meeting_management.views)
       | \-update_meeting_schedule (meeting_management.views)
       | \-view_meeting (meeting_management.views)
       \-views (meeting_management.urls)
-    os (topic_management.tests,topic_management.views)
-    pdtresources 
-      \-MeetingsCalendar 
-      | \-MeetingCalendar (meeting_management.views)
-      \-comments 
-      | \-comment_form (topic_management.views)
-      | \-recursive_comments (topic_management.views)
-      \-decorators 
-      | \-user_is_authenticated_decorator (user_management.views)
-      \-handles 
-      | \-create_directory (topic_management.views)
-      | \-create_groups (user_management.views)
-      | \-delete_topic (topic_management.views)
-      | \-handle_uploaded_file (topic_management.views)
-      | \-paginate (user_management.supervisor_views)
-      \-templates 
-      | \-form_modal (meeting_management.resources,meeting_management.views,user_management.supervisor_views,topic_management.views)
-      | \-modal (meeting_management.resources,meeting_management.views)
-      \-testsimplifier 
-        \-Client (meeting_management.tests,topic_management.tests)
-        \-Testsimplifier (user_management.tests,meeting_management.tests,topic_management.tests)
+    os (pdtresources.handles,pdtresources,pdtresources.templatetags.randomgen,topic_management.tests,topic_management.views)
     topic_management 
       \-context 
       | \-search_form (topic_management.tests)
@@ -2213,29 +2768,34 @@ External dependencies
       | \-TopicForm (topic_management.tests,topic_management.views)
       | \-upload_document_form (topic_management.views)
       \-models 
-      | \-Comment (topic_management.admin,topic_management.views)
-      | \-Document (topic_management.admin,topic_management.tests,topic_management.views)
-      | \-Topic (topic_management.forms,topic_management.resources,meeting_management.models,topic_management.views,meeting_management.resources,meeting_management.views,topic_management.admin,topic_management.tests)
+      | \-Comment (pdtresources.comments,topic_management.admin,topic_management.views)
+      | \-Document (pdtresources.testsimplifier,topic_management.admin,topic_management.tests,topic_management.views)
+      | \-Topic (topic_management.forms,topic_management.resources,meeting_management.models,topic_management.views,meeting_management.resources,pdtresources.testsimplifier,meeting_management.views,topic_management.admin,topic_management.tests)
       \-resources 
       | \-generate_topic_slug (topic_management.views)
       \-views (topic_management.urls)
-
-
-
-Raw metrics
------------
-
-+----------+-------+------+---------+-----------+
-|type      |number |%     |previous |difference |
-+==========+=======+======+=========+===========+
-|code      |1690   |51.48 |1322     |+368.00    |
-+----------+-------+------+---------+-----------+
-|docstring |285    |8.68  |178      |+107.00    |
-+----------+-------+------+---------+-----------+
-|comment   |827    |25.19 |637      |+190.00    |
-+----------+-------+------+---------+-----------+
-|empty     |481    |14.65 |310      |+171.00    |
-+----------+-------+------+---------+-----------+
+    user_management 
+      \-forms 
+      | \-AccountSettingsForm (user_management.views)
+      | \-ForgotPassword (user_management.views)
+      | \-RegisterForm (user_management.views)
+      | \-ResetPasswordForm (user_management.views)
+      | \-UserManagementForm (user_management.supervisor_views)
+      \-models 
+      | \-ActivateUserDB (user_management.views,user_management.tests,user_management.admin,user_management.resources)
+      | \-ExtendedUser (user_management.views,user_management.tests,user_management.admin,user_management.supervisor_views,user_management.resources,pdtresources.testsimplifier,topic_management.tests)
+      | \-ForgotPasswordDB (user_management.views,user_management.tests,user_management.admin,user_management.resources)
+      | \-Notification (user_management.admin)
+      | \-Organization (user_management.admin)
+      | \-User (pdtresources.testsimplifier)
+      \-resources 
+      | \-check_existing_user (user_management.supervisor_views,user_management.forms)
+      | \-check_user_groups (user_management.supervisor_views)
+      | \-send_activation_email (user_management.views)
+      | \-send_new_password_email (user_management.views)
+      | \-send_password_reset_email (user_management.views)
+      \-supervisor_views (user_management.urls)
+      \-views (user_management.urls)
 
 
 

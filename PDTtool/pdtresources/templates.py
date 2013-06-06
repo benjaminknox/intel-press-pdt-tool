@@ -1,6 +1,35 @@
 from django.shortcuts import render
 from django.utils.safestring import mark_safe
 
+###
+#This simply creates an html input string.
+def input_string(inputtype,
+								 name,
+								 classname=None,
+								 value=None):
+	
+	###
+	#Get the value of the string.
+	value = '''<input type="%s" name="%s"  class="%s" value="%s" />''' % (inputtype,
+																														 name,
+																														 classname,
+																														 value)
+
+	###
+	#Return the value.
+	return mark_safe(value)
+
+###
+#This creates a submit input string.
+def submit_button_string(value,classname=""):
+	return '<input type="submit" value="%s"  class="btn %s" />' % (value,classname)
+
+###
+#This creates a row in a database table
+def tr_string(string):
+	return '<tr><td></td><td>%s<td></tr>'%string
+
+###
 #This outputs a form from a form object, I will probably replace 
 #			this with a template at some point.
 def output_form_as_table(request,
@@ -14,39 +43,74 @@ def output_form_as_table(request,
 						 get_string="",
 						 add_submit_button=True,
 						 formname_value='1',
-						 action=False):
+						 action=False,
+						 method="POST",
+						 hidden_fields=None):
 
-	#This is a function for generating a table row string.
-	tr_string = lambda string: '<tr><td></td><td>%s<td></tr>'%string
-	#This is a function for generating an input string.
-	input_string = lambda inputtype,name,classname=None,value=None: '<input type="%s" name="%s"  class="%s" value="%s" />' % (inputtype,name,classname,value)
-	#This is a submit button input string.
-	submit_button_string = lambda value,classname="": '<input type="submit" value="%s"  class="btn %s" />' % (value,classname)
+	###
+	#Create a new list reference for the hidden_fields.
+	if hidden_fields:
+		hidden_fields_list = hidden_fields
+	else:
+		hidden_fields_list = []
 
-	#If there is not an action defined by the person
+	###
+	#Load in hidden fields
+	#This is a hidden field to identify the field name.
+	hidden_fields_list.append(input_string('hidden',formname,value=formname_value))
+
+	###
+	#If there is not an action defined create 
+	#		one based on the current path.
 	if not action:
-		#Put a string in the action.
+		#Get the request url.
 		action = "%s?%s" % (request.path,get_string)
-		
-	form_multipart = ''
+
+	###
+	#If the form is flagged as multipart (has file data),
+	#		add in the tag below
 	if multipart:
-		form_multipart = 'enctype="multipart/form-data"'
+		formmultipart = mark_safe('enctype="multipart/form-data"')
+	else:
+		formmultipart = ''
 
-	form_string = ""
-
-	form_string+= '<form action="%s" method="POST" %s>' % (action,form_multipart)
-	if 'csrftoken' in request.COOKIES:
-		form_string+= input_string('hidden','csrfmiddlewaretoken',value=request.COOKIES['csrftoken'])
-	form_string+= input_string('hidden',formname,value=formname_value)
-	form_string+= extra_fields
-	form_string+= '<table class="%s">' % table_class
-	form_string+= form
+	###
+	#If there needs to be a submit button create a string
 	if add_submit_button:
-		form_string+= tr_string(submit_button_string(submit_text))
-	form_string+= '</table>'
-	form_string+= '</form>'
+		add_submit_button = tr_string(submit_button_string(submit_text))
+	else:
+		add_submit_button = ''
 
-	return form_string
+	###
+	#Pass variables into the template context.
+	context = {
+			'formname':formname,
+			'action':action,
+			'method':method,
+			'formmultipart':formmultipart,
+			'hidden_fields':hidden_fields_list,
+			'table_class':table_class,
+			'extra_fields':extra_fields,
+			'form':form,
+			'add_submit_button': add_submit_button
+		}
+
+	###
+	#Get the template as a string.	
+	template = mark_safe(
+											#Render the form template using the context variables.
+											render(
+														#Load the request
+														request,
+														#Load the template.
+														'resources/forms.html',
+														context
+												#Output the file.
+											).content
+						 )
+	###
+	#Return the rendered template.
+	return template
 
 # This requires a topic object to output properly.
 def topic_html(topic):
