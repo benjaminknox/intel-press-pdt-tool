@@ -14,11 +14,36 @@ class Testsimplifier(TestCase):
     self.assertEquals(resp.status_code, resp_status_code)
     self.assertContains(resp,string)
 
+  #Check that the response contains a string.
+  def checkRespNotContains(self,resp,string,resp_status_code=200):
+    self.assertEquals(resp.status_code, resp_status_code)
+    self.assertNotContains(resp,string)
+
   #Check that the response redirects to a defined urlstring.
   def checkRedirects(self,resp,urlstring='/',resp_status_code=302,target_status_code=200):
     self.assertEquals(resp.status_code, resp_status_code)
     self.assertRedirects(resp,urlstring,target_status_code=target_status_code)
 
+  #Check if the user is logged in
+  def checkUserLoginViews(self,url,redirect_url):
+
+    #Check the redirect when a user is not logged in.
+    resp = self.client.get(url)
+    self.checkRedirects(resp, redirect_url)
+
+    del resp
+
+    #Check the redirect when a user is logged in without 
+    #   being a program manager.
+    C = Client()
+    #Login a user.
+    C.login(username='test.user',password='test')
+    resp = C.get(url)
+    self.checkRedirects(resp, redirect_url,target_status_code=302)
+    #Logout the user.
+    C.logout()
+
+    del resp
 
   #Create a user by posting to the register form.
   def register_form(self,username):
@@ -69,10 +94,13 @@ class Testsimplifier(TestCase):
     if groups:
         #Group throught the list of groups.
         for g in groups:
-            #Load the group.
-            group = Group(name=g)
-            #Save the group.
-            group.save()
+            try:
+              group = Group.objects.get(name=g)
+            except:
+              #Load the group.
+              group = Group(name=g)
+              #Save the group.
+              group.save()
             #Add the usergroup.
             testuser.groups.add(group)
 

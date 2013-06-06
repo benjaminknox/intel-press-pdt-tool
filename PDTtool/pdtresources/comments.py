@@ -21,6 +21,11 @@ def comment_form(request, commented_object = 'topic', commented_object_id=None):
 	if 'currentmeeting' in request.GET:
 		action_url += '&currentmeeting=%s'%request.GET['currentmeeting']
 
+	if 'csrftoken' in request.COOKIES:
+		csrftoken = request.COOKIES['csrftoken']
+	else:
+		csrftoken = "TOKEN"
+
 	#If it is a topic add a feedback 
 	#		button.
 	addfeedback = ''
@@ -35,7 +40,7 @@ def comment_form(request, commented_object = 'topic', commented_object_id=None):
 				#This is the form wrapper.
 	content+= 	'<form action="%s" method="POST">'% action_url
 					#This is the CSRF value.
-	content+= 		'<input type="hidden" name="csrfmiddlewaretoken" value="%s" />'% request.COOKIES['csrftoken']
+	content+= 		'<input type="hidden" name="csrfmiddlewaretoken" value="%s" />'% csrftoken
 					#This is the actual commented object id.
 	content+=		'<input type="hidden" name="%s" value="%s" />'% (commented_object_field_name, commented_object_id_string,)
 					#this is the textarea for the user input.
