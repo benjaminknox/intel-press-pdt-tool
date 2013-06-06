@@ -220,108 +220,160 @@ def viewtopic(request):
 
 	#Check for POST data
 	if request.method == 'POST':
-		
-		#Update the description of the topic.
-		if 'update_topic_description' in request.POST and topic_object.publicid == request.POST['update_topic_description']:
-			#Update the description.
-			topic_object.description = request.POST['description']
-			#Save the topic_object.
-			topic_object.save()
-		
-		#Ready the topic for review
-		topic_ready_for_review_index = 'topic_ready_for_review_id'
 
-		#Check if the topic is ready for review.
-		if (
-			topic_ready_for_review_index in request.POST and
-			request.POST[topic_ready_for_review_index] == topic_object.publicid
-			):
+		"""
+		" These can only be accessed if a user is the owner or a Supervisor
+		"""			
+		if topic_object.user == request.user or request.user.groups.filter(Q(name='Supervisor')).count() != 0:
 
-			#Update the topic presentation length.
-			if 'topic_presentationlength' in request.POST:
-				#Set the topic ready for review.
-				readyforreview = True
-				#Set the presentation length to the length entered.
-				presentationlength = int(request.POST['topic_presentationlength'])
-				#Add a datetime for the time it was set.
-				topic_object.datesetforreview = datetime.now()
-			else:
-				#The topic is not ready for review.
-				readyforreview = False
-				#Update the presentationlength.
-				presentationlength = 15
+			#Update the description of the topic.
+			if 'update_topic_description' in request.POST and topic_object.publicid == request.POST['update_topic_description']:
+				#Update the description.
+				topic_object.description = request.POST['description']
+				#Save the topic_object.
+				topic_object.save()
+			
+			#Ready the topic for review
+			topic_ready_for_review_index = 'topic_ready_for_review_id'
 
-			#Set the fields in the database.
-			topic_object.readyforreview = readyforreview
-			topic_object.presentationlength = presentationlength
+			#Check if the topic is ready for review.
+			if (
+				topic_ready_for_review_index in request.POST and
+				request.POST[topic_ready_for_review_index] == topic_object.publicid
+				):
 
-			#Save the topic object.
-			topic_object.save()
+				#Update the topic presentation length.
+				if 'topic_presentationlength' in request.POST:
+					#Set the topic ready for review.
+					readyforreview = True
+					#Set the presentation length to the length entered.
+					presentationlength = int(request.POST['topic_presentationlength'])
+					#Add a datetime for the time it was set.
+					topic_object.datesetforreview = datetime.now()
+				else:
+					#The topic is not ready for review.
+					readyforreview = False
+					#Update the presentationlength.
+					presentationlength = 15
 
-			#Reset the meeting duration.
-			if topic_object.meeting:
-				#This is the topic_meeting.
-				topic_meeting = topic_object.meeting;
-				#Set the duration to 0.
-				duration = 0
-				#Loop through each of the topic in the meeting.
-				for t in topic_meeting.topics.all():
-					#Increment the duration.
-					duration += t.presentationlength
+				#Set the fields in the database.
+				topic_object.readyforreview = readyforreview
+				topic_object.presentationlength = presentationlength
 
-				#Set the meeting duration.
-				topic_meeting.duration = duration
-				#Save the topic meeting.
-				topic_meeting.save()
+				#Save the topic object.
+				topic_object.save()
 
-		#We deleted the topic.
-		if 'deleted_topicid' in request.POST and request.POST['deleted_topicid'] == topic_object.publicid:
-			#Delete the topic object
-			topic_object.deleted = True
-			topic_object.save()
+				#Reset the meeting duration.
+				if topic_object.meeting:
+					#This is the topic_meeting.
+					topic_meeting = topic_object.meeting;
+					#Set the duration to 0.
+					duration = 0
+					#Loop through each of the topic in the meeting.
+					for t in topic_meeting.topics.all():
+						#Increment the duration.
+						duration += t.presentationlength
 
-			#Move the files to a 'deleted' directory.
-			delete_topic(topic_object)
+					#Set the meeting duration.
+					topic_meeting.duration = duration
+					#Save the topic meeting.
+					topic_meeting.save()
 
-			#Redirect to the list of topics, there is a hash
-			#		for a notification.
-			return redirect('/viewtopics/?deleted=%s' % topic_object.name)
+			#We deleted the topic.
+			if 'deleted_topicid' in request.POST and request.POST['deleted_topicid'] == topic_object.publicid:
+				#Delete the topic object
+				topic_object.deleted = True
+				topic_object.save()
 
-		#We approved the document.
-		if 'released_topicid' in request.POST and request.POST['released_topicid'] == topic_object.publicid:
-			#In the topic_object set the supervisor_released true.
-			topic_object.supervisor_released = True
-			#Save the topic.
-			topic_object.save()
+				#Move the files to a 'deleted' directory.
+				delete_topic(topic_object)
 
-			directory = create_directory(topic_object,settings.APPROVED_TOPIC_DIR)
+				#Redirect to the list of topics, there is a hash
+				#		for a notification.
+				return redirect('/viewtopics/?deleted=%s' % topic_object.name)
 
-			#Loop throught the document and copy
-			#		them to the right directory.
-			for document in topic_object.documents.all():
+			#We approved the document.
+			if 'released_topicid' in request.POST and request.POST['released_topicid'] == topic_object.publicid:
+				#In the topic_object set the supervisor_released true.
+				topic_object.supervisor_released = True
+				#Save the topic.
+				topic_object.save()
 
-				#Get the approved file.
-				approved_file = "%s/%s" % (directory,document.fileName)
+				directory = create_directory(topic_object,settings.APPROVED_TOPIC_DIR)
 
-				#Make a copy of the file.
-				copyfile(document.location, approved_file)
+				#Loop throught the document and copy
+				#		them to the right directory.
+				for document in topic_object.documents.all():
 
-		#We have an updated document.
-		if 'updated_documentid' in request.POST:
+					#Get the approved file.
+					approved_file = "%s/%s" % (directory,document.fileName)
 
-			#Get the updated document
-			updated_document = topic_object.documents.filter(publicid=request.POST['updated_documentid'])
-			#Get the document
-			if updated_document.exists():
+					#Make a copy of the file.
+					copyfile(document.location, approved_file)
 
-				#Get the old file and delete.
-				old_file_path = updated_document.values()[0]['location']
+			#We have an updated document.
+			if 'updated_documentid' in request.POST:
 
-				try:
-					#Delete the old file.
-					os.remove(old_file_path)
-				except OSError:
-					print "deleted file not found, but it doesn't really matter"
+				#Get the updated document
+				updated_document = topic_object.documents.filter(publicid=request.POST['updated_documentid'])
+				#Get the document
+				if updated_document.exists():
+
+					#Get the old file and delete.
+					old_file_path = updated_document.values()[0]['location']
+
+					try:
+						#Delete the old file.
+						os.remove(old_file_path)
+					except OSError:
+						print "deleted file not found, but it doesn't really matter"
+
+					#Get the uploaded file.
+					f = request.FILES['file']
+
+					#Single file upload
+					#Get the file
+					name = f.name
+					fileName = "%s-%s" % (uuid4(),name)
+					#The uploaded_topic_dir is in PDTtool.settings.
+					location = '%s/%s' % (topicdirectory, fileName)
+					#Get the file size.
+					fileSize = f.size
+					#Get the updated document
+					updated_document.update(location=location,name=name,fileName=fileName,size=fileSize)
+	 				#handle the uploaded file.
+					handle_uploaded_file(f,location)
+
+					#Updated notification
+					updatednotification = True
+
+			#We have an updated document.
+			if 'deleted_documentid' in request.POST:
+
+				#Get the updated document
+				deleted_document = topic_object.documents.filter(publicid=request.POST['deleted_documentid'])
+				#Get the document
+				if deleted_document.exists():
+
+					#Get the old file and delete.
+					file_path = deleted_document.values()[0]['location']
+
+					try:
+						#Delete the file
+						os.remove(file_path)
+					except OSError:
+						print "deleted file not found, but it doesn't really matter"
+
+					#Remove the m2m relationship.
+					topic_object.documents.remove(deleted_document.values()[0]['id'])
+					#Delete the document.
+					deleted_document.delete()
+					#Delete the document notification.
+					deleteddocumentdnotification = True
+
+
+			#We have added a document.
+			if 'add_document' in request.POST:
 
 				#Get the uploaded file.
 				f = request.FILES['file']
@@ -330,66 +382,19 @@ def viewtopic(request):
 				#Get the file
 				name = f.name
 				fileName = "%s-%s" % (uuid4(),name)
+
 				#The uploaded_topic_dir is in PDTtool.settings.
 				location = '%s/%s' % (topicdirectory, fileName)
-				#Get the file size.
 				fileSize = f.size
-				#Get the updated document
-				updated_document.update(location=location,name=name,fileName=fileName,size=fileSize)
- 				#handle the uploaded file.
+				#This is the newdocument.
+				newdocument = Document(topic=topic_object,location=location,name=name,fileName=fileName,size=fileSize)
+				newdocument.save()
+				#Add the document to the topic.
+				topic_object.documents.add(newdocument)
+				#Upload the file
 				handle_uploaded_file(f,location)
-
 				#Updated notification
-				updatednotification = True
-
-		#We have an updated document.
-		if 'deleted_documentid' in request.POST:
-
-			#Get the updated document
-			deleted_document = topic_object.documents.filter(publicid=request.POST['deleted_documentid'])
-			#Get the document
-			if deleted_document.exists():
-
-				#Get the old file and delete.
-				file_path = deleted_document.values()[0]['location']
-
-				try:
-					#Delete the file
-					os.remove(file_path)
-				except OSError:
-					print "deleted file not found, but it doesn't really matter"
-
-				#Remove the m2m relationship.
-				topic_object.documents.remove(deleted_document.values()[0]['id'])
-				#Delete the document.
-				deleted_document.delete()
-				#Delete the document notification.
-				deleteddocumentdnotification = True
-
-
-		#We have added a document.
-		if 'add_document' in request.POST:
-
-			#Get the uploaded file.
-			f = request.FILES['file']
-
-			#Single file upload
-			#Get the file
-			name = f.name
-			fileName = "%s-%s" % (uuid4(),name)
-
-			#The uploaded_topic_dir is in PDTtool.settings.
-			location = '%s/%s' % (topicdirectory, fileName)
-			fileSize = f.size
-			#This is the newdocument.
-			newdocument = Document(topic=topic_object,location=location,name=name,fileName=fileName,size=fileSize)
-			newdocument.save()
-			#Add the document to the topic.
-			topic_object.documents.add(newdocument)
-			#Upload the file
-			handle_uploaded_file(f,location)
-			#Updated notification
-			addednotification = True
+				addednotification = True
 
 		"""
 		" The following adds comments to the specified object

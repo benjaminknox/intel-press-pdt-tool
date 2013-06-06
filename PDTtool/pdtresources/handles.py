@@ -6,9 +6,6 @@ from django.core.paginator import Paginator, EmptyPage, InvalidPage
 
 #This creates a directory for the topic.
 def create_directory(topic,base_dir=settings.PROJECT_DIR,delete=True):
-  
-  
-
   #Define a directory with the topic publicid in it.
   directory = "%s/%s" % (base_dir,topic.publicid)
   #If the path already exists delete it.
@@ -31,8 +28,13 @@ def handle_uploaded_file(f,location):
 
 #Move the deleted documents to another a deleted directory
 def delete_topic(topic):
-  directory = "%s/%s"% (settings.UPLOADED_TOPIC_DIR, topic.publicid)
-  deldirectory = "%s/%s"% (settings.DELETED_TOPIC_DIR, topic.publicid)
+  topic_publicid = topic.publicid
+  directory = "%s/%s"% (settings.UPLOADED_TOPIC_DIR, topic_publicid)
+  deldirectory = "%s/%s"% (settings.DELETED_TOPIC_DIR, topic_publicid)
+
+  print directory
+  print deldirectory
+
   if os.path.exists(directory):
     move(directory,deldirectory)
 

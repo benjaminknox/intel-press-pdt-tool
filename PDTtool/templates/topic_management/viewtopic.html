@@ -6,7 +6,7 @@
 	<form method="POST" action="{{ request.get_full_path }}">
 		{% csrf_token %}
 		<input type="hidden" name="released_topicid" value="{{ request.GET.publicid }}" />
-		<input type="submit" value="Release This Topic" id="release_button" class="btn btn-success light-button btn-mini" />
+		<input type="submit" value="Approve This Topic" id="release_button" class="btn btn-success light-button btn-mini" />
 	</form>
 	<!-- End output of the release button -->
 	{% endif %}
@@ -132,8 +132,6 @@
 		<!-- End the display/edit of the description of the topic -->
 
 		{% if Supervisor or user_is_owner %}
-		
-		{% if not topic.topic_object.readyforreview %}
 
 		<!-- Start the output of a release button for adding to a meeting. -->
 		<div id="release_interface">
@@ -151,8 +149,6 @@
 			</form><!-- (bootstrap) .form-inline -->
 		</div><!-- #release_interface -->
 		<!-- End the output of a release button for adding to a meeting. -->
-
-		{% endif %}
 
 		{% endif %}
 	</div><!-- #wrap_documents -->
