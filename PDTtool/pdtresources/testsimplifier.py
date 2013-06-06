@@ -1,6 +1,8 @@
 from django.test import TestCase
+import PDTtool.settings as settings
 from django.test.client import Client
 from django.contrib.auth.models import Group
+from topic_management.models import Topic, Document
 from user_management.models import User, ExtendedUser
 
 class Testsimplifier(TestCase):
@@ -69,12 +71,13 @@ class Testsimplifier(TestCase):
                   is_superuser=False,
                   is_active=True,
                   extenduser=True,
-                  groups=False):
+                  groups=False,
+                  password='test'):
     #Create a testuser
     testuser = User.objects.create_user(first_name='TestFirst',
                    last_name='TestLast',
                    username=username,
-                   password='test',
+                   password=password,
                    email='ben.knox@cummings-inc.com')
     testuser.is_active = is_active
     testuser.is_superuser = is_superuser
@@ -154,3 +157,29 @@ class Testsimplifier(TestCase):
     resp = C.get(url)
     #Check that the user has a response of 302: found.
     self.assertEqual(resp.status_code,302)
+
+  def add_topic_form(self,C,url='/addtopic/',description=''):
+
+    f1 = "%s/www/css/jquery.timepicker.css" % settings.BASE_DIR
+    f2 = "%s/www/css/jquery.ui.timepicker.css" % settings.BASE_DIR
+
+    with open(f1) as fp1, open(f2) as fp2:
+
+      document_name = 'test Document upload'
+      document_desc = 'testing the document upload %s' % description
+
+      #Check the return of a valid form.
+      postData = {
+        'name':document_name,
+        'description':document_desc,
+        'category':'Outline',
+        'f1':fp1,
+        'f2':fp2,
+      }
+      resp = C.post(url,postData)
+      self.assertEquals(resp.status_code, 302)
+      self.assertIn('viewtopic/',resp['Location'])
+      #self.checkTemplateUsed(resp,'topic_management/addtopic.html')
+          
+      #Return the inserted topic
+      return Topic.objects.get(name = document_name,description=document_desc)
