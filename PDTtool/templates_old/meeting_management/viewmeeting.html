@@ -1,0 +1,38 @@
+{% load filters %}
+{% if Supervisor %}
+<div class="pull-right">
+  <form action="{{ request.get_full_path }}" method="post" class="form-inline">
+  {% csrf_token %}
+  <a href="javascript:edit_meeting('{{ meeting.publicid }}');" class="btn btn-primary btn-mini">Edit Meeting</a>&nbsp;&nbsp;
+  <a href="javascript:edit_schedule('{{ meeting.publicid }}');" class="btn btn-primary btn-mini">Edit Schedule</a>&nbsp;&nbsp;
+    <input type="hidden" name="delete_meeting" value="{{ meeting.publicid }}" />
+    <input type="submit" class="btn btn-danger btn-mini" value="Delete Meeting" />
+  </form>
+</div><!-- (bootstrap) .pull-right -->
+{% endif %}
+<table id="meeting_topics" class="table table-bordered">
+  <thead>
+  <tr>
+  	<th class="text-success" colspan="2">
+      {{ meeting.topics.count }} Topic(s) {{ meeting.duration }} min(s)
+      <input type="text" placeholder="Search Topics" class="pull-right" onkeyup="filter_results('{{ meeting.publicid }}',$(this).val());" />
+    </th><!-- (bootstrap) .text-success -->
+  </tr>
+  </thead>
+  <tbody>
+{% for topic in topics %}
+{% if not topic.deleted %}
+	<tr>
+    <td>
+      {{ topic.scheduleorder }}
+    </td>
+		<td onclick="window.location='/viewtopic/?publicid={{ topic.publicid }}&currentmeeting={{ meeting.publicid }}'" title="{{topic.name}} has {{ topic.documents.all|length}} documents, click to view all documents.">
+			<h5>{{topic.name}} presented by {{ topic.user.get_full_name }}&nbsp;&nbsp;<small>{{ topic.topic_slug }}</small></h5>
+			<small>{{ topic.description | truncatechars:"200" }}</small><br>
+      <small>Category {{ topic.category }}</small>
+		</td>
+	</tr>
+{% endif %}
+{% endfor %}
+</tbody>
+</table><!-- #meeting_topics (boostrap) .table .table-bordered -->

@@ -1,0 +1,70 @@
+{% extends "gui_base.html" %}
+{% load staticfiles %}
+{% load filters %}
+{% block stylesheet %}
+	<link rel="stylesheet" href="{% static 'www/css/usermanagement.style.css' %}" />
+{% endblock %}
+
+{% block content %}
+	<div id="content_wrapper">
+		<form action="{{ request.get_full_path }}" class="form-inline" method="POST">
+			{% csrf_token %}
+			<div id="submit_bar">
+				<button type="submit" class="btn pull-left">Save</button>
+				<input type="hidden" name="save_notification_settings" value="true" />
+			</div>
+			<div id="wrap_notifications" class="container">
+				<div class="row">
+				{% for name,set in notification_sets.items %}
+					<div class="notification_box close-box-shadow-5 border-radius-5 pull-left span3" box-order="{{ set.order }}">
+						<div class="notification_box_header">{{ set.title }}</div>
+						<div class="notification_box_body border-radius-bottom-5">
+							{% for notification in notification_dialogs %}
+							{% if set.varname in notification.label %}
+					    <div class="notification_option" instructions="{{ notification.help_text }}">
+					      <label for="{{notification.name}}_checkbox">
+					      {{notification.label |replace_delimeter:notification_delimeter| trim}}:
+					      </label>
+					      {{notification}}
+					    </div>
+					    {% endif %}
+							{% endfor %}
+					  </div><!-- .notification_box_body .border-radius-bottom-5 -->
+					  <div class="checkbox_instructions">
+					  </div><!-- .checkbox_instructions -->
+	     		</div><!-- .notification_box .close-box-shadow-5 .border-radius-5 -->
+	     		{% if forloop.counter|divisibleby:4 %}</div><div class="row">{% endif %}
+     		{% endfor %}
+     	</div>
+		    {#% for notification_dialog in notification_dialogs %#}
+		    	{#% include 'user_management/notifications_box_template.html' %#}
+		    {#% endfor %#}
+
+			</div><!-- #wrap_notifications -->
+		</form>
+	</div>
+{% endblock %}
+
+{% block scripts%}
+<script>
+	$('.notification_option').hover(function(){
+		var option = $(this);
+		var instructions = option.attr('instructions');
+		var instructions_selector = option.closest('.notification_box').find('.checkbox_instructions');
+		instructions_selector.html('Set Notification:<br>'+instructions).show();
+	},function(){
+		var option = $(this);
+		var instructions_selector = option.closest('.notification_box').find('.checkbox_instructions');
+		instructions_selector.hide();
+	});/*
+	$(".notification_checkbox").change(function(){
+		var checkbox = $(this);
+		var input = checkbox.closest('div').find('input[type=hidden]');
+		var value = 0;
+		if(checkbox.is(":checked")){
+			value = 1;
+		}
+		input.val(value);*/
+	});
+</script>
+{% endblock %}

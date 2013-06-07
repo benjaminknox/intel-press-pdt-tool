@@ -1,0 +1,12 @@
+Hello {{ user.user.get_full_name }},<br /><br />
+
+The last day to add a topic to "{{ meeting.startdate|date:"F j" }} {{ meeting.name }}" at {{ meeting.starttime }} is coming up on {{ meeting.duedate }} at {{ meeting.startdate}}. Please submit your topics to the PDT portal before midnight on that date.<br /><br />
+
+"{{ meeting.startdate|date:"F j" }} {{ meeting.name }}" will start at {{ meeting.starttime }}<br /><br />
+
+If you miss the cutoff, your topic will automatically be added to the following meeting once you are ready for it to be reviewed.<br /><br />
+
+{% include "meeting_topic_table.html" %}
+
+-<a href="{{ domain_name }}">The PDT Portal</a><br>
+<a href="{{ domain_name }}/notifications/">Go here to manage your notifications</a>

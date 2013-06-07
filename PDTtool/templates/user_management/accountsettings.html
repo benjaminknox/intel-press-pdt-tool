@@ -1,0 +1,35 @@
+{% extends "gui_base.html" %}
+{% load staticfiles %}
+
+{% block stylesheet %}
+	<link rel="stylesheet" href="{% static 'www/css/usermanagement.style.css' %}" />
+{% endblock %}
+
+{% block content %}
+	<div id="content_wrapper">
+		<form action="{{ request.get_full_path }}" method="POST">
+			{% csrf_token %}
+			<table id="table_form">
+				{{ AccountSettingsForm.as_table }}
+				<tr>
+					<td></td>
+					<td><input type="submit" class="btn" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+{% endblock %}
+
+{% block scripts%}
+<script>
+	$(function(){
+		{% if BadPassword %}
+		toastr.error('The password you entered did not match our records.');
+		{% endif %}
+		
+		{% if UpdatedInformation %}
+		toastr.success('Your information is updated.');
+		{% endif %}
+	});
+</script>
+{% endblock %}

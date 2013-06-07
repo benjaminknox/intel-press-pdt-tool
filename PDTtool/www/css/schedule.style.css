@@ -1,0 +1,260 @@
+
+#scheduler_wrapper{
+  margin: 0 auto;
+  padding-bottom: 40px;
+  text-align: left;
+  width: 70%;
+}
+
+#scheduler_wrapper .category-row{
+  margin-bottom: 50px;
+  padding: 10px;
+  background: #FCFCFC;
+  border: 1px solid #DDD;
+  position: relative;
+}
+
+#scheduler_wrapper .category-row .meeting_submit_button{
+  position: absolute;
+  bottom: -40px;
+  right: 10px;
+}
+
+#scheduler_wrapper .category-row .element{
+  margin-top: 30px;
+  padding-left: 6px;
+  border: 1px solid #CCC;
+  background: #F6F6F6;
+  position: relative;
+  min-height: 60px;
+  float: left;
+  margin-right: 1%;
+  /*display: none;*/
+}
+
+#scheduler_wrapper .topic-description{
+  background: none;
+  border: none;
+  width: 30%;
+  float: left;
+}
+
+#scheduler_wrapper .category{
+  width: 30%;
+  padding-bottom: 2px;
+}
+
+#scheduler_wrapper .category .topic{
+  text-align: left;
+  margin: 2px 3px 0 0;
+  padding: 4px;
+  width: 100%;
+  background: #FEFEFE;
+  border: 1px solid #CCC;
+  z-index: 999;
+}
+
+#scheduler_wrapper .category h4{
+  white-space: nowrap;
+  right: 0;
+}
+
+#scheduler_wrapper .category-schedule h4{
+  margin-left: -6px;
+  z-index: 100;
+}
+
+#scheduler_wrapper .category-title{
+  margin: 0;
+  padding: 0; 
+  position: absolute;
+  top: -20px;
+  font-size: 22pt;
+}
+
+#scheduler_wrapper .topic{
+  position: relative;
+}  
+
+.topic{
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+}
+
+#scheduler_wrapper .category-schedule .topic{
+  margin: 2px 3px 0 0;
+  padding: 3px 0 5px 0;
+  width: 100%;
+  background: #FFE29B;
+  border: 1px solid #FFD879;
+  z-index: 1000;
+  display: block;
+  float: right;
+  text-align: left;
+}
+
+#scheduler_wrapper .category .topic .scroller_wrapper{
+  margin-left: 3px;
+  float: left;
+  width: 70%;
+  overflow-x: hidden;
+  text-align: left;
+}
+
+#scheduler_wrapper .category-schedule{
+  width: 30%;
+  padding-bottom: 2px;
+}
+#scheduler_wrapper .category-schedule .topic .scroller_wrapper{
+  width: 70%;
+}
+
+#scheduler_wrapper .category-schedule .topic-duration{
+  top: 2px !important;
+}
+
+.topic-duration{
+  position: absolute;
+  top: 0px;
+  right: 3px;
+  text-align: center;
+  background: #FEFEFE;
+  border: 1px solid #CCC;
+  padding: 1px 3px;
+  z-index: 1001;
+}
+
+.topic-description{
+  margin-top: 20px !important;
+}
+
+.topic-description .topic-name-display{
+  margin: 0;
+  padding: 0;
+}
+
+.original-text{
+  display: none;
+}
+
+.arrow_interface{
+  position: absolute;
+  top: 0;
+  left: -35px;
+  z-index: 1002;
+}
+
+.arrow_interface .arrow_button{
+  cursor: pointer;
+}
+
+.arrow_interface .move_up{
+  background: url('../images/green-arrows.png') no-repeat;
+  height: 37px;
+  width: 28px;
+}
+
+.arrow_interface .move_up:hover{
+  background-position: -29px 0;
+}
+
+.arrow_interface .order{
+  margin: 3px 0;
+  padding: 5px;
+  border: 1px solid #CCC;
+  background: #FFFFFF;
+  text-align: center;
+}
+
+.arrow_interface .move_down{
+  background: url('../images/green-arrows.png') 0 -37px no-repeat;
+  background-repeat: no-repeat;
+  height: 37px;
+  width: 28px;
+}
+
+.arrow_interface .move_down:hover{
+  background-position: -29px -37px;
+}
+
+#blank_topic_element{
+  display: none;
+}
+
+#hidden-category-title{
+  margin: 0 0 0 20px;
+  padding: 0;
+}
+
+.clearable{
+  clear: both;
+}
+
+.meeting_time_total{
+  position: absolute;
+  bottom: -43px;
+  right: 0px;
+  text-align: right;
+  font-size: 10pt;
+}
+
+#fixed_update_meeting_element{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border-top: 1px solid #CCC;
+  padding-top: 10px;
+  margin-right: 10%;
+  width: 80%;
+  height: 50px;
+  text-align: center;
+  background: #FFFFFF;
+  z-index: 2000;
+}
+
+.ios{
+  position:relative;
+}
+
+#ios_meeting_submit_element{
+  width: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-right: 1px solid #CCC;
+}
+
+#meeting_chat{
+    width: 100%;
+    height: 25px;
+    float: right;
+    background: #FFFFFF;
+    height: 25px;
+    border-top: 1px solid #DDD;
+    margin-top: 20px;
+}
+
+.screen{
+  padding-bottom: 10px !important;
+}
+
+.bridge_number{
+  margin: 0;
+  font-size: 12pt;
+  text-align: left;
+  line-height: 25px;
+}
+
+.bridge_number h2{
+  margin: 20px 0 0 0;
+  padding:0;
+  font-size: 16pt;
+  line-height: 25px;
+}
+
+#topic-title{
+  margin: 20px 0 0 0;
+  font-size: 16pt !important;
+}

@@ -1,0 +1,73 @@
+#content_wrapper{
+  width: 95%;
+  margin: inherit auto;
+}
+
+#wrap_notifications{
+  margin: 0px 0 0 -450px;
+  position: absolute;
+  left: 50%;
+  width: 900px;
+}
+
+#submit_bar{
+  padding-left: 1%;
+  width: 99%;
+  height: 40px;
+  border-bottom: 1px solid #CCC;
+}
+
+.notification_box{
+  border: 1px solid #CCC;
+  margin-top: 20px;
+  position: relative;
+  text-align: left;
+  overflow: hidden;
+}
+
+
+.notification_box .notification_box_header{
+  padding: 10px ;
+  width: 100%;
+  border-bottom: 1px solid #CCC;
+}
+
+.notification_box .notification_box_body{
+  padding-top: 10px;
+  min-height: 60px;
+  background: #EFEFEF;
+  cursor: pointer;
+}
+
+.notification_box .notification_box_body label{
+  padding: 0 0 0 10px ;
+}
+
+.notification_box .notification_option{
+  padding: 0 0 10px 0;
+}
+
+.notification_box .checkbox_instructions{
+  padding: 0 3px;
+  border: 1px solid #8AA132;
+  background: #E4F89B;
+  width: 200px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: -215px;
+  display: none;
+}
+
+.user_form{
+  display: none;
+  margin: 0 -150px 0 0;
+  width: 300px;
+  padding: 20px;
+  position: absolute;
+  top: 10px;
+  right: 50%;
+  background: #FFF;
+  z-index: 100px;
+}
+

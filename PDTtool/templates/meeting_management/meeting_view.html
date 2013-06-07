@@ -1,0 +1,86 @@
+<div id="view_meeting" class="content_wrapper screen-content">
+    
+  <div id="edit_meeting">
+    {% if Supervisor %}
+      <form action="{{ request.get_full_path }}" method="post" class="form-inline">
+      {% csrf_token %}
+      <a href="javascript:void(0);" onclick="edit_meeting($(this));" class="edit_form_button btn btn-primary btn-mini">Edit Meeting</a>&nbsp;&nbsp;
+      <a href="javascript:void(0)" onclick="edit_schedule($(this));" class="edit_form_button btn btn-primary btn-mini">Edit Schedule</a>&nbsp;&nbsp;
+        <input type="hidden" name="delete_meeting" id="delete_meeting_input" />
+        <input type="submit" class="btn btn-danger btn-mini" value="Delete Meeting" />
+      </form>
+    {% endif %}
+
+    <a href="javascript:view_attendees();" id="view_attendees_button" class="btn btn-success btn-mini view-attendees">View Attendees</a>
+
+  </div><!-- (bootstrap) .pull-right -->
+
+  <div id="wrap_documents" class="pull-left">
+    <h3 id="meeting-name" class="text-info">View Meeting</h3>
+    <div class="bridge_number">
+      <h2>Connection Information</h2>
+      916-356-2663, 8-356-2663, <br>Bridge: 2, <br>Passcode: 973 5722 <br>Speed dialer: inteldialer://2,9735722
+    </div>
+    <h5 id="topic-title">Schedule</h5>
+    {% for category in topic_categories %}
+    <table class="table table-striped table-bordered" category-name="{{ category.name }}">
+      <thead>
+        <tr>
+          <th colspan="3">{{ category.name }}</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th class="schedule-name">Name</th>
+          <th class="schedule-presenter">Presenter</th>
+        </tr>
+      <thead>
+      <tbody id="meeting-topics">
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3"></td>
+        </tr>
+      </tfoot>
+    </table><!-- .table .table-striped -->
+    {% endfor %}
+  </div><!-- #wrap_documents -->
+  <div id="document_table_display" class="pull-right box-shadow-1 border-radius-3">
+    <h4 id="topic-name"></h4>
+    <table class="table table-stripped table-hover disable-select">
+        <thead>
+          <th>Document Name</th>
+          <th></th>
+        </thead>
+        <tbody id="topic-documents">
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3"></td>
+          <tr>
+        </tfoot>
+    </table>
+    <div id="topic-description" class="well">
+
+    </div><!-- #topic-description -->
+  </div>
+  <div id="view_attendees">
+    <h5>View Attendees</h5>
+    {#% if Supervisor %}
+    {# load multiple_users %}
+      <select multiple>
+        {#for extendedusers as  ExtUsers%}
+        {# endfor %}
+      </select>
+    {% endif %#}
+    <div >
+    </div><!-- #view_attendees -->
+  </div><!-- #view_attendees -->
+  <div id="meeting_chat">
+    <a href="javascript:void(0)" 
+       id="meeting_chat_link"
+       onclick="open_meeting_chat();"
+       class="btn btn-link pull-right">
+       open
+    </a>
+  </div><!-- #meeting_chat -->
+</div><!-- #meeting_view -->

@@ -1,7 +1,1 @@
-Gerrit-managed Git Repo for IntelPress
-
-** Please edit this file for your project! **
------
-See https://tickets.cummings.local/default.asp?W57 for information on how to use this effectively.
-
-Short version: run gerrit_get_commit_hook to get your commit hook before trying to push to Gerrit!
+Intel Press Django App

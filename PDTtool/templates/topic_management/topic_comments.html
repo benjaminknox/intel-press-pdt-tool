@@ -1,0 +1,8 @@
+      <!-- Output the comments on the form -->
+      {% for comment in topic.comments %}
+        {{ comment.html|safe }}
+      {% endfor %}
+      <!-- End output the comments on the form -->
+      <!-- Output a form for adding feedback to the topic. -->
+      {{ topic.comment_form|safe }}
+      <!-- End output a form for adding feedback to the topic. -->

@@ -1,0 +1,7 @@
+Hello {{ topic.user.get_full_name }},
+
+Your topic {% for topic in topics %}'{{ topic.name }}'{% endfor %} has been added to the meeting '{{ meeting.name }}' which is on {{ meeting.startdate }} at {{ meeting.starttime }}.
+
+Go to this link to view the meeting schedule: {{ host_name }}/viewmeetings/?year={{ meeting.startdate.year}}&month{{ meeting.startdate.month }}#{{ meeting.publicid }}
+
+-The PDT Portal: {{ host_name }}

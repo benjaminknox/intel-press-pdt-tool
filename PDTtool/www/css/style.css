@@ -1,0 +1,941 @@
+HTML,BODY{
+	width:100%;
+	height: 100%;
+	background: #f2f2f2;
+}
+
+.disable-select{
+	-webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+}
+
+.corner{
+	/* This makes corners on the div. */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.nextmeeting{
+	background: #EEEEEE;
+	border: 1px solid #CCC;
+	text-align: center;
+}
+
+#nextmeeting{
+	padding: 5px;
+	margin: 0 0 10px 0;
+	width: 105%;
+}
+
+#sidebarmeeting{
+	padding: 0 0 0 10px;
+	margin: 40px 0;
+}
+
+.nextmeeting h6{
+	margin: 0;
+}
+
+#addmeetingform1{
+	width: 610px;
+	display: none;
+}
+
+#addmeetingform2{
+	height: 400px;
+}
+
+.addmeetingform{
+	width: 900px;
+	margin-left: -450px;
+}
+
+.addmeetingform .modal-body{
+	min-height:500px;
+}
+
+.schedule{
+	margin-right: 30px;
+}
+
+.select_topics{
+	padding-right: 45px;
+	border-right: 1px solid #CCC;
+}
+
+.select_topics .title{
+	margin-left: 20px;
+}
+
+.draggable{
+	list-style: none;
+	width: 360px;
+	height: 420px;
+	overflow-y: auto;
+}
+
+
+.draggable li{
+	margin-bottom: 5px;
+	cursor: pointer;
+	padding-left: 5px;
+	width: 320px;
+	list-style:none;
+}
+
+.list-topic-td .category{
+	margin-top: 10px;
+}
+
+.placeholder{
+	padding-top:10px;
+	height: 30px;
+	background: #FEFEFE;
+	border: 1px dashed #DDD;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	color: #DDD;
+	text-align: center;
+}
+
+.schedule-item{
+	background: #EEE;
+	border: 1px solid #DDD;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.modal_form{
+    margin: 5px;
+}
+
+.modal_form .btn{
+    width: 100px;
+}
+
+.modal_form .textarea{
+	height: 100px;
+	width: 100%;
+}
+
+.dark-button{
+  background-color: hsl(35, 28%, 39%) !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#997d56", endColorstr="#7f6847");
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#997d56), to(#7f6847));
+  background-image: -moz-linear-gradient(top, #997d56, #7f6847);
+  background-image: -ms-linear-gradient(top, #997d56, #7f6847);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #997d56), color-stop(100%, #7f6847));
+  background-image: -webkit-linear-gradient(top, #997d56, #7f6847);
+  background-image: -o-linear-gradient(top, #997d56, #7f6847);
+  background-image: linear-gradient(#997d56, #7f6847);
+  border-color: #7f6847 #7f6847 hsl(35, 28%, 37%);
+  color: #fff !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.13);
+  -webkit-font-smoothing: antialiased;
+}
+
+.light-button{
+	background-color: hsl(35, 28%, 85%) !important;
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f2ede8", endColorstr="#e3dace");
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#f2ede8), to(#e3dace));
+	background-image: -moz-linear-gradient(top, #f2ede8, #e3dace);
+	background-image: -ms-linear-gradient(top, #f2ede8, #e3dace);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f2ede8), color-stop(100%, #e3dace));
+	background-image: -webkit-linear-gradient(top, #f2ede8, #e3dace);
+	background-image: -o-linear-gradient(top, #f2ede8, #e3dace);
+	background-image: linear-gradient(#f2ede8, #e3dace);
+	border-color: #e3dace #e3dace hsl(35, 28%, 83%);
+	color: #333 !important;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.13);
+	-webkit-font-smoothing: antialiased;
+}
+
+.lighter-button{
+	background-color: hsl(35, 28%, 90%) !important;
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fbfaf8", endColorstr="#ece6de");
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#fbfaf8), to(#ece6de));
+	background-image: -moz-linear-gradient(top, #fbfaf8, #ece6de);
+	background-image: -ms-linear-gradient(top, #fbfaf8, #ece6de);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fbfaf8), color-stop(100%, #ece6de));
+	background-image: -webkit-linear-gradient(top, #fbfaf8, #ece6de);
+	background-image: -o-linear-gradient(top, #fbfaf8, #ece6de);
+	background-image: linear-gradient(#fbfaf8, #ece6de);
+	border-color: #ece6de #ece6de hsl(35, 28%, 88%);
+	color: #333 !important;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.13);
+	-webkit-font-smoothing: antialiased;
+}
+
+.form-submit-button{
+	background-color: hsl(70, 11%, 23%) !important;
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#7b7f66", endColorstr="#3e4134");
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#7b7f66), to(#3e4134));
+	background-image: -moz-linear-gradient(top, #7b7f66, #3e4134);
+	background-image: -ms-linear-gradient(top, #7b7f66, #3e4134);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7b7f66), color-stop(100%, #3e4134));
+	background-image: -webkit-linear-gradient(top, #7b7f66, #3e4134);
+	background-image: -o-linear-gradient(top, #7b7f66, #3e4134);
+	background-image: linear-gradient(#7b7f66, #3e4134);
+	border-color: #3e4134 #3e4134 hsl(70, 11%, 17.5%);
+	color: #fff !important;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.36);
+	-webkit-font-smoothing: antialiased;
+}
+
+.medium-dark-button{
+	background-color: hsl(0, 0%, 84%) !important;
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e5e5e5", endColorstr="#d6d6d6");
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#e5e5e5), to(#d6d6d6));
+	background-image: -moz-linear-gradient(top, #e5e5e5, #d6d6d6);
+	background-image: -ms-linear-gradient(top, #e5e5e5, #d6d6d6);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e5e5e5), color-stop(100%, #d6d6d6));
+	background-image: -webkit-linear-gradient(top, #e5e5e5, #d6d6d6);
+	background-image: -o-linear-gradient(top, #e5e5e5, #d6d6d6);
+	background-image: linear-gradient(#e5e5e5, #d6d6d6);
+	border-color: #d6d6d6 #d6d6d6 hsl(0, 0%, 82.5%);
+	color: #333 !important;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.09);
+	-webkit-font-smoothing: antialiased;
+}
+
+/*
+* In the base_panel.html template 
+* 	this is used to style the h3
+*	tag at the top of the page.
+*/
+#page-title{
+	color: #072E57;
+}
+/*
+* These styles are in templates/dashboard/base_panel.htm
+*/
+
+.wrapper_bg{
+	position: relative;
+	padding: 10px;
+	margin-top: 20px;
+	border: 1px solid #DDD;
+
+	/* This makes corners on the div. */
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+
+	/* This adds a gradient to the div. */
+	-webkit-box-shadow: 0px 3px 20px 0px #CCCCCC;
+	box-shadow: 0px 3px 20px 0px #CCCCCC;
+	background: #ffffff; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlZWVlZWUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top, #ffffff 0%, #eeeeee 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #ffffff 0%,#eeeeee 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ); /* IE6-8 */
+}
+
+#user_management_wrapper{
+	width: 500px; 
+	margin: 30px auto 30px auto;
+}
+
+#user_management_wrapper th{
+	padding-right: 20px;
+	width: 180px;
+	text-align: right;
+}
+
+.submit_login #register_btn{
+	margin-top: 5px;
+}
+
+/* This wraps the main app after login.*/
+#wrapper{
+
+
+}
+
+/* The navbar is located inside of the #wrapper div */
+#navbar{
+	height: 100%;
+}
+	
+	/* This is a group of navigation elements. */
+	#navbar .nav-block{
+		position: relative;
+		border-top: 1px dotted #999999;
+		margin-top: 30px;
+	}
+
+		/* This is the title of group of navigation elements */
+		#navbar .nav-block h6{
+			margin: -20px 0 0 0;
+			padding: 0;
+			top: 0;
+		}
+
+	/* This is the content wrapper in the application */
+	#content-wrapper{
+		padding-left: 10px;
+		border-left: 1px solid #DDD;
+		min-height: 300px;
+	}
+		/* This contains the content from the templates */
+		#content-wrapper #content{
+			margin-top: 20px;
+		}
+
+	/* This is the logout button on each page */
+	#logout{
+		position: absolute;
+		right: 3px;
+		top: 3px;
+		cursor: pointer;
+	}
+
+	/* This is the admin button that shows if a user is a superuser*/
+	#admin{
+		position: absolute;
+		right: 70px;
+		top: 3px;
+	}
+
+/*
+* End styles in templates/dashboard/base_panel.htm
+*/
+
+/*
+* These styles are in templates/dashboard/DefaultViews/viewtopics.htm
+*/
+
+.list-topic-td{
+	cursor: pointer;
+}
+
+/* This displays the document with a description */ 
+.list-topic{
+	padding: 5px;
+	margin-top: 10px;
+	width: 98%;
+	border: 1px solid #EEE;
+
+	/* This makes corners on the div. */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background: #FAFAFA;
+}
+
+/* This is the delete document button, if the user owns the document it is shown */
+#delete_button{
+	position: absolute;
+	top: 50px;
+	right: 65px;
+}
+
+/* This is the release document button, if the user owns the document it is shown */
+#release_button{
+	position: absolute;
+	top: 50px;
+	right: 165px;
+}
+
+/* This is the page links at the bottom of the padge. */
+#pagination{
+	margin: inherit auto;
+	text-align: center;
+}
+
+/*
+* End styles in templates/dashboard/DefaultViews/viewdocuments.htm
+*/
+
+/*
+* These styles are used in dashboard.resources.comment_form.
+*	The template they are used in is dashboard/templates/GeneralUser/viewdocument.html
+*/
+
+/* This is the wrapper around the comment forms */
+.comment_form{
+	display: none;
+}
+	/* This is the textarea that is used in the form. */
+	.comment_form textarea{
+		width: 220px;
+		height: 50px;
+		margin-right: 10px;
+	}
+/*
+* End of the styles that are in dashboard.resources.comment_form.
+*/
+
+/*
+* These styles are in dashboard/templates/GeneralUser/viewdocument.html
+*/
+#comment_wrapper{
+	margin-top: 20px;
+	padding-top: 5px;
+	border-top: 1px dotted #DDD;
+	width: 100%;
+}
+/*
+* These styles can be found in dashboard.resources.comment_form,
+*	but are parsed into the template above.
+*/
+/* This is the comment at the top of the comment tree */
+.highest_parent_comment{
+	width: 100%;
+}
+.document_feedback .highest_parent_comment{
+	width: 97.5%;
+	float: left;
+}
+/* This is any comment that has a parent */
+.child_comment{
+	width: 93%;
+	position: relative;
+}
+/* This wraps any comment reguardless of its relationship */
+.comment_content_wrapper{
+}
+	/* This is a wrapper of the content within a content */
+	.comment_content_wrapper .comment_content{
+		padding: 8px;
+		margin: 20px 0 5px 0;
+		width: 100%;
+		background: #F6F6F6;
+		border-top: 1px solid #DDD;
+		position: relative;
+	}
+	/* This contains the comment users first name and last name. */
+	.comment_content_wrapper .comment_content h6{
+		margin: 0;
+		padding: 0;
+	}
+	/* This is the reply button within each comment */
+	.comment_content_wrapper .comment_content .reply_button{
+		position: absolute;
+		top: 6px;
+		right: 3px;
+		background-color: hsl(40, 0%, 93%) !important;
+		background-repeat: repeat-x;
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f7f7f7", endColorstr="#ededed");
+		background-image: -khtml-gradient(linear, left top, left bottom, from(#f7f7f7), to(#ededed));
+		background-image: -moz-linear-gradient(top, #f7f7f7, #ededed);
+		background-image: -ms-linear-gradient(top, #f7f7f7, #ededed);
+		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f7f7), color-stop(100%, #ededed));
+		background-image: -webkit-linear-gradient(top, #f7f7f7, #ededed);
+		background-image: -o-linear-gradient(top, #f7f7f7, #ededed);
+		background-image: linear-gradient(#f7f7f7, #ededed);
+		border-color: #ededed #ededed hsl(40, 0%, 92%);
+		color: #000 !important;
+		text-shadow: 0 1px 1px rgba(255, 255, 255, 0.06);
+		-webkit-font-smoothing: antialiased;
+	}
+/*
+* End the styles found in dashboard.resources.comment_form
+*/
+/*
+* End of the styles that are in dashboard/templates/GeneralUser/viewdocument.html
+*/
+/*
+* These styles are in templates/dashboard/UserAuth/register.html.
+*/
+.form_table{
+	border: 1px solid #DDD;
+	background: #EEE;
+	text-align: center;
+	margin: 20px auto 0 auto;
+	width: 200px;
+	height: 100px;
+}
+#register_form{
+	width: 500px;
+}
+#register_form input{
+	margin-top: 5px;
+}
+/*
+* These are output by the Form helper class when validation is false.
+*/
+#register_form .errorlist{
+	list-style: none;
+	position: absolute;
+	margin: 0;
+	padding: 0;
+}
+#register_form .errorlist li{
+	padding: 5px;
+}
+/*
+* End of these that are output by the Form helper class when validation is false.
+*/
+/*
+* End of the styles that are in templates/dashboard/UserAuth/register.html.
+*/
+
+/*
+* These styles are in dashboard/templates/SupervisorProgramManager/adddocument.html
+*/
+/* This is the form for the topic information */
+#topic_info_table{
+	width: 100%;
+}
+	/* This is the row around the submit button in the Document info form. */
+	.submit_button_row{
+		text-align: center;
+	}
+/*
+* End the styles that are in dashboard/templates/SupervisorProgramManager/adddocument.html
+*/
+
+#calendar{
+	border: 1px solid #DDD;
+	background: #EEE;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	padding: 20px;
+	margin: 0 0 20px 0;
+	width: 100%;
+}
+
+#calendar table {
+    width: 100%;
+}
+
+#calendar table tr th {
+    text-align: center;
+    background-color: #FCFCFC;
+    color: #000;
+    border: 1px solid #BBB;
+}
+
+#calendar table tr td {
+    width: 10%;
+    border: 1px solid #BBB;
+    background: #FFF;
+    vertical-align: top;
+    height: 80px;
+    padding: 2px;
+}
+
+#calendar td.noday {
+    background-color: #eee;
+}
+
+#calendar td.filled {
+    background-color: #fff6bf;
+}
+
+#calendar td.today {
+    border: 4px solid #316497;
+}
+
+#calendar td.activated {
+    border: 4px solid #316497;
+}
+
+#calendar .dayNumber {
+    font-size: 16px !important;
+    font-weight: bold;
+}
+
+#calendar ul{
+	margin: 0 0 0 15px;
+	padding: 0;
+	list-style: none;
+}
+
+#calendar ul li{
+	line-height: 10px;
+}
+
+#calendar a {
+    font-size: 8px;
+}
+
+.add_calendar_item{
+	float: right;
+	display: none;
+	cursor: pointer;
+}
+
+.topic_browser{
+	margin: 34px 0 20px 0;
+	height: 200px;
+	width: 240px;
+	overflow-y: scroll;
+	background: #FFF;
+	/* This makes corners on the bottom of the div. */
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-top-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+
+	float: left;
+
+	border: 1px solid #DDD;
+}
+
+#add_meeting tr{
+	text-align: left;
+}
+
+#add_meeting textarea{
+	height:100px;
+}
+
+#id_duration,#id_maxscheduleitems{
+	width:30px;
+}
+
+#topic_browser_search{
+	position: absolute;
+	top:0;
+	left: 0;
+}
+
+.topic_browser .topic{
+	position: relative;
+	/*color: #FFF;*/
+	color: #333;
+	cursor: pointer;
+	width: 203px;
+	margin: 5px;
+	padding: 5px;
+	background: #EEE;
+	/*background: #269926;*/
+	/* This makes corners on the div. */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #CCC;
+	/*border: 1px solid #008500;*/
+	overflow: hidden; 
+}
+
+.topic_browser .topic .topic_description{
+	position: absolute;
+	margin-top: 7px;
+	overflow-y: scroll;
+	width: 96%;
+	height: 55px;
+}
+
+#form_element #id_name{
+	width: 100%;
+}
+
+#form_element #id_description{
+	width: 100%;
+}
+
+.simplemodal-overlay{
+	background-color:rgba(0,0,0,0.5);
+}
+.simplemodal-data h4{
+	margin-bottom: 20px;
+}
+
+.close-modal{
+	position: absolute;
+	top:-20px;
+	right: -20px;
+	cursor: pointer;
+	z-index: 1000;
+	width: 45px;
+	height: 45px;
+	background:url('../images/close_button.png');
+}
+
+.simplemodal-data{
+	padding: 10px;
+	width: 350px;
+	text-align: center;
+	border: 1px solid #DDD;
+
+	/* This makes corners on the div. */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+
+	/* This adds a gradient to the div. */
+	-webkit-box-shadow: 0px 3px 20px 0px #333;
+	box-shadow: 0px 3px 20px 0px #333;
+	background: #ffffff; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlZWVlZWUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top, #ffffff 0%, #eeeeee 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #ffffff 0%,#eeeeee 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ); /* IE6-8 */
+
+}
+
+.yellow-tooltip{
+	margin: -20px 30px 0 0;
+	padding: 0;
+	background: #FFF0AA;
+	border: 1px solid #FFE773;
+	/* This adds a gradient to the div. */
+	-webkit-box-shadow: 0;
+	box-shadow: 0;
+}
+
+#id_topics{
+	list-style: none;
+	position: relative;
+}
+
+#id_topics li label input{
+	position: absolute;
+	top: 4px;
+	left: 5px;
+	z-index: 30;
+}
+
+#id_topics li label{
+	position: relative;
+	z-index: 20;
+}
+
+#id_topics li label .topic_option{
+	background: #DDD;
+	border: 1px solid #CCC;
+	/* This makes corners on the div. */
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+#id_topics li label .topic_title{
+	padding: 5px 5px 5px 30px;
+	font-size: 12pt;
+}
+
+#id_topics li label .topic_description{
+	display: none;
+}
+
+#topic_descriptions{
+	display: none;
+	width: 300px;
+	right: 350px;
+	top: 92px;
+	left: -170px;
+	display: none;
+	padding: 10px;
+	position: absolute;
+	background: #EEE;
+	z-index: 30;
+	-webkit-box-shadow: 0px 3px 20px 0px #666;
+	box-shadow: 0px 3px 20px 0px #666;
+}
+
+.meetings-modal{
+	width: 900px;
+	max-height: 500px;
+	overflow-y: auto;
+}
+
+#view_meeting{
+	display: none;
+}
+
+#meeting_topics{
+	background: #FFF;
+}
+
+#meeting_topics td{
+	cursor: pointer;
+}
+
+#meeting_topics h5{
+	margin: 0;
+}
+
+#description_edit{
+	display: none;
+}
+#description_edit form{
+	margin: 0;
+}
+#description_edit textarea{
+	width: 570px;
+	height: 200px;
+	margin: 0;
+}
+
+#current_meeting_button{
+
+	padding: 20px;
+
+	width: 100px;
+
+	font-weight: bold;
+	font-size: 14pt;
+	text-align: center;
+
+	cursor: pointer;
+
+	background: #f9fcf7; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y5ZmNmNyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmNWY5ZjAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top, #f9fcf7 0%, #f5f9f0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9fcf7), color-stop(100%,#f5f9f0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #f9fcf7 0%,#f5f9f0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #f9fcf7 0%,#f5f9f0 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #f9fcf7 0%,#f5f9f0 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #f9fcf7 0%,#f5f9f0 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9fcf7', endColorstr='#f5f9f0',GradientType=0 ); /* IE6-8 */
+
+	position: fixed;
+	top: 20px;
+	left: 70px;
+
+	border: 1px solid #CCC;
+
+}
+
+.shadow{
+	/* This adds a gradient to the div. */
+	-webkit-box-shadow: 0px 3px 20px 0px #eee;
+	box-shadow: 0px 3px 20px 0px #eee;
+}
+
+#id_duration{
+
+}
+
+#ios-arrow-left {
+    display : block; 
+    position:absolute;
+    z-index : 0;
+    right:10px;
+    top:10px;    
+    height:30px;
+    width:auto;
+    padding: 0 10px 0 6px;
+
+    background-repeat:repeat-x;
+    -webkit-background-size : 30px;
+    background-position :0;
+    background-image : -webkit-linear-gradient(
+        bottom,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0) 50%,
+        rgba(255,255,255,0.1) 50%,
+        rgba(255,255,255,0.3) 100%
+        );
+
+    -webkit-border-radius: 5px;
+
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+
+    -webkit-box-shadow :0 -1px 1px rgba(0,0,0,0.2)inset,
+        0 1px 2px rgba(0,0,0,0.8)inset;
+
+    font-family : HelveticaNeue;
+    font-weight: 400;
+    font-size : 12px;
+    line-height : 30px;
+    text-align:center;
+    color:#fff;
+    text-shadow : 0px -1px 0px rgba(0,0,0,0.8);
+}
+
+#ios-arrow-left:before{
+    position:absolute;
+    content : ' ';
+    left:-8px;
+    top:3.5px;
+    height : 24px;
+    width: 24px;
+    z-index : 1;
+
+    background-repeat:repeat-x;
+    -webkit-background-size : 20px 20px;
+    background-position :-1px -0.5px;
+    background-image :  
+        -webkit-gradient(linear, left bottom, right top, 
+            from(rgba(0,0,0,0)), 
+            color-stop(0.5, rgba(0,0,0,0)), 
+            color-stop(0.5, rgba(255,255,255,0.1)), 
+            to(rgba(255,255,255,0.3))); 
+
+
+    -webkit-transform : rotate(-45deg) skew(-10deg, -10deg);
+
+    -webkit-border-top-right-radius : 10px;
+    -webkit-border-top-left-radius :0px;
+    -webkit-border-bottom-right-radius : 0px;
+    -webkit-border-bottom-left-radius : 10px;
+
+    border-left : 1.5px solid rgba(255,255,255,0.4);
+
+    box-shadow :  1px 1px 1px rgba(0,0,0,0.4) inset,
+        -1px 1px 1px rgba(0,0,0,0.5) inset;
+
+    -webkit-mask-image : 
+        -webkit-gradient(linear, left top, right bottom,
+            from(#000000), 
+            color-stop(0.4,#000000), 
+            color-stop(0.5, transparent), 
+            to(transparent));
+}
+#ios-arrow-left,
+#ios-arrow-left:before {
+    background-color: rgba(74,108,155,1);/*hovercolor*/
+
+}
+
+#ios-arrow-left.over,
+#ios-arrow-left.over:before {
+    background-color: rgba(54,88,135,1);/*hovercolor*/
+
+}
+
+#id_topics{
+	padding: 10px;
+	border: 1px solid #CCC;
+	background: #EEE;
+	height: 300px;
+	overflow-y: auto; 
+}
+#search_input{
+	width: 340px;
+	margin-left: 25px;
+}
+
+.timepicker{
+	width: 80px;
+}
+
+.datepicker{
+	width:80px;
+}
+
+.margin-left-10{
+	margin-left:10px;
+}

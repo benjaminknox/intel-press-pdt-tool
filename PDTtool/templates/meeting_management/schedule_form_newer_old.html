@@ -1,0 +1,48 @@
+{% load staticfiles %}
+{% load filters %}
+{% load topics %}
+
+<div id="add_schedule_form" class="screen-content disable-select">
+  <h3>Create a Schedule</h3>
+  <div class="container" id="scheduler_wrapper">
+
+    <div id="blank_topic_element">
+      {% include 'meeting_management/topic_element.html' %}
+    </div><!-- .blank_topic_element -->
+
+    {% for category in topic_categories %}
+    <div class="row-fluid category-row close-box-shadow-1" category-row-category-name="{{ category.code_name }}">
+
+    <div class="pull-left" style="display: none">
+      <h1 id="hidden-category-title" class="pull-right"></h1>
+      <button class="btn btn-large">Expand This Category</button>
+    </div>
+
+    <div class="arrow_interface">
+      <div class="move_up arrow_button"></div><!-- .move_up -->
+      <div class="order"><input type="text" class="order-value" /></div><!-- .order -->
+      <div class="move_down arrow_button"></div><!-- .move_down -->
+    </div><!-- .arrow_interface -->
+
+      <div category-name="{{ category.name }}" class="category element span3">
+        <h4 class="text-info category-title"></h4>
+        {% topics_by_category category %}
+      </div><!-- .category .element (bootstrap) .span2-->
+      <div class="category-schedule element span4" schedule-category="{{ category.code_name }}">
+        <h4 class="muted category-title">Schedule</h4>
+      </div><!-- .category-schedule (bootstrap) .span4 -->
+      <div class="topic-description span4" topic-description-category="{{ category.code_name }}">
+        <h5 class="topic-name-display"></h5>
+        <div class="topic-description-display"></div><!-- .description-display -->
+      </div><!-- .topic-description -->
+      <div class="clearfix"></div>
+      <input type="submit" value="Create Meeting" id="meeting_submit_button" class="meeting_submit_button btn btn-success pull-right" />
+    </div><!-- (bootstrap) .row-fluid -->
+    {% endfor %}
+
+    <input type="hidden" name="schedule_categories" id="schedule_categories_input" />
+    <input type="hidden" name="schedule_items" id="schedule_items_input" />
+    <input type="submit" value="Create Meeting" id="meeting_submit_button" class="btn btn-success" />
+
+  </div><!-- #schedule_wrapper (bootstrap) .container -->
+</div>

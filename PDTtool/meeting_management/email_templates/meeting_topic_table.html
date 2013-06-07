@@ -1,0 +1,31 @@
+
+Below is the current schedule as it stands.<br /><br />
+
+{% for category in categoryschedules %}
+{% if category.topics.count > 0 %}
+<table style="margin-bottom: 40px" border="1">
+  <tr>
+    <td colspan="5" text-align="center">{{ category.category | title }}</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Length</td>
+    <td>Topic</td>
+    <td>Who</td>
+    <td>Documents</td>
+  </tr>
+  {% for topic in category.topics.all %}
+  <tr>
+    <td style="width: 30px">{{ topic.scheduleorder }}</td>
+    <td style="width: 100px">{{ topic.presentationlength }} min.</td>
+    <td style="width: 300px;">
+      <a href="{{ domain_name }}/viewtopic/?publicid={{ topic.publicid }}" style="color: #000000;">{{ topic.name }}</a>
+    </td>
+    <td style="width: 200px">{{ topic.user.get_full_name }}</td>
+    <td style="width: 30px">{{ topic.documents.count }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+{% endfor %}
+<br /><br />

@@ -1,0 +1,8 @@
+Hello {{ user.user.get_full_name }},<br /><br />
+
+There is a meeting on "{{ meeting.startdate|date:"F j" }} {{ meeting.name }}" at {{ meeting.starttime }} that your topic is in. Please review the documents before the beginning of the meeting. You may add feedback at any time.<br /><br />
+
+{% include "meeting_topic_table.html" %}
+
+-<a href="{{ domain_name }}">The PDT Portal</a><br>
+<a href="{{ domain_name }}/notifications/">Go here to manage your notifications</a>

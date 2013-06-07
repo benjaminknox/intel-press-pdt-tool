@@ -1,0 +1,8 @@
+Hello {{ user.user.get_full_name }},
+
+There is a meeting on "{{ meeting.startdate|date:"F j" }} {{ meeting.name }}" at {{ meeting.starttime }} that your topic is in. Please review the documents before the beginning of the meeting. You may add feedback at any time.
+
+Go to the link below to this link to view current meeting schedule: {{ domain_name }}/?year={{ meeting.starttime.year }}&month={{ meeting.starttime.month }}#{{ meeting.publicid }}
+
+-The PDT Portal
+Go here to manage your notifications: {{ domain_name }}/notifications/

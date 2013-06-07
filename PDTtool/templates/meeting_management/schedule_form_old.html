@@ -1,0 +1,25 @@
+<div id="add_schedule_form" class="screen-content disable-select">
+  <h3>Create a Schedule</h3>
+  <div class="droppable-wrapper row-fluid">
+    <input type="text" id="search-topics" onkeyup="filter_topics($(this).val());" placeholder="Search Topics" height="" />
+    <ul class="select_topics dropTrue span4">
+    </ul><!-- .select_topics -->
+    <ul class="available_topics">
+      {% for topic in topics %}
+      <li class="droppable border-box" duration="{{ topic.presentationlength }}" publicid="{{ topic.publicid }}">
+        <h6>{{ topic.name }}</h6>
+      </li>
+      {% endfor %}
+    </ul><!-- .available_topics -->
+    <div class="span6">
+      <div class="number_system pull-left">
+        <div class="scale span1 pull-left"></div>
+        <ul class="create_schedule dropTrue border-radius-2 pull-left">
+          
+        </ul>
+      </div><!-- .number_system -->
+    </div>
+  </div>
+  <input type="hidden" name="schedule_items" id="schedule_items_input" />
+  <input type="submit" value="Create Meeting" id="meeting_submit_button" class="btn btn-success" />
+</div>

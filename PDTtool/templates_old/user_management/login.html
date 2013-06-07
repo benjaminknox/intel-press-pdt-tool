@@ -1,0 +1,26 @@
+{% extends "user_auth_base.html" %}
+
+{% block content %}
+	<form action="{{ request.get_full_path }}" method="POST">
+		{% csrf_token %}
+		<div style="height: 30px; text-align: center; width: 100%;">
+		{% if loginerror %}
+			<span class="text-error">{{ loginerror }}</span>
+		{% else %}
+			<span class="text-info">Welcome to the PDT portal</span>
+		{% endif %}
+		</div>
+		<table id="login_form">
+			{{ AuthenticationForm.as_table }}
+			<tr>
+				<td></td>
+				<td class="submit_login">
+					<input type="submit" value="login" class="btn" />
+					<a href="/register/" class="btn btn-primary btn-mini pull-right" id="register_btn">Register</a><br>
+					<a href="/forgotpassword/" class="btn btn-link btn-mini pull-right" id="register_btn">Reset Password</a>
+				</td>
+			</tr>
+		</table><!-- #login-form -->
+	</form>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+<form action="{{request.get_full_path}}" method="POST">
+<input type="hidden" id="meeting_form_identity" />
+<div id="add_meeting_form" class="screen-content">
+  <h3>Add a Meeting</h3>
+    {% csrf_token %}
+    <table id="meeting_form_table">
+      {{ addmeetingform }}
+      <tr>
+        <td></td>
+        <td>
+          <a href="javascript:load_schedule_form_populate_schedules(true);" id="edit_schedule_button" class="btn btn-success">Next</a>
+          <button type="button" id="submit_meeting_info_button" onclick="check_meeting_info_form($(this))" class="btn btn-success">submit</a>
+        </td>
+      </tr>
+    </table>
+</div><!-- .add_meeting_form -->

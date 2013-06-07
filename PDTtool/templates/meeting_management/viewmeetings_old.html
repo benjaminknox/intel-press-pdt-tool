@@ -1,0 +1,162 @@
+{% extends "gui_base.html" %}
+{% load staticfiles %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'www/css/calendar.style.css' %}" />
+{% endblock %}
+{% block content %}
+
+{% if Supervisor %}
+	<div class="calendar_day_form light-hard-shadow">
+		<i class="icon-remove close-calendar-day pull-right"></i>
+		<form onsubmit="return add_meeting_form_submit($(this));">
+			<h5>Add a meeting</h5>
+			<div class="item-wrap">
+				When: <span class="date"></span>
+				<input type="hidden" name="startdate" class="input-small" />
+			</div>
+			<div class="item-wrap">
+				Name:
+				<input type="text" name="name" class="meetingname clear-border-radius" autocomplete="off" />
+			</div>
+			<div class="submit-wrap">
+				<input type="submit" value="Continue" class="btn btn-success" />
+			</div>
+		</form>
+		<div class="pointer"></div><!-- .pointer -->
+	</div><!-- .calendar_day_form -->
+{% endif %}
+
+	<div class="screen">
+		<div id="view_meeting" class="screen-content">
+		<h3 id="meeting-name">View Meeting</h3>
+
+		{% if Supervisor %}
+		<div id="edit_meeting">
+		  <form action="{{ request.get_full_path }}" method="post" class="form-inline">
+		  {% csrf_token %}
+		  <a href="javascript:void(0);" onclick="edit_meeting($(this));" class="edit_form_button btn btn-primary btn-mini">Edit Meeting</a>&nbsp;&nbsp;
+		  <a href="javascript:void(0)" onclick="edit_schedule($(this));" class="edit_form_button btn btn-primary btn-mini">Edit Schedule</a>&nbsp;&nbsp;
+		    <input type="hidden" name="delete_meeting" id="delete_meeting_input" />
+		    <input type="submit" class="btn btn-danger btn-mini" value="Delete Meeting" />
+		  </form>
+		</div><!-- (bootstrap) .pull-right -->
+		{% endif %}
+
+			<div class="row-fluid">
+				<div >
+					<div id="meeting-description" class="well"></div>
+					<div id="schedule_wrapper" class="span3">
+						<table id="topic_table" class="table-header table table-stripped table-bordered table-hover disable-select">
+								<thead>
+									<tr>
+										<th colspan="3">Schedule</th>
+									</tr>
+									<tr>
+										<th></th>
+										<th class="schedule-name">Name</th>
+										<th class="schedule-presenter">Presenter</th>
+									</tr>
+								</thead>
+						</table>
+						<div id="schedule_wrapper_scroller" style="overflow-y: auto;">
+							<table id="topic_table" class="table table-stripped table-bordered table-hover disable-select">
+									<tbody id="meeting-topics">
+									</tbody>
+							</table>
+						</div>
+							<table id="topic_table" class="table-footer table table-stripped table-bordered table-hover disable-select">
+								<tfoot>
+									<tr>
+										<td id="meeting-topics-footer" colspan="3"></td>
+									</tr>
+								</tfoot>
+						</table>
+					</div>
+					<div id="document_table_display" class="span8">
+						<h4 id="topic-name"></h4>
+						<div id="topic-description">
+						</div>
+						<table class="table table-stripped table-hover disable-select">
+								<thead>
+									<th>Document Name</th>
+									<th></th>
+								</thead>
+								<tbody id="topic-documents">
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="3"></td>
+									<tr>
+								</tfoot>
+							</table>
+					</div>
+				</div><!-- #view_meeting -->
+			</div>
+		</div>
+		{% if Supervisor %}
+		<a href="javascript:void(0);" onclick="$(this).parent().hide();" class="btn btn-danger hide-button">close</a>
+		<form action="{{request.get_full_path}}" method="POST">
+		<input type="hidden" id="meeting_form_identity" />
+		<div id="add_meeting_form" class="screen-content">
+			<h3>Add a Meeting</h3>
+				{% csrf_token %}
+				<table id="meeting_form_table">
+					{{ addmeetingform }}
+					<tr>
+						<td></td>
+						<td>
+							<a href="javascript:load_schedule_form();" class="btn btn-success">Next</a>
+						</td>
+					</tr>
+				</table>
+		</div><!-- .add_meeting_form -->
+
+		<div id="add_schedule_form" class="screen-content disable-select">
+			<h3>Create a Schedule</h3>
+			<div class="droppable-wrapper row-fluid">
+				<input type="text" id="search-topics" onkeyup="filter_topics($(this).val());" placeholder="Search Topics" height="" />
+				<ul class="select_topics dropTrue span4">
+				</ul><!-- .select_topics -->
+				<ul class="available_topics">
+					{% for topic in topics %}
+					<li class="droppable border-box" duration="{{ topic.presentationlength }}" publicid="{{ topic.publicid }}">
+						<h6>{{ topic.name }}</h6>
+					</li>
+					{% endfor %}
+				</ul><!-- .available_topics -->
+				<div class="span6">
+					<div class="number_system pull-left">
+						<div class="scale span1 pull-left"></div>
+						<ul class="create_schedule dropTrue border-radius-2 pull-left">
+
+						</ul>
+					</div><!-- .number_system -->
+				</div>
+			</div>
+			<input type="hidden" name="schedule_items" id="schedule_items_input" />
+			<input type="submit" value="Create Meeting" id="meeting_submit_button" class="btn btn-success" />
+		</div>
+	</form>
+
+{% endif %}
+
+</div>
+<!--
+<div id="sidebar" class="pull-left">
+	&nbsp;
+</div> #sidebar (bootstrap) .pull-left -->
+<div id="calendar-wrapper" class="disable-select pull-left">
+
+<div class="calendar-buttons">
+	<a href="/viewmeetings/?month={{prev_month.month}}&year={{prev_month.year}}" class="grey-gradient border-radius-2">&larr; {{ prev_month_textual }}</a>
+	<a href="/viewmeetings/?month={{next_month.month}}&year={{next_month.year}}" class="grey-gradient border-radius-2"> {{ next_month_textual }} &rarr;</a>
+</div>
+
+	{{calendar}}
+</div><!-- #calendar-wrapper  .pull-left -->
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'www/js/calendar.ui.js' %}"></script>
+{% endblock %}

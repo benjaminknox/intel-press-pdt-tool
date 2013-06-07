@@ -1,0 +1,12 @@
+
+    <div id="{{form_name}}_{{ publicid }}" class="user_form close-box-shadow-2">
+      <a href="javascript:void(0)" onclick="$(this).parent().hide();" class="btn btn-danger btn-mini">close</a>
+      <form action="{{ request.get_full_path }}" method="POST">
+        <input type="hidden" name="{{form_name}}" value="{{ publicid }}" />
+        {% csrf_token %}
+        {{ user_form }}
+        <div style="margin-top: 30px;">
+          <button type="submit" class="btn btn-success">Save</button>
+        </div>
+      </form>
+    </div>

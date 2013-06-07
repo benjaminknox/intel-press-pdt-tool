@@ -1,0 +1,12 @@
+Hello {{ user.user.get_full_name }},
+
+The last day to add a topic to "{{ meeting.startdate|date:"F j" }} {{ meeting.name }}" at {{ meeting.starttime }} is coming up on {{ meeting.duedate }} at {{ meeting.startdate}}. Please submit your topics to the PDT portal before midnight on that date.
+
+"{{ meeting.startdate|date:"F j" }} {{ meeting.name }}" will start at {{ meeting.starttime }}
+
+If you miss the cutoff, your topic will automatically be added to the following meeting once you are ready for it to be reviewed.
+
+Go to the link below to this link to view current meeting schedule: {{ domain_name }}/?year={{ meeting.starttime.year }}&month={{ meeting.starttime.month }}#{{ meeting.publicid }}
+
+-The PDT Portal
+Go here to manage your notifications: {{ domain_name }}/notifications/

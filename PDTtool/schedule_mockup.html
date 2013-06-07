@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="http://127.0.0.1:8000/static/www/bootstrap/css/bootstrap.min.css"></link>
+<link rel="stylesheet" href="http://127.0.0.1:8000/static/www/css/gui-style.css"></link>
+<style type="text/css">
+
+  #scheduler_wrapper{
+  }
+  
+  #scheduler_wrapper .element{
+    margin-top: 30px;
+    padding-left: 6px;
+    border: 1px solid #CCC;
+    background: #F6F6F6;
+    position: relative;
+  }
+
+  #scheduler_wrapper .topic-description{
+    background: none;
+    border: none;
+  }
+
+  #scheduler_wrapper .category h4{
+    white-space: nowrap;
+    right: 0;
+  }
+
+  #scheduler_wrapper .category-schedule h4{
+    margin-left: -6px;
+    z-index: 100;
+  }
+
+  #scheduler_wrapper .category-title{
+    margin: 0;
+    padding: 0; 
+    position: absolute;
+    top: -20px;
+    font-size: 22pt;
+  }
+
+  #scheduler_wrapper .category-row{
+    margin-bottom: 30px;
+  }
+
+  #scheduler_wrapper .topic{
+    position: relative;
+  }  
+
+ .topic{
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  #scheduler_wrapper .category .topic{
+    margin: 10px 0 !important;
+    padding: 5px 10px 10px 10px;
+    height: 40px;
+    width: 100px;
+    background: #FFE29B;
+    border: 1px solid #FFD879;
+    z-index: 1000;
+  }
+
+  #scheduler_wrapper .category-schedule .topic{
+    width: 270px;
+    margin: 10px 0;
+    padding: 10px 5px 30px 5px;
+    background: #FEFEFE;
+    border: 1px solid #CCC;
+    z-index: 999;
+  }
+
+  .topic-duration{
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    text-align: center;
+    background: #FEFEFE;
+    border: 1px solid #CCC;
+    padding: 1px 3px;
+    z-index: 1001;
+  }
+
+  .topic-description{
+    margin-top: -30px;
+  }
+
+  .topic-description .topic-name-display{
+    margin: 0;
+    padding: 0;
+  }
+
+  .original-text{
+    display: none;
+  }
+
+</style>
+<body>
+
+<div class="container" id="scheduler_wrapper">
+
+<form action="file:///home/programmer/.virtualenvs/PDTtool/IntelPress/PDTtool/schedule_mockup.html" method="POST">
+
+  <button type="submit" class="btn btn-success">Update Schedule</button>
+
+  <div class="row-fluid category-row">
+    <div category-name="Book" class="category element span2">
+      <h4 class="text-info category-title"></h4>
+      <div class="topic border-radius-3 light-hard-shadow" topic-name="1" topic-duration="50" topic-publicid="1" topic-category="book" topic-description="I'm a description! Awesome Aweseom Awesome!!!!!!!"></div><!-- .topic (bootstrap) -->
+      <div class="topic border-radius-3 light-hard-shadow" topic-name="2" topic-duration="50" topic-publicid="2" topic-category="book" topic-description="I'm a descripawfawef awefaesbtion! Awesome Aweseom Aawef aw awfwe ascwesome!!!!!!!"></div><!-- .topic (bootstrap) -->
+      <div class="topic border-radius-3 light-hard-shadow" topic-name="3" topic-duration="50" topic-publicid="3" topic-category="book" topic-description="I'm a descripa wfawe fawefasdf ftion!aef  awefa Awesoaw awef awme Aweseom Awesoawe fawefme!!!!!!!"></div><!-- .topic (bootstrap) -->
+    </div><!-- .category .element (bootstrap) .span2-->
+    <div class="category-schedule element span4" schedule-category="book">
+      <h4 class="muted category-title">Schedule</h4>
+    </div><!-- .category-schedule (bootstrap) .span4 -->
+    <div class="topic-description element span6" topic-description-category="book">
+      <h5 class="topic-name-display"></h5>
+      <div class="topic-description-display"></div><!-- .description-display -->
+    </div><!-- .topic-description -->
+  </div><!-- (bootstrap) .row-fluid -->
+
+  <div class="row-fluid category-row">
+    <div category-name="Outline" class="category element span2">
+      <h4 class="text-info category-title"></h4>
+      <div class="topic border-radius-3 light-hard-shadow" topic-name="4" topic-duration="50" topic-publicid="4" topic-category="outline" topic-description="I'm a description! Awesome Aweseom Awesome!!!!!!!"></div><!-- .topic (bootstrap) -->
+      <div class="topic border-radius-3 light-hard-shadow" topic-name="5" topic-duration="5054654" topic-publicid="5" topic-category="outline" topic-description="I'm a dasdfasfsdfawefawefawerwgweg waefawe  awefa escription! Awesome Aweseom Awesome!!!!!!!"></div><!-- .topic (bootstrap) -->
+    </div><!-- .category .element (bootstrap) .span2-->
+    <div class="category-schedule element span4" schedule-category="outline">
+      <h4 class="muted category-title">Schedule</h4>
+    </div><!-- .category-schedule (bootstrap) .span4 -->
+    <div class="topic-description element span6" topic-description-category="outline">
+      <h5 class="topic-name-display"></h5>
+      <div class="topic-description-display"></div><!-- .description-display -->
+    </div><!-- .topic-description -->
+  </div><!-- (bootstrap) .row-fluid -->
+
+  <div class="row-fluid category-row">
+    <div category-name="Recent Open" class="category element span2">
+      <h4 class="text-info category-title"></h4>
+      <div class="topic border-radius-3 light-hard-shadow" topic-name="6" topic-duration="50" topic-publicid="6" topic-category="recent_open" topic-description="I' awefaw awcera qADAV FADFasdf  a description! Awesome Aweseoawe fawef m Awesome!!!!!!!"></div><!-- .topic (bootstrap) -->
+      <div class="topic border-radius-3 light-hard-shadow" topic-name="7" topic-duration="5054654" topic-publicid="7" topic-category="recent_open" topic-description="I'm a description! Awesome Aweseaw fawdf ascawec awe fawef om Awesome!!!!!!!"></div><!-- .topic (bootstrap) -->
+    </div><!-- .category .element (bootstrap) .span2-->
+    <div class="category-schedule element span4" schedule-category="recent_open">
+      <h4 class="muted category-title">Schedule</h4>
+    </div><!-- .category-schedule (bootstrap) .span4 -->
+    <div class="topic-description element span6" topic-description-category="recent_open">
+      <h5 class="topic-name-display"></h5>
+      <div class="topic-description-display"></div><!-- .description-display -->
+    </div><!-- .topic-description -->
+  </div><!-- (bootstrap) .row-fluid -->
+  <input type="text" name="schedule_items_input" />
+  <button type="submit" class="btn btn-success">Update Schedule</button>
+</form>
+</div><!-- #schedule_wrapper (bootstrap) .container -->
+<script src="http://127.0.0.1:8000/static/www/js/jquery.min.js"></script>
+<script src="http://127.0.0.1:8000/static/www/jquery-ui/js/jquery-ui.min.js"></script>
+<script src="http://127.0.0.1:8000/static/www/js/jquery.ui.touch-punch.min.js"></script>
+<script>
+
+  var category_row_selector = '.category-row';
+  var scrolling_text_selector = '.scroller';
+
+  function scroll(ele){
+    var s = ele.text().substr(1)+ele.text().substr(0,1);
+    ele.text(s);
+  }
+
+  function start_scrolling(element){
+    var scroller = element.find(scrolling_text_selector)
+    if(scroller.width() > element.width()){
+      intervalID = setInterval(function() {
+         scroll(scroller);
+      }, 100);
+    }else{
+      intervalID = false;
+    }
+  }
+
+  function stop_scrolling_text(element){
+    if(intervalID){
+      element.find(scrolling_text_selector).html(element.find('.original-text').html());
+      clearInterval(intervalID);
+    }
+  }
+
+  function save_topics(){
+    var schedules = $('.category-schedule');
+    var publicid = '';
+    schedules.each(function(){
+      var schedule = $(this);
+      schedule.find('.topic').each(function(){
+        var topic = $(this);
+        var topic_publicid = topic.attr('topic-publicid');
+        if(topic_publicid) publicid += topic_publicid+',';
+      });
+    });
+    $('input[name=schedule_items_input]').val('').val(publicid);
+  }
+
+  $('.category').each(function(){
+    var category = $(this);
+    var category_name = category.attr('category-name');
+    var category_name_lower = category_name.toLowerCase().replace(' ','_');
+    var header = category.find('.category-title');
+    var parent = category.closest(category_row_selector);
+    var category_scheduler = parent.find('.category-schedule');
+
+    header.text(category_name);
+
+    category.find('.topic').each(function(){
+      var topic = $(this);
+      var topic_name = topic.attr('topic-name');
+      var topic_description = topic.attr('topic-description');
+      var topic_duration = topic.attr('topic-duration');
+      var topic_duration_selector = '.topic-duration';
+      var topic_name_display_element = topic.closest(category_row_selector).find('.topic-description .topic-name-display');
+      var topic_description_display_element = topic.closest(category_row_selector).find('.topic-description .topic-description-display');
+      topic.html('<span class="scroller">'+topic_name+'&nbsp;&nbsp;&nbsp;</span><span class="original-text">'+topic_name+'&nbsp;&nbsp;&nbsp;</span>')
+           .append('<div class="topic-duration border-radius-3">'+topic_duration+' min.</div>')
+           .hover(function(e){
+            var element = $(this);
+            start_scrolling(element);
+            topic_name_display_element.html(topic_name);
+            topic_description_display_element.html(topic_description);
+           },function(e){
+            stop_scrolling_text($(this));
+           });
+    });
+
+    category.sortable({
+      connectWith:category_scheduler,
+      receive: function(event,ui){
+        var element = $(ui.item);
+        stop_scrolling_text(element);
+        start_scrolling(element);
+        save_topics();
+      }
+    });
+
+    category_scheduler.sortable({
+      connectWith:category,
+      cancel:'h4',
+      receive: function(event,ui){
+        var element = $(ui.item);
+        stop_scrolling_text(element);
+        start_scrolling(element);
+        save_topics();
+      },
+      stop: function(event,ui){
+        save_topics();
+      }
+    });
+
+  }).disableSelection();
+
+</script>
+
+</body>
+</html>

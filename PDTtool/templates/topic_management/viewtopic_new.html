@@ -1,0 +1,106 @@
+{% extends "gui_base.html" %}
+{% load staticfiles %}
+{% block stylesheet %}
+{% load documents %}
+<link rel="stylesheet" href="{% static 'www/css/topics.style.css' %}" />
+{% endblock %}
+{% block content %}
+<div id="document_content" class="disable-select ">
+
+	{% if Supervisor or user_is_owner %}
+
+	<!-- Start the output of a release button for adding to a meeting. -->
+	<div id="release_interface">
+		<form method="POST" action="{{ request.get_full_path }}" class="form-inline">
+			{% csrf_token %}
+			<input type="hidden" name="topic_ready_for_review_id" value="{{ topic.topic_object.publicid }}"  />
+		{% if not topic.topic_object.readyforreview %}
+			Presentation Length: <input type="text" style="width: 30px" name="topic_presentationlength" value="15" /> minutes
+			<input type="submit" class="btn btn-primary" value="Release for Review"  />
+		{% else %}
+			<span class="text-success">This has been readied for review. It is a {{ topic.topic_object.presentationlength }} minute presentation.</span>
+			<input type="submit" value="Change" class="btn btn-primary"  /><br>
+			<small>This was set at {{topic.topic_object.datesetforreview}}</small>
+		{% endif %}
+		</form><!-- (bootstrap) .form-inline -->
+	</div><!-- #release_interface -->
+	<!-- End the output of a release button for adding to a meeting. -->
+
+	{% endif %}
+
+	<div id="document_scroller_wrapper" class="pull-left border-radius-5">
+		<h4 id="document_content_header">Documents</h4> <a href="javascript:add_document()" title="Add Document" class="add-document btn btn-success btn-mini pull-right "><i class="icon-plus icon-white"></i></a>
+		<div id="document_scroller">
+
+		{% with id="add_document_form" form_name="add_document" %}		
+			{% include "topic_management/simple_document_upload_form.html" %}
+		{% endwith %}
+
+		{% for document in documents %}
+
+			<div class="document text-info close-box-shadow-1"
+					 document-publicid="{{ document.document_object.publicid }}"
+					 document-name="{{ document.document_object.name }}">
+
+				{% with form_name="updated_documentid" form_value=document.document_object.publicid classes="update_document_form" %}
+					{% include "topic_management/simple_document_upload_form.html" %}
+				{% endwith %}
+
+				<h4 class="text-info">Document</h4>
+				{{ document.document_object.name }}
+
+				<div style="margin-top: 10px">
+					<a href="/download/{{ topic.topic_object.publicid }}/{{ document.document_object.fileName }}" title="Download Document" class="btn btn-info btn-mini pull-left">
+						<i class="icon-download icon-white"></i>
+					</a>
+					<a href="javascript:void(0);" onclick="update_document($(this));" class="btn btn-warning btn-mini pull-left document-button update-document" title="Update Document">
+						<i class="icon-arrow-up icon-white update-document"></i>
+					</a>
+					<a href="javascript:void(0);" onclick="alert($('#delete_document_{{ document.document_object.publicid }}').length);" class="btn btn-danger btn-mini pull-left document-button update-document" title="Update Document">
+						<i class="icon-trash icon-white delete-document"></i>
+					</a>
+					<form action="{{ request.get_full_path }}" method="POST" id="delete_document_{{ document.document_object.publicid }}" class="delete_document_form">
+						{% csrf_token %}
+						<input type="hidden" name="deleted_documentid" value="{{ document.document_object.publicid }}" />
+					</form>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		{% endfor %}
+		</div><!-- #document_scroller -->
+	</div><!-- #document_scroller_wrapper -->
+
+	<div id="document_feedback" class="pull-left border-radius-5">
+		<h4>Comments</h4>
+
+		<div id="document_feedback_scroller">
+			
+		</div><!-- #document_feedback_scroller -->
+	</div><!-- #document_feedback -->
+
+	<div id="topic_display">
+		<h1>{{ topic.topic_object.name }}</h1>
+		
+		<div id="topic_description">
+			{{ topic.topic_object.description }}
+		</div><!-- #topic_description -->
+		<div id="topic_comment_wrapper">
+			
+			<!-- Output a form for adding feedback to the topic. -->
+			{{ topic.comment_form|safe }}
+			<!-- End output a form for adding feedback to the topic. -->
+
+			<h1>Topic Comments</h1>
+			<!-- Output the topic comments -->
+			{% for comment in topic.comments %}
+					{{ comment.html | safe }}
+			{% endfor %}
+			<!-- End output of the topic comments -->
+			<div class="clearfix"></div>
+			</div>
+	</div><!-- #topic_display -->
+</div><!-- #document_content --> 
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'www/js/viewtopic.ui.js' %}"></script>
+{% endblock %}

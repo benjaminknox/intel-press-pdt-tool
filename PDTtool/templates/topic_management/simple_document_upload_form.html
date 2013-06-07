@@ -1,0 +1,10 @@
+<div{% if id %} id="{{ id }}"{% endif %} class="{{ classes }} document_upload_form border-radius-3 close-box-shadow-2">
+  <form  enctype="multipart/form-data" method="POST" action="{{ request.get_full_path }}" style="margin: 0;height: 40px;">
+    {% csrf_token %}
+    <input type="hidden" name="{{ form_name }}"{% if form_value %} value="{{ form_value }}"{% endif %} />
+    <input type="file" name="file" class="file"  onchange="$(this).closest('form').submit();" />
+    <a href="javascript:void(0);" onclick="$(this).closest('form').find('.file').show().click().hide();" class="btn ">Choose File</a>
+    <br><br>
+    <!--<input type="submit" value="Upload" class="btn btn-primary" />-->
+  </form>
+</div><!-- #add_document_form -->

@@ -1,0 +1,63 @@
+{% extends "gui_base.html" %}
+{% load staticfiles %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'www/css/calendar.style.css' %}" />
+<link rel="stylesheet" href="{% static 'www/css/schedule.style.css' %}" />
+{% endblock %}
+{% block content %}
+
+{% if Supervisor %}
+	<div class="calendar_day_form light-hard-shadow">
+		<i class="icon-remove close-calendar-day pull-right"></i>
+		<form onsubmit="return add_meeting_form_submit($(this));">
+			<h5>Add a meeting</h5>
+			<div class="item-wrap">
+				When: <span class="date"></span>
+				<input type="hidden" name="startdate" class="input-small" />
+			</div>
+			<div class="item-wrap">
+				Name:
+				<input type="text" name="name" class="meetingname clear-border-radius" autocomplete="off" />
+			</div>
+				<input type="hidden" name="duedate" />
+			<div class="submit-wrap">
+				<input type="submit" value="Continue" class="btn btn-success" />
+			</div>
+		</form>
+		<div class="pointer"></div><!-- .pointer -->
+	</div><!-- .calendar_day_form -->
+{% endif %}
+	<div class="screen close-box-shadow-2">
+		<a href="javascript:void(0);" onclick="hide_meeting();" class="btn btn-danger hide-button">close</a>
+		{% include 'meeting_management/meeting_view.html' %}
+		{% if Supervisor %}
+			{% include 'meeting_management/meeting_form.html' %}
+			{% include 'meeting_management/schedule_form.html' %}
+		{% endif %}
+	</div>
+	<div class="black_overlay">
+
+	</div>
+</div>
+<!--
+<div id="sidebar" class="pull-left">
+	&nbsp;
+</div> #sidebar (bootstrap) .pull-left -->
+<div id="calendar-wrapper" class="disable-select  border-radius-5 box-shadow-2 pull-left">
+
+<div class="calendar-buttons">
+	<a href="/viewmeetings/?month={{prev_month.month}}&year={{prev_month.year}}" class="grey-gradient border-radius-2">&larr; {{ prev_month_textual }}</a>
+	<a href="/viewmeetings/?month={{next_month.month}}&year={{next_month.year}}" class="grey-gradient border-radius-2"> {{ next_month_textual }} &rarr;</a>
+</div>
+
+	{{calendar}}
+</div><!-- #calendar-wrapper  .pull-left -->
+<div id="loading" >Loading...</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'www/js/jquery.sortElements.js' %}"></script>
+<script src="{% static 'www/js/calendar.ui.js' %}"></script>
+<script src="{% static 'www/js/schedule.ui.js' %}"></script>
+<script src="{% static 'www/js/schedule.ios.js' %}"></script>
+{% endblock %}

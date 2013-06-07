@@ -1,0 +1,67 @@
+{% extends "html_base.html" %}
+{% load staticfiles %}
+{% block htmlcontent %}
+{% load nextmeeting %}
+<div class="container" style="margin-bottom: -40px;">
+
+	<h3 id="page-title" class="disable-select">PDT Portal</h3><!-- #page-title -->
+</div><!-- (boostrap) .container -->
+<!--
+
+	This is the UI template.
+
+-->
+<div id="wrapper" class="wrapper_bg container">
+	{% if request.user.is_superuser %}
+	<a id="admin" class="btn btn-inverse dark-button" href="/admin/">admin</a>
+	{% endif %}
+	<a id="logout" class="btn btn-inverse dark-button" href="/logout/">logout</a>
+	<div id="navbar" class="span3 disable-select">
+
+		<div class="nav-block">
+			<h6>Topics</h6>
+			<a href="/viewtopics/">View All Topics</a>
+			{% if Program_Manager or Supervisor %}
+			<br><a href="/viewtopics/?mytopics=1">My Topics</a>
+			<br><a href="/addtopic/">Add a Topic</a>
+			{% endif %}
+		</div><!-- .nav-block -->
+
+		<div class="nav-block">
+			<h6>Meetings</h6>
+			<a href="/viewmeetings/">View Meetings</a>
+		</div><!-- .nav-block -->
+
+		<div class="nav-block">
+			<h6>User Management</h6>
+			<a href="/accountsettings/">My Account Settings</a>
+			<br><a href="/resetpassword/">Reset My Password</a>
+			{% if 'Supervisor' in usersgroups %}
+			<br><a href="/viewusers/">View the Users</a>
+			{% endif %}
+		</div><!-- .nav-block -->
+
+		{% sidebarmeeting request %}
+
+	</div><!-- #navbar (bootstrap) .span3 -->
+	<div id="content-wrapper" class="span8">
+		<h4 class="disable-select">{{ title }}</h4>
+		<div id="content">
+			{% block content %}
+
+
+				This is the template contents.
+
+
+			{% endblock %}
+			<div class="clear-fix"></div>
+		</div><!-- #content -->
+	</div><!-- #content-wrapper (bootstrap) .span8 -->
+	<div class="clear-fix"></div>
+</div><!-- #wrapper (bootstrap) .container -->
+<!--
+
+	End UI template.
+
+-->
+{% endblock %}

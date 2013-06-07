@@ -1,0 +1,10 @@
+{% load filters %}
+<div class="topic border-box"
+     topic-name="{{ topic.name }}"
+     topic-duration="{{ topic.presentationlength }}"
+     topic-publicid="{{ topic.publicid }}"
+     topic-category="{{category.name | replace:"/ /-" | lower }}" 
+     topic-description="{{ topic.description }}"
+     topic-submitted-date="{{ topic.datesetforreview }}"
+     topic-user-name="{{ topic.user.get_full_name }}"
+     {% if original %}original-topic="True"{% endif %}></div><!-- .topic (bootstrap) -->

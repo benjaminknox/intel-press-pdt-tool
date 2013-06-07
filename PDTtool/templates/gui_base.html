@@ -1,0 +1,119 @@
+{% load staticfiles %}
+{% load nextmeeting %}
+<!DOCTYPE html>
+<html lang="en" charset="utf-8">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /> <meta name="HandheldFriendly" content="true" />
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <title>PDT Portal - {{ title }}</title>
+  
+  <link rel="stylesheet" href="{% static 'www/bootstrap/css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'www/toastr/toastr.css' %}" />
+  <link rel="stylesheet" href="{% static 'www/bootstrap/css/bootstrap-responsive.css' %}"></link>
+  <link rel="stylesheet" href="{% static 'www/css/jquery.timepicker.css' %}" />
+  <link rel="stylesheet" href="{% static 'www/css/gui-style.css' %}" />
+  <link rel="stylesheet" href="{% static 'www/jquery-ui/css/ui-lightness/jquery-ui.min.css' %}"></link>
+  {% block stylesheet %}
+  {% endblock %}
+  
+</head>
+<body>
+  <div id="header">
+    <div id="navbar" class="navbar navbar-inverse border-box">
+      <ul class="nav">
+        <li>
+          <a href="/">View Meetings</a>
+        </li>
+        <li>
+          <a href="/viewtopics/">View Topics</a>
+        </li>
+        <li class="dropdown">
+          <a href="javascript:void(0);" data-toggle="dropdown" >
+            User Management
+          </a>
+          <ul class="dropdown-menu"  role="menu" aria-labelledby="dLabel">
+            <li>
+              <a href="/accountsettings/">My Account Settings</a>
+            </li>
+            <li>
+              <a href="/resetpassword/">Reset My Password</a>
+            </li>
+            <li>
+              <a href="/notifications/">Notifications</a>
+            </li> 
+            {% if Supervisor %}
+            <li>
+              <a href="/viewusers/">View Users</a>
+            </li>
+            {% endif %}
+          </ul>
+        </li>
+      </ul>
+      <a href="/logout/" class="btn btn-inverse pull-right log-out-btn">Log Out</a>
+      <div id="user_greeting" class="pull-right muted">Welcome {{ extendeduser.user.get_full_name }}</div>
+      {% if request.user.is_superuser %}
+      <a id="admin" class="btn btn-inverse" href="/admin/">admin</a>
+      {% endif %}
+    </div><!-- #navbar -->
+    <div id="infobar" class="border-box">
+      <h1 class="pull-left">{{title}}</h1>
+      {% nextmeeting request %}
+    </div><!-- #infobar -->
+  </div><!-- #header -->
+  {% block content %}
+  {% endblock %}
+
+<script src="{% static 'www/js/jquery.min.js' %}"></script>
+<script src="{% static 'www/toastr/toastr.js' %}"></script>
+<script src="{% static 'www/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'www/jquery-ui/js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'www/js/jquery.timepicker.min.js' %}"></script>
+<script src="{% static 'www/js/jquery.ui.touch-punch.min.js' %}"></script>
+<script src="{% static 'www/js/jquery.maskedinput.min.js' %}"></script>
+<script>
+
+//This initializes a datepicker field.
+function create_datepicker(datepicker,altField){
+  datepicker.datepicker({
+    dateFormat:'yy-mm-dd'
+  });
+  if(altField) datepicker.datepicker("option","altField",altField);
+}
+
+//This initializes a timepicker field.
+//This initializes a datepicker field.
+function create_timepicker(timepicker){
+    timepicker.timepicker();
+}
+
+$(function(){
+  //Load the datepicker
+  var datepicker = $(".datepicker,.datepicker2");
+  //Check for any datepickers
+  if(datepicker.length > 0){
+    //If datepickers are found load
+    //  the jQuery UI datepicker.
+    create_datepicker(datepicker,false);
+  }
+  
+  //Load the datepicker
+  var timepicker = $(".timepicker,.timepicker2");
+  //Check for any datepickers
+  if(timepicker.length > 0){
+    //If datepickers are found load
+    //  the jQuery UI datepicker.
+    create_timepicker(timepicker);
+  }
+});
+
+</script>
+
+{% block scripts %}
+<!--
+  This block is for scripts that are
+    used only on one template.
+-->
+{% endblock %}
+
+</body>
+</html>

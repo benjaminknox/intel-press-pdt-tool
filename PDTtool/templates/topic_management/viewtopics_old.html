@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+	
+	<h4 class="pull-left text-success disable-select">All Topics</h4>
+
+	<!-- Load the search form from dashboard.context_processors.dashboard -->
+	{{ search_form|safe }}
+
+	<!-- Load the topics that have been uploaded -->
+	{% if topics|length > 0 %}
+
+		<table class="table table-bordered table-striped" style="background: #F0F0F0;">
+		<!-- Display the topics -->
+		{% for topic in topics %}
+			<tr>
+				<td class="list-topic-td" onclick="location.href = '/viewtopic/?publicid={{ topic.publicid }}';" title="Click for more on '{{ topic.name }}'.">
+					<div class="pull-right">
+					{% if  topic.supervisor_released %}
+						<span class="label label-success">Approved</span>
+					{% endif %}
+					{% if not  topic.supervisor_released and topic.readyforreview and not topic.meeting %}
+						<span class="label label-info">Needs Review</span>
+					{% endif %}
+					{% if not topic.supervisor_released and not topic.readyforreview %}
+						<span class="label label-default">In Progress</span>
+					{% endif %}
+					{% if topic.meeting %}
+						<a href="/viewmeetings/?month={{ topic.meeting.startdate.month }}&year={{ topic.meeting.startdate.year }}#{{topic.meeting.publicid}}"><span class="label label-important">In Meeting: '{{ topic.meeting.name }}'</span></a>
+					{% endif %}
+					</div>
+					<h5>{{ topic.name }} by {{ topic.user.first_name }} {{ topic.user.last_name }}&nbsp;&nbsp;<small>{{topic.topic_slug}}</small></h5> 
+					<div class="list-topic">
+						{{ topic.description | truncatechars:"200" }}
+					</div><!-- .list-document -->
+					<div class="category">Category {{ topic.category }}</div>
+				</td>
+			</tr>
+		{% endfor %}
+		<!-- End display of the documents -->
+		</table>
+		<!-- Output the pagination links. -->
+		<div id="pagination" class="pagination">
+		    	<ul>
+			        {% if topics.has_previous %}
+			            <li><a href="?{{queries.urlencode}}&amp;page={{ topics.previous_page_number }}">prev</a></li>
+		            {% else %}
+		            	<li class="active"><a>prev</a></li>
+			        {% endif %}
+			     <li class="active"><a>Page {{ topics.number }} of {{ topics.paginator.num_pages }}</a></li>
+			        {% if topics.has_next %}
+			            <li><a href="?{{queries.urlencode}}&amp;page={{ topics.next_page_number }}">next</a></li>
+		            {% else %}
+		            	<li class="active"><a>next</a></li>
+			        {% endif %}
+		        </ul>
+		</div><!-- (bootstrap) .pagination -->
+		<!-- End the output of the pagination links. -->
+
+	 {% else %}
+
+	  	<span class="text-error">No results found</span><!-- (bootstrap) .text-error -->
+
+	{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		$(function(){
+
+			{% if Supervisor and request.GET.deleted%}
+				toastr.error('You deleted \'{{ request.GET.deleted}}\'.');	
+			{% endif %}
+
+			$(".list-topic-td").tooltip({track:true, tooltipClass: "yellow-tooltip"});
+
+		});
+	</script>
+{% endblock %}

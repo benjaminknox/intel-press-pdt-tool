@@ -1,0 +1,7 @@
+Hello {{ topic.user.get_full_name }},<br /><br />
+
+Your topic {% for topic in topics %}'{{ topic.name }}'{% endfor %} has been added to the meeting '{{ meeting.name }}' which is on {{ meeting.startdate }} at {{ meeting.starttime }}.<br /><br />
+
+<a href="{{ host_name }}/viewmeetings/?year={{ meeting.startdate.year}}&month{{ meeting.startdate.month }}#{{ meeting.publicid }}">View the meeting</a><br /><br />
+
+-<a href="{{ host_name }}">The PDT Portal</a>
