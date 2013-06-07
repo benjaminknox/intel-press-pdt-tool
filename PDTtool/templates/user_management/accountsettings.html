@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<form action="{{ request.get_full_path }}" method="POST">
+		{% csrf_token %}
+		<table>
+			{{ AccountSettingsForm.as_table }}
+			<tr>
+				<td></td>
+				<td><input type="submit" class="btn" /></td>
+			</tr>
+		</table>
+	</form>
+{% endblock %}
+
+{% block scripts%}
+<script>
+	$(function(){
+		{% if BadPassword %}
+		toastr.error('The password you entered did not match our records.');
+		{% endif %}
+		
+		{% if UpdatedInformation %}
+		toastr.success('Your information is updated.');
+		{% endif %}
+	});
+</script>
+{% endblock %}

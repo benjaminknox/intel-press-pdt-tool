@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load nextmeeting %}
+
+<!-- THIS IS NOT USED RIGHT NOW | IT COULD BE DELETED SOON -->
+
+{% block content%}
+
+	{% if Supervisor %}
+	<!-- Load the meeting form depending on which step we are on. -->
+	{{ meetingform }}
+	<!-- End the loading of the meeting form -->
+	{% endif %}
+
+	<!-- Load a modal for each meeting. -->
+	{% for m in meetings %}
+		{{m.meeting_view}}
+		{% if Supervisor %}
+		{{m.edit_meeting_form1}}
+		{{m.edit_meeting_form2}}
+		{% endif %}
+	{% endfor %}
+	<!-- End the loading of the modals for each meeting. -->
+
+
+	<!-- Links for paging through each calendar -->
+	<ul class="pager" style="width: 106.5%;">
+		<!-- Previous button -->
+		<li class="previous">
+			<a href="/viewmeetings/?month={{prev_month.month}}&year={{prev_month.year}}">&larr; {{ prev_month_textual }}</a>
+		</li><!-- (bootstrap) .previous -->
+		<li class="next">
+			<a href="/viewmeetings/?month={{next_month.month}}&year={{next_month.year}}"> {{ next_month_textual }} &rarr;</a>
+		</li><!-- (bootstrap) .next -->
+	</ul><!-- (bootstrap) .pager -->
+
+	<!-- Load the calendar interface -->
+	<div id="calendar">
+		{{ calendar | safe }}
+	</div><!-- #calendar -->
+	<!-- End the loading of the calendar interface -->
+	
+{% endblock %}
+
+{% block scripts%}
+
+<script src="{% static 'www/js/draggable.calendar.js' %}"></script>
+<script src="{% static 'www/js/bootbox.min.js' %}"></script>
+<script>
+	$(function(){
+
+		check_forms();
+
+		$('.add_calendar_item').tooltip({track:true, tooltipClass: "yellow-tooltip"})
+
+		{% if 'schedule_items' in request.POST %}
+			toastr.success('Successfully created a meeting.');
+		{% endif %}
+
+		{% if Supervisor %}
+			{% if loadform %}
+				//Load the meeting modal.
+				add_meeting_modal(false);
+			{% endif %}
+			//Create the code that makes a hover.
+			$('#calendar td').hover(function(){
+					//Show the calendar item on hover.
+					$(this).children('.add_calendar_item').show();
+			},function(){
+					//Hide the calendar item on hover off.
+					$(this).children('.add_calendar_item').hide();
+			});
+
+			//Add a calendar item.
+			$('.add_calendar_item').click(function(){
+					//Get the date clicked.
+					date_clicked = $(this).parent().attr('date-value');
+					//Add the meeting modal.
+					add_meeting_modal(date_clicked);
+			});
+		{% endif %}
+
+		//Get the window location hash.
+		if(window.location.hash){
+			//Check the value for meetingadded
+			if(window.location.hash == '#meetingadded'){
+				//Then we put out a new meeting value.
+				toastr.success('Added a meeting.');
+			}else{
+				//Load the meeting information.
+				view_meeting(window.location.hash.substr(1));
+			}
+		}
+
+		//Add a meeting tooltip.
+		$('.meeting_link').tooltip({track:true, tooltipClass: "yellow-tooltip"});
+
+		//Add a 
+    $('#addmeetingform').on('hide',function(){
+    	bootbox.confirm('Are you sure you want to close, you have unsaved data?',function(result){
+    		if(result){
+    			window.location = '{{ request.path }}';
+  			 }else{
+  			 	$('#addmeetingform').modal();
+  			}
+    	});
+    });
+	});
+	
+	{% if Supervisor %}
+	//Get the meeting information.
+	function add_meeting_modal(date_clicked){
+			//Check to make sure there 
+			//		was a date clicked.
+			if(date_clicked){
+				//Add the value of the date clicked 
+				//			to the startdate.
+				$('#id_startdate').val(date_clicked);
+			}
+			//Add the meeting form.
+			meetingmodal = $('#addmeetingform1');
+			if(meetingmodal.length == 0){
+				meetingmodal = $('#addmeetingform');
+			}
+			meetingmodal.modal();
+	}
+
+	//Edit the meeting.
+	function edit_meeting(publicid){
+
+		$('#'+publicid).modal('hide');
+		//Load the meeting public id.
+		identifier = '#editmeetingform1_'+publicid;
+		modal = $(identifier);
+		//This is the modal.
+		//Check the modal.
+		modal.modal();
+	}
+
+	//Edit the meeting schedule.
+	function edit_schedule(publicid){
+		$('#'+publicid).modal('hide');
+		//Load the meeting public id.
+		identifier = '#editmeetingform_'+publicid;
+		//Check the modal.
+		$(identifier).modal();
+	}
+
+	{% endif %}
+
+	//View the meeting.
+	function view_meeting(publicid){
+		//Load the meeting public id.
+		identifier = '#'+publicid;
+		//Check the modal.
+		$(identifier).modal();
+		//Create a tooltip for the meeting.
+		$(identifier).find('td').tooltip({track:true, tooltipClass: "yellow-tooltip"}).hover(function(){
+			//Change the background of the topic on hover.
+			$(this).css('background',"#EFF6FB");
+		},function(){
+			//Change it back on hover out.
+			$(this).css('background','inherit')
+		});
+	}
+
+	function checkforms(){
+		$('form').each(function(){
+			alert($(this).html())
+		});
+	}
+
+</script>
+{% endblock %}

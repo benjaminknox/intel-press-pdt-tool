@@ -1,0 +1,22 @@
+<div id="{{ modal_id }}" class="modal hide fade {{ modal_class }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+  {% if modal_title %}
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">{{ modal_title }}</h3><!-- #myModalLabel -->
+  </div><!-- (bootstrap) .modal-header -->
+  {% endif %}
+
+  {% if content %}
+  <div class="modal-body">
+    {{ content }}
+  </div><!-- (bootstrap) .modal-body -->
+  {% endif %}
+
+  <div class="modal-footer">
+    <button class="btn {{close_button_class}}" data-dismiss="modal" aria-hidden="true">{{close_button_text}}</button><!-- (dynamic) ."{{ close_button_class }}" (bootstrap) .btn -->
+    {% if modal_form %}
+    <a href="javascript:void(0);" onclick="$(this).parent().parent().children('.modal-body').find('form').submit();" class="btn {{ submit_button_class }}">{{ submit_text }}</a>
+    {% endif %}
+  </div><!-- (bootstrap) .modal-footer -->
+</div><!-- #{{ modal_id }} (dynamic) ."{{ modal_class}}" (bootstrap) modal hide fade-->

@@ -1,0 +1,330 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load nextmeeting %}
+{% block content%}
+
+{{ nextmeeting.next_view_meeting }}
+
+{% if Supervisor %}
+<!-- Load the next meeting.-->
+{{ nextmeeting.next_edit_meeting_form1 }}
+{{ nextmeeting.next_edit_meeting_form2 }}
+<!-- End the loadiing of the new meeting form. -->
+
+<!-- Load the meeting form depending on which step we are on. -->
+{{ meetingform }}
+<!-- End the loading of the meeting form -->
+{% endif %}
+
+<!-- load the meetings list -->
+{% for m in meetings_list %}
+{{ m.view_meeting }}
+
+{% if Supervisor %}
+{{ m.edit_meeting_form1 }}
+{{ m.edit_meeting_form2 }}
+{% endif %}
+
+{% endfor %}
+<!-- End the looping of the meeting form -->
+{% nextmeeting request %}
+
+<!-- Links for paging through each calendar -->
+<ul class="pager" style="width: 106.5%;">
+	<!-- Previous button -->
+	<li class="previous">
+		<a href="/viewmeetings/?month={{prev_month.month}}&year={{prev_month.year}}">&larr; {{ prev_month_textual }}</a>
+	</li><!-- (bootstrap) .previous -->
+	<li class="next">
+		<a href="/viewmeetings/?month={{next_month.month}}&year={{next_month.year}}"> {{ next_month_textual }} &rarr;</a>
+	</li><!-- (bootstrap) .next -->
+</ul><!-- (bootstrap) .pager -->
+
+<div id="calendar">
+	{{ calendar }}
+</div><!-- #calendar -->
+
+{% endblock %}
+
+{% block scripts%}
+<script src="{% static 'www/js/draggable.calendar.js' %}"></script>
+<script src="{% static 'www/js/bootbox.min.js' %}"></script>
+<script>
+
+//Filter the meetings list.
+function filter_results(publicid,search){
+	//A selector for the meeting modal.
+	var identifier = "#"+publicid;
+	//Find the rows inside of that meeting to load.
+	var rows = $(identifier).find('#meeting_topics > tbody > tr');
+	//Loop through each row.
+	rows.each(function(){
+		//Get the text of the meeting title.
+		var text = $(this).find('h5').text().toLowerCase();
+		//Get the text the user typed into the search box.
+		var search_text = (search.length > 0)? search.toLowerCase() : 0;
+		//Hide the row.
+		$(this).hide();
+		//Check the value of the search.
+		if(search_text == 0 || text.indexOf(search_text) != -1){
+			//Show the rows that are available.
+			$(this).show();
+		}
+	});
+}
+
+//This function loads the meeting view.
+function view_meeting(publicid){
+	//Create an identifier for the modal.
+	var identifier = '#'+publicid
+	//Show the modal.
+	$(identifier).modal();
+	//Show the modal.
+	$(identifier).css({'width':'900px','margin-left':'-450px'});
+	//Create a tooltip for the meeting.
+		$(identifier).find('td').tooltip({track:true, tooltipClass: "yellow-tooltip"}).hover(function(){
+			//Change the background of the topic on hover.
+			$(this).css('background',"#EFF6FB");
+		},function(){
+			//Change it back on hover out.
+			$(this).css('background','inherit')
+		});
+}
+
+{% if Supervisor %}
+//Get the meeting information.
+function add_meeting_modal(date_clicked){
+		//Check to make sure there 
+		//		was a date clicked.
+		if(date_clicked){
+			//Add the value of the date clicked 
+			//			to the startdate.
+			$('#id_startdate').val(date_clicked);
+		}
+		//Add the meeting form.
+		meetingmodal = $('#addmeetingform1');
+		if(meetingmodal.length == 0){
+			meetingmodal = $('#addmeetingform');
+		}
+		//Change the meeting_modal.
+		meetingmodal.modal();
+}
+
+//Edit the meeting.
+function edit_meeting(publicid){
+	//Hide the view meeting modal.
+	$('#'+publicid).modal('hide');
+	//Load the meeting public id.
+	identifier = '#editmeetingform1_'+publicid;
+	modal = $(identifier);
+	//This is the modal.
+	//Check the modal.
+	modal.modal();
+}
+
+//Edit the meeting schedule.
+function edit_schedule(publicid){
+	//Hide the view meeting modal.
+	$('#'+publicid).modal('hide');
+	//Load the meeting public id.
+	identifier = '#editmeetingform_'+publicid;
+	//Check the modal.
+	$(identifier).modal();
+}
+{% endif %}
+
+//This loops through and checks each of the
+//		elements for the right information.
+//Validation.
+function checkforms(){
+	//Select the forms and loop through each one.
+	$('form').each(function(){
+		//On submit check the fields.
+		$(this).submit(function(){
+			//This is the form.
+			var form = $(this);
+			//Create a boolean for the validity.
+			var invalid = false;
+			//Get the input fields.
+			var inputFields = $(this).find('input,textarea');
+			var fieldcheckstr = '';
+			//Loop through each of the fields.
+			inputFields.each(function(){
+				//Get the feild.
+				var field = $(this)
+				//Get the field class.
+				var fieldclass = field.attr('class');
+				//Get the field id.
+				var fieldid = field.attr('id');
+				//Get the field name.
+				var fieldname = field.attr('name')
+				//Get the field value.
+				var fieldvalue = field.val();
+				//Get the field label.
+				var fieldlabel = form.find('label[for="'+fieldid+'"]').text();
+				//Define a string for the start of the field error report.
+				var error_start = 'For the '+fieldlabel.toLowerCase().replace(':','');
+				//Make sure there is a name
+				if(
+					//Check the field id.
+					fieldid == 'id_name' &&
+					//Check the length field value.
+					fieldvalue.length == 0
+				){
+					//Output a field error string.
+					fieldcheckstr +=  error_start+', please enter a value. \r\n';
+					//Flag the form invalid.
+					invalid = true;
+				}
+
+				//Check the date fields.
+				if(
+					//Check if the field has a class.
+					fieldclass && 
+					//Check the class is datepicker.
+					fieldclass.indexOf('datepicker') != -1 &&
+					(	
+						//Check the field value matches a date pattern.
+						!fieldvalue.match(/(\d{4})-(\d|\d{2})-(\d|\d{2})/) ||
+						//Check the fieldvalue is longer than ten.
+						fieldvalue.length > 10
+					)
+				){
+					//Output a field error string.
+					fieldcheckstr += error_start+', please use this format: yyyy-mm-dd \r\n';
+					//Flag the form invalid.
+					invalid = true;
+				}
+
+				//Check the time fields.
+				if(
+					//Check if the field has a class.
+					fieldclass &&
+					//Check the class is timepicker.
+					fieldclass.indexOf('timepicker') != -1 &&
+					//Check the value matches the time 
+					//		below appropriately.
+					!fieldvalue.match(/(\d|\d{2}):(\d{2})(am|pm)/)
+				){
+					//Output a field error string.
+					fieldcheckstr +=  error_start+', please use this format: 00:00am/pm \r\n';
+					//Flag the form invalid.
+					invalid = true;
+				}
+			});
+			//If the form is invalid do this:
+			if(invalid){
+				//Alert the errors.
+				alert(fieldcheckstr);
+				//Don't allow them to move on.
+				return false;
+			}else{
+				//Return the variable
+				return true;//invalid;
+			}
+		});
+	});
+}
+
+$(function(){
+	//Check the forms.
+	checkforms();
+	//This initializes each of the forms
+	$('input[name="update_meeting_information"]').each(function(){
+		//This is the publicid of the item.
+		var publicid = $(this).val();
+		//Select the fields.
+		var fields = $(this).parent().find('.modal_form').find('input, textarea');
+		//Output the fields.
+		fields.each(function(){
+			//Get the field.
+			var field = $(this);
+			//Get the id.
+			var id = $(this).attr('id');
+			//Create a new id string.
+			var newid = id+publicid;
+			//Get the attribute.
+			$(this).attr('id',newid);
+			var idstring = '#'+newid
+			//Check if it is a datepicker
+			if(field.hasClass('stand_alone_datepicker')){
+				//This is the datepicker.
+				create_datepicker(field,idstring);
+			}
+			if(field.hasClass('stand_alone_timepicker')){
+				create_timepicker(field,idstring);
+			}
+		});
+
+	});
+
+	{% if 'added' in request.GET%}
+	//Then we put out a new meeting value.
+	toastr.success('Added a meeting \'{{ request.GET.added }}\'');
+	{% endif %}
+
+	{% if 'updated' in request.GET %}
+	//Then we put out a new meeting value.
+	toastr.success('Updated meeting \'{{ request.GET.updated }}\'');
+	{% endif %}
+
+	{% if 'deleted' in request.GET %}
+	//Then we put out a new meeting value.
+	toastr.error('Deleted meeting \'{{ request.GET.deleted }}\'');
+	{% endif %}
+
+	//Get the window location hash.
+	if(window.location.hash){
+			//Load the meeting information.
+			view_meeting(window.location.hash.substr(1));
+	}
+	//Add a tooltip to the item.
+	$('.add_calendar_item').tooltip({track:true, tooltipClass: "yellow-tooltip"})
+
+	//Add a meeting tooltip.
+	$('.meeting_link').tooltip({track:true, tooltipClass: "yellow-tooltip"});
+
+	{% if Supervisor %}
+
+		{% if loadform %}
+			//Load the meeting modal.
+			add_meeting_modal(false);
+		{% endif %}
+		//Create the code that makes a hover.
+		$('#calendar td').hover(function(){
+				//Show the calendar item on hover.
+				$(this).children('.add_calendar_item').show();
+		},function(){
+				//Hide the calendar item on hover off.
+				$(this).children('.add_calendar_item').hide();
+		});
+
+		//Add a calendar item.
+		$('.add_calendar_item').click(function(){
+				//Get the date clicked.
+				date_clicked = $(this).parent().attr('date-value');
+				//Add the meeting modal.
+				add_meeting_modal(date_clicked);
+		});
+
+		//Add a bootbox confirm dialogue, to check
+		//		if the user wants to save.
+	  $('#addmeetingform').on('hide',function(){
+  	//This is the confirm message.
+		bootbox.confirm('Are you sure you want to close, you have unsaved data?',function(result){
+			//Check the result.
+			if(result){
+				//Reload the window if the answer is ok.
+				window.location = '{{ request.path }}';
+			 }else{
+			 	//Otherwise pull up the modal.
+			 	$('#addmeetingform').modal();
+			}
+		});
+});
+		{% endif %}
+});
+
+
+</script>
+{% endblock %}

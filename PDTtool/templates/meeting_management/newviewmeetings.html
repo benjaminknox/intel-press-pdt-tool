@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load nextmeeting %}
+{% block content%}
+
+<!-- THIS IS NOT USED RIGHT NOW | IN DEVELOPMENT -->
+
+{% nextmeeting request %}
+
+<div id="meeting_information_form_screen" class="meeting_screen">
+	{{ meeting_information_form }}
+</div>
+
+<div id="calendar_screen" class="meeting_screen">
+
+	<!-- Links for paging through each calendar -->
+	<ul class="pager" style="width: 106.5%;">
+		<!-- Previous button -->
+		<li class="previous">
+			<a href="/viewmeetings/?month={{prev_month.month}}&year={{prev_month.year}}">&larr; {{ prev_month_textual }}</a>
+		</li><!-- (bootstrap) .previous -->
+		<li class="next">
+			<a href="/viewmeetings/?month={{next_month.month}}&year={{next_month.year}}"> {{ next_month_textual }} &rarr;</a>
+		</li><!-- (bootstrap) .next -->
+	</ul><!-- (bootstrap) .pager -->
+
+	<div id="calendar">
+		{{ calendar }}
+	</div><!-- #calendar -->
+</div><!-- #calendar_screen .meeting_screen -->
+
+{% endblock %}
+
+{% block scripts%}
+<script src="{% static 'www/js/draggable.calendar.js' %}"></script>
+<script src="{% static 'www/js/bootbox.min.js' %}"></script>
+<script>
+
+function view_meeting(meeting_publicid){
+	window.location.hash = '#show:id=meeting_information_form_screen:meetingid='+meeting_publicid;
+}
+
+//Return the hash class.
+function hash_class(hash){
+	//remove the '#'.
+	var hash = hash.replace('#','');
+	//Split the hash.
+	var variables = hash.split(':');
+
+	//Create a hash_instance
+	var hash_instance = Object.create(null);
+
+	//Get the action which is the first variable
+	hash_instance.action = variables[0];
+
+	//Remove the first variable
+	delete variables[0];
+
+	//Add in the variables to the meeting.
+	for(var i in variables){
+			//Split the variables.
+			var variable = variables[i].split('=');
+			//add a variable.
+			hash_instance[variable[0]] = variable[1];
+	}
+
+	//return the hash prototype.
+	return hash_instance;
+}
+
+//Change the screen based on the hash.
+function checkhash(oldhash){
+	//Get the window location hash.
+	if(!window.location.hash){
+		//Show the calendar.
+		window.location.hash  = "#show:id=calendar_screen";
+	}
+	//Get the curhash.
+	var currhash = window.location.hash;
+	if(oldhash != currhash){
+	
+		//Load the url.
+		var state = hash_class(currhash);
+
+		//Check for the show calendar
+		if(state.action == "show" && state.id){
+			$('.meeting_screen').hide();
+			//Show the calendar screen.
+			$("#"+state.id).show();
+		}
+		//Check for a meetingid
+		if(state.meetingid){
+
+		}
+	}
+	var t= setTimeout("checkhash('"+currhash+"');",50);
+}
+
+$(function(){
+
+	checkhash();
+
+	{% if 'added' in request.GET%}
+	//Then we put out a new meeting value.
+	toastr.success('Added a meeting \'{{ request.GET.added }}\'');
+	{% endif %}
+
+	{% if 'updated' in request.GET %}
+	//Then we put out a new meeting value.
+	toastr.success('Updated meeting \'{{ request.GET.updated }}\'');
+	{% endif %}
+
+	//Add a tooltip to the item.
+	$('.add_calendar_item').tooltip({track:true, tooltipClass: "yellow-tooltip"})
+
+	//Add a meeting tooltip.
+	$('.meeting_link').tooltip({track:true, tooltipClass: "yellow-tooltip"});
+
+	{% if Supervisor %}
+
+		{% if loadform %}
+			//Load the meeting modal.
+			add_meeting_modal(false);
+		{% endif %}
+		//Create the code that makes a hover.
+		$('#calendar td').hover(function(){
+				//Show the calendar item on hover.
+				$(this).children('.add_calendar_item').show();
+		},function(){
+				//Hide the calendar item on hover off.
+				$(this).children('.add_calendar_item').hide();
+		});
+
+		//Add a calendar item.
+		$('.add_calendar_item').click(function(){
+				//Get the date clicked.
+				date_clicked = $(this).parent().attr('date-value');
+				//Add the meeting modal.
+				add_meeting_modal(date_clicked);
+		});
+
+		{% endif %}
+});
+
+
+</script>
+{% endblock %}

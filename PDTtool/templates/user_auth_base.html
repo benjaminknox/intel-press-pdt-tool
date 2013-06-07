@@ -1,0 +1,27 @@
+{% extends "html_base.html" %}
+{% load staticfiles %}
+{% block htmlcontent %}
+<!--
+
+	This is the UI template for user authentication.
+
+-->
+<div id="user_management_wrapper" class="wrapper_bg">
+		{% if not loginscreen %}
+		<a href="/login/" class="pull-right">back</a>
+		{% endif %}
+		<span class="label label-info">{{ title }}</span>
+		<div id="content">
+			{% block content %}
+				This is the template contents.
+			{% endblock %}
+			<div class="clear-fix"></div>
+		</div><!-- #content -->
+	<div class="clear-fix"></div>
+</div><!-- #user_management_wrapper .wrapper_bg (bootstrap) .container -->
+<!--
+
+	End UI template.
+
+-->
+{% endblock %}

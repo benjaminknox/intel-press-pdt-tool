@@ -1,0 +1,14 @@
+<form action="{{ action }}" method="{{ method }}" {{ formmultipart }}>
+  {% csrf_token %}
+  
+  {% for hidden_field in hidden_fields %}
+    {{hidden_field}}
+  {% endfor %}
+ 
+  {{ extra_fields }}
+
+  <table class="{{table_class}}">
+    {{ form }}
+    {{add_submit_button}}
+  </table><!-- .{{table_class}} -->
+</form>
